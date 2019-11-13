@@ -2,7 +2,7 @@
 
 
 ## Features:
-- Dialog editor
+- Dialog editor (well it only allows viewing atm)
 
 ## Installation:
 

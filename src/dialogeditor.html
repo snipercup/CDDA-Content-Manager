@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Cataclysm: Dark Days Ahead content manager</title>
+		<link rel="stylesheet" href="index.css">
+	</head>
+	 <script src="filesystemfunctions.js"></script> 
+	 <script src="jsonfunctions.js"></script> 
+	 <script src="commonclasses.js"></script> 
+	 <script src="constants.js"></script> 
+	<script>
+		//List of all talk topics
+		var talk_topics;
+		var npcObjList;
+		
+		//When the page finishes loading
+		document.addEventListener("DOMContentLoaded", function(event) {
+			init();
+		});
+		
+		//This class represents one talk topic.
+		class Talk_topic {
+			// jsonObject must be a list of the json object and the path of the file i.e. [[jsonobject], "c:\apps\topics.json"]
+			constructor(jsonObject) {
+				this.jsonObject = jsonObject;
+			}
+			
+			get id(){
+				return this.jsonObject[0].id;
+			}
+			
+			get dynamic_line(){
+				var objDynamicLine = this.jsonObject[0].dynamic_line;
+				if(objDynamicLine){
+					return objDynamicLine;
+				} else {
+					//This talk topic does not have a dynamic line defined.
+					let talk_topic = getTalkTopicById(this.initialTopic);
+					return talk_topic.dynamic_line;
+				}
+			}
+			
+			get dynamic_line_html(){
+				var objDynamicLine = this.dynamic_line;
+				if(typeof objDynamicLine === 'object' && objDynamicLine !== null){
+					//It's an object.
+					return "<table>"+buildHtmlRowsFromJSON(objDynamicLine)+"</table>";
+				} else {
+					return objDynamicLine;
+				}
+			}
+			
+			get responsesJSON(){
+				return this.jsonObject[0].responses;
+			}
+			
+			get responses(){
+				let listResponses = [];
+				const responses = this.responsesJSON;
+				for (i = 0; i < responses.length; i++) {
+					listResponses.push(new Talk_response(responses[i]));
+				}
+				return listResponses;
+			}
+			
+			get responses_html(){
+				const responses = this.responses;
+				let htmlString = "<table>"
+				for (i = 0; i < responses.length; i++) {
+					htmlString += "<tr><td>responses:</td><td>"+responses[i].text+"</td></tr>";
+				}
+				htmlString += "</table>"
+				return htmlString;
+			}
+			
+			get filePath(){
+				return this.jsonObject[1];
+			}
+			
+			set initialTopic(strTopic){
+				this.firstTopic = strTopic;
+			}
+			
+			//The id of the topic that called for this topic.
+			//For example if TALK_STRANGER_FRIENDLY called for this topic, this is the value it will get.
+			//This helps with user expectations and helps determine a dynamic line for this topic.
+			get initialTopic(){
+				return this.firstTopic;
+			}
+			
+			//Returns wether or not this talk topic has the specified ID.
+			//Some talk topics have multiple IDs. If the given ID is present in the list of IDs, true is returned
+			hasID(strID){
+				if(typeof this.id == "string") {
+					return this.id == strID;
+				} else if(Array.isArray(this.id)) {
+					return this.id.includes(strID);
+				}
+				return false;
+			}
+			
+			get htmlTable(){
+				let span = document.createElement("span");
+				let htmlString = "<table class='talk_topic'>"
+				htmlString += buildRecursiveHtmlRowsFromJSON(this.jsonObject[0]);
+				<!-- htmlString += "<tr><td>type:</td><td>talk_topic</td></tr>"; -->
+				<!-- htmlString += "<tr><td>id:</td><td>"+this.id+"</td></tr>"; -->
+				<!-- htmlString += "<tr><td>dynamic line:</td><td>"+this.dynamic_line_html+"</td></tr>"; -->
+				<!-- htmlString += "<tr><td>responses:</td><td>"+this.responses_html+"</td></tr>"; -->
+				<!-- htmlString += "<tr><td>file:</td><td>"+this.filePath+"</td></tr>"; -->
+				htmlString += "</table>"
+				span.innerHTML = htmlString;
+				return span;
+			}
+			
+			get treeNode(){
+					let li = document.createElement("LI");
+					let span = document.createElement("span");
+					let ul = document.createElement("ul");
+					span.innerHTML = this.htmlTable();
+					li.appendChild(span);
+					span = document.createElement("span");
+					span.innerHTML = "expand"
+					span.className = "caret";
+					ul.className = "nested";
+					li.appendChild(span);
+					li.appendChild(ul);
+			}
+			
+			
+		}
+		
+		//This class represents one talk response. for example: { "text": "I'm sorry, I gotta go.", "topic": "TALK_DONE" }
+		class Talk_response {
+			// jsonObject is something like { "text": "I'm sorry, I gotta go.", "topic": "TALK_DONE" }
+			constructor(jsonObject) {
+				this.jsonObject = jsonObject;
+			}
+			
+			get text(){
+				return this.jsonObject.text;
+			}
+			
+			get topic(){
+				return this.jsonObject.topic;
+			}
+		}
+		
+		//Initialize function, it is asynchonous to allow await-ing for the functions called in init.
+		async function init(){
+			npcObjList = new jsonObjList(document.getElementById("npcList"), DATA_JSON_NPCS, "id");
+			readTalkTopicsFromDisk();
+		}
+		
+		function displayTalkTopic(previousTopic, currentTopic){
+			document.getElementById("npcTalkTree").innerHTML = "";
+			var talk_topics = getTalkTopicsById(currentTopic);
+			
+			if(currentTopic != "TALK_DONE"){
+				for (i = 0; i < talk_topics.length; i++) {
+					talk_topics[i].initialTopic = currentTopic;
+					document.getElementById("npcTalkTree").appendChild(talk_topics[i].htmlTable);
+				}
+			} else {
+				document.getElementById("npcTalkTree").innerHTML = createTALK_DONE_NONEhtmlTable("TALK_DONE", "");
+			}
+		}
+		
+		//When the user selects an item from the NPC list
+		async function npcList_change(selectElement){
+			//User selects an item
+			//Get item title (it's a json string)
+			let itemTitle = selectElement.options[selectElement.selectedIndex].title;
+			//Transform the title string to a json object
+			var jsonObj = JSON.parse(itemTitle);  
+			//Transform the json object to html
+			let htmlString = buildHtmlTableFromJSON_andFile(jsonObj);
+			//Update the npc basic properties element
+			document.getElementById("npcBasicProperties").innerHTML = htmlString
+			
+			var chat = jsonObj[0].chat;
+			displayTalkTopic(chat, chat);
+			
+			<!-- if(chat != "TALK_DONE"){ -->
+				<!-- //Get the talk topic the NPC has in 'chat' -->
+				<!-- var talk_topics = await getTalkTopicsById(chat); -->
+				<!-- document.getElementById("npcTalkTree").innerHTML = ""; -->
+				<!-- for (i = 0; i < talk_topics.length; i++) { -->
+					<!-- //Transform the json object to html -->
+					<!-- let li = document.createElement("LI"); -->
+					<!-- let span = document.createElement("span"); -->
+					<!-- let ul = document.createElement("ul"); -->
+					<!-- span.innerHTML = buildHtmlTableFromJSON(talk_topics[i]); -->
+					<!-- li.appendChild(span); -->
+					<!-- span = document.createElement("span"); -->
+					<!-- span.innerHTML = "expand" -->
+					<!-- span.className = "caret"; -->
+					<!-- ul.className = "nested"; -->
+					<!-- li.appendChild(span); -->
+					<!-- li.appendChild(ul); -->
+					<!-- await createNPCTalkTree(talk_topics[i], [], ul); -->
+					<!-- document.getElementById("npcTalkTree").appendChild(li); -->
+					
+			
+					<!-- //Initialize toggler for the tree -->
+					<!-- var toggler = document.getElementsByClassName("caret"); -->
+					<!-- var i; -->
+
+					<!-- for (i = 0; i < toggler.length; i++) { -->
+					  <!-- toggler[i].addEventListener("click", function() { -->
+						<!-- this.parentElement.querySelector(".nested").classList.toggle("active"); -->
+						<!-- this.classList.toggle("caret-down"); -->
+					  <!-- }); -->
+					<!-- } -->
+				<!-- } -->
+				
+			<!-- } else { -->
+				<!-- document.getElementById("npcTalkTree").innerHTML = createTALK_DONE_NONEhtmlTable("TALK_DONE"); -->
+			<!-- } -->
+		}
+		
+		//Create custom talk topic html table for TALK_DONE
+		function createTALK_DONE_NONEhtmlTable(str, text){
+			let htmlString = "<table>";
+			htmlString += "<tr><td>type</td><td>talk_topic</td></tr>";
+			htmlString += "<tr><td>id</td><td>"+str+"</td></tr>";
+			if(text){htmlString += "<tr><td>id</td><td>"+text+"</td></tr>"};
+			htmlString += "</table>";
+			return htmlString;
+		}
+		
+		<!-- //We have a base talk topic, now build a tree from the response-topic chain -->
+		<!-- //Use traverseIDs to keep track of the ID's encountered while building the tree so no loop occurs. -->
+		<!-- async function createNPCTalkTree(talk_topic, traverseIDs, parentUl){ -->
+			<!-- var talkTopicJSON = talk_topic[0]; -->
+			<!-- var talkTopicID = talkTopicJSON.id; -->
+			<!-- var talkTopicResponses = talkTopicJSON.responses; -->
+			<!-- let numberOfResponses = talkTopicResponses.length; -->
+			<!-- var responseTopic; -->
+			<!-- var i=0; -->
+			<!-- var y=0; -->
+			
+			<!-- if(typeof talkTopicID == "string") { -->
+				<!-- traverseIDs.push(talkTopicID); -->
+			<!-- } else if(Array.isArray(talkTopicID)) { -->
+				<!-- let y = 0; -->
+				<!-- for (; y < talkTopicID.length; y++) { -->
+					<!-- traverseIDs.push(talkTopicID[y]); -->
+				<!-- } -->
+			<!-- } -->
+			
+			<!-- //iterate over all the responses -->
+			<!-- //Get all the topics that the response topic points to -->
+			<!-- for (i = 0; i < numberOfResponses; i++) { -->
+				<!-- responseTopic = talkTopicResponses[i].topic; -->
+				
+				<!-- if(responseTopic == "TALK_DONE" || responseTopic == "TALK_NONE"){ -->
+					<!-- let li = document.createElement("LI"); -->
+					<!-- let span = document.createElement("span"); -->
+					<!-- let htmlString = "<table>"; -->
+					<!-- htmlString += "<tr><td>type</td><td>talk_topic</td></tr>"; -->
+					<!-- htmlString += "<tr><td>id</td><td>"+responseTopic+"</td></tr>"; -->
+					<!-- htmlString += "</table>"; -->
+					<!-- span.innerHTML = htmlString; -->
+					<!-- li.appendChild(span); -->
+					<!-- parentUl.appendChild(li); -->
+				<!-- } else { -->
+					<!-- var talk_topics = await getTalkTopicsById(responseTopic); -->
+					<!-- y = 0; -->
+					<!-- for (y = 0; y < talk_topics.length; y++) { -->
+						<!-- //Transform the json object to html -->
+						
+						<!-- let li = document.createElement("LI"); -->
+						<!-- let span = document.createElement("span"); -->
+						<!-- span.innerHTML = buildHtmlTableFromJSON(talk_topics[y]); -->
+						<!-- li.appendChild(span); -->
+						<!-- span = document.createElement("span"); -->
+						<!-- span.innerHTML = "expand" -->
+						<!-- span.className = "caret"; -->
+						<!-- li.appendChild(span); -->
+						<!-- li.style.backgroundColor = CSS_COLOR_NAMES[traverseIDs.length]; -->
+						<!-- parentUl.appendChild(li); -->
+						
+						<!-- //Check if the topic has already passed earlier in the tree. -->
+						<!-- if (!traverseIDs.includes(responseTopic)) { -->
+							<!-- var ul = document.createElement("ul"); -->
+							<!-- ul.className = "nested"; -->
+							<!-- li.appendChild(ul); -->
+							<!-- createNPCTalkTree(talk_topics[y], traverseIDs, ul); -->
+						<!-- } -->
+					<!-- } -->
+				<!-- } -->
+			<!-- } -->
+		<!-- } -->
+		
+		
+		
+		//Get a talk topics by ID. Some talk topics have multiple id's if one id appears in multiple talk topics, return all of them.
+		function getTalkTopicsById(strID){
+			var i;
+			var talk_topicID;
+			var talkTopicList = []
+			for (i = 0; i < talk_topics.length; i++) {
+				talk_topicID = talk_topics[i];
+				if(talk_topicID.hasID(strID)){
+					talkTopicList.push(talk_topics[i]);
+				}
+			}
+			return talkTopicList;
+		}
+		
+		//Get a talk topic by ID. Will only get the first topic that matches the given ID fully.
+		function getTalkTopicById(strID){
+			var i;
+			var talk_topicID;
+			for (i = 0; i < talk_topics.length; i++) {
+				if(talk_topics[i].id == strID){
+					return talk_topics[i];
+				}
+			}
+			return false;
+		}
+		
+		//Updates the list of all talk topics
+		async function readTalkTopicsFromDisk(){
+			//Update variable talk topics to contain all talk topics
+			allTopics = await getFilteredJsonItemsFromFolder(DATA_JSON_NPCS, [["type", "talk_topic", true, true]]);
+			talk_topics = [];
+			for (i = 0; i < allTopics.length; i++) {
+				var talk_topic = new Talk_topic(allTopics[i]);
+				talk_topics.push(talk_topic);
+			}
+		}
+		
+	</script> 
+		<body>
+		<h1>Cataclysm: Dark Days Ahead dialog editor</h1>
+		<p>Welcome to the content manager of Cataclysm: Dark Days Ahead. <a href="index.html">back to home</a></p>
+		<div class="mainContent">
+		<table>
+		<tr>
+			<td>
+				<p>List of NPCs:</p>
+				<p id="listNPCsContainer">
+					<select name="npcList" id="npcList"  onchange="npcList_change(this);" size="42">
+					</select>
+				</p>
+			</td>
+			<td>
+				<div class="contentContainer">
+					<p id="npcBasicProperties">content</p>
+					<p id="previousTopic"></p>
+					<ul id="npcTalkTree"><li>content</li></ul>
+				</div>
+			</td>
+		</tr>
+		</div>
+		</table>
+		
+		
+	</body>
+</html>

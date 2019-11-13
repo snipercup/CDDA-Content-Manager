@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Cataclysm: Dark Days Ahead content manager</title>
+		<link rel="stylesheet" href="index.css">
+	</head>
+	 <script src="filesystemfunctions.js"></script> 
+	<script>
+		//When the page finishes loading
+		document.addEventListener("DOMContentLoaded", function(event) {
+			init();
+		});
+		
+		async function init(){
+			let cataclysmGameFolder = await getCataclysmGameFolder();
+			document.getElementById("cataclysmGameFolder").innerHTML = "Cataclysm game folder: " + cataclysmGameFolder;
+		}
+		
+		//Writes the settings for the user to a json file.
+		function writeUserSettingsFile(cataclysmGameFolder = ""){
+			// file system module to perform file operations
+			const fs = require('fs');
+			
+			var jsonObj = {};
+			jsonObj["cataclysmGameFolder"] = cataclysmGameFolder;
+			 
+			// stringify JSON Object
+			var jsonContent = JSON.stringify(jsonObj);
+			 
+			fs.writeFile("userSettings.json", jsonContent, 'utf8', function (err) {
+				if (err) {
+					console.log("An error occured while writing JSON Object to File.");
+					return console.log(err);
+				}
+			}); 
+		}
+		
+		//When the get caltaclysmgamefolder button is clicked
+		//The user gets a open file dialog and is asked to select a folder
+		//The selected folder is written in usersettings.json to be retrieved later
+		function btnGetCataclysmGameFolderClicked(){
+			var app = require('electron').remote; 
+			var dialog = app.dialog;
+			dialog.showOpenDialog({
+			  properties: ['openFile', 'openDirectory']
+			}).then(result => {
+				console.log(result.canceled)
+				console.log(result.filePaths)
+				if(result.filePaths){
+					document.getElementById("cataclysmGameFolder").innerHTML = "Cataclysm game folder: " + result.filePaths;
+					writeUserSettingsFile(result.filePaths[0]);
+				}
+			}).catch(err => {
+			  console.log(err)
+			})
+		}
+		
+	</script> 
+		<body>
+		<h1>Cataclysm: Dark Days Ahead content manager</h1>
+		<p>Welcome to the content manager of Cataclysm: Dark Days Ahead.</p>
+		<p>
+		<span id="cataclysmGameFolder">Cataclysm game folder: no game folder set!</span> 
+		<button onclick="btnGetCataclysmGameFolderClicked()" id="btnGetCataclysmGameFolder" type="button">Change</button> 
+		</p>
+		<div>
+		  <ul>
+			<li><a href="#"><img src="img\ItemEditorButton.png" /></a></li>
+			<li><a href="#"><img src="img\MapEditorButton.png" /></a></li>
+			<li><a href="dialogeditor.html"><img src="img\DialogEditorButton.png" /></a></li>
+		  </ul>
+		</div>
+	</body>
+</html>

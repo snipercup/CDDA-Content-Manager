@@ -14,6 +14,7 @@
 	<script>
 		//List of all talk topics
 		var talk_topics;
+		var talk_responses;
 		var npcObjList;
 		
 		//When the page finishes loading
@@ -54,26 +55,161 @@
 				htmlString += buildRecursiveHtmlRowsFromJSON(this.jsonObject[0], JSON.stringify(obj));
 				htmlString += "</table>"
 				span.innerHTML = htmlString;
-				updateResponses(span);
+				this.updateResponses(span);
 				return span;
 			}
 			
 			//Save the tbody element of the responses to a array
-			//TODO: make actual class responses class instances
 			updateResponses(span){
 				let responsesTexts = span.getElementsByClassName("trtext");
+				let responsesText;
+				let responsesTextParent;
+				let response
 				this.responses = [];
 				for (i = 0; i < responsesTexts.length; i++) {
-					this.responses.push(responsesTexts[i].parenTelement);
+					responsesText = responsesTexts[i];
+					responsesTextParent = responsesText.parentElement;
+					response = new Talk_response(this, responsesTextParent);
+					this.responses.push(response); //Add to this talk_topic's responses array
+					talk_responses.push(response); //Add to the global responses array
 				}
 			}
 		}
 		
 		//This class represents one talk response.
 		class Talk_response {
-			//The talk_topic is the parent talk topic of this response
-			constructor(talk_topic) {
-				this.talk_topic = jsonObject;
+			constructor(talktopic, htmlElement) {
+				this.talk_topic = talktopic; //The talk_topic is the parent talk topic of this response
+				this.tbody = htmlElement; //A html tbody element with the response in it.
+			}
+			
+			setVisibility(visible){
+				if(visible){ 
+					this.tbody.style.display = "";
+				} else {
+					this.tbody.style.display = "none";
+				}
+			}
+			
+			//If the condition is true, this response is visible.
+			updateVisibility(visible){
+				this.setVisibility(this.evaluateCondition())
+			}
+			
+			//If this response has a condition, this function will resolve the condition and return true or false.
+			evaluateCondition(){
+				let children = this.tbody.getElementsByClassName("tablecondition");
+				let htmlElement;
+				if(children.length > 0){ //most of the time a response has a condition table and html element will be the first row in that
+					htmlElement = children[0].childNodes[0].childNodes[0]; //children[0] = the table, .childNodes[0] = tbody, .childNodes[0] = table row
+				} else { //sometimes there is no tablecondition. this is when there's only a condition and it's a simple boolean without value.
+					htmlElement = this.tbody.getElementsByClassName("trcondition")[0];
+				}
+				if(htmlElement){
+					//The we send in a table row and it must return true/false. It could be a condition row, an or row, an and row or a not row.
+					return this.evaluateConditionRecursive(htmlElement);
+				} else {
+					//This response does not have a condition. Should always be visible
+					return true;
+				}
+			}
+			
+			//Recursively try to resolve the condition and return true or false
+			evaluateConditionRecursive(htmlElement){
+				if(!htmlElement){
+					console.log("no htmlElement");
+				}
+				if(!htmlElement.className){
+					console.log("no classname");
+				}
+				let className = htmlElement.className
+				let childNodes;
+				let i = 0;
+				let node;
+				let child;
+				let result;
+				switch (className) {
+					case 'trand': 
+					//It's an and
+						//Dig down into all the rows in the and subtable. the amount of row can by anywhere between 1 and x;
+						childNodes = htmlElement.childNodes[1].childNodes[0].childNodes[0].childNodes;
+						result = true;
+						for (i = 0; i < childNodes.length; i++) {
+							//and and or are always followed by a list of conditions. we have to dig deeper to get those conditions out of the list.
+							node = childNodes[i];	//TR of one of the conditions below the and
+							child = node.childNodes[1]; //Eighter a table for a condition or a td with a condition;
+							if(child.childNodes.length > 0){
+								//It has children so it's probably a TR
+								if(!this.evaluateConditionRecursive(child.childNodes[0].childNodes[0].childNodes[0])){
+									//The row in the and returned as false;
+									result = false;
+									break; //If any row in the and returns as false, the and is false.
+								}
+							} else {
+								//It has no children. It is a td element
+								if(!isToggleConditionChecked(child.textContent)){
+									//The row in the and returned as false;
+									result = false;
+									break; //If any row in the and returns as false, the and is false.
+								}
+							}
+						}
+						return result;
+					break;
+
+					case 'tror': 
+					//It's an or
+						//Dig down into all the rows in the and subtable. the amount of row can by anywhere between 1 and x;
+						childNodes = htmlElement.childNodes[1].childNodes[0].childNodes[0].childNodes;
+						result = false;
+						for (i = 0; i < childNodes.length; i++) {
+							//and and or are always followed by a list of conditions. we have to dig deeper to get those conditions out of the list.
+							node = childNodes[i];	//TR of one of the conditions below the and
+							child = node.childNodes[1]; //Eighter a table for a condition or a td with a condition;
+							if(child.childNodes.length > 0){
+								//It has children so it's probably a TR
+								if(this.evaluateConditionRecursive(child.childNodes[0].childNodes[0].childNodes[0])){
+									//The row in the or returned as false;
+									result = true;
+									break; //If any row in the or returns as false, the or is true.
+								}
+							} else {
+								//It has no children. It is a td element
+								if(isToggleConditionChecked(child.textContent)){
+									//The row in the or returned as false;
+									result = true;
+									break; //If any row in the or returns as false, the or is true.
+								}
+							}
+						}
+						return result;
+					break;
+
+					case 'trnot': 
+					//It's a not 
+						//A not can only have 1 row in its subtable that's why we get the childnodes[0].
+						node = htmlElement.childNodes[1].childNodes[0].childNodes[0].childNodes[0];
+						return(!this.evaluateConditionRecursive(node)); //use the ! to flip the result of the evaluation.
+					break;
+					
+					case 'trcondition': 
+					//It's a condition row. This can happen when there is only one condition and it's a simple boolean with no value like has_many_missions
+						//In this case the second cell in the row has a innerText with the name of the condition. return if the condition is checked.
+						node = htmlElement.childNodes[1];
+						return isToggleConditionChecked(node.textContent)
+					break;
+					
+					default: 
+						//Check if it is a condition. in this case we want to check the id which holds the actual condition name
+						let topic_condition = getTopic_ConditionJsonByID(htmlElement.id);
+						if(topic_condition){ 
+							//it's a condition.
+							return isToggleConditionChecked(htmlElement.childNodes[1].id + htmlElement.childNodes[1].textContent)
+						} else {
+							//It's something else.
+							return false;
+						}
+				}
 			}
 		}
 		
@@ -86,23 +222,34 @@
 		
 		//returns if the given condition is marked at the top of the page.
 		function isToggleConditionChecked(conditionName){
-			let elements = document.getElementsByClassName("conditiontrue");
-			let element;
-			let elementConditionName;
-			for (i = 0; i < elements.length; i++) {
-				element = elements[i].childNodes[0];
-				elementConditionName = element.className;
-				if(elementConditionName == "condition"){ //This is the case if a condition is a simple boolean without value
-					elementConditionName = element.name;
-				}
-				if(elementConditionName == conditionName){
+			let element = document.getElementById(conditionName);
+				if(element){
 					if(element.checked){
 						return true;
 					}
 				}
-			}
 			return false;
 		}
+		
+		<!-- //returns if the given condition is marked at the top of the page. -->
+		<!-- function isToggleConditionChecked(conditionName){ -->
+			<!-- let elements = document.getElementsByClassName("conditiontrue"); -->
+			<!-- let element; -->
+			<!-- let elementConditionName; -->
+			<!-- for (i = 0; i < elements.length; i++) { -->
+				<!-- element = elements[i].childNodes[0]; -->
+				<!-- elementConditionName = element.className; -->
+				<!-- if(elementConditionName == "condition"){ //This is the case if a condition is a simple boolean without value -->
+					<!-- elementConditionName = element.name; -->
+				<!-- } -->
+				<!-- if(elementConditionName == conditionName){ -->
+					<!-- if(element.checked){ -->
+						<!-- return true; -->
+					<!-- } -->
+				<!-- } -->
+			<!-- } -->
+			<!-- return false; -->
+		<!-- } -->
 		
 		//Checks if the collapsed checkbox is checked and collapses everything but 'text' rows
 		function updateCollapsed(){
@@ -140,7 +287,7 @@
 			let conditionName = "";
 			let conditionChecked = false;
 			let conditionTDElement;
-			console.log("file")
+			let conditionTDElementTextContent;
 			let conditionTDElementParent;
 			let siblings;
 			let i = 0;
@@ -149,8 +296,12 @@
 				for (i = 0; i < conditionTDElements.length; i++) {
 					conditionTDElement = conditionTDElements[i];
 					conditionName = conditionTDElement.id;
+					conditionTDElementTextContent = conditionTDElement.textContent;
 					if(conditionName == "condition"){ //This happens when a condition is a simple boolean without value,like has_many_missions
-						conditionName = conditionTDElement.textContent;
+						conditionName = conditionTDElementTextContent;
+					}
+					if(conditionTDElementTextContent != "true" && conditionTDElementTextContent != "false"){
+						conditionName += conditionTDElementTextContent; //all toggle conditions are identified by the id and textcontent.
 					}
 					conditionChecked = isToggleConditionChecked(conditionName);
 					conditionTDElementParent = conditionTDElement.parentElement;
@@ -168,44 +319,11 @@
 						} else {
 							setElementVisibilityExceptClassName("no", siblings, false); //Everything but the row with 'no' is hidden.
 						}
-					} else {
-						//This condition does not have a 'no' sibling. apply the filter some other way
-						let y = 0;
-						let className;
-						let not = false;
-						//The base element is a TD cell with a condition classname
-						//We like to move up the hirargy to find the tr with the 'condition' classname
-						//If we encounter a row with 'not', take that into account
-						for (y = 0; y < 10; y++) {
-							className = conditionTDElementParent.id;
-							if(className == "condition" && conditionTDElementParent.tagName == "TR"){
-								//We have reached the row where the condition is.
-								//We hide the whole table if the condition does not match.
-								if(conditionChecked){
-									//The condition is true
-									if(not){
-										conditionTDElementParent.parentElement.style.display = "none";
-									} else {
-										conditionTDElementParent.parentElement.style.display = "";
-									}
-								} else {
-									//The condition is false
-									if(not){
-										conditionTDElementParent.parentElement.style.display = "";
-									} else {
-										conditionTDElementParent.parentElement.style.display = "none";
-									}
-								}
-								break;
-							} else {
-								//Check if it is contained within a 'not'
-								if(className == "not" && conditionTDElementParent.tagName == "TR"){
-									not = true;
-								}
-								conditionTDElementParent = conditionTDElementParent.parentElement;
-							}
-						}
 					}
+				}
+				let x = 0;
+				for (x = 0; x < talk_responses.length; x++) {
+					talk_responses[x].updateVisibility();
 				}
 			} else {
 				//The view should be normal. Make everything visible.
@@ -237,77 +355,6 @@
 			}
 		}
 		
-		//The first iteration akes a html row with classname condition and evaluates to true/false
-		function recursiveEvaluateCondition(conditionElement){
-			let childNodes = conditionElement.childNodes;
-			let className;
-			let tagName;
-			if(childNodes){
-				let childNode;
-				//Check that the first child contains condition so we can make sure we don't have the wrong row
-				if(childNodes[0].textContent == "condition"){	//This is only true at the top-level
-					
-				} else { //We are in a sub-level of the iteration
-					let numberOfChildren = childNodes.length;
-					let y = 0;
-					for (y = 0; y < numberOfChildren; y++) {
-						childNode = childNodes[y];
-						className = childNode.id;
-						tagName = childNode.tagName;
-						switch (className) {
-							case 'and': 
-							//It's an and
-							break;
-
-							case 'or': 
-							//It's an or
-								
-							break;
-
-							case 'not': 
-							//It's a not
-							break;
-							
-							default: 
-								if(className == "condition"){ //In this case we replace the classname with the textContent
-									className = cell.textContent; //In this case, it becomes u_has_weapon, which is a condition so the cell counts as a condition
-								}
-								//Check if it is a condition
-								topic_condition = getTopic_ConditionJsonByID(className);
-								if(topic_condition){ 
-									//it's a condition. it has childnodes
-									if(recursiveEvaluateCondition(conditionElement)){ //true has been returned
-									
-									} else { //false has been returned
-									
-									}
-								} else {
-									//It's something else. It has children.
-									return recursiveEvaluateCondition(conditionElement); //This has a possibility of returning true.
-								}
-						}
-					}
-				}
-			} else { //There are no more children, this is the last child.
-				className = conditionElement.id
-				if(className == "condition"){ //In this case we replace the classname with the textContent
-					className = cell.textContent; //In this case, it becomes u_has_weapon, which is a condition so the cell counts as a condition
-				}
-				//Check if it is a condition
-				topic_condition = getTopic_ConditionJsonByID(className);
-				if(topic_condition){ 
-					//it's a condition
-					let conditionChecked = isToggleConditionChecked(className);
-					if(conditionChecked){ //It's a condition and the user say's it's true, so return true.
-						return true;
-					}
-				} else {
-					//It's something else. 
-					//It's probably nothing interesting and we should do nothing.
-				}
-			}
-		}
-		
 		function conditionBox_click(){
 			updateTopicConditions()
 		}
@@ -323,20 +370,24 @@
 			let cell;
 			let topic_condition;
 			let conditionsList = [];
+			let textcontent = "";
 			let i=0;
 			for (i = 0; i < cells.length; i++) {
 				cell = cells[i];
 				className = cell.id
 				if(className){
-					//Some conditions are siple booleans and do not have values.
-					//This creates an element with classname=condition and textContent=varname for example u_has_weapon
-					if(className == "condition"){ //In this case we replace the classname with the textContent
-						className = cell.textContent; //In this case, it becomes u_has_weapon, which is a condition so the cell counts as a condition
-					}
-					//Check if it is a condition
-					topic_condition = getTopic_ConditionJsonByID(className);
-					if(topic_condition){ 
-						conditionsList.push(cell); 
+					textcontent = cell.textContent;
+					if(className != textcontent){ //The textcontent should be the condition value. not the condition name
+						//Some conditions are siple booleans and do not have values.
+						//This creates an element with classname=condition and textContent=varname for example u_has_weapon
+						if(className == "condition"){ //In this case we replace the classname with the textContent
+							className = cell.textContent; //In this case, it becomes u_has_weapon, which is a condition so the cell counts as a condition
+						}
+						//Check if it is a condition
+						topic_condition = getTopic_ConditionJsonByID(className);
+						if(topic_condition){ 
+							conditionsList.push(cell); 
+						}
 					}
 				}
 			}
@@ -362,7 +413,7 @@
 		
 		//Lists all the conditions on the page at the top
 		async function updateToggleConditions(){
-			var cells = getConditionTDElements(); //Get all table cells
+			var cells = getConditionTDElements(); //Get all table condition cells
 			var className = ""
 			var cellContents = ""
 			var cell;
@@ -374,7 +425,10 @@
 			for (i = 0; i < cells.length; i++) {
 				cell = cells[i];
 				className = cell.id;
-				cellContents = cell.innerText;
+				cellContents = cell.textContent;
+				if(className == "condition"){
+					className = cellContents;
+				}
 				topic_condition = getTopic_ConditionJsonByID(className);
 				conditionDatatype = topic_condition.datatype;
 				isInList = false;
@@ -395,7 +449,7 @@
 				if(!isInList){
 					//If it's a boolean we don't want the string following it. instead just put 'boolean'.
 					if(conditionDatatype == "boolean"){
-						conditionsList.push([className, conditionDatatype]);
+						conditionsList.push([className, ""]);
 					} else {
 						//It's something other then a boolean, put whatever is following the condition.
 						conditionsList.push([className, cellContents]);
@@ -407,9 +461,23 @@
 			var htmlString = ""
 			document.getElementById("conditionsToggle").innerHTML = "";
 			i=0;
+			let conditionName = "";
+			let conditionValue = "";
 			for (i = 0; i < conditionsList.length; i++) {
 				topic_condition = conditionsList[i];
-				htmlString += ' | <span class="conditiontrue"><input type="checkbox" value="'+topic_condition[0]+'" name="'+topic_condition[1]+'" onclick="conditionBox_click()">'+topic_condition[0]+': '+topic_condition[1]+'</span>'
+				conditionName = topic_condition[0];
+				conditionValue = topic_condition[1];
+				htmlString += ' | <span class="conditiontrue"><input type="checkbox" '
+				htmlString += 'id="'+conditionName+conditionValue+'" '
+				<!-- htmlString += 'value="'+conditionName+'" ' -->
+				<!-- htmlString += 'name="'+conditionValue+'" ' -->
+				htmlString += 'onclick="conditionBox_click()">'
+				if(conditionValue){
+					htmlString += conditionName+': '+conditionValue;
+				} else {
+					htmlString += conditionName;
+				}
+				htmlString += '</span>'
 			}
 			if(htmlString == ""){
 				document.getElementById("conditionsTrueContainer").style.display = "none";
@@ -428,6 +496,7 @@
 			document.getElementById("previousTopic").innerHTML = previousTopic;
 			document.getElementById("previousTopic").onclick = function(){displayTalkTopic(currentTopic, previousTopic)};
 			var talk_topics = getTalkTopicsById(currentTopic);
+			talk_responses = [];
 			
 			if(currentTopic != "TALK_DONE"){
 				let i=0;
@@ -448,15 +517,13 @@
 		
 		//A topic can be clicked to view it (it replaces the currently viewed topic)
 		function updateTopicElementClick(){
-			var elements = document.getElementsByClassName("topic");
+			var elements = document.getElementsByClassName("tdtopic");
 			for (i = 0; i < elements.length; i++) {
 				var element = elements[i];
-				if(element.tagName == "TD"){
-					let data = JSON.parse(element.title);
-					let previousTopic = data.talk_topidID;
-					let currentTopic = element.innerHTML
-					element.onclick = function(){displayTalkTopic(previousTopic, currentTopic)};
-				}
+				let data = JSON.parse(element.title);
+				let previousTopic = data.talk_topidID;
+				let currentTopic = element.innerHTML
+				element.onclick = function(){displayTalkTopic(previousTopic, currentTopic)};
 			}
 		}
 		
@@ -530,6 +597,9 @@
 			updateCollapsed();
 		}
 		
+		
+		
+		
 		//Updates the list of all talk topics
 		async function readTalkTopicsFromDisk(){
 			//Update variable talk topics to contain all talk topics
@@ -540,6 +610,119 @@
 				talk_topics.push(talk_topic);
 			}
 		}
+		
+		
+		
+		<!-- //The first iteration akes a html row with classname condition and evaluates to true/false -->
+		<!-- function recursiveEvaluateCondition(conditionElement){ -->
+			<!-- let childNodes = conditionElement.childNodes; -->
+			<!-- let className; -->
+			<!-- let tagName; -->
+			<!-- if(childNodes){ -->
+				<!-- let childNode; -->
+				<!-- //Check that the first child contains condition so we can make sure we don't have the wrong row -->
+				<!-- if(childNodes[0].textContent == "condition"){	//This is only true at the top-level -->
+					
+				<!-- } else { //We are in a sub-level of the iteration -->
+					<!-- let numberOfChildren = childNodes.length; -->
+					<!-- let y = 0; -->
+					<!-- for (y = 0; y < numberOfChildren; y++) { -->
+						<!-- childNode = childNodes[y]; -->
+						<!-- className = childNode.id; -->
+						<!-- tagName = childNode.tagName; -->
+						<!-- switch (className) { -->
+							<!-- case 'and':  -->
+							<!-- //It's an and -->
+							<!-- break; -->
+
+							<!-- case 'or':  -->
+							<!-- //It's an or -->
+								
+							<!-- break; -->
+
+							<!-- case 'not':  -->
+							<!-- //It's a not -->
+							<!-- break; -->
+							
+							<!-- default:  -->
+								<!-- if(className == "condition"){ //In this case we replace the classname with the textContent -->
+									<!-- className = cell.textContent; //In this case, it becomes u_has_weapon, which is a condition so the cell counts as a condition -->
+								<!-- } -->
+								<!-- //Check if it is a condition -->
+								<!-- topic_condition = getTopic_ConditionJsonByID(className); -->
+								<!-- if(topic_condition){  -->
+									<!-- //it's a condition. it has childnodes -->
+									<!-- if(recursiveEvaluateCondition(conditionElement)){ //true has been returned -->
+									
+									<!-- } else { //false has been returned -->
+									
+									<!-- } -->
+								<!-- } else { -->
+									<!-- //It's something else. It has children. -->
+									<!-- return recursiveEvaluateCondition(conditionElement); //This has a possibility of returning true. -->
+								<!-- } -->
+						<!-- } -->
+					<!-- } -->
+				<!-- } -->
+			<!-- } else { //There are no more children, this is the last child. -->
+				<!-- className = conditionElement.id -->
+				<!-- if(className == "condition"){ //In this case we replace the classname with the textContent -->
+					<!-- className = cell.textContent; //In this case, it becomes u_has_weapon, which is a condition so the cell counts as a condition -->
+				<!-- } -->
+				<!-- //Check if it is a condition -->
+				<!-- topic_condition = getTopic_ConditionJsonByID(className); -->
+				<!-- if(topic_condition){  -->
+					<!-- //it's a condition -->
+					<!-- let conditionChecked = isToggleConditionChecked(className); -->
+					<!-- if(conditionChecked){ //It's a condition and the user say's it's true, so return true. -->
+						<!-- return true; -->
+					<!-- } -->
+				<!-- } else { -->
+					<!-- //It's something else.  -->
+					<!-- //It's probably nothing interesting and we should do nothing. -->
+				<!-- } -->
+			<!-- } -->
+		<!-- } -->
+		
+		
+		 <!-- else { -->
+						<!-- //This condition does not have a 'no' sibling. apply the filter some other way -->
+						<!-- let y = 0; -->
+						<!-- let className; -->
+						<!-- let not = false; -->
+						<!-- //The base element is a TD cell with a condition classname -->
+						<!-- //We like to move up the hirargy to find the tr with the 'condition' classname -->
+						<!-- //If we encounter a row with 'not', take that into account -->
+						<!-- for (y = 0; y < 10; y++) { -->
+							<!-- className = conditionTDElementParent.id; -->
+							<!-- if(className == "condition" && conditionTDElementParent.tagName == "TR"){ -->
+								<!-- //We have reached the row where the condition is. -->
+								<!-- //We hide the whole table if the condition does not match. -->
+								<!-- if(conditionChecked){ -->
+									<!-- //The condition is true -->
+									<!-- if(not){ -->
+										<!-- conditionTDElementParent.parentElement.style.display = "none"; -->
+									<!-- } else { -->
+										<!-- conditionTDElementParent.parentElement.style.display = ""; -->
+									<!-- } -->
+								<!-- } else { -->
+									<!-- //The condition is false -->
+									<!-- if(not){ -->
+										<!-- conditionTDElementParent.parentElement.style.display = ""; -->
+									<!-- } else { -->
+										<!-- conditionTDElementParent.parentElement.style.display = "none"; -->
+									<!-- } -->
+								<!-- } -->
+								<!-- break; -->
+							<!-- } else { -->
+								<!-- //Check if it is contained within a 'not' -->
+								<!-- if(className == "not" && conditionTDElementParent.tagName == "TR"){ -->
+									<!-- not = true; -->
+								<!-- } -->
+								<!-- conditionTDElementParent = conditionTDElementParent.parentElement; -->
+							<!-- } -->
+						<!-- } -->
+					<!-- } -->
 		
 	</script> 
 		<body>

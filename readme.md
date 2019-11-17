@@ -2,14 +2,18 @@
 
 
 ## Features:
-- Dialog editor
+- Dialog editor (well it only allows viewing atm)
 
 ## Installation:
 
-### Windows:
-- Go to releases and download the latest releases
-- extract the zip file and run the .exe file
+### Windows binary:
+- Go to [releases](https://github.com/snipercup/CDDA-Content-Manager/releases) and download the latest release
+- extract the zip file and run the .exe file. There is no installation.
 - first step is to select your cataclysm game folder. After that you're ready to go.
+
+### Windows developer environment:
+- download a copy of the source
+- use NPM to run it.
 
 ### Linux:
 - If you're using linux, you're smart enoug to:

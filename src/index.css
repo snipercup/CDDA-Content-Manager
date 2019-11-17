@@ -24,7 +24,7 @@ table, th, td {
 }
 
 th, td {
-  padding: 0px;
+  padding: 2px;
 }
 
 tr {
@@ -40,18 +40,19 @@ div.contentContainer {
     height: 650px;
     width: 1280px;
     display: inline-block;
+	padding: 10px;
 }
 div.mainContent {
     height: 700px;
 }
 
-table.dynamic_line, table.speaker_effect, table.id {
+.tabledynamic_line, .tablespeaker_effect, .tableid {
     margin: 7px;
 }
 /* end general */
 
 /* id */
-table.id > tbody > tr {
+.trid {
 	background-color:#8cb1df
 }
 /* end id*/
@@ -60,146 +61,162 @@ table.id > tbody > tr {
 
 
 /* dynamic line */
-table.dynamic_line > tbody > tr > td {
+.tddynamic_line {
     padding-top: 7px;
     padding-bottom: 7px;
 }
 
 
-table.dynamic_line > tbody > tr {
+.trdynamic_line, .trtype {
 	background-color:#a9c5e7
 }
 
-tr.npc_has_var, tr.u_has_var, tr.npc_has_effect, tr.u_male, tr.u_has_any_trait, tr.u_add_var {
+.trnpc_has_var, .tru_has_var, .trnpc_has_effect, .tru_male, .tru_has_any_trait, .tru_add_var {
     color:#000 !important; 
 	background-color:#f6f9fd !important
 }
 
-/*
-tr.type {
-    color:#000 !important; 
-	background-color:#c5d8ef !important
-}
-*/
-
-tr.context {
+.trcontext {
     color:#000 !important; 
 	background-color:#a9c5e7 !important
 }
 
-tr.value {
+.trvalue {
     color:#000 !important; 
 	background-color:#e2ecf7 !important
 }
 
-tr.yes {
+.tryes {
     color:#000 !important; 
 	background-color:#8cb1df !important
 }
 
-tr.no {
+.trno {
     color:#fff !important; 
 	background-color:#558dd1 !important
 }
 /* end dynamic line */
 
+/* start conditions true */
+.conditiontrue {
+    color:#000 !important; 
+	background-color:#a9c5e7 !important;
+    padding-left: 3px;
+    padding-right: 3px;
+    margin: 3px;
+    border-width: 3px;
+    border-color: #3c7bc9;
+    border-style: solid;
+}
+.conditionsTrueContainer {
+    color:#fff !important; 
+	background-color:#3c7bc9 !important;
+    padding: 3px;
+    line-height: 27px;
+}
+/* end conditions true */
+
 /* responses */
-table.responses > tbody > tr > td {
+.tableresponses > tbody > tr > td {
     padding-top: 7px;
     padding-bottom: 7px;
     border: none;
 }
 
-table.responses > tbody > tr {
+.trresponses {
+    border: none;
+	background-color: #8cb1df;
+}
+
+.tableresponses {
     border: none;
 }
 
-table.responses {
-    border: none;
-}
-
-tr.text {
+.trtext {
     color:#000 !important; 
 	background-color:#f6f9fd !important
 }
 
-tr.condition {
+.trcondition {
     color:#000 !important; 
 	background-color:#c5d8ef !important;
     border: none;
 }
 
-table.condition {
+.tablecondition {
     border: none;
 }
 
-table.condition tr{
+.tdcondition {
+    padding: 0px;
     border: none;
 }
 
-.and, .not{
+.trand, .trnot {
     border: none;
 }
 
-.and tr, .not tr{
+.tableand, .tablenot {
     border: none;
 }
 
-.and table, .not table{
-    border: none;
+.tdnot {
+    border-width: thin;
+    border-color: black;
+    border-style: solid;
 }
 
-tr.topic {
+.trtopic {
     color:#000 !important; 
 	background-color:#a9c5e7 !important
 }
 
-tr.effect {
+.treffect {
     color:#000 !important; 
 	background-color:#e2ecf7 !important
 }
 
-tr.opinion, tr.mod, tr.mod tr {
+.tropinion, .trmod {
     color:#000 !important; 
 	background-color:#8cb1df !important
 }
 
-tr.switch {
+.trswitch {
     color:#fff !important; 
 	background-color:#558dd1 !important
 }
 
-tr.trial {
+.trtrial {
     color:#fff !important; 
 	background-color:#3c7bc9 !important
 }
 
-tr.trial .type, tr.trial .difficulty, tr.trial table{
+.trtrial .type, .trtrial .difficulty, .trtrial table{
     color:#000 !important; 
 	background-color:#a9c5e7 !important;
 	width: 100%
 }
 
-tr.success table {
+.trsuccess table {
 	width: 100%
 }
 
-tr.failure table {
+.trfailure table {
 	width: 100%
 }
 
-tr.success {
+.trsuccess {
     color:#fff !important; 
 	background-color:#2a5c9a !important
 }
 
-tr.failure {
+.trfailure {
     color:#fff !important; 
 	background-color:#234d80 !important
 }
 /* end responses */
 
-table.talk_topic {
+.talk_topic {
     margin-top: 15px;
 	color:#fff !important; 
 	background-color:#3c7bc9 !important

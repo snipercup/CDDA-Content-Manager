@@ -9,6 +9,8 @@
 	 <script src="jsonfunctions.js"></script> 
 	 <script src="commonclasses.js"></script> 
 	 <script src="constants.js"></script> 
+	 <script src="dialog_topic_conditions.js"></script> 
+	 <script src="htmlfunctions.js"></script> 
 	<script>
 		//List of all talk topics
 		var talk_topics;
@@ -30,63 +32,8 @@
 				return this.jsonObject[0].id;
 			}
 			
-			get dynamic_line(){
-				var objDynamicLine = this.jsonObject[0].dynamic_line;
-				if(objDynamicLine){
-					return objDynamicLine;
-				} else {
-					//This talk topic does not have a dynamic line defined.
-					let talk_topic = getTalkTopicById(this.initialTopic);
-					return talk_topic.dynamic_line;
-				}
-			}
-			
-			get dynamic_line_html(){
-				var objDynamicLine = this.dynamic_line;
-				if(typeof objDynamicLine === 'object' && objDynamicLine !== null){
-					//It's an object.
-					return "<table>"+buildHtmlRowsFromJSON(objDynamicLine)+"</table>";
-				} else {
-					return objDynamicLine;
-				}
-			}
-			
-			get responsesJSON(){
-				return this.jsonObject[0].responses;
-			}
-			
-			get responses(){
-				let listResponses = [];
-				const responses = this.responsesJSON;
-				for (i = 0; i < responses.length; i++) {
-					listResponses.push(new Talk_response(responses[i]));
-				}
-				return listResponses;
-			}
-			
-			get responses_html(){
-				const responses = this.responses;
-				let htmlString = "<table>"
-				for (i = 0; i < responses.length; i++) {
-					htmlString += "<tr><td>responses:</td><td>"+responses[i].text+"</td></tr>";
-				}
-				htmlString += "</table>"
-				return htmlString;
-			}
-			
 			get filePath(){
 				return this.jsonObject[1];
-			}
-			
-			set initialTopic(strTopic){
-				this.firstTopic = strTopic;
-			}
-			
-			//The id of the topic that called for this topic.
-			//For example if TALK_STRANGER_FRIENDLY called for this topic, this is the value it will get.
-			//This helps with user expectations and helps determine a dynamic line for this topic.
-			get initialTopic(){
-				return this.firstTopic;
 			}
 			
 			//Returns wether or not this talk topic has the specified ID.
@@ -103,47 +50,30 @@
 			get htmlTable(){
 				let span = document.createElement("span");
 				let htmlString = "<table class='talk_topic'>"
-				htmlString += buildRecursiveHtmlRowsFromJSON(this.jsonObject[0]);
-				<!-- htmlString += "<tr><td>type:</td><td>talk_topic</td></tr>"; -->
-				<!-- htmlString += "<tr><td>id:</td><td>"+this.id+"</td></tr>"; -->
-				<!-- htmlString += "<tr><td>dynamic line:</td><td>"+this.dynamic_line_html+"</td></tr>"; -->
-				<!-- htmlString += "<tr><td>responses:</td><td>"+this.responses_html+"</td></tr>"; -->
-				<!-- htmlString += "<tr><td>file:</td><td>"+this.filePath+"</td></tr>"; -->
+				var obj = {talk_topidID: this.id};
+				htmlString += buildRecursiveHtmlRowsFromJSON(this.jsonObject[0], JSON.stringify(obj));
 				htmlString += "</table>"
 				span.innerHTML = htmlString;
+				updateResponses(span);
 				return span;
 			}
 			
-			get treeNode(){
-					let li = document.createElement("LI");
-					let span = document.createElement("span");
-					let ul = document.createElement("ul");
-					span.innerHTML = this.htmlTable();
-					li.appendChild(span);
-					span = document.createElement("span");
-					span.innerHTML = "expand"
-					span.className = "caret";
-					ul.className = "nested";
-					li.appendChild(span);
-					li.appendChild(ul);
+			//Save the tbody element of the responses to a array
+			//TODO: make actual class responses class instances
+			updateResponses(span){
+				let responsesTexts = span.getElementsByClassName("trtext");
+				this.responses = [];
+				for (i = 0; i < responsesTexts.length; i++) {
+					this.responses.push(responsesTexts[i].parenTelement);
+				}
 			}
-			
-			
 		}
 		
-		//This class represents one talk response. for example: { "text": "I'm sorry, I gotta go.", "topic": "TALK_DONE" }
+		//This class represents one talk response.
 		class Talk_response {
-			// jsonObject is something like { "text": "I'm sorry, I gotta go.", "topic": "TALK_DONE" }
-			constructor(jsonObject) {
-				this.jsonObject = jsonObject;
-			}
-			
-			get text(){
-				return this.jsonObject.text;
-			}
-			
-			get topic(){
-				return this.jsonObject.topic;
+			//The talk_topic is the parent talk topic of this response
+			constructor(talk_topic) {
+				this.talk_topic = jsonObject;
 			}
 		}
 		
@@ -153,19 +83,395 @@
 			readTalkTopicsFromDisk();
 		}
 		
+		
+		//returns if the given condition is marked at the top of the page.
+		function isToggleConditionChecked(conditionName){
+			let elements = document.getElementsByClassName("conditiontrue");
+			let element;
+			let elementConditionName;
+			for (i = 0; i < elements.length; i++) {
+				element = elements[i].childNodes[0];
+				elementConditionName = element.className;
+				if(elementConditionName == "condition"){ //This is the case if a condition is a simple boolean without value
+					elementConditionName = element.name;
+				}
+				if(elementConditionName == conditionName){
+					if(element.checked){
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+		
+		//Checks if the collapsed checkbox is checked and collapses everything but 'text' rows
+		function updateCollapsed(){
+			let elements = document.getElementsByClassName("text");
+			let checked = !document.getElementById('collapsed').checked; //reverse boolean, elements should be visible if it's unchecked
+			let siblings;
+			let element;
+			let sibling;
+			for (i = 0; i < elements.length; i++) {
+				element = elements[i];
+				if(element.tagName == "TR"){
+					siblings = element.parentElement.childNodes;
+					setElementVisibilityExceptClassName("text", siblings, checked);
+				}
+			}
+		}
+		
+		function toggleCollapsed(element){
+			var siblings = element.parentElement.childNodes;
+			for (y = 0; y < siblings.length; y++) {
+				var sibling = siblings[y];
+				if(sibling.id != "text"){
+					if (sibling.style.display != "none") {
+						sibling.style.display = "none";
+					} else {
+						sibling.style.display = "";
+					}
+				}
+			}
+		}
+		
+		//This function will transform the visible dialog and show the content as though the conditions apply
+		function updateTopicConditions(){
+			let conditionTDElements = getConditionTDElements(); //Get all table conditionTDElement cells
+			let conditionName = "";
+			let conditionChecked = false;
+			let conditionTDElement;
+			console.log("file")
+			let conditionTDElementParent;
+			let siblings;
+			let i = 0;
+			//Check that the user has selected the option to view the topic as thought the conditions apply
+			if(document.getElementById("conditionsTrueEnabled").checked){
+				for (i = 0; i < conditionTDElements.length; i++) {
+					conditionTDElement = conditionTDElements[i];
+					conditionName = conditionTDElement.id;
+					if(conditionName == "condition"){ //This happens when a condition is a simple boolean without value,like has_many_missions
+						conditionName = conditionTDElement.textContent;
+					}
+					conditionChecked = isToggleConditionChecked(conditionName);
+					conditionTDElementParent = conditionTDElement.parentElement;
+					siblings = getHTMLSiblingsByClassName("no", conditionTDElementParent); //Try finding a sibling of 'no'
+					if(siblings.length == 1){	//We need exactly one 'no' sibling
+						siblings = conditionTDElementParent.parentElement.childNodes;
+						if(conditionChecked){
+							//The condition is set to true by the user.
+							//If there are less then 3 siblings, there is no room for a 'yes', only the condition name and 'no' are present.
+							if(siblings.length < 3){
+								setElementVisibilityExceptClassName(conditionName, siblings, false); //Everything but the row with the condition is hidden
+							} else {
+								setElementVisibilityExceptClassName("yes", siblings, false); //Everything but the row with 'yes' is hidden.
+							}
+						} else {
+							setElementVisibilityExceptClassName("no", siblings, false); //Everything but the row with 'no' is hidden.
+						}
+					} else {
+						//This condition does not have a 'no' sibling. apply the filter some other way
+						let y = 0;
+						let className;
+						let not = false;
+						//The base element is a TD cell with a condition classname
+						//We like to move up the hirargy to find the tr with the 'condition' classname
+						//If we encounter a row with 'not', take that into account
+						for (y = 0; y < 10; y++) {
+							className = conditionTDElementParent.id;
+							if(className == "condition" && conditionTDElementParent.tagName == "TR"){
+								//We have reached the row where the condition is.
+								//We hide the whole table if the condition does not match.
+								if(conditionChecked){
+									//The condition is true
+									if(not){
+										conditionTDElementParent.parentElement.style.display = "none";
+									} else {
+										conditionTDElementParent.parentElement.style.display = "";
+									}
+								} else {
+									//The condition is false
+									if(not){
+										conditionTDElementParent.parentElement.style.display = "";
+									} else {
+										conditionTDElementParent.parentElement.style.display = "none";
+									}
+								}
+								break;
+							} else {
+								//Check if it is contained within a 'not'
+								if(className == "not" && conditionTDElementParent.tagName == "TR"){
+									not = true;
+								}
+								conditionTDElementParent = conditionTDElementParent.parentElement;
+							}
+						}
+					}
+				}
+			} else {
+				//The view should be normal. Make everything visible.
+				for (i = 0; i < conditionTDElements.length; i++) {
+					conditionTDElement = conditionTDElements[i];
+					conditionTDElementParent = conditionTDElement.parentElement;
+					siblings = getHTMLSiblingsByClassName("no", conditionTDElementParent); //Try finding a sibling of 'no'
+					if(siblings.length == 1){	//We need exactly one 'no' sibling
+						siblings = conditionTDElementParent.parentElement.childNodes;
+						setElementVisibilityExceptClassName("no", siblings, true);
+						conditionTDElementParent.parentElement.style.display = "";
+					} else {
+						//This condition does not have a 'no' sibling. apply the filter some other way
+						siblings = conditionTDElementParent.parentElement.childNodes;
+						let y = 0;
+						//The base element is a TD cell with a condition classname
+						//We like to move up the hirargy to find the tr with the 'condition' classname
+						for (y = 0; y < 10; y++) {
+							if(conditionTDElementParent.id == "condition" && conditionTDElementParent.tagName == "TR"){
+								//We have reached the row where the condition is. show everything
+								conditionTDElementParent.parentElement.style.display = "";
+								break;
+							} else {
+								conditionTDElementParent = conditionTDElementParent.parentElement;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		//The first iteration akes a html row with classname condition and evaluates to true/false
+		function recursiveEvaluateCondition(conditionElement){
+			let childNodes = conditionElement.childNodes;
+			let className;
+			let tagName;
+			if(childNodes){
+				let childNode;
+				//Check that the first child contains condition so we can make sure we don't have the wrong row
+				if(childNodes[0].textContent == "condition"){	//This is only true at the top-level
+					
+				} else { //We are in a sub-level of the iteration
+					let numberOfChildren = childNodes.length;
+					let y = 0;
+					for (y = 0; y < numberOfChildren; y++) {
+						childNode = childNodes[y];
+						className = childNode.id;
+						tagName = childNode.tagName;
+						switch (className) {
+							case 'and': 
+							//It's an and
+							break;
+
+							case 'or': 
+							//It's an or
+								
+							break;
+
+							case 'not': 
+							//It's a not
+							break;
+							
+							default: 
+								if(className == "condition"){ //In this case we replace the classname with the textContent
+									className = cell.textContent; //In this case, it becomes u_has_weapon, which is a condition so the cell counts as a condition
+								}
+								//Check if it is a condition
+								topic_condition = getTopic_ConditionJsonByID(className);
+								if(topic_condition){ 
+									//it's a condition. it has childnodes
+									if(recursiveEvaluateCondition(conditionElement)){ //true has been returned
+									
+									} else { //false has been returned
+									
+									}
+								} else {
+									//It's something else. It has children.
+									return recursiveEvaluateCondition(conditionElement); //This has a possibility of returning true.
+								}
+						}
+					}
+				}
+			} else { //There are no more children, this is the last child.
+				className = conditionElement.id
+				if(className == "condition"){ //In this case we replace the classname with the textContent
+					className = cell.textContent; //In this case, it becomes u_has_weapon, which is a condition so the cell counts as a condition
+				}
+				//Check if it is a condition
+				topic_condition = getTopic_ConditionJsonByID(className);
+				if(topic_condition){ 
+					//it's a condition
+					let conditionChecked = isToggleConditionChecked(className);
+					if(conditionChecked){ //It's a condition and the user say's it's true, so return true.
+						return true;
+					}
+				} else {
+					//It's something else. 
+					//It's probably nothing interesting and we should do nothing.
+				}
+			}
+		}
+		
+		function conditionBox_click(){
+			updateTopicConditions()
+		}
+		
+		function conditionsTrueEnabled_click(){
+			updateTopicConditions()
+		}
+		
+		//This function returns a list of td elements that have a condition as classname
+		function getConditionTDElements(){
+			let cells = document.getElementsByTagName("TD"); //Get all table cells
+			let className = ""
+			let cell;
+			let topic_condition;
+			let conditionsList = [];
+			let i=0;
+			for (i = 0; i < cells.length; i++) {
+				cell = cells[i];
+				className = cell.id
+				if(className){
+					//Some conditions are siple booleans and do not have values.
+					//This creates an element with classname=condition and textContent=varname for example u_has_weapon
+					if(className == "condition"){ //In this case we replace the classname with the textContent
+						className = cell.textContent; //In this case, it becomes u_has_weapon, which is a condition so the cell counts as a condition
+					}
+					//Check if it is a condition
+					topic_condition = getTopic_ConditionJsonByID(className);
+					if(topic_condition){ 
+						conditionsList.push(cell); 
+					}
+				}
+			}
+			return conditionsList;
+		}
+		
+		//This function returns a JSON element of a condition if provide with an id.
+		function getTopic_ConditionJsonByID(id){
+			let topic_condition;
+			let conditionName = "";
+			let y=0;
+			//topic_conditions is a global constant defined in dialog_topic_conditions.js
+			for (y = 0; y < topic_conditions.length; y++) {
+				topic_condition = topic_conditions[y];
+				conditionName = topic_condition.condition;
+				if(id == conditionName){
+					return topic_condition;
+				}
+			}
+			return false;
+		}
+		
+		
+		//Lists all the conditions on the page at the top
+		async function updateToggleConditions(){
+			var cells = getConditionTDElements(); //Get all table cells
+			var className = ""
+			var cellContents = ""
+			var cell;
+			var topic_condition;
+			var isInList;
+			var conditionsList = [];
+			let conditionDatatype = "";
+			let i=0;
+			for (i = 0; i < cells.length; i++) {
+				cell = cells[i];
+				className = cell.id;
+				cellContents = cell.innerText;
+				topic_condition = getTopic_ConditionJsonByID(className);
+				conditionDatatype = topic_condition.datatype;
+				isInList = false;
+				//Check if it is already in the list
+				for (x = 0; x < conditionsList.length; x++) {
+					//Check if the classname matches a classname entered before;
+					if(className == conditionsList[x][0]){
+						if(conditionDatatype == "boolean"){
+							isInList = true;
+						} else {
+							//string conditions may appear multiple times as long as their strings are different i.e. npc_has_var can have differen variable names.
+							if(cellContents == conditionsList[x][1]){
+								isInList = true;
+							}
+						}
+					}
+				}
+				if(!isInList){
+					//If it's a boolean we don't want the string following it. instead just put 'boolean'.
+					if(conditionDatatype == "boolean"){
+						conditionsList.push([className, conditionDatatype]);
+					} else {
+						//It's something other then a boolean, put whatever is following the condition.
+						conditionsList.push([className, cellContents]);
+					}
+				}
+			}
+			
+			//Now transform the obtained conditions into HTML to be used by the user.
+			var htmlString = ""
+			document.getElementById("conditionsToggle").innerHTML = "";
+			i=0;
+			for (i = 0; i < conditionsList.length; i++) {
+				topic_condition = conditionsList[i];
+				htmlString += ' | <span class="conditiontrue"><input type="checkbox" value="'+topic_condition[0]+'" name="'+topic_condition[1]+'" onclick="conditionBox_click()">'+topic_condition[0]+': '+topic_condition[1]+'</span>'
+			}
+			if(htmlString == ""){
+				document.getElementById("conditionsTrueContainer").style.display = "none";
+			} else {
+				document.getElementById("conditionsTrueContainer").style.display = "";
+			}
+			document.getElementById("conditionsToggle").innerHTML = htmlString;
+		}
+		
+		
+		//Takes a topic and display its content to the user in HTML tables
+		//The previousTopic is the topic the user saw before navigating to the current topic.
+		//The previousTopic allows the user to return to the topic he was seeing before.
 		function displayTalkTopic(previousTopic, currentTopic){
 			document.getElementById("npcTalkTree").innerHTML = "";
+			document.getElementById("previousTopic").innerHTML = previousTopic;
+			document.getElementById("previousTopic").onclick = function(){displayTalkTopic(currentTopic, previousTopic)};
 			var talk_topics = getTalkTopicsById(currentTopic);
 			
 			if(currentTopic != "TALK_DONE"){
+				let i=0;
 				for (i = 0; i < talk_topics.length; i++) {
-					talk_topics[i].initialTopic = currentTopic;
 					document.getElementById("npcTalkTree").appendChild(talk_topics[i].htmlTable);
+					updateTopicElementClick();
+					updateTextElementClick();
+					updateCollapsed();
+					updateToggleConditions();
+					updateTopicConditions();
 				}
 			} else {
 				document.getElementById("npcTalkTree").innerHTML = createTALK_DONE_NONEhtmlTable("TALK_DONE", "");
+				document.getElementById("conditionsToggle").innerHTML = "";
+				document.getElementById("conditionsTrueContainer").style.display = "none";
 			}
 		}
+		
+		//A topic can be clicked to view it (it replaces the currently viewed topic)
+		function updateTopicElementClick(){
+			var elements = document.getElementsByClassName("topic");
+			for (i = 0; i < elements.length; i++) {
+				var element = elements[i];
+				if(element.tagName == "TD"){
+					let data = JSON.parse(element.title);
+					let previousTopic = data.talk_topidID;
+					let currentTopic = element.innerHTML
+					element.onclick = function(){displayTalkTopic(previousTopic, currentTopic)};
+				}
+			}
+		}
+		
+		//A text can be clicked to toggle collapsed view
+		function updateTextElementClick(){
+			var elements = document.getElementsByClassName("text");
+			for (i = 0; i < elements.length; i++) {
+				var element = elements[i];
+				if(element.tagName == "TR"){
+					element.onclick = function(){toggleCollapsed(this)};
+				}
+			}
+		}
+		
+		
 		
 		//When the user selects an item from the NPC list
 		async function npcList_change(selectElement){
@@ -181,43 +487,6 @@
 			
 			var chat = jsonObj[0].chat;
 			displayTalkTopic(chat, chat);
-			
-			<!-- if(chat != "TALK_DONE"){ -->
-				<!-- //Get the talk topic the NPC has in 'chat' -->
-				<!-- var talk_topics = await getTalkTopicsById(chat); -->
-				<!-- document.getElementById("npcTalkTree").innerHTML = ""; -->
-				<!-- for (i = 0; i < talk_topics.length; i++) { -->
-					<!-- //Transform the json object to html -->
-					<!-- let li = document.createElement("LI"); -->
-					<!-- let span = document.createElement("span"); -->
-					<!-- let ul = document.createElement("ul"); -->
-					<!-- span.innerHTML = buildHtmlTableFromJSON(talk_topics[i]); -->
-					<!-- li.appendChild(span); -->
-					<!-- span = document.createElement("span"); -->
-					<!-- span.innerHTML = "expand" -->
-					<!-- span.className = "caret"; -->
-					<!-- ul.className = "nested"; -->
-					<!-- li.appendChild(span); -->
-					<!-- li.appendChild(ul); -->
-					<!-- await createNPCTalkTree(talk_topics[i], [], ul); -->
-					<!-- document.getElementById("npcTalkTree").appendChild(li); -->
-					
-			
-					<!-- //Initialize toggler for the tree -->
-					<!-- var toggler = document.getElementsByClassName("caret"); -->
-					<!-- var i; -->
-
-					<!-- for (i = 0; i < toggler.length; i++) { -->
-					  <!-- toggler[i].addEventListener("click", function() { -->
-						<!-- this.parentElement.querySelector(".nested").classList.toggle("active"); -->
-						<!-- this.classList.toggle("caret-down"); -->
-					  <!-- }); -->
-					<!-- } -->
-				<!-- } -->
-				
-			<!-- } else { -->
-				<!-- document.getElementById("npcTalkTree").innerHTML = createTALK_DONE_NONEhtmlTable("TALK_DONE"); -->
-			<!-- } -->
 		}
 		
 		//Create custom talk topic html table for TALK_DONE
@@ -229,72 +498,6 @@
 			htmlString += "</table>";
 			return htmlString;
 		}
-		
-		<!-- //We have a base talk topic, now build a tree from the response-topic chain -->
-		<!-- //Use traverseIDs to keep track of the ID's encountered while building the tree so no loop occurs. -->
-		<!-- async function createNPCTalkTree(talk_topic, traverseIDs, parentUl){ -->
-			<!-- var talkTopicJSON = talk_topic[0]; -->
-			<!-- var talkTopicID = talkTopicJSON.id; -->
-			<!-- var talkTopicResponses = talkTopicJSON.responses; -->
-			<!-- let numberOfResponses = talkTopicResponses.length; -->
-			<!-- var responseTopic; -->
-			<!-- var i=0; -->
-			<!-- var y=0; -->
-			
-			<!-- if(typeof talkTopicID == "string") { -->
-				<!-- traverseIDs.push(talkTopicID); -->
-			<!-- } else if(Array.isArray(talkTopicID)) { -->
-				<!-- let y = 0; -->
-				<!-- for (; y < talkTopicID.length; y++) { -->
-					<!-- traverseIDs.push(talkTopicID[y]); -->
-				<!-- } -->
-			<!-- } -->
-			
-			<!-- //iterate over all the responses -->
-			<!-- //Get all the topics that the response topic points to -->
-			<!-- for (i = 0; i < numberOfResponses; i++) { -->
-				<!-- responseTopic = talkTopicResponses[i].topic; -->
-				
-				<!-- if(responseTopic == "TALK_DONE" || responseTopic == "TALK_NONE"){ -->
-					<!-- let li = document.createElement("LI"); -->
-					<!-- let span = document.createElement("span"); -->
-					<!-- let htmlString = "<table>"; -->
-					<!-- htmlString += "<tr><td>type</td><td>talk_topic</td></tr>"; -->
-					<!-- htmlString += "<tr><td>id</td><td>"+responseTopic+"</td></tr>"; -->
-					<!-- htmlString += "</table>"; -->
-					<!-- span.innerHTML = htmlString; -->
-					<!-- li.appendChild(span); -->
-					<!-- parentUl.appendChild(li); -->
-				<!-- } else { -->
-					<!-- var talk_topics = await getTalkTopicsById(responseTopic); -->
-					<!-- y = 0; -->
-					<!-- for (y = 0; y < talk_topics.length; y++) { -->
-						<!-- //Transform the json object to html -->
-						
-						<!-- let li = document.createElement("LI"); -->
-						<!-- let span = document.createElement("span"); -->
-						<!-- span.innerHTML = buildHtmlTableFromJSON(talk_topics[y]); -->
-						<!-- li.appendChild(span); -->
-						<!-- span = document.createElement("span"); -->
-						<!-- span.innerHTML = "expand" -->
-						<!-- span.className = "caret"; -->
-						<!-- li.appendChild(span); -->
-						<!-- li.style.backgroundColor = CSS_COLOR_NAMES[traverseIDs.length]; -->
-						<!-- parentUl.appendChild(li); -->
-						
-						<!-- //Check if the topic has already passed earlier in the tree. -->
-						<!-- if (!traverseIDs.includes(responseTopic)) { -->
-							<!-- var ul = document.createElement("ul"); -->
-							<!-- ul.className = "nested"; -->
-							<!-- li.appendChild(ul); -->
-							<!-- createNPCTalkTree(talk_topics[y], traverseIDs, ul); -->
-						<!-- } -->
-					<!-- } -->
-				<!-- } -->
-			<!-- } -->
-		<!-- } -->
-		
-		
 		
 		//Get a talk topics by ID. Some talk topics have multiple id's if one id appears in multiple talk topics, return all of them.
 		function getTalkTopicsById(strID){
@@ -310,7 +513,7 @@
 			return talkTopicList;
 		}
 		
-		//Get a talk topic by ID. Will only get the first topic that matches the given ID fully.
+		//Get a single talk topic by ID. Will only get the first topic that matches the given ID fully.
 		function getTalkTopicById(strID){
 			var i;
 			var talk_topicID;
@@ -320,6 +523,11 @@
 				}
 			}
 			return false;
+		}
+		
+		
+		function collapsed_click(element){
+			updateCollapsed();
 		}
 		
 		//Updates the list of all talk topics
@@ -349,9 +557,14 @@
 			</td>
 			<td>
 				<div class="contentContainer">
-					<p id="npcBasicProperties">content</p>
-					<p id="previousTopic"></p>
-					<ul id="npcTalkTree"><li>content</li></ul>
+					<p id="npcBasicProperties">Select a NPC to start.</p>
+					<p><b><span>Previous topic: </span><span id="previousTopic"></span></b></p>
+					<p><input type="checkbox" id="collapsed" onclick="collapsed_click(this)" title="show dialog content collapsed" name="collapsed" value="collapsed">collapsed</p>
+					<p class="conditionsTrueContainer" id="conditionsTrueContainer" style="display:none">
+						<input type="checkbox" id="conditionsTrueEnabled" onclick="conditionsTrueEnabled_click()" title="Checking this box will show the dialog as though the conditions were true/false. You can mark each condition as true or false by checking or unchecking each condition's box." name="conditionsTrueEnabled" value="conditionsTrueEnabled">
+						<span>Conditions true: </span><span id="conditionsToggle"></span>
+					</p>
+					<p id="npcTalkTree"></p>
 				</div>
 			</td>
 		</tr>

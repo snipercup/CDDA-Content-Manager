@@ -16,6 +16,6 @@
 - use NPM to run it.
 
 ### Linux:
-- If you're using linux, you're smart enoug to:
+- If you're using linux, you're smart enough to:
 - download a copy of the source
 - use NPM to run it.

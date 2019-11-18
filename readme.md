@@ -19,3 +19,7 @@
 - If you're using linux, you're smart enough to:
 - download a copy of the source
 - use NPM to run it.
+
+
+#### Demo of the dialog editor:
+![Image demoing dialog editor](https://i.imgur.com/Be7ab2i.gif)

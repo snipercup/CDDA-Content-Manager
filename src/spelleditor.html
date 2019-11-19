@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Cataclysm: Dark Days Ahead content manager</title>
+		<link rel="stylesheet" href="index.css">
+	</head>
+	 <script src="filesystemfunctions.js"></script> 
+	 <script src="jsonfunctions.js"></script> 
+	 <script src="commonclasses.js"></script> 
+	 <script src="constants.js"></script> 
+	 <script src="htmlfunctions.js"></script> 
+	<script>
+		//List of all talk topics
+		var talk_topics;
+		var talk_responses;
+		var spellObjList;
+		
+		//When the page finishes loading
+		document.addEventListener("DOMContentLoaded", function(event) {
+			init();
+		});
+		
+		
+		//Initialize function, it is asynchonous to allow await-ing for the functions called in init.
+		async function init(){
+			spellObjList = new jsonObjList(document.getElementById("spellList"), DATA_MODS, "id", [["type", "SPELL", true, true]]);
+		}
+		
+		
+		
+		
+		//When the user selects an item from the spell list
+		async function spellList_change(selectElement){
+			//User selects an item
+			//Get item title (it's a json string)
+			let itemTitle = selectElement.options[selectElement.selectedIndex].title;
+			//Transform the title string to a json object
+			var jsonObj = JSON.parse(itemTitle);  
+			//Transform the json object to html
+			let htmlString = buildHtmlTableFromJSON_andFile(jsonObj);
+			//Update the spell basic properties element
+			document.getElementById("spellBasicProperties").innerHTML = htmlString;
+		}
+		
+	</script> 
+		<body>
+		<h1>Cataclysm: Dark Days Ahead spell editor</h1>
+		<p>Welcome to the content manager of Cataclysm: Dark Days Ahead. <a href="index.html">back to home</a></p>
+		<div class="mainContent">
+		<table>
+		<tr>
+			<td>
+				<p>List of spells:</p>
+				<p id="listspellsContainer">
+					<select name="spellList" id="spellList"  onchange="spellList_change(this);" size="42">
+					</select>
+				</p>
+			</td>
+			<td>
+				<div class="contentContainer">
+					<p id="spellBasicProperties">Select a spell to start.</p>
+				</div>
+			</td>
+		</tr>
+		</div>
+		</table>
+		
+		
+	</body>
+</html>

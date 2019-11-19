@@ -13,13 +13,15 @@
 
 ### Windows developer environment:
 - download a copy of the source
-- use NPM to run it.
+- download and install [node.js](https://nodejs.org/en/download/) (it includes npm)
+- scroll to the bottom of [this](https://github.com/electron/electron/blob/master/docs/tutorial/first-app.md) page. 
+- Execute the commands you see there (npm install and npm start).
 
 ### Linux:
-- If you're using linux, you're smart enough to:
 - download a copy of the source
-- use NPM to run it.
-
+- download and install [node.js](https://nodejs.org/en/download/) (it includes npm)
+- scroll to the bottom of [this](https://github.com/electron/electron/blob/master/docs/tutorial/first-app.md) page. 
+- Execute the commands you see there (npm install and npm start).
 
 #### Demo of the dialog editor:
 ![Image demoing dialog editor](https://i.imgur.com/Be7ab2i.gif)

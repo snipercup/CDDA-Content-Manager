@@ -231,39 +231,19 @@
 			return false;
 		}
 		
-		<!-- //returns if the given condition is marked at the top of the page. -->
-		<!-- function isToggleConditionChecked(conditionName){ -->
-			<!-- let elements = document.getElementsByClassName("conditiontrue"); -->
-			<!-- let element; -->
-			<!-- let elementConditionName; -->
-			<!-- for (i = 0; i < elements.length; i++) { -->
-				<!-- element = elements[i].childNodes[0]; -->
-				<!-- elementConditionName = element.className; -->
-				<!-- if(elementConditionName == "condition"){ //This is the case if a condition is a simple boolean without value -->
-					<!-- elementConditionName = element.name; -->
-				<!-- } -->
-				<!-- if(elementConditionName == conditionName){ -->
-					<!-- if(element.checked){ -->
-						<!-- return true; -->
-					<!-- } -->
-				<!-- } -->
-			<!-- } -->
-			<!-- return false; -->
-		<!-- } -->
+		
 		
 		//Checks if the collapsed checkbox is checked and collapses everything but 'text' rows
 		function updateCollapsed(){
-			let elements = document.getElementsByClassName("text");
+			let elements = document.getElementsByClassName("trtext");
 			let checked = !document.getElementById('collapsed').checked; //reverse boolean, elements should be visible if it's unchecked
 			let siblings;
 			let element;
 			let sibling;
 			for (i = 0; i < elements.length; i++) {
 				element = elements[i];
-				if(element.tagName == "TR"){
-					siblings = element.parentElement.childNodes;
-					setElementVisibilityExceptClassName("text", siblings, checked);
-				}
+				siblings = element.parentElement.childNodes;
+				setElementVisibilityExceptClassName("text", siblings, checked);
 			}
 		}
 		
@@ -529,12 +509,10 @@
 		
 		//A text can be clicked to toggle collapsed view
 		function updateTextElementClick(){
-			var elements = document.getElementsByClassName("text");
+			var elements = document.getElementsByClassName("trtext");
 			for (i = 0; i < elements.length; i++) {
 				var element = elements[i];
-				if(element.tagName == "TR"){
-					element.onclick = function(){toggleCollapsed(this)};
-				}
+				element.onclick = function(){toggleCollapsed(this)};
 			}
 		}
 		
@@ -723,6 +701,27 @@
 							<!-- } -->
 						<!-- } -->
 					<!-- } -->
+					
+					
+					<!-- //returns if the given condition is marked at the top of the page. -->
+		<!-- function isToggleConditionChecked(conditionName){ -->
+			<!-- let elements = document.getElementsByClassName("conditiontrue"); -->
+			<!-- let element; -->
+			<!-- let elementConditionName; -->
+			<!-- for (i = 0; i < elements.length; i++) { -->
+				<!-- element = elements[i].childNodes[0]; -->
+				<!-- elementConditionName = element.className; -->
+				<!-- if(elementConditionName == "condition"){ //This is the case if a condition is a simple boolean without value -->
+					<!-- elementConditionName = element.name; -->
+				<!-- } -->
+				<!-- if(elementConditionName == conditionName){ -->
+					<!-- if(element.checked){ -->
+						<!-- return true; -->
+					<!-- } -->
+				<!-- } -->
+			<!-- } -->
+			<!-- return false; -->
+		<!-- } -->
 		
 	</script> 
 		<body>

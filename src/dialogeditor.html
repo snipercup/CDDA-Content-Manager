@@ -215,7 +215,7 @@
 		
 		//Initialize function, it is asynchonous to allow await-ing for the functions called in init.
 		async function init(){
-			npcObjList = new jsonObjList(document.getElementById("npcList"), DATA_JSON_NPCS, "id");
+			npcObjList = new jsonObjList(document.getElementById("npcList"), DATA_JSON_NPCS, "id", [["type", "npc", true, true]]);
 			readTalkTopicsFromDisk();
 		}
 		

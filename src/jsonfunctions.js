@@ -40,51 +40,6 @@ function buildRecursiveHtmlRowsFromJSON(jsonObject, data) {
 	return htmlString;
 }
 
-// function buildRecursiveHtmlRowsFromJSON(jsonObject, data) {
-	// let htmlString = "";
-	// var properties = "";
-	// Object.keys(jsonObject).forEach(function(key) {
-		// properties = "title='"+data+"' " + "class='"+key+"'";
-		// htmlString += "<tr "+properties+">"
-		// htmlString += "<td>"+key+"</td>"
-		// const mobject = jsonObject[key];
-		// if(typeof mobject === 'object' && mobject !== null){
-			// It's an object.
-			// htmlString += "<td "+properties+">";
-			// htmlString += "<table "+properties+">";
-			// htmlString += buildRecursiveHtmlRowsFromJSON(mobject, data);
-			// htmlString += "</table></td>";
-		// } else {
-			// htmlString += "<td "+properties+">"+mobject+"</td>"
-		// }
-		// htmlString += "</tr>"
-	// })
-	// return htmlString;
-// }
-
-// function buildRecursiveHtmlRowsFromJSON(jsonObject, properties) {
-	// let htmlString = "";
-	// let properties = "";
-	// Object.keys(jsonObject).forEach(function(key) {
-		// properties += "class='"+key+"'";
-		// htmlString += "<tr "+properties+">"
-		// htmlString += "<td>"+key+":</td>"
-		// const mobject = jsonObject[key];
-		// if(typeof mobject === 'object' && mobject !== null){
-			////It's an object.
-			// htmlString += "<td class='"+key+"'>";
-			// htmlString += "<table class='"+key+"'>";
-			// htmlString += buildRecursiveHtmlRowsFromJSON(mobject);
-			// htmlString += "</table></td>";
-		// } else {
-			// htmlString += "<td class='"+key+"'>"+mobject+"</td>"
-		// }
-		// htmlString += "</tr>"
-	// })
-	// return htmlString;
-// }
-
-
 		
 //Get all json entries from a given folder.
 //See the description of getItemsFromListOfJsonItems for the filter properties
@@ -99,14 +54,16 @@ async function getFilteredJsonItemsFromFolder(folderName, filter){
 	let objFileContent; //JSON object representing the contents of the file
 	let filteredJSONItems = []; 
 	let retreivedItems = [];
-	let y = 0;
+	let y;
 	for (; i < amountOfFiles; i++) {
 		y = 0;
 		objFileContent = await getJsonFromFile(allfiles[i])
-		retreivedItems = await getItemsFromListOfJsonItems(objFileContent, filter);
-		//All retreived items get added to our list and get their filenames added.
-		for (; y < retreivedItems.length; y++) {
-			filteredJSONItems.push([retreivedItems[y], allfiles[i]]);
+		if(objFileContent){
+			retreivedItems = await getItemsFromListOfJsonItems(objFileContent, filter);
+			//All retreived items get added to our list and get their filenames added.
+			for (; y < retreivedItems.length; y++) {
+				filteredJSONItems.push([retreivedItems[y], allfiles[i]]);
+			}
 		}
 	}
 	return filteredJSONItems;
@@ -193,3 +150,50 @@ function findMatchInKey(keyvalue, value){
 	}
 	return false;
 }
+
+
+
+
+// function buildRecursiveHtmlRowsFromJSON(jsonObject, data) {
+	// let htmlString = "";
+	// var properties = "";
+	// Object.keys(jsonObject).forEach(function(key) {
+		// properties = "title='"+data+"' " + "class='"+key+"'";
+		// htmlString += "<tr "+properties+">"
+		// htmlString += "<td>"+key+"</td>"
+		// const mobject = jsonObject[key];
+		// if(typeof mobject === 'object' && mobject !== null){
+			// It's an object.
+			// htmlString += "<td "+properties+">";
+			// htmlString += "<table "+properties+">";
+			// htmlString += buildRecursiveHtmlRowsFromJSON(mobject, data);
+			// htmlString += "</table></td>";
+		// } else {
+			// htmlString += "<td "+properties+">"+mobject+"</td>"
+		// }
+		// htmlString += "</tr>"
+	// })
+	// return htmlString;
+// }
+
+// function buildRecursiveHtmlRowsFromJSON(jsonObject, properties) {
+	// let htmlString = "";
+	// let properties = "";
+	// Object.keys(jsonObject).forEach(function(key) {
+		// properties += "class='"+key+"'";
+		// htmlString += "<tr "+properties+">"
+		// htmlString += "<td>"+key+":</td>"
+		// const mobject = jsonObject[key];
+		// if(typeof mobject === 'object' && mobject !== null){
+			////It's an object.
+			// htmlString += "<td class='"+key+"'>";
+			// htmlString += "<table class='"+key+"'>";
+			// htmlString += buildRecursiveHtmlRowsFromJSON(mobject);
+			// htmlString += "</table></td>";
+		// } else {
+			// htmlString += "<td class='"+key+"'>"+mobject+"</td>"
+		// }
+		// htmlString += "</tr>"
+	// })
+	// return htmlString;
+// }

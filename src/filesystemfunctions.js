@@ -32,6 +32,10 @@ async function getJsonFromFile(filepath){
 	if(!fileExists(filepath)){
 		return "file does not exist";
 	}
+	if(filepath.split('.').pop() != "json"){
+		//console.log('[getJsonFromFile]: skipped file \"'+filepath+'\", it is not a json file');
+		return "file is not a json file";
+	}
 	
 	const util = require('util');
 	const readfile = util.promisify(fs.readFile);
@@ -45,8 +49,22 @@ async function getJsonFromFile(filepath){
 	if (data === undefined) {
 		console.log('[getJsonFromFile]:undefined');
 	} else {
-		return JSON.parse(data);
+		let jsonObj;
+		try {
+			jsonObj = JSON.parse(data);
+		} catch (e) {
+			if (e instanceof SyntaxError) {
+				console.log('[getJsonFromFile]: file \"'+filepath+'\", contains bad syntax');
+				printError(e, true);
+			} else {
+				printError(e, false);
+			}
+		}
+		return jsonObj;
 	}
+}
+var printError = function(error, explicit) {
+    console.log(`[${explicit ? 'EXPLICIT' : 'INEXPLICIT'}] ${error.name}: ${error.message}`);
 }
 
 

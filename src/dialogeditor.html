@@ -5,14 +5,15 @@
 		<title>Cataclysm: Dark Days Ahead content manager</title>
 		<link rel="stylesheet" href="index.css">
 	</head>
-	 <script src="filesystemfunctions.js"></script> 
-	 <script src="jsonfunctions.js"></script> 
-	 <script src="commonclasses.js"></script> 
-	 <script src="constants.js"></script> 
-	 <script src="dialog_topic_conditions.js"></script> 
-	 <script src="htmlfunctions.js"></script> 
-	 <script src="d3.min.js"></script> 
-	 <script src="jsnetworkx.js"></script> 
+	<script src="filesystemfunctions.js"></script> 
+	<script src="jsonfunctions.js"></script> 
+	<script src="commonclasses.js"></script> 
+	<script src="constants.js"></script> 
+	<script src="dialog_topic_conditions.js"></script> 
+	<script src="htmlfunctions.js"></script> 
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+	<script src="springy.js"></script>
+	<script src="springyui.js"></script>
 	 
 	 
 	<script>
@@ -63,6 +64,60 @@
 				return span;
 			}
 			
+			//Returns a list of id's of all child topics
+			get childTopics(){
+				let responses = this.jsonObject[0].responses;
+				let childTopics = [];
+				let childTopic;
+				if(responses){
+					for (i = 0; i < responses.length; i++) {
+						childTopic = responses[i].topic;
+						if(childTopic){
+							childTopics.push(childTopic); //Add to the global responses array
+						}
+						if(responses[i].success){
+							childTopic = responses[i].success.topic;
+							if(childTopic){
+								childTopics.push(childTopic); //Add to the global responses array
+							}
+						}
+						if(responses[i].failure){
+							childTopic = responses[i].failure.topic;
+							if(childTopic){
+								childTopics.push(childTopic); //Add to the global responses array
+							}
+						}
+					}
+				}
+				return childTopics;
+			}
+			
+			//Returns a list of id's of all parent topics
+			get parentTopics(){
+				let i;
+				let y;
+				let talk_topicParents = [];
+				let talk_topicParentsChildrem;
+				let idArray;
+				let currentID;
+				//Want to iterate over a list, even if the id is only 1 string.
+				if(Array.isArray(this.id)){
+					idArray = this.id;
+				} else {
+					idArray = [this.id];
+				}
+				for (y = 0; y < idArray.length; y++) {
+					currentID = idArray[y]
+					for (i = 0; i < talk_topics.length; i++) {
+						//If the current topic is in the list of children of the topic that is iterated over
+						if(talk_topics[i].childTopics.indexOf(currentID) != -1){
+							talk_topicParents.push(talk_topics[i].id);
+						}
+					}
+				}
+				return talk_topicParents;
+			}
+			
 			//Save the tbody element of the responses to a array
 			updateResponses(span){
 				let responsesTexts = span.getElementsByClassName("trtext");
@@ -92,6 +147,17 @@
 					this.tbody.style.display = "";
 				} else {
 					this.tbody.style.display = "none";
+				}
+			}
+			
+			//A talk response has only one topic it is referring to.
+			//It should be in the textContent of the tdtopic element that is not equal to the id.
+			get topicID(){
+				let topics = this.tbody.getElementsByClassName("tdtopic");
+				for (i = 0; i < topics.length; i++) {
+					if(topics[i].textContent != topics[i].id){
+						return topics[i].textContent;
+					}
 				}
 			}
 			
@@ -222,6 +288,232 @@
 			npcObjList = new jsonObjList(document.getElementById("npcList"), DATA_JSON_NPCS, "id", [["type", "npc", true, true]]);
 			readTalkTopicsFromDisk();
 		}
+		
+		
+		
+		//Get a talk topics by ID. Some talk topics have multiple id's if one id appears in multiple talk topics, return all of them.
+		function getTalkTopicsById(strID){
+			var i;
+			var talk_topicID;
+			var talkTopicList = []
+			for (i = 0; i < talk_topics.length; i++) {
+				talk_topicID = talk_topics[i];
+				if(talk_topicID.hasID(strID)){
+					talkTopicList.push(talk_topics[i]);
+				}
+			}
+			return talkTopicList;
+		}
+		
+		//Get a single talk topic by ID. Will only get the first topic that matches the given ID fully.
+		function getTalkTopicById(strID){
+			var i;
+			var talk_topicID;
+			for (i = 0; i < talk_topics.length; i++) {
+				if(talk_topics[i].id == strID){
+					return talk_topics[i];
+				}
+			}
+			return false;
+		}
+		
+		function collapsed_click(element){
+			updateCollapsed();
+		}
+		
+		//Updates the list of all talk topics
+		async function readTalkTopicsFromDisk(){
+			//Update variable talk topics to contain all talk topics
+			allTopics = await getFilteredJsonItemsFromFolder(DATA_JSON_NPCS, [["type", "talk_topic", true, true]]);
+			talk_topics = [];
+			for (i = 0; i < allTopics.length; i++) {
+				var talk_topic = new Talk_topic(allTopics[i]);
+				talk_topics.push(talk_topic);
+			}
+		}
+		
+		
+		//Takes a topic and display its content to the user in HTML tables
+		//The previousTopic is the topic the user saw before navigating to the current topic.
+		//The previousTopic allows the user to return to the topic he was seeing before.
+		function displayTalkTopic(previousTopic, currentTopic){
+			document.getElementById("npcTalkTree").innerHTML = "";
+			document.getElementById("previousTopic").innerHTML = previousTopic;
+			document.getElementById("previousTopic").onclick = function(){displayTalkTopic(currentTopic, previousTopic)};
+			var talk_topics = getTalkTopicsById(currentTopic);
+			talk_responses = [];
+			
+			if(currentTopic != "TALK_DONE"){
+				let i=0;
+				for (i = 0; i < talk_topics.length; i++) {
+					document.getElementById("npcTalkTree").appendChild(talk_topics[i].htmlTable);
+					updateTopicElementClick();
+					updateTextElementClick();
+					updateCollapsed();
+					updateToggleConditions();
+					updateTopicConditions();
+				}
+			} else {
+				document.getElementById("npcTalkTree").innerHTML = createTALK_DONE_NONEhtmlTable("TALK_DONE", "");
+				document.getElementById("conditionsToggle").innerHTML = "";
+				document.getElementById("conditionsTrueContainer").style.display = "none";
+			}
+			document.getElementById('graphDrawAreaContainer').innerHTML = "";
+		}
+		
+		//Returns a list of talk topic ids of visible talk topics
+		function getVisibleTalkTopicsID(){
+			let treeChildren = document.getElementById("npcTalkTree").childNodes;
+			let talkTopicIDs = [];
+			for (i = 0; i < treeChildren.length; i++) {
+				let topics = treeChildren[i].getElementsByClassName("tdid");
+				for (y = 0; y < topics.length; y++) {
+					//For td elements representing the key value 'id', the textcontent is 'id'. we don't want that
+					//We want the textcontent of the next cell with classname tdid, which holds the id of the topic id.
+					if(topics[y].textContent != topics[y].id){
+						talkTopicIDs.push(topics[y].textContent);
+					}
+				}
+			}
+			return talkTopicIDs;
+		}
+		
+		//When the user clicks 'visualise'
+		function visualise_click(){
+			let depth = document.getElementById('visualiseDepth').value;
+			document.getElementById('graphDrawAreaContainer').innerHTML = '<canvas id="graphDrawArea" width="1024" height="800" style="display:none;" />';
+			document.getElementById('graphDrawArea').style.display = ""; //Make the draw area visible
+			let topics = getVisibleTalkTopicsID();
+			var graph = new Springy.Graph();
+			
+			//Iterate over every visible talk topic. This is usually 1 to 3 nodes.
+			for (y = 0; y < topics.length; y++) {
+				createGraphRecursiveNodes(graph, depth, topics[y]);
+			}
+
+			jQuery(function(){
+			  var springy = jQuery('#graphDrawArea').springy({
+				graph: graph,
+				stiffness: 400,
+				repulsion: 20,
+				//minEnergyThreshold: 0.1
+				damping: 0.1
+			  });
+			});
+		}
+		
+		function graphNodeDoubleClick(graphNode, graph){
+			createGraphRecursiveNodes(graph, 0, graphNode.label);
+		}
+		
+		//Creates all the nodes for the given topic id including parent and child
+		function createGraphRecursiveNodes(graph, depth, topicId){
+			let topicNode;
+			let topics;
+			let currentTopic;
+			let currentTopicId;
+			let childTopics;
+			let parentTopics;
+			let otherTopicNode;
+			let iteratedTopics;
+			//Some topics have multiple ids. return all of them. This could be 1 to x;
+			topics = getTalkTopicsById(topicId);
+			for (y = 0; y < topics.length; y++) {
+				currentTopic = topics[y];
+				currentTopicId = currentTopic.id;
+				topicNode = getNodeByLabel(currentTopicId, graph);
+				if(topicNode){	//The topic node already exists
+					
+				} else {	//The topic does not already exist, create a new one
+					topicNode = graph.newNode({label: topicId, ondoubleclick: function() { graphNodeDoubleClick(this, graph); }});
+				}
+				childTopics = currentTopic.childTopics;
+				if(childTopics){
+					iteratedTopics = [];
+					for (x = 0; x < childTopics.length; x++) {
+						//If it is not already iterated over
+						if(iteratedTopics.indexOf(childTopics[x]) == -1){
+							otherTopicNode = getNodeByLabel(childTopics[x], graph);
+							if(otherTopicNode){	//The topic node already exists
+								if(graph.getEdges(topicNode, otherTopicNode).length < 1){
+									graph.newEdge(topicNode, otherTopicNode, {color: '#00A0B0'});
+								}
+							} else {	//The topic does not already exist, create a new one
+								otherTopicNode = graph.newNode({label: childTopics[x], ondoubleclick: function() { graphNodeDoubleClick(this, graph); }});
+								graph.newEdge(topicNode, otherTopicNode, {color: '#00A0B0'});
+							}
+							iteratedTopics.push(childTopics[x]);
+							if(depth > 0){
+								createGraphRecursiveNodes(graph, depth-1, childTopics[x]);
+							}
+						}
+					}
+				}
+				parentTopics = currentTopic.parentTopics;
+				if(parentTopics){
+					iteratedTopics = [];
+					for (x = 0; x < parentTopics.length; x++) {
+						//If it is not already iterated over
+						if(iteratedTopics.indexOf(parentTopics[x]) == -1){
+							otherTopicNode = getNodeByLabel(parentTopics[x], graph);
+							if(otherTopicNode){	//The topic node already exists
+								if(graph.getEdges(otherTopicNode, topicNode).length < 1){
+									graph.newEdge(otherTopicNode, topicNode, {color: '#EDC951'});
+								}
+							} else {	//The topic does not already exist, create a new one
+								otherTopicNode = graph.newNode({label: parentTopics[x], ondoubleclick: function() { graphNodeDoubleClick(this, graph); }});
+								graph.newEdge(otherTopicNode, topicNode, {color: '#EDC951'});
+							}
+							iteratedTopics.push(parentTopics[x]);
+							if(depth > 0){
+								createGraphRecursiveNodes(graph, depth-1, parentTopics[x]);
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		//from https://github.com/elliotmgray/GraphDrawing/blob/930b773b1f75efc8c6c885e6066cb94dc7ab0457/springy_project_kernel.js
+		/**This function searches the nodes of a Springy.Graph and returns the id of the node with the given label. */
+		function getNodeByLabel(label, graph){
+			var count = 0;
+			while (count < graph.nodes.length){
+				if(label === graph.nodes[count].data.label){
+					return graph.nodes[count];
+				} else { count++; }
+			};
+			return false;
+		};
+		
+		//from https://github.com/elliotmgray/GraphDrawing/blob/930b773b1f75efc8c6c885e6066cb94dc7ab0457/springy_project_kernel.js
+		/**This function searches the nodes of a Springy.Graph and returns the id of the node with the given label. */
+		function findNodeId(label, graph){
+			var node_id = -1;
+			var count = 0;
+			while (count < graph.nodes.length){
+				if(label === graph.nodes[count].data.label){
+					node_id = count;
+					break;
+				} else { count++; }
+			};
+			return node_id;
+		};
+
+		//from https://github.com/anthonyhughes/anthonyhughes.github.io/blob/4b5759c2504dbe6bd148d6c99c1eb33f020014ed/js/graph-demo.js
+		function doesEdgeAlreadyExist(subj, obj, predicate) {
+			var edges = springyGraph.getEdges(subj, obj);
+			if (edges.length == 0) {
+				return false;
+			} else {
+				for (var edge in edges) {
+					if (edges[edge].data.label == predicate.label) {
+						return true;
+					}
+				}
+			}
+		}
+		
 		
 		//Allow the npcbasicproperties table to collapse 
 		function npcBasicProperties_click(htmlElement){
@@ -485,34 +777,6 @@
 			document.getElementById("conditionsToggle").innerHTML = htmlString;
 		}
 		
-		
-		//Takes a topic and display its content to the user in HTML tables
-		//The previousTopic is the topic the user saw before navigating to the current topic.
-		//The previousTopic allows the user to return to the topic he was seeing before.
-		function displayTalkTopic(previousTopic, currentTopic){
-			document.getElementById("npcTalkTree").innerHTML = "";
-			document.getElementById("previousTopic").innerHTML = previousTopic;
-			document.getElementById("previousTopic").onclick = function(){displayTalkTopic(currentTopic, previousTopic)};
-			var talk_topics = getTalkTopicsById(currentTopic);
-			talk_responses = [];
-			
-			if(currentTopic != "TALK_DONE"){
-				let i=0;
-				for (i = 0; i < talk_topics.length; i++) {
-					document.getElementById("npcTalkTree").appendChild(talk_topics[i].htmlTable);
-					updateTopicElementClick();
-					updateTextElementClick();
-					updateCollapsed();
-					updateToggleConditions();
-					updateTopicConditions();
-				}
-			} else {
-				document.getElementById("npcTalkTree").innerHTML = createTALK_DONE_NONEhtmlTable("TALK_DONE", "");
-				document.getElementById("conditionsToggle").innerHTML = "";
-				document.getElementById("conditionsTrueContainer").style.display = "none";
-			}
-		}
-		
 		//A topic can be clicked to view it (it replaces the currently viewed topic)
 		function updateTopicElementClick(){
 			var elements = document.getElementsByClassName("tdtopic");
@@ -560,47 +824,6 @@
 			return htmlString;
 		}
 		
-		//Get a talk topics by ID. Some talk topics have multiple id's if one id appears in multiple talk topics, return all of them.
-		function getTalkTopicsById(strID){
-			var i;
-			var talk_topicID;
-			var talkTopicList = []
-			for (i = 0; i < talk_topics.length; i++) {
-				talk_topicID = talk_topics[i];
-				if(talk_topicID.hasID(strID)){
-					talkTopicList.push(talk_topics[i]);
-				}
-			}
-			return talkTopicList;
-		}
-		
-		//Get a single talk topic by ID. Will only get the first topic that matches the given ID fully.
-		function getTalkTopicById(strID){
-			var i;
-			var talk_topicID;
-			for (i = 0; i < talk_topics.length; i++) {
-				if(talk_topics[i].id == strID){
-					return talk_topics[i];
-				}
-			}
-			return false;
-		}
-		
-		function collapsed_click(element){
-			updateCollapsed();
-		}
-		
-		//Updates the list of all talk topics
-		async function readTalkTopicsFromDisk(){
-			//Update variable talk topics to contain all talk topics
-			allTopics = await getFilteredJsonItemsFromFolder(DATA_JSON_NPCS, [["type", "talk_topic", true, true]]);
-			talk_topics = [];
-			for (i = 0; i < allTopics.length; i++) {
-				var talk_topic = new Talk_topic(allTopics[i]);
-				talk_topics.push(talk_topic);
-			}
-		}
-		
 	</script> 
 		<body>
 		<h1>Cataclysm: Dark Days Ahead dialog editor</h1>
@@ -611,21 +834,26 @@
 			<td>
 				<p>List of NPCs:</p>
 				<p id="listNPCsContainer">
-					<select name="npcList" id="npcList"  onchange="npcList_change(this);" size="42">
+					<select name="npcList" id="npcList"  onchange="npcList_change(this);" size="41">
 					</select>
 				</p>
 			</td>
 			<td>
 				<div class="contentContainer">
 					<p id="npcBasicProperties" onclick="npcBasicProperties_click(this)">Select a NPC to start.</p>
-					<p><b><span>Previous topic: </span><span id="previousTopic"></span></b></p>
-					<p><input type="checkbox" id="collapsed" onclick="collapsed_click(this)" title="show dialog content collapsed" name="collapsed" value="collapsed">collapsed</p>
+					<p>
+						<b><span>Previous topic: </span><span id="previousTopic"></span></b>
+						&nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp<span><input type="checkbox" id="collapsed" onclick="collapsed_click(this)" title="show dialog content collapsed" name="collapsed" value="collapsed">collapsed</span>
+						&nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp<span>depth:<input type="number" name="visualiseDepth" id="visualiseDepth" min="0" max="5" value="0"></span>
+						<span> <input type="button" value="Visualise" onclick="visualise_click()"> </span>
+					</p>
+					<p id="graphDrawAreaContainer"></p>
+					<p></p>
 					<p class="conditionsTrueContainer" id="conditionsTrueContainer" style="display:none">
 						<input type="checkbox" id="conditionsTrueEnabled" onclick="conditionsTrueEnabled_click()" title="Checking this box will show the dialog as though the conditions were true/false. You can mark each condition as true or false by checking or unchecking each condition's box." name="conditionsTrueEnabled" value="conditionsTrueEnabled">
 						<span>Conditions true: </span><span id="conditionsToggle"></span>
 					</p>
 					<p id="npcTalkTree"></p>
-					<p id="graphDrawArea"></p>
 				</div>
 			</td>
 		</tr>

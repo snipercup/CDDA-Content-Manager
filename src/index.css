@@ -38,12 +38,12 @@ tr {
 div.contentContainer {
     overflow: auto;
     height: 650px;
-    width: 1280px;
+    width: 1270px;
     display: inline-block;
 	padding: 10px;
 }
 div.mainContent {
-    height: 700px;
+    height: 710px;
 }
 
 .tabledynamic_line, .tablespeaker_effect, .tableid {

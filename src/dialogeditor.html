@@ -11,6 +11,10 @@
 	 <script src="constants.js"></script> 
 	 <script src="dialog_topic_conditions.js"></script> 
 	 <script src="htmlfunctions.js"></script> 
+	 <script src="d3.min.js"></script> 
+	 <script src="jsnetworkx.js"></script> 
+	 
+	 
 	<script>
 		//List of all talk topics
 		var talk_topics;
@@ -219,6 +223,24 @@
 			readTalkTopicsFromDisk();
 		}
 		
+		//Allow the npcbasicproperties table to collapse 
+		function npcBasicProperties_click(htmlElement){
+			let checked;
+			if(htmlElement.childNodes[0].id){
+				if(htmlElement.childNodes[0].id == "true"){
+					htmlElement.childNodes[0].id = "false";
+					checked = false;
+				} else {
+					htmlElement.childNodes[0].id = "true";
+					checked = true;
+				}
+			} else {
+				htmlElement.childNodes[0].id = "false";
+				checked = false;
+			}
+			let siblings = htmlElement.childNodes[0].childNodes[0].childNodes; //Get all the tr elements from the table
+			setElementVisibilityExceptId("id", siblings, checked);
+		}
 		
 		//returns if the given condition is marked at the top of the page.
 		function isToggleConditionChecked(conditionName){
@@ -231,8 +253,6 @@
 			return false;
 		}
 		
-		
-		
 		//Checks if the collapsed checkbox is checked and collapses everything but 'text' rows
 		function updateCollapsed(){
 			let elements = document.getElementsByClassName("trtext");
@@ -243,7 +263,7 @@
 			for (i = 0; i < elements.length; i++) {
 				element = elements[i];
 				siblings = element.parentElement.childNodes;
-				setElementVisibilityExceptClassName("text", siblings, checked);
+				setElementVisibilityExceptId("text", siblings, checked);
 			}
 		}
 		
@@ -292,12 +312,12 @@
 							//The condition is set to true by the user.
 							//If there are less then 3 siblings, there is no room for a 'yes', only the condition name and 'no' are present.
 							if(siblings.length < 3){
-								setElementVisibilityExceptClassName(conditionName, siblings, false); //Everything but the row with the condition is hidden
+								setElementVisibilityExceptId(conditionName, siblings, false); //Everything but the row with the condition is hidden
 							} else {
-								setElementVisibilityExceptClassName("yes", siblings, false); //Everything but the row with 'yes' is hidden.
+								setElementVisibilityExceptId("yes", siblings, false); //Everything but the row with 'yes' is hidden.
 							}
 						} else {
-							setElementVisibilityExceptClassName("no", siblings, false); //Everything but the row with 'no' is hidden.
+							setElementVisibilityExceptId("no", siblings, false); //Everything but the row with 'no' is hidden.
 						}
 					}
 				}
@@ -313,7 +333,7 @@
 					siblings = getHTMLSiblingsByClassName("no", conditionTDElementParent); //Try finding a sibling of 'no'
 					if(siblings.length == 1){	//We need exactly one 'no' sibling
 						siblings = conditionTDElementParent.parentElement.childNodes;
-						setElementVisibilityExceptClassName("no", siblings, true);
+						setElementVisibilityExceptId("no", siblings, true);
 						conditionTDElementParent.parentElement.style.display = "";
 					} else {
 						//This condition does not have a 'no' sibling. apply the filter some other way
@@ -449,8 +469,6 @@
 				conditionValue = topic_condition[1];
 				htmlString += ' | <span class="conditiontrue"><input type="checkbox" '
 				htmlString += 'id="'+conditionName+conditionValue+'" '
-				<!-- htmlString += 'value="'+conditionName+'" ' -->
-				<!-- htmlString += 'name="'+conditionValue+'" ' -->
 				htmlString += 'onclick="conditionBox_click()">'
 				if(conditionValue){
 					htmlString += conditionName+': '+conditionValue;
@@ -516,8 +534,6 @@
 			}
 		}
 		
-		
-		
 		//When the user selects an item from the NPC list
 		async function npcList_change(selectElement){
 			//User selects an item
@@ -570,13 +586,9 @@
 			return false;
 		}
 		
-		
 		function collapsed_click(element){
 			updateCollapsed();
 		}
-		
-		
-		
 		
 		//Updates the list of all talk topics
 		async function readTalkTopicsFromDisk(){
@@ -588,140 +600,6 @@
 				talk_topics.push(talk_topic);
 			}
 		}
-		
-		
-		
-		<!-- //The first iteration akes a html row with classname condition and evaluates to true/false -->
-		<!-- function recursiveEvaluateCondition(conditionElement){ -->
-			<!-- let childNodes = conditionElement.childNodes; -->
-			<!-- let className; -->
-			<!-- let tagName; -->
-			<!-- if(childNodes){ -->
-				<!-- let childNode; -->
-				<!-- //Check that the first child contains condition so we can make sure we don't have the wrong row -->
-				<!-- if(childNodes[0].textContent == "condition"){	//This is only true at the top-level -->
-					
-				<!-- } else { //We are in a sub-level of the iteration -->
-					<!-- let numberOfChildren = childNodes.length; -->
-					<!-- let y = 0; -->
-					<!-- for (y = 0; y < numberOfChildren; y++) { -->
-						<!-- childNode = childNodes[y]; -->
-						<!-- className = childNode.id; -->
-						<!-- tagName = childNode.tagName; -->
-						<!-- switch (className) { -->
-							<!-- case 'and':  -->
-							<!-- //It's an and -->
-							<!-- break; -->
-
-							<!-- case 'or':  -->
-							<!-- //It's an or -->
-								
-							<!-- break; -->
-
-							<!-- case 'not':  -->
-							<!-- //It's a not -->
-							<!-- break; -->
-							
-							<!-- default:  -->
-								<!-- if(className == "condition"){ //In this case we replace the classname with the textContent -->
-									<!-- className = cell.textContent; //In this case, it becomes u_has_weapon, which is a condition so the cell counts as a condition -->
-								<!-- } -->
-								<!-- //Check if it is a condition -->
-								<!-- topic_condition = getTopic_ConditionJsonByID(className); -->
-								<!-- if(topic_condition){  -->
-									<!-- //it's a condition. it has childnodes -->
-									<!-- if(recursiveEvaluateCondition(conditionElement)){ //true has been returned -->
-									
-									<!-- } else { //false has been returned -->
-									
-									<!-- } -->
-								<!-- } else { -->
-									<!-- //It's something else. It has children. -->
-									<!-- return recursiveEvaluateCondition(conditionElement); //This has a possibility of returning true. -->
-								<!-- } -->
-						<!-- } -->
-					<!-- } -->
-				<!-- } -->
-			<!-- } else { //There are no more children, this is the last child. -->
-				<!-- className = conditionElement.id -->
-				<!-- if(className == "condition"){ //In this case we replace the classname with the textContent -->
-					<!-- className = cell.textContent; //In this case, it becomes u_has_weapon, which is a condition so the cell counts as a condition -->
-				<!-- } -->
-				<!-- //Check if it is a condition -->
-				<!-- topic_condition = getTopic_ConditionJsonByID(className); -->
-				<!-- if(topic_condition){  -->
-					<!-- //it's a condition -->
-					<!-- let conditionChecked = isToggleConditionChecked(className); -->
-					<!-- if(conditionChecked){ //It's a condition and the user say's it's true, so return true. -->
-						<!-- return true; -->
-					<!-- } -->
-				<!-- } else { -->
-					<!-- //It's something else.  -->
-					<!-- //It's probably nothing interesting and we should do nothing. -->
-				<!-- } -->
-			<!-- } -->
-		<!-- } -->
-		
-		
-		 <!-- else { -->
-						<!-- //This condition does not have a 'no' sibling. apply the filter some other way -->
-						<!-- let y = 0; -->
-						<!-- let className; -->
-						<!-- let not = false; -->
-						<!-- //The base element is a TD cell with a condition classname -->
-						<!-- //We like to move up the hirargy to find the tr with the 'condition' classname -->
-						<!-- //If we encounter a row with 'not', take that into account -->
-						<!-- for (y = 0; y < 10; y++) { -->
-							<!-- className = conditionTDElementParent.id; -->
-							<!-- if(className == "condition" && conditionTDElementParent.tagName == "TR"){ -->
-								<!-- //We have reached the row where the condition is. -->
-								<!-- //We hide the whole table if the condition does not match. -->
-								<!-- if(conditionChecked){ -->
-									<!-- //The condition is true -->
-									<!-- if(not){ -->
-										<!-- conditionTDElementParent.parentElement.style.display = "none"; -->
-									<!-- } else { -->
-										<!-- conditionTDElementParent.parentElement.style.display = ""; -->
-									<!-- } -->
-								<!-- } else { -->
-									<!-- //The condition is false -->
-									<!-- if(not){ -->
-										<!-- conditionTDElementParent.parentElement.style.display = ""; -->
-									<!-- } else { -->
-										<!-- conditionTDElementParent.parentElement.style.display = "none"; -->
-									<!-- } -->
-								<!-- } -->
-								<!-- break; -->
-							<!-- } else { -->
-								<!-- //Check if it is contained within a 'not' -->
-								<!-- if(className == "not" && conditionTDElementParent.tagName == "TR"){ -->
-									<!-- not = true; -->
-								<!-- } -->
-								<!-- conditionTDElementParent = conditionTDElementParent.parentElement; -->
-							<!-- } -->
-						<!-- } -->
-					<!-- } -->
-					
-					
-					<!-- //returns if the given condition is marked at the top of the page. -->
-		<!-- function isToggleConditionChecked(conditionName){ -->
-			<!-- let elements = document.getElementsByClassName("conditiontrue"); -->
-			<!-- let element; -->
-			<!-- let elementConditionName; -->
-			<!-- for (i = 0; i < elements.length; i++) { -->
-				<!-- element = elements[i].childNodes[0]; -->
-				<!-- elementConditionName = element.className; -->
-				<!-- if(elementConditionName == "condition"){ //This is the case if a condition is a simple boolean without value -->
-					<!-- elementConditionName = element.name; -->
-				<!-- } -->
-				<!-- if(elementConditionName == conditionName){ -->
-					<!-- if(element.checked){ -->
-						<!-- return true; -->
-					<!-- } -->
-				<!-- } -->
-			<!-- } -->
-			<!-- return false; -->
-		<!-- } -->
 		
 	</script> 
 		<body>
@@ -739,7 +617,7 @@
 			</td>
 			<td>
 				<div class="contentContainer">
-					<p id="npcBasicProperties">Select a NPC to start.</p>
+					<p id="npcBasicProperties" onclick="npcBasicProperties_click(this)">Select a NPC to start.</p>
 					<p><b><span>Previous topic: </span><span id="previousTopic"></span></b></p>
 					<p><input type="checkbox" id="collapsed" onclick="collapsed_click(this)" title="show dialog content collapsed" name="collapsed" value="collapsed">collapsed</p>
 					<p class="conditionsTrueContainer" id="conditionsTrueContainer" style="display:none">
@@ -747,6 +625,7 @@
 						<span>Conditions true: </span><span id="conditionsToggle"></span>
 					</p>
 					<p id="npcTalkTree"></p>
+					<p id="graphDrawArea"></p>
 				</div>
 			</td>
 		</tr>

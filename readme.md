@@ -3,6 +3,7 @@
 
 ## Features:
 - Dialog editor (well it only allows viewing atm)
+- Spells viewer (only mods folder)
 
 ## Installation:
 

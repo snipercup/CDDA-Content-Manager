@@ -25,3 +25,9 @@
 
 #### Demo of the dialog editor:
 ![Image demoing dialog editor](https://i.imgur.com/Be7ab2i.gif)
+
+The visualiser. The blue arrow means it's a child. The yellow arrow means it's a parent. The direction means you can go from one topic to another topic. Double clicking an element will fetch all parents and children and connect them to the appropriate nodes.
+![Image demoing dialog visualiser1](https://i.imgur.com/egcny23.gif)
+
+Increasing the depth before clicking visualise will get the node's children/parents, and the children's children/parents for each level in depth.
+![Image demoing dialog visualiser](https://i.imgur.com/x8AB5M8.gif)

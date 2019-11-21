@@ -12,9 +12,9 @@ function buildHtmlTableFromJSON_andFile(jsonObject) {
 function buildHtmlRowsFromJSON(jsonObject) {
 	let htmlString = ""
 	Object.keys(jsonObject).forEach(function(key) {
-		htmlString += "<tr>"
-		htmlString += "<td>"+key+":</td>"
-		htmlString += "<td>"+jsonObject[key]+"</td>"
+		htmlString += "<tr class='basictr"+key+"' id='"+key+"'>"
+		htmlString += "<td class='basictd"+key+"' id='"+key+"'>"+key+":</td>"
+		htmlString += "<td class='basictd"+key+"' id='"+key+"'>"+jsonObject[key]+"</td>"
 		htmlString += "</tr>"
 	})
 	return htmlString;

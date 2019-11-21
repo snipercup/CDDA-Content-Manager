@@ -45,10 +45,15 @@
 			//Returns wether or not this talk topic has the specified ID.
 			//Some talk topics have multiple IDs. If the given ID is present in the list of IDs, true is returned
 			hasID(strID){
-				if(typeof this.id == "string") {
-					return this.id == strID;
-				} else if(Array.isArray(this.id)) {
-					return this.id.includes(strID);
+				let thisID = this.id
+				if(typeof thisID == "string") {
+					return thisID == strID;
+				} else if(Array.isArray(thisID)) {
+					if(Array.isArray(strID)) {
+						return JSON.stringify(thisID) === JSON.stringify(strID);
+					} else {
+						return thisID.includes(strID);
+					}
 				}
 				return false;
 			}
@@ -363,17 +368,14 @@
 		
 		//Returns a list of talk topic ids of visible talk topics
 		function getVisibleTalkTopicsID(){
-			let treeChildren = document.getElementById("npcTalkTree").childNodes;
+			let elements = document.getElementsByClassName("talk_topic");
+			let topicTitle;
+			let topicTitleJSON;
 			let talkTopicIDs = [];
-			for (i = 0; i < treeChildren.length; i++) {
-				let topics = treeChildren[i].getElementsByClassName("tdid");
-				for (y = 0; y < topics.length; y++) {
-					//For td elements representing the key value 'id', the textcontent is 'id'. we don't want that
-					//We want the textcontent of the next cell with classname tdid, which holds the id of the topic id.
-					if(topics[y].textContent != topics[y].id){
-						talkTopicIDs.push(topics[y].textContent);
-					}
-				}
+			for (i = 0; i < elements.length; i++) {
+				topicTitle = elements[i].childNodes[0].childNodes[0].title;
+				topicTitleJSON = JSON.parse(topicTitle);
+				talkTopicIDs.push(topicTitleJSON.talk_topidID);
 			}
 			return talkTopicIDs;
 		}
@@ -416,6 +418,7 @@
 			let parentTopics;
 			let otherTopicNode;
 			let iteratedTopics;
+			let pass = false;
 			//Some topics have multiple ids. return all of them. This could be 1 to x;
 			topics = getTalkTopicsById(topicId);
 			for (y = 0; y < topics.length; y++) {
@@ -425,27 +428,30 @@
 				if(topicNode){	//The topic node already exists
 					
 				} else {	//The topic does not already exist, create a new one
-					topicNode = graph.newNode({label: topicId, ondoubleclick: function() { graphNodeDoubleClick(this, graph); }});
+					topicNode = graph.newNode({label: currentTopicId, ondoubleclick: function() { graphNodeDoubleClick(this, graph); }});
 				}
 				childTopics = currentTopic.childTopics;
 				if(childTopics){
 					iteratedTopics = [];
 					for (x = 0; x < childTopics.length; x++) {
 						//If it is not already iterated over
-						if(iteratedTopics.indexOf(childTopics[x]) == -1){
+						if(iteratedTopics.indexOf(childTopics[x]) == -1 && childTopics[x] != currentTopicId){
 							otherTopicNode = getNodeByLabel(childTopics[x], graph);
 							if(otherTopicNode){	//The topic node already exists
 								if(graph.getEdges(topicNode, otherTopicNode).length < 1){
 									graph.newEdge(topicNode, otherTopicNode, {color: '#00A0B0'});
+								} else {
+									pass = true;
 								}
 							} else {	//The topic does not already exist, create a new one
 								otherTopicNode = graph.newNode({label: childTopics[x], ondoubleclick: function() { graphNodeDoubleClick(this, graph); }});
 								graph.newEdge(topicNode, otherTopicNode, {color: '#00A0B0'});
 							}
 							iteratedTopics.push(childTopics[x]);
-							if(depth > 0){
+							if(depth > 0 && !pass){
 								createGraphRecursiveNodes(graph, depth-1, childTopics[x]);
 							}
+							pass = false;
 						}
 					}
 				}
@@ -454,20 +460,23 @@
 					iteratedTopics = [];
 					for (x = 0; x < parentTopics.length; x++) {
 						//If it is not already iterated over
-						if(iteratedTopics.indexOf(parentTopics[x]) == -1){
+						if(iteratedTopics.indexOf(parentTopics[x]) == -1 && parentTopics[x] != currentTopicId){
 							otherTopicNode = getNodeByLabel(parentTopics[x], graph);
 							if(otherTopicNode){	//The topic node already exists
 								if(graph.getEdges(otherTopicNode, topicNode).length < 1){
 									graph.newEdge(otherTopicNode, topicNode, {color: '#EDC951'});
+								} else {
+									pass = true;
 								}
 							} else {	//The topic does not already exist, create a new one
 								otherTopicNode = graph.newNode({label: parentTopics[x], ondoubleclick: function() { graphNodeDoubleClick(this, graph); }});
 								graph.newEdge(otherTopicNode, topicNode, {color: '#EDC951'});
 							}
 							iteratedTopics.push(parentTopics[x]);
-							if(depth > 0){
+							if(depth > 0 && !pass){
 								createGraphRecursiveNodes(graph, depth-1, parentTopics[x]);
 							}
+							pass = false;
 						}
 					}
 				}
@@ -478,8 +487,10 @@
 		/**This function searches the nodes of a Springy.Graph and returns the id of the node with the given label. */
 		function getNodeByLabel(label, graph){
 			var count = 0;
+			let nodeLabel;
 			while (count < graph.nodes.length){
-				if(label === graph.nodes[count].data.label){
+				nodeLabel = graph.nodes[count].data.label
+				if(label === nodeLabel){
 					return graph.nodes[count];
 				} else { count++; }
 			};

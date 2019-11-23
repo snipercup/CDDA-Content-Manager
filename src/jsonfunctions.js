@@ -40,6 +40,118 @@ function buildRecursiveHtmlRowsFromJSON(jsonObject, data) {
 	return htmlString;
 }
 
+//Takes a basic JSON object and transforms each key and value pair into a HTML table.
+async function buildHtmlEditFormFromJSON_andFile(jsonObject, formJSONFile) {
+	let jsonFormObj = await getEditFormDataFromFile(formJSONFile);
+	let htmlString = "<table>"
+	// jsonObject[0] is the json object itself.
+	// jsonObject[1] is the file name it came from.
+	htmlString += await buildRecursiveHtmlEditFormFromJSON(jsonObject[0], null, jsonFormObj);
+	htmlString += "<tr><td>file:</td><td>"+jsonObject[1]+"</td></tr>"
+	htmlString += "</table>"
+	return htmlString;
+}
+
+//Returns the first item found in the filter
+function getItemFromListOfJsonItems(jsonFormObj, filter) {
+	let items;
+	items = getItemsFromListOfJsonItems(jsonFormObj, filter);
+	if(items){
+		if(items[0]){
+			return items[0];
+		}
+	}
+	return false;
+}
+
+
+//Gets the data for the ediform from a file and returns a json object.
+async function getEditFormDataFromFile(formJSONFile) {
+	const basePath = getWorkingDirectory();
+	let filePath = basePath + "\\data\\json\\editform\\" + formJSONFile;
+	let jsonFormObj = await getJsonFromFile(filePath);
+	let jsonSubFormObj;
+	let jsonEntry;
+	let jsonSubEntry;
+	let i = 0;
+	let y = 0;
+	let type;
+	let amountOfItems = jsonFormObj.length;
+	for (; i < amountOfItems; i++) {
+		jsonEntry = jsonFormObj[i]
+		type = jsonEntry.type;
+		if(type == "include"){
+			jsonSubFormObj = await getEditFormDataFromFile(jsonEntry.filename);
+			y = 0;
+			for (; y < jsonSubFormObj.length; y++) {
+				jsonSubEntry = jsonSubFormObj[y];
+				jsonFormObj.push(jsonSubEntry);
+			}
+		}
+	}
+	return jsonFormObj;
+}
+
+//Builds an editform from a json object and optionally some data.
+function buildRecursiveHtmlEditFormFromJSON(jsonObject, data, jsonFormObj) {
+	let htmlString = "";
+	let formObj;
+	Object.keys(jsonObject).forEach(function(key) {
+		const mobject = jsonObject[key];
+		formObj = getItemFromListOfJsonItems(jsonFormObj, [["type", "key", true, true], ["keyname", key, true, true]]);
+		htmlString += "<tr title='"+data+"' class='tr"+key+"' id='"+key+"'>"
+		htmlString += "<td title='"+formObj.description+"' class='keytd"+key+"' id='"+key+"'>"+key+"</td>"
+		if(typeof mobject === 'object' && mobject !== null){
+			// It's an object.
+			if(Array.isArray(mobject)){
+				htmlString += "<td title='"+formObj.description+"' class='keytd"+key+"' id='"+key+"'>";
+				if(typeof mobject[0] === 'object' && mobject !== null){ //It's a list of objects
+					htmlString += "<table class='table"+key+"' id='"+key+"'>";
+					htmlString += buildRecursiveHtmlEditFormFromJSON(mobject, data);
+					htmlString += "</table>";
+				} else { //It's a list of items
+					htmlString += "<table class='table"+key+"' id='"+key+"'><tr>";
+					htmlString += "<td><select multiple onchange='addedEntryList_change(this);' style='width: 150px' size='5'>";
+					let selectString = "<td><select multiple onchange='availableEntryList_change(this);' style='width: 150px' size='5'>";
+					if(formObj.valid_values){
+						let validValues = formObj.valid_values
+						let i;
+						for (i of validValues) {
+							if(i.name) {
+								if(mobject.indexOf(i.name) >= 0) {
+									htmlString += "<option value='"+i.name+"'>"+i.name+"</option>";
+								} else {
+									selectString += "<option value='"+i.name+"'>"+i.name+"</option>";
+								}
+							} else {
+								if(mobject.indexOf(i) >= 0) {
+									htmlString += "<option value='"+i+"'>"+i+"</option>";
+								} else {
+									selectString += "<option value='"+i+"'>"+i+"</option>";
+								}
+							}
+						}
+					}
+					selectString += "</select></td>";
+					htmlString += "</select></td><td><br><< add<br>remove >></td>" + selectString;
+					htmlString += "</tr></table>";
+				}
+				htmlString += "</td>";
+			} else {
+				htmlString += "<td title='"+formObj.description+"' class='keytd"+key+"' id='"+key+"'>";
+				htmlString += "<table class='table"+key+"' id='"+key+"'>";
+				htmlString += buildRecursiveHtmlEditFormFromJSON(mobject, data);
+				htmlString += "</table></td>";
+			}
+		} else {
+			htmlString += "<td title='"+formObj.description+"' class='valuetd"+key+"' id='"+key+"'>";
+			htmlString += "<input type='text' class='textedit"+key+"' id='"+key+"' size='90' value='"+mobject+"'>";
+			htmlString += "</td>";
+		}
+		htmlString += "</tr>"
+	})
+	return htmlString;
+}
 		
 //Get all json entries from a given folder.
 //See the description of getItemsFromListOfJsonItems for the filter properties
@@ -81,7 +193,10 @@ This will let you do:
 	- All items where faction = marloss or class = marloss
 	- All items that have key chat or key ID
 */
-async function getItemsFromListOfJsonItems(jsonObject, filter){
+function getItemsFromListOfJsonItems(jsonObject, filter){
+	if(!jsonObject){
+		return false;
+	}
 	let i = 0;
 	let y = 0;
 	let amountOfItems = jsonObject.length;
@@ -150,50 +265,3 @@ function findMatchInKey(keyvalue, value){
 	}
 	return false;
 }
-
-
-
-
-// function buildRecursiveHtmlRowsFromJSON(jsonObject, data) {
-	// let htmlString = "";
-	// var properties = "";
-	// Object.keys(jsonObject).forEach(function(key) {
-		// properties = "title='"+data+"' " + "class='"+key+"'";
-		// htmlString += "<tr "+properties+">"
-		// htmlString += "<td>"+key+"</td>"
-		// const mobject = jsonObject[key];
-		// if(typeof mobject === 'object' && mobject !== null){
-			// It's an object.
-			// htmlString += "<td "+properties+">";
-			// htmlString += "<table "+properties+">";
-			// htmlString += buildRecursiveHtmlRowsFromJSON(mobject, data);
-			// htmlString += "</table></td>";
-		// } else {
-			// htmlString += "<td "+properties+">"+mobject+"</td>"
-		// }
-		// htmlString += "</tr>"
-	// })
-	// return htmlString;
-// }
-
-// function buildRecursiveHtmlRowsFromJSON(jsonObject, properties) {
-	// let htmlString = "";
-	// let properties = "";
-	// Object.keys(jsonObject).forEach(function(key) {
-		// properties += "class='"+key+"'";
-		// htmlString += "<tr "+properties+">"
-		// htmlString += "<td>"+key+":</td>"
-		// const mobject = jsonObject[key];
-		// if(typeof mobject === 'object' && mobject !== null){
-			////It's an object.
-			// htmlString += "<td class='"+key+"'>";
-			// htmlString += "<table class='"+key+"'>";
-			// htmlString += buildRecursiveHtmlRowsFromJSON(mobject);
-			// htmlString += "</table></td>";
-		// } else {
-			// htmlString += "<td class='"+key+"'>"+mobject+"</td>"
-		// }
-		// htmlString += "</tr>"
-	// })
-	// return htmlString;
-// }

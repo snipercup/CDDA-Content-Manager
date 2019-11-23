@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const app = require('electron').remote.app
 
 
 //Takes a directory string, i.e. c:\users\tom\somefolder
@@ -24,6 +25,11 @@ async function getAllFiles(dirPath, arrayOfFiles) {
 		}
     }
 	return arrayOfFiles
+}
+
+function getWorkingDirectory(){
+	const basepath = app.getAppPath();
+	return basepath;
 }
 
 

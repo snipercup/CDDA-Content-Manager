@@ -32,6 +32,8 @@ function getWorkingDirectory(){
 	return basepath;
 }
 
+
+		
 //Writes the json object to a json file.
 function writeJsonFile(jsonObj){
 	// stringify JSON Object
@@ -44,6 +46,8 @@ function writeJsonFile(jsonObj){
 		}
 	}); 
 }
+
+
 //Returns the contents of a json file in the form of a JSON object
 async function getJsonFromFile(filepath){
 	if(!fileExists(filepath)){

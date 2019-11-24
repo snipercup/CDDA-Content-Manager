@@ -44,12 +44,19 @@ function buildRecursiveHtmlRowsFromJSON(jsonObject, data) {
 async function buildHtmlEditFormFromJSON_andFile(jsonObject, formJSONFile) {
 	let jsonFormObj = await getEditFormDataFromFile(formJSONFile);
 	let htmlString = "<table>"
+	htmlString += "<tr><td colspan='2'><span id='jsonObjectContainer' style='display:none'></span><button onclick='editFormSave_click()'>Save</button></td></tr>"
+
 	// jsonObject[0] is the json object itself.
 	// jsonObject[1] is the file name it came from.
 	htmlString += await buildRecursiveHtmlEditFormFromJSON(jsonObject[0], null, jsonFormObj);
 	htmlString += "<tr><td>file:</td><td>"+jsonObject[1]+"</td></tr>"
 	htmlString += "</table>"
 	return htmlString;
+}
+
+function editFormSave_click(){
+	jsonObj = JSON.parse(document.getElementById("jsonObjectContainer").textContent);
+	writeJsonFile(jsonObj[0]);
 }
 
 //Returns the first item found in the filter
@@ -70,6 +77,8 @@ async function getEditFormDataFromFile(formJSONFile) {
 	const basePath = getWorkingDirectory();
 	let filePath = basePath + "\\data\\json\\editform\\" + formJSONFile;
 	let jsonFormObj = await getJsonFromFile(filePath);
+	let jsonSubFormObj, jsonEntry, jsonSubEntry;
+	let i = 0, y = 0;
 	let jsonSubFormObj;
 	let jsonEntry;
 	let jsonSubEntry;
@@ -80,7 +89,7 @@ async function getEditFormDataFromFile(formJSONFile) {
 	for (; i < amountOfItems; i++) {
 		jsonEntry = jsonFormObj[i]
 		type = jsonEntry.type;
-		if(type == "include"){
+		if(type == "include"){ //One entry can be a include entry. It will append the entries of that included file to this json object.
 			jsonSubFormObj = await getEditFormDataFromFile(jsonEntry.filename);
 			y = 0;
 			for (; y < jsonSubFormObj.length; y++) {

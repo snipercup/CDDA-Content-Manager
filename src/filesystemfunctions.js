@@ -32,7 +32,18 @@ function getWorkingDirectory(){
 	return basepath;
 }
 
-
+//Writes the json object to a json file.
+function writeJsonFile(jsonObj){
+	// stringify JSON Object
+	var jsonContent = JSON.stringify(jsonObj, null, "\t");
+	 
+	fs.writeFile("testJson.json", jsonContent, 'utf8', function (err) {
+		if (err) {
+			console.log("An error occured while writing JSON Object to File.");
+			return console.log(err);
+		}
+	}); 
+}
 //Returns the contents of a json file in the form of a JSON object
 async function getJsonFromFile(filepath){
 	if(!fileExists(filepath)){

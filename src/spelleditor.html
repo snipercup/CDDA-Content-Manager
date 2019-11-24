@@ -41,6 +41,7 @@
 			let htmlString = await buildHtmlEditFormFromJSON_andFile(jsonObj, "spell_editform.json");
 			//Update the spell basic properties element
 			document.getElementById("spellBasicProperties").innerHTML = htmlString;
+			document.getElementById("jsonObjectContainer").innerHTML = itemTitle;
 		}
 		
 	</script> 

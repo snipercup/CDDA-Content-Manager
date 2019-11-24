@@ -1,0 +1,22 @@
+[
+	{
+		"type": "key",
+		"keyname": "id",
+		"description": "unique id of the entry."
+	},
+	{
+		"type": "key",
+		"keyname": "type",
+		"description": "The type of entry."
+	},
+	{
+		"type": "key",
+		"keyname": "name",
+		"description": "The name of entry as it appears ingame."
+	},
+	{
+		"type": "key",
+		"keyname": "description",
+		"description": "The description of entry as it appears ingame."
+	}
+]

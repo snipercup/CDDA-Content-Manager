@@ -38,9 +38,10 @@
 			//Transform the title string to a json object
 			var jsonObj = JSON.parse(itemTitle);  
 			//Transform the json object to html
-			let htmlString = buildHtmlTableFromJSON_andFile(jsonObj);
+			let htmlString = await buildHtmlEditFormFromJSON_andFile(jsonObj, "spell_editform.json");
 			//Update the spell basic properties element
 			document.getElementById("spellBasicProperties").innerHTML = htmlString;
+			document.getElementById("jsonObjectContainer").innerHTML = itemTitle;
 		}
 		
 	</script> 
@@ -53,7 +54,7 @@
 			<td>
 				<p>List of spells:</p>
 				<p id="listspellsContainer">
-					<select name="spellList" id="spellList"  onchange="spellList_change(this);" size="42">
+					<select name="spellList" id="spellList"  onchange="spellList_change(this);" size="41">
 					</select>
 				</p>
 			</td>

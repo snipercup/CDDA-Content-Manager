@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const app = require('electron').remote.app
 
 
 //Takes a directory string, i.e. c:\users\tom\somefolder
@@ -24,6 +25,26 @@ async function getAllFiles(dirPath, arrayOfFiles) {
 		}
     }
 	return arrayOfFiles
+}
+
+function getWorkingDirectory(){
+	const basepath = app.getAppPath();
+	return basepath;
+}
+
+
+		
+//Writes the json object to a json file.
+function writeJsonFile(jsonObj){
+	// stringify JSON Object
+	var jsonContent = JSON.stringify(jsonObj, null, "\t");
+	 
+	fs.writeFile("testJson.json", jsonContent, 'utf8', function (err) {
+		if (err) {
+			console.log("An error occured while writing JSON Object to File.");
+			return console.log(err);
+		}
+	}); 
 }
 
 

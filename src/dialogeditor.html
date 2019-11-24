@@ -168,7 +168,11 @@
 			
 			//If the condition is true, this response is visible.
 			updateVisibility(visible){
-				this.setVisibility(this.evaluateCondition())
+				if(document.getElementById("conditionsTrueEnabled").checked){
+					this.setVisibility(this.evaluateCondition());
+				} else {
+					this.setVisibility(true);
+				}
 			}
 			
 			//If this response has a condition, this function will resolve the condition and return true or false.
@@ -205,27 +209,27 @@
 				let result;
 				switch (className) {
 					case 'trand': 
-					//It's an and
+					//It's an And
 						//Dig down into all the rows in the and subtable. the amount of row can by anywhere between 1 and x;
 						childNodes = htmlElement.childNodes[1].childNodes[0].childNodes[0].childNodes;
 						result = true;
 						for (i = 0; i < childNodes.length; i++) {
 							//and and or are always followed by a list of conditions. we have to dig deeper to get those conditions out of the list.
-							node = childNodes[i];	//TR of one of the conditions below the and
+							node = childNodes[i];	//TR of one of the conditions below the And
 							child = node.childNodes[1]; //Eighter a table for a condition or a td with a condition;
 							if(child.childNodes.length > 0){
 								//It has children so it's probably a TR
 								if(!this.evaluateConditionRecursive(child.childNodes[0].childNodes[0].childNodes[0])){
 									//The row in the and returned as false;
 									result = false;
-									break; //If any row in the and returns as false, the and is false.
+									break; //If any row in the and returns as false, the And is false.
 								}
 							} else {
 								//It has no children. It is a td element
 								if(!isToggleConditionChecked(child.textContent)){
 									//The row in the and returned as false;
 									result = false;
-									break; //If any row in the and returns as false, the and is false.
+									break; //If any row in the and returns as false, the And is false.
 								}
 							}
 						}
@@ -233,27 +237,27 @@
 					break;
 
 					case 'tror': 
-					//It's an or
+					//It's an Or
 						//Dig down into all the rows in the and subtable. the amount of row can by anywhere between 1 and x;
 						childNodes = htmlElement.childNodes[1].childNodes[0].childNodes[0].childNodes;
 						result = false;
 						for (i = 0; i < childNodes.length; i++) {
-							//and and or are always followed by a list of conditions. we have to dig deeper to get those conditions out of the list.
+							//And and Or are always followed by a list of conditions. we have to dig deeper to get those conditions out of the list.
 							node = childNodes[i];	//TR of one of the conditions below the and
 							child = node.childNodes[1]; //Eighter a table for a condition or a td with a condition;
 							if(child.childNodes.length > 0){
 								//It has children so it's probably a TR
 								if(this.evaluateConditionRecursive(child.childNodes[0].childNodes[0].childNodes[0])){
-									//The row in the or returned as false;
+									//The row in the or returned as true;
 									result = true;
-									break; //If any row in the or returns as false, the or is true.
+									break; //If any row in the Or returns as true, the Or is true.
 								}
 							} else {
 								//It has no children. It is a td element
 								if(isToggleConditionChecked(child.textContent)){
-									//The row in the or returned as false;
+									//The row in the Or returned as true;
 									result = true;
-									break; //If any row in the or returns as false, the or is true.
+									break; //If any row in the Or returns as true, the Or is true.
 								}
 							}
 						}
@@ -261,10 +265,15 @@
 					break;
 
 					case 'trnot': 
-					//It's a not 
-						//A not can only have 1 row in its subtable that's why we get the childnodes[0].
-						node = htmlElement.childNodes[1].childNodes[0].childNodes[0].childNodes[0];
-						return(!this.evaluateConditionRecursive(node)); //use the ! to flip the result of the evaluation.
+					//It's a Not 
+						node = htmlElement.childNodes[1]; //TD in the row of the Not
+						if(node.childNodes[0].tagName == "TABLE"){
+							//It has children so it probably includes a table, tbody and below that a TR
+							return !this.evaluateConditionRecursive(node.childNodes[0].childNodes[0].childNodes[0]);
+						} else {
+							//It has no children. It is a td element
+							return !isToggleConditionChecked(node.textContent);
+						}
 					break;
 					
 					case 'trcondition': 
@@ -654,6 +663,10 @@
 							}
 						}
 					}
+				}
+				let x = 0;
+				for (x = 0; x < talk_responses.length; x++) {
+					talk_responses[x].updateVisibility();
 				}
 			}
 		}

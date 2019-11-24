@@ -45,7 +45,6 @@ async function buildHtmlEditFormFromJSON_andFile(jsonObject, formJSONFile) {
 	let jsonFormObj = await getEditFormDataFromFile(formJSONFile);
 	let htmlString = "<table>"
 	htmlString += "<tr><td colspan='2'><span id='jsonObjectContainer' style='display:none'></span><button onclick='editFormSave_click()'>Save</button></td></tr>"
-
 	// jsonObject[0] is the json object itself.
 	// jsonObject[1] is the file name it came from.
 	htmlString += await buildRecursiveHtmlEditFormFromJSON(jsonObject[0], null, jsonFormObj);
@@ -79,11 +78,6 @@ async function getEditFormDataFromFile(formJSONFile) {
 	let jsonFormObj = await getJsonFromFile(filePath);
 	let jsonSubFormObj, jsonEntry, jsonSubEntry;
 	let i = 0, y = 0;
-	let jsonSubFormObj;
-	let jsonEntry;
-	let jsonSubEntry;
-	let i = 0;
-	let y = 0;
 	let type;
 	let amountOfItems = jsonFormObj.length;
 	for (; i < amountOfItems; i++) {

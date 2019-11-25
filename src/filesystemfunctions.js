@@ -35,17 +35,15 @@ function getWorkingDirectory(){
 
 		
 //Writes the json object to a json file.
-function writeJsonFile(jsonObj){
-	// stringify JSON Object
-	var jsonContent = JSON.stringify(jsonObj, null, "\t");
-	 
-	fs.writeFile("testJson.json", jsonContent, 'utf8', function (err) {
+function writeJsonFile(jsonString, fileName){
+	fs.writeFile(fileName, jsonString + "\n", 'utf8', function (err) {
 		if (err) {
 			console.log("An error occured while writing JSON Object to File.");
 			return console.log(err);
 		}
 	}); 
 }
+
 
 
 //Returns the contents of a json file in the form of a JSON object
@@ -55,7 +53,7 @@ async function getJsonFromFile(filepath){
 	}
 	if(filepath.split('.').pop() != "json"){
 		//console.log('[getJsonFromFile]: skipped file \"'+filepath+'\", it is not a json file');
-		return "file is not a json file";
+		return false;
 	}
 	
 	const util = require('util');

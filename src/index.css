@@ -23,6 +23,14 @@ table, th, td {
   border-collapse: collapse;
 }
 
+.formtable, .buttonsrow, .buttonsrow td {
+  border: 0px solid black;
+}
+
+.buttonsrow td {
+  padding-bottom: 20px;
+}
+
 th, td {
   padding: 2px;
 }
@@ -38,7 +46,7 @@ tr {
 div.contentContainer {
     overflow: auto;
     height: 650px;
-    width: 1270px;
+    width: 1260px;
     display: inline-block;
 	padding: 10px;
 }

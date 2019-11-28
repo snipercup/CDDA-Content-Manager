@@ -47,12 +47,18 @@ class jsonObjList {
 	}
 	
 	selectItem(itemValue){
-	  var opts = this.selectionBox.options;
-	  for (var opt, j = 0; opt = opts[j]; j++) {
-		if (opt.value == itemValue) {
-		  this.selectionBox.selectedIndex = j;
-		  break;
+		var opts = this.selectionBox.options;
+		for (var opt, j = 0; opt = opts[j]; j++) {
+			if (opt.value == itemValue) {
+				this.selectionBox.selectedIndex = j;
+				break;
+			}
 		}
-	  }
+		this.selectionBox.dispatchEvent(new Event('change'));
+	}
+	
+	selectRandom(){
+		var opts = this.selectionBox.options;
+		this.selectedEntryId = opts[getRndInteger(0, opts.length)].value;
 	}
 }

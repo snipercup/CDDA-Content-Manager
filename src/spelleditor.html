@@ -5,15 +5,14 @@
 		<title>Cataclysm: Dark Days Ahead content manager</title>
 		<link rel="stylesheet" href="index.css">
 	</head>
-	 <script src="filesystemfunctions.js"></script> 
+	 <script src="filesystemfunctions.js"></script>
+	 <script src="commonfunctions.js"></script> 
 	 <script src="jsonfunctions.js"></script> 
 	 <script src="commonclasses.js"></script> 
 	 <script src="constants.js"></script> 
 	 <script src="htmlfunctions.js"></script> 
 	<script>
-		//List of all talk topics
-		var talk_topics;
-		var talk_responses;
+		const formJSONFile = "spell_editform.json";
 		var entryList;
 		
 		//When the page finishes loading
@@ -34,12 +33,13 @@
 		async function entryList_change(selectElement){
 			//User selects an item
 			let item = selectElement.options[selectElement.selectedIndex];
+			if(!item){return;}
 			//Get item title (it's a json string)
 			let itemTitle = item.title;
 			//Transform the title string to a json object
 			var jsonObj = JSON.parse(itemTitle);  
 			//Transform the json object to html
-			let htmlString = await buildHtmlEditFormFromJSON_andFile(jsonObj, "spell_editform.json");
+			let htmlString = await buildHtmlEditFormFromJSON_andFile(jsonObj);
 			entryList.selectedEntryId = item.value;
 		}
 		

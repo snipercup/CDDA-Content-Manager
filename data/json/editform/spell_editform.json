@@ -88,7 +88,24 @@
 	{
 		"type": "key",
 		"keyname": "extra_effects",
-		"default_value": "",
+		"valid_values": [
+			{
+				"keyname": "id",
+				"default_value": "",
+				"description": "The id of the spell you want this spell to cast as extra effect."
+			},
+			{
+				"keyname": "hit_self",
+				"default_value": false,
+				"description": "Can be true or false"
+			},
+			{
+				"keyname": "max_level",
+				"default_value": 0,
+				"description": "A number"
+			}
+		],
+		"default_value": [ { "id": "your_id_here" } ],
 		"description": "this allows you to cast multiple spells with only one spell"
 	},
 	{

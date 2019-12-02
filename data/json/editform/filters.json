@@ -1,0 +1,7 @@
+[
+	{
+		"type": "filter",
+		"filterName": "all_spells",
+		"filter": [["type", "SPELL", true, true]]
+	}
+]

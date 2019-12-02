@@ -1,5 +1,274 @@
 var stringify = require("@aitodotai\\json-stringify-pretty-compact");
 
+
+
+//This will update the json entry data in jsonObjectContainer. It will be updated with the information in the edit form.
+function updateEntryJsonData(){
+	let htmlElement = document.getElementById("jsonObjectContainer");
+	if(htmlElement.textContent == ""){
+		return false;
+	}
+	let jsonObj = JSON.parse(htmlElement.textContent);
+	let jsonEntry = jsonObj.jsonObject;
+	let htmlNodes = document.getElementsByClassName("basicFormEntry");
+	let htmlNode, htmlNodeValue, htmlNodeId;
+	//Loop textnodes, these are typically plain text entry fields
+	for (x in htmlNodes) {
+		htmlNode = htmlNodes[x];
+		htmlNodeId = htmlNode.id;
+		if(jsonEntry[htmlNodeId]){	//If the id of the text input element corresponds to a key in the json object
+			htmlNodeValue = htmlNode.value;
+			if(Number.isInteger(jsonEntry[htmlNodeId])){
+				jsonEntry[htmlNodeId] = parseInt(htmlNodeValue); //Update the value
+			} else {
+				jsonEntry[htmlNodeId] = htmlNodeValue; //Update the value
+			}
+		} else {
+			let parentTable = getNearestTableAncestor(htmlNode);
+			if(parentTable){
+				let parentTableId = parentTable.id;
+				let parentEntry = jsonEntry[parentTableId];
+				if(parentEntry){
+					htmlNodeValue = htmlNode.value;
+					if(Number.isInteger(parentEntry[htmlNodeId])){
+						parentEntry[htmlNodeId] = parseInt(htmlNodeValue); //Update the value
+					} else {
+						parentEntry[htmlNodeId] = htmlNodeValue; //Update the value
+					}
+				}
+			}
+		}
+	}
+	
+	let selectNodes = document.getElementsByTagName("SELECT");
+	let selectValues, childNodes, childNode;
+	//Loop selectNodes, these are typically plain lists
+	for (x in selectNodes) {
+		htmlNode = selectNodes[x];
+		htmlNodeId = htmlNode.id;
+		if(htmlNodeId && htmlNode.multiple){	//If the node as an id and the user can select multiple options.
+			selectValues = [];
+			if(jsonEntry[htmlNodeId]){	//If the id of the text input element corresponds to a key in the json object
+				childNodes = htmlNode.childNodes
+				for (y = 0; y < childNodes.length; y++){ //Loop over the select list options
+					childNode = childNodes[y];
+					if(childNode){
+						selectValues.push(childNode.value);
+					}
+				}
+				jsonEntry[htmlNodeId] = selectValues; //Update the value
+			}
+		}
+	}
+	
+	let objListNodes = document.getElementsByClassName("objectListContainer");
+	let objList, objRowInput, obj, tableList, table;
+	//Loop objListNodes, these are typically lists of objects in the form of tables and rows
+	for (let r = 0, len = objListNodes.length; r < len; r++) {
+		objList = [];
+		htmlNode = objListNodes[r]; //This objectListContainer contains a list of tables representing the object lists
+		htmlNodeId = htmlNode.id; //This is the property name of the main JSON we will edit
+		tableList = htmlNode.childNodes; //get the list of tables form this objectListContainer
+		for (let y = 0, tableslen = tableList.length; y < tableslen; y++) {
+			table = tableList[y];
+			if(table.tagName == "TABLE"){	
+				objRowInput = table.getElementsByTagName("INPUT"); //The table contains rows and cells, and in those sells are the input elements we want.
+				obj = {};
+				for (let z = 0, rowslen = objRowInput.length; z < rowslen; z++) {
+					obj[objRowInput[z].id] = objRowInput[z].value; //Get the keyname and value into the empty object
+				}
+				objList.push(obj); //Add the object to the object list
+			}
+		}
+		if(jsonEntry[htmlNodeId]){	//If the id of the text input element corresponds to a key in the json object
+			jsonEntry[htmlNodeId] = objList; //Update the value
+		}
+	}
+	
+	jsonObj.jsonObject = jsonEntry;
+	document.getElementById("jsonObjectContainer").innerHTML = JSON.stringify(jsonObj);
+}
+
+
+//When the user presses the button to delete a property from the editform json entry data
+function editFormDeleteProperty_click(buttonElement){
+	updateEntryJsonData();
+	let buttonParent = buttonElement.parentElement;
+	let keyName = buttonParent.id;
+	let parentTable = getNearestTableAncestor(buttonParent);
+	if(parentTable.className == "formtable"){ //It's a top level property
+		deletePropertyFromEditFormJSON(keyName);
+	} else { //It's a property in one of the sub objects.
+		//Get html elements
+		let jsonObjectContainer = document.getElementById("jsonObjectContainer");
+		let propertyName = parentTable.id; //The name of the property in the object in the object list
+		
+		//Get json objects
+		let jsonObj = JSON.parse(jsonObjectContainer.innerHTML);
+		let jsonEntry = jsonObj.jsonObject; //jsonObj[0] is the json object, jsonObj[1] is the filename.
+		let jsonEntryKey = jsonEntry[propertyName]; //This contains the list of objects.
+		
+		//Delete the entry from the json and write it back to the jsonobjectcontainer.
+		delete jsonEntryKey[keyName]; //Delete the property
+		jsonEntry[propertyName] = jsonEntryKey; //Put the object list back into the main json
+		jsonObj[0] = jsonEntry; //Put the main json back into the first slot of the json object
+		jsonObjectContainer.innerHTML = JSON.stringify(jsonObj); //Write it back to html
+		buildHtmlEditFormFromJSON_andFile(jsonObj); //refresh the editform
+	}
+}
+
+
+//Builds an editform from a json object and optionally some data.
+async function buildRecursiveHtmlEditFormFromJSON(jsonObject, data, jsonFormObj, depth = 0) {
+	let htmlString = "";
+	let formObj, formObjJSON;
+	let keys = Object.keys(jsonObject), key;
+	// Object.keys(jsonObject).forEach(function(key) {
+	for (let y = 0, keyslength = keys.length; y < keyslength; y++) {
+		key = keys[y];
+		const mobject = jsonObject[key];
+		if(depth < 1){
+			formObj = getItemFromListOfJsonItems(jsonFormObj, [["type", "key", true, true], ["keyname", key, true, true]]);
+			if(!formObj){
+				console.log("[jsonfunctions.js]:[buildRecursiveHtmlEditFormFromJSON]: getItemFromListOfJsonItems returned false using key: "+key+"!");
+				return "<tr><td>Poperty with key \""+key+"\" is not defined in the editform.</td></tr>";
+			}
+			formObjJSON = formObj.jsonObject;
+		}
+		htmlString += "<tr title='"+data+"' class='tr"+key+"' id='"+key+"'>"
+		htmlString += "<td class='keytd"+key+"' id='"+key+"'><button title='Delete' onclick='editFormDeleteProperty_click(this)'>X</button></td>"
+		htmlString += "<td title='";
+		if(formObjJSON){htmlString += formObjJSON.description};
+		htmlString += "' class='keytd"+key+"' id='"+key+"'>"+key+"</td>"
+		if(typeof mobject === 'object' && mobject !== null){
+			// It's an object.
+			if(Array.isArray(mobject)){
+				htmlString += "<td title='"+formObjJSON.description+"' class='keytd"+key+"' id='"+key+"'>";
+				if(typeof mobject[0] === 'object' && mobject !== null){ //It's a list of objects
+					htmlString += "<div class='objectListContainer' id='"+key+"'>";
+					let obj;
+					//Loop over the objects in the object list
+					for (obj of mobject) {
+						htmlString += "<table class='table"+key+"' id='"+key+"'>";
+						let validObjectsNotAdded = "";
+						let rowString = "", firstRowString = "";
+						let rowCounter = 1;
+						//Loop over the valid values
+						for (validObj of formObjJSON.valid_values) {
+							//Check that the valid keyname is defined in the object
+							if(obj[validObj.keyname] != null){ //The valid value is defined in the object so we display it with its current value.
+								if(rowCounter == 1){ //The first row will contain the delete button, to be added later
+									firstRowString += "<td colspan='2'>" + validObj.keyname + "</td>";
+									firstRowString += "<td><input type='text' id='"+validObj.keyname+"' size='60' value='"+obj[validObj.keyname]+"'></td>";
+								} else {
+									rowString += "<tr>";
+									rowString += "<td id='"+key+"'><button id='"+validObj.keyname+"' onclick='editFormDeletePropertyFromObjInObjList_click(this)'>X</button></td>";
+									rowString += "<td>" + validObj.keyname + "</td>";
+									rowString += "<td><input type='text' size='60' id='"+validObj.keyname+"' value='"+obj[validObj.keyname]+"'></td>";
+									rowString += "</tr>";
+								}
+								rowCounter++
+							} else { //The valid value is not yet defined in the object but the user gets the option to add it.
+								validObjectsNotAdded += "<option value='"+validObj.keyname+"'>"+validObj.keyname+"</option>";
+							}
+						}
+						//Valid values that are not already in the object (so the user has not filled them yet,
+						//Are added to a select item to be added later.
+						rowString += "<tr class='objectValidValuesAvailable'>";
+						if(validObjectsNotAdded.length > 0){
+							rowString += "<td colspan='2'>Add property</td>";
+							rowString += "<td><select class='keytd"+key+"' id='"+key+"' style='width: 150px'>";
+							rowString += validObjectsNotAdded;
+							rowString += "</select><button id='"+key+"' onclick='editFormAddPropertyInObjList_click(this)' style='margin-right:20px'>Add</button></td></tr>";
+						}
+						htmlString += "<tr><td rowspan='"+rowCounter+"'>";
+						htmlString += "<button onclick='editFormDeleteObjFromObjList_click(this)' style='margin-right:20px'>X</button>";
+						htmlString += "</td>"+firstRowString+"</tr>";
+						htmlString += rowString;
+						htmlString += "</table>";
+					}
+					htmlString += "<button title='Add another to this list.' id='"+key+"' onclick='editFormAddObjToObjList_click(this)' style='margin-right:20px'>Add</button>";
+					htmlString += "</div>";
+				} else { //It's a list of items
+					htmlString += "<table class='table"+key+"' id='"+key+"'><tr>";
+					htmlString += "<td><select multiple  class='keytd"+key+"' id='"+key+"' style='width: 150px' size='5'>";
+					let selectString = "<td><select multiple style='width: 150px' size='5'>";
+					//Check if the form json entry contains a list of valid values
+					if(formObjJSON.valid_values){
+						let validValues = formObjJSON.valid_values
+						let i;
+						//Loop over the valid values
+						for (i of validValues) {
+							//If i does not have a name, it's a plain list. Otherwise, it's a list of objects with name and description
+							if(i.name) {
+								//Check if the list of the json entry contains the value from the list of valid values.
+								//If this is true, the item will be added to the left select element. Otherwise it will be added to the right.
+								if(mobject.indexOf(i.name) >= 0) {
+									htmlString += "<option ondblclick='addedEntryListItem_doubleclick(this);' value='"+i.name+"'>"+i.name+"</option>";
+								} else {
+									selectString += "<option ondblclick='availableEntryListItem_doubleclick(this);' value='"+i.name+"'>"+i.name+"</option>";
+								}
+							} else {
+								//Check if the list of the json entry contains the value from the list of valid values.
+								//If this is true, the item will be added to the left select element. Otherwise it will be added to the right.
+								if(mobject.indexOf(i) >= 0) {
+									htmlString += "<option ondblclick='addedEntryListItem_doubleclick(this)'; value='"+i+"'>"+i+"</option>";
+								} else {
+									selectString += "<option ondblclick='availableEntryListItem_doubleclick(this);' value='"+i+"'>"+i+"</option>";
+								}
+							}
+						}
+					}
+					selectString += "</select></td>";
+					htmlString += "</select></td><td><br><< add<br>remove >></td>" + selectString;
+					htmlString += "</tr></table>";
+				}
+				htmlString += "</td>";
+			} else { //It is a object but not an array
+				htmlString += "<td title='"+formObjJSON.description+"' class='keytd"+key+"' id='"+key+"'>";
+				htmlString += "<table class='table"+key+"' id='"+key+"'>";
+				htmlString += await buildRecursiveHtmlEditFormFromJSON(mobject, data, jsonFormObj, depth+1);
+				if(formObjJSON){
+					let validValues = formObjJSON.valid_values;
+					if(validValues){
+						let lookup_filter = validValues.lookup_filter
+						if(lookup_filter){
+							const basePath = getWorkingDirectory();
+							let filePath = basePath + "\\data\\json\\editform\\filters.json";
+							let jsonFilterList = await getJsonFromFile(filePath);
+							let filter = getItemFromListOfJsonItems(jsonFilterList, [["filterName", lookup_filter, true, true]]).jsonObject.filter;
+							let filteredItems = await getFilteredJsonItemsFromFolder(DATA_MODS, filter);
+							let filteredItem;
+							htmlString += "<tr><td colspan='3'><select style='width: 150px'>"
+							for (let n = 0, filteredItemslength = filteredItems.length; n < filteredItemslength; n++) {
+								filteredItem = filteredItems[n].jsonObject;
+								htmlString += "<option value='"+filteredItem.id+"'>"+filteredItem.id+"</option>";
+							}
+							htmlString += "</select>";
+							htmlString += "<button id='"+key+"' style='margin-right:20px' onclick='editFormAddPropertyInObjList_click(this)'>Add</button></td></tr>";
+						}
+					}
+				}
+				htmlString += "</table></td>";
+			}
+		} else {
+			htmlString += "<td title='";
+			if(formObjJSON){htmlString += formObjJSON.description};
+			htmlString += "' class='keytd"+key+"' id='"+key+"'>";
+			if(Number.isInteger(mobject)){
+				htmlString += "<input type='number' class='basicFormEntry' id='"+key+"' size='90' value='"+mobject+"'>";
+			} else {
+				htmlString += "<input type='text' class='basicFormEntry' id='"+key+"' size='90' value='"+mobject+"'>";
+			}
+			htmlString += "</td>";
+		}
+		htmlString += "</tr>";
+	}
+	// })
+	return htmlString;
+}
+
+
 //from https://github.com/NadaCode/es6-import-test/blob/c6393c45ac5015261eaaa18e46a37f8a54f2202f/es6_test_lib.js
 // https://github.com/lydell/json-stringify-pretty-compact
 const stringifyPrettyCompact = (json, stringify) => {
@@ -53,11 +322,12 @@ function buildRecursiveHtmlRowsFromJSON(jsonObject, data) {
 
 //Takes a basic JSON object and transforms each key and value pair into a HTML table.
 async function buildHtmlEditFormFromJSON_andFile(jsonObject) {
-	let jsonFormObj;
+	let jsonFormObj = await getEditFormDataFromFile(formJSONFile); //formJSONFile is a global
 	let htmlString = "<table class='formtable'>"
+	
+	//Create row of buttons
 	htmlString += "<tr class='buttonsrow'><td colspan='3'>";
 	htmlString += "<span id='jsonObjectContainer' style='display:none'></span>";	
-	jsonFormObj = await getEditFormDataFromFile(formJSONFile);
 	htmlString += "<button style='margin-right:20px' onclick='editFormSave_click()'>Save</button>";
 	htmlString += "<button style='margin-right:20px' onclick='editFormDuplicate_click()'>Duplicate</button>";
 	htmlString += "<button style='margin-right:20px' onclick='editFormDelete_click()'>Delete</button>";
@@ -65,10 +335,11 @@ async function buildHtmlEditFormFromJSON_andFile(jsonObject) {
 	htmlString += "<select id='hiddenPropertiesSelect' style='margin-right:2px' ></select>";
 	htmlString += "<button style='margin-right:20px' onclick='editFormAddProperty_click()'>Add</button>";
 	htmlString += "</td></tr>";
+	
 	// jsonObject[0] is the json object itself.
 	// jsonObject[1] is the file name it came from.
-	htmlString += await buildRecursiveHtmlEditFormFromJSON(jsonObject[0], null, jsonFormObj);
-	htmlString += "<tr><td>file:</td><td colspan='2'>"+jsonObject[1]+"</td></tr>"
+	htmlString += await buildRecursiveHtmlEditFormFromJSON(jsonObject.jsonObject, null, jsonFormObj);
+	htmlString += "<tr><td>file:</td><td colspan='2'>"+jsonObject.fileName+"</td></tr>"
 	htmlString += "</table>";
 	document.getElementById("editForm").innerHTML = htmlString;
 	document.getElementById("jsonObjectContainer").innerHTML = JSON.stringify(jsonObject);
@@ -77,6 +348,7 @@ async function buildHtmlEditFormFromJSON_andFile(jsonObject) {
 
 
 async function editFormDeleteObjFromObjList_click(buttonElement){
+	updateEntryJsonData();
 	//Get html elements
 	let jsonObjectContainer = document.getElementById("jsonObjectContainer");
 	let buttonParentTable = buttonElement.parentElement.parentElement.parentElement.parentElement;
@@ -90,7 +362,7 @@ async function editFormDeleteObjFromObjList_click(buttonElement){
 	
 	//Get json objects
 	let jsonObj = JSON.parse(jsonObjectContainer.innerHTML);
-	let jsonEntry = jsonObj[0]; //jsonObj[0] is the json object, jsonObj[1] is the filename.
+	let jsonEntry = jsonObj.jsonObject; //jsonObj[0] is the json object, jsonObj[1] is the filename.
 	let jsonEntryKey = jsonEntry[keyName]; //jsonObj[0] is the json object, jsonObj[1] is the filename.
 	
 	//Delete the entry from the json and write it back to the jsonobjectcontainer.
@@ -98,7 +370,7 @@ async function editFormDeleteObjFromObjList_click(buttonElement){
 	let jsonEntryKeyData = jsonEntryKey.data;
 	if(jsonEntryKeyData.length > 0){
 		jsonEntry[keyName] = jsonEntryKeyData;
-		jsonObj[0] = jsonEntry;
+		jsonObj.jsonObject = jsonEntry;
 		jsonObjectContainer.innerHTML = JSON.stringify(jsonObj);
 		buildHtmlEditFormFromJSON_andFile(jsonObj);
 	} else {
@@ -109,7 +381,7 @@ async function editFormDeleteObjFromObjList_click(buttonElement){
 		} else {
 			//The list is empty but the user wants to keep property. Create a new entry with default value.
 			jsonEntry = await editFormAddObjToObjList(jsonEntry, keyName);
-			jsonObj[0] = jsonEntry;
+			jsonObj.jsonObject = jsonEntry;
 			jsonObjectContainer.innerHTML = JSON.stringify(jsonObj);
 			buildHtmlEditFormFromJSON_andFile(jsonObj);
 		}
@@ -118,28 +390,31 @@ async function editFormDeleteObjFromObjList_click(buttonElement){
 
 //Adds a new object to a object list.
 async function editFormAddObjToObjList_click(buttonElement){
+	updateEntryJsonData();
 	//Get html elements
 	let jsonObjectContainer = document.getElementById("jsonObjectContainer");
 	let keyValue = buttonElement.id; 
 	
 	//Get json objects
 	let jsonObj = JSON.parse(jsonObjectContainer.innerHTML);
-	let jsonEntry = jsonObj[0]; //The json for this entry (provides content for the whole edit form).
+	let jsonEntry = jsonObj.jsonObject; //The json for this entry (provides content for the whole edit form).
 	
 	jsonEntry = await editFormAddObjToObjList(jsonEntry, keyValue);
-	jsonObj[0] = jsonEntry;
+	jsonObj.jsonObject = jsonEntry;
 	jsonObjectContainer.innerHTML = JSON.stringify(jsonObj);
 	buildHtmlEditFormFromJSON_andFile(jsonObj);
 }
 
 //Adds a new object to a object list. The new object uses the default value from the editform definition.
 async function editFormAddObjToObjList(jsonEntry, keyValue){
+	updateEntryJsonData();
 	//Get json objects
 	let jsonEntryKey = jsonEntry[keyValue]; //The property (that contains the object list)
 	let formJSONData = await getEditFormDataFromFile(formJSONFile);
 	let formJSONEntry = getItemFromListOfJsonItems(formJSONData, [["keyname", keyValue, true, true]])
 	if(!formJSONEntry){return;}
-	let defaultValue = formJSONEntry.default_value; //The default value for an object list
+	let formJSONEntryJSONObject = formJSONEntry.jsonObject
+	let defaultValue = formJSONEntryJSONObject.default_value; //The default value for an object list
 	let defaultValuEntry = defaultValue[0]; //The default value of the object list should contain at least 1 object.
 	
 	//Add the entry to the json and return it.
@@ -150,29 +425,24 @@ async function editFormAddObjToObjList(jsonEntry, keyValue){
 
 //Deletes a property by keyname from the main editform json entry
 function deletePropertyFromEditFormJSON(keyName){
+	updateEntryJsonData();
 	//Get html elements
 	let jsonObjectContainer = document.getElementById("jsonObjectContainer");
 	
 	//Get json objects
 	let jsonObj = JSON.parse(jsonObjectContainer.innerHTML);
-	let jsonEntry = jsonObj[0];
+	let jsonEntry = jsonObj.jsonObject;
 	
 	//Delete the entry from the json and write it back to the jsonobjectcontainer.
 	delete jsonEntry[keyName];
-	jsonObj[0] = jsonEntry;
+	jsonObj.jsonObject = jsonEntry;
 	jsonObjectContainer.innerHTML = JSON.stringify(jsonObj);
 	buildHtmlEditFormFromJSON_andFile(jsonObj);
 }
 
-//When the user presses the button to delete a property from the editform json entry data
-function editFormDeleteProperty_click(buttonElement){
-	let buttonParent = buttonElement.parentElement;
-	let keyName = buttonParent.id;
-	deletePropertyFromEditFormJSON(keyName);
-}
-
 //Takes an object in a object list and deletes a property from that object.
 function editFormDeletePropertyFromObjInObjList_click(buttonElement){
+	updateEntryJsonData();
 	//Get html elements
 	let jsonObjectContainer = document.getElementById("jsonObjectContainer");
 	let buttonParent = buttonElement.parentElement;
@@ -188,7 +458,7 @@ function editFormDeletePropertyFromObjInObjList_click(buttonElement){
 	
 	//Get json objects
 	let jsonObj = JSON.parse(jsonObjectContainer.innerHTML);
-	let jsonEntry = jsonObj[0]; //jsonObj[0] is the json object, jsonObj[1] is the filename.
+	let jsonEntry = jsonObj.jsonObject; //jsonObj[0] is the json object, jsonObj[1] is the filename.
 	let jsonEntryKey = jsonEntry[keyName]; //This contains the list of objects.
 	let jsonEntryObj = jsonEntryKey[i]; //This is the object that contains the property we want to delete.
 	
@@ -206,6 +476,7 @@ function editFormDeletePropertyFromObjInObjList_click(buttonElement){
 
 //Adds a missing property to one of the objects in a object list.
 async function editFormAddPropertyInObjList_click(buttonElement){
+	updateEntryJsonData();
 	//Get html elements
 	let hiddenFieldsSelect = buttonElement.previousSibling;
 	let jsonObjectContainer = document.getElementById("jsonObjectContainer");
@@ -216,28 +487,38 @@ async function editFormAddPropertyInObjList_click(buttonElement){
 	
 	//Get json objects
 	let jsonObj = JSON.parse(jsonObjectContainer.innerHTML);
-	let jsonEntry = jsonObj[0];
+	let jsonEntry = jsonObj.jsonObject;
 	let jsonEntryKey = jsonEntry[keyValue];
 	let formJSONData = await getEditFormDataFromFile(formJSONFile);
 	let formJSONEntry = getItemFromListOfJsonItems(formJSONData, [["keyname", keyValue, true, true]])
 	if(!formJSONEntry){return;}
-	let validValues = formJSONEntry.valid_values;
-	let validValusEntry = getItemFromListOfJsonItems(validValues, [["keyname", optValue, true, true]])
-	
-	//Calculate the child number
-	let i = 0;
-	while( (buttonParentTable = buttonParentTable.previousSibling) != null ) {
-		i++;
+	let formJSONEntryJSONObject = formJSONEntry.jsonObject;
+	let validValues = formJSONEntryJSONObject.valid_values;
+	if(!validValues.lookup_filter){
+		let validValusEntry = getItemFromListOfJsonItems(validValues, [["keyname", optValue, true, true]])
+		//Calculate the child number
+		let i = 0;
+		while( (buttonParentTable = buttonParentTable.previousSibling) != null ) {
+			i++;
+		}
+		//Set the values we need
+		let defaultValue = validValusEntry.jsonObject.default_value;
+		if(defaultValue == null){defaultValue = ""}
+		//Add the entry to the json and write it back to the jsonobjectcontainer.
+		jsonEntryKey[i][optValue] = defaultValue;
+	} else {
+		//Set the values we need
+		let defaultValue = formJSONEntryJSONObject.default_value;
+		if(defaultValue == null){defaultValue = ""}
+		//Add the entry to the json and write it back to the jsonobjectcontainer.
+		
+		let keys = Object.keys(defaultValue);
+		jsonEntryKey[optValue] = defaultValue[keys[0]];
 	}
 	
-	//Set the values we need
-	let defaultValue = validValusEntry.default_value;
-	if(defaultValue == null){defaultValue = ""}
 	
-	//Add the entry to the json and write it back to the jsonobjectcontainer.
-	jsonEntryKey[i][optValue] = defaultValue;
 	jsonEntry[keyValue] = jsonEntryKey;
-	jsonObj[0] = jsonEntry;
+	jsonObj.jsonObject = jsonEntry;
 	jsonObjectContainer.innerHTML = JSON.stringify(jsonObj);
 	buildHtmlEditFormFromJSON_andFile(jsonObj);
 }
@@ -245,6 +526,7 @@ async function editFormAddPropertyInObjList_click(buttonElement){
 
 //Adds a missing property to the json.
 async function editFormAddProperty_click(){
+	updateEntryJsonData();
 	//Get html elements
 	let hiddenFieldsSelect = document.getElementById("hiddenPropertiesSelect");
 	let jsonObjectContainer = document.getElementById("jsonObjectContainer");
@@ -253,13 +535,14 @@ async function editFormAddProperty_click(){
 	
 	//Get json objects
 	let jsonObj = JSON.parse(jsonObjectContainer.innerHTML);
-	let jsonEntry = jsonObj[0];
+	let jsonEntry = jsonObj.jsonObject;
 	let formJSONData = await getEditFormDataFromFile(formJSONFile);
 	let formJSONEntry = getItemFromListOfJsonItems(formJSONData, [["keyname", optValue, true, true]])
 	if(!formJSONEntry){return;}
+	let formJSONEntryJSONObject = formJSONEntry.jsonObject;
 	
 	//Set the values we need
-	let defaultValue = formJSONEntry.default_value;
+	let defaultValue = formJSONEntryJSONObject.default_value;
 	if(defaultValue == null){defaultValue = ""}
 	
 	//Add the entry to the json and write it back to the jsonobjectcontainer.
@@ -273,7 +556,7 @@ async function editFormAddProperty_click(){
 function updateHiddenFieldsSelect(jsonObject, jsonFormObj){
 	let hiddenFieldsSelect = document.getElementById("hiddenPropertiesSelect");
 	let editFormEntry, editFormKeyName;
-	let jsonObjectEntry = jsonObject[0];
+	let jsonObjectEntry = jsonObject.jsonObject;
 	hiddenFieldsSelect.innerHTML = "";
 	//Loop nodes
 	for (x in jsonFormObj) {
@@ -294,56 +577,8 @@ function updateHiddenFieldsSelect(jsonObject, jsonFormObj){
 function editFormSave_click(){
 	updateEntryJsonData()
 	let jsonObj = JSON.parse(document.getElementById("jsonObjectContainer").textContent);
-	updateJsonEntryInFileById(jsonObj[0], jsonObj[1]); //jsonObj[0] is the json data, jsonObj[1] is the filename
+	updateJsonEntryInFileByIndex(jsonObj.jsonObject, jsonObj.fileName, jsonObj.indexInParentObject); //jsonObj[0] is the json data, jsonObj[1] is the filename
 	entryList.updateList();
-}
-
-//This will update the json entry data in jsonObjectContainer. It will be updated with the information in the edit form.
-function updateEntryJsonData(){
-	let htmlElement = document.getElementById("jsonObjectContainer");
-	if(htmlElement.textContent == ""){
-		return false;
-	}
-	let jsonObj = JSON.parse(htmlElement.textContent);
-	let jsonEntry = jsonObj[0];
-	let htmlNodes = document.getElementsByTagName("INPUT");
-	let htmlNode, htmlNodeValue, htmlNodeId;
-	//Loop textnodes
-	for (x in htmlNodes) {
-		htmlNode = htmlNodes[x];
-		htmlNodeId = htmlNode.id;
-		if(jsonEntry[htmlNodeId]){	//If the id of the text input element corresponds to a key in the json object
-			htmlNodeValue = htmlNode.value;
-			if(Number.isInteger(jsonEntry[htmlNodeId])){
-				jsonEntry[htmlNodeId] = parseInt(htmlNodeValue); //Update the value
-			} else {
-				jsonEntry[htmlNodeId] = htmlNodeValue; //Update the value
-			}
-		}
-	}
-	
-	let selectNodes = document.getElementsByTagName("SELECT");
-	let selectValues, childNodes, childNode;
-	//Loop selectNodes
-	for (x in selectNodes) {
-		htmlNode = selectNodes[x];
-		htmlNodeId = htmlNode.id;
-		if(htmlNodeId){	//If the node as an id.
-			selectValues = [];
-			if(jsonEntry[htmlNodeId]){	//If the id of the text input element corresponds to a key in the json object
-				childNodes = htmlNode.childNodes
-				for (y = 0; y < childNodes.length; y++){ //Loop over the select list options
-					childNode = childNodes[y];
-					if(childNode){
-						selectValues.push(childNode.value);
-					}
-				}
-				jsonEntry[htmlNodeId] = selectValues; //Update the value
-			}
-		}
-	}
-	jsonObj[0] = jsonEntry;
-	document.getElementById("jsonObjectContainer").innerHTML = JSON.stringify(jsonObj);
 }
 
 //This will read the json file of the currently selected entry and then append a new item
@@ -351,10 +586,10 @@ function updateEntryJsonData(){
 function editFormDuplicate_click(){
 	updateEntryJsonData()
 	let jsonObj = JSON.parse(document.getElementById("jsonObjectContainer").textContent);
-	jsonObj[0].id = jsonObj[0].id + "_copy"
-	appendJsonEntryInFile(jsonObj[0], jsonObj[1]); //jsonObj[0] is the json data, jsonObj[1] is the filename
+	jsonObj.jsonObject.id = jsonObj.jsonObject.id + "_copy"
+	appendJsonEntryInFile(jsonObj.jsonObject, jsonObj.fileName); //jsonObj[0] is the json data, jsonObj[1] is the filename
 	entryList.updateList();
-	entryList.selectedEntryId = jsonObj[0].id;
+	entryList.selectedEntryId = jsonObj.jsonObject.id;
 	buildHtmlEditFormFromJSON_andFile(jsonObj);
 }
 
@@ -364,7 +599,7 @@ function editFormDelete_click(){
 	if (result) {
 		updateEntryJsonData()
 		let jsonObj = JSON.parse(document.getElementById("jsonObjectContainer").textContent);
-		deleteJsonEntryInFileById(jsonObj[0], jsonObj[1]); //jsonObj[0] is the json data, jsonObj[1] is the filename
+		deleteJsonEntryInFileByIndex(jsonObj.jsonObject, jsonObj.fileName, jsonObj.indexInParentObject); //jsonObj[0] is the json data, jsonObj[1] is the filename
 		entryList.updateList();
 		entryList.selectRandom();
 	}
@@ -399,6 +634,26 @@ async function updateJsonEntryInFileById(jsonEntry, fileName){
 
 		
 //Loads a json file, updates one entry and writes it to disk.
+async function updateJsonEntryInFileByIndex(jsonEntry, fileName, index){
+	let sourceJSON = await getJsonFromFile(fileName);
+	if(sourceJSON){
+		sourceJSON[index] = jsonEntry;
+		writeJsonFile(stringifyPrettyCompact(sourceJSON, stringify), fileName);
+	}
+}
+
+		
+//Loads a json file, updates one entry and writes it to disk.
+async function deleteJsonEntryInFileByIndex(jsonEntry, fileName, index){
+	let sourceJSON = await getJsonFromFile(fileName);
+	if(sourceJSON){
+		var result1 = deleteEntryFromJSONObjectByIndex(sourceJSON).remove(index);
+		writeJsonFile(stringifyPrettyCompact(result1.data, stringify), fileName);
+	}
+}
+
+		
+//Loads a json file, updates one entry and writes it to disk.
 async function deleteJsonEntryInFileById(jsonEntry, fileName){
 	let sourceJSON = await getJsonFromFile(fileName);
 	if(sourceJSON){
@@ -424,7 +679,7 @@ function deleteEntryFromJSONObjectByIndex(param) {
         return this;
     }
     //return object for operation
-    return obj
+    return obj;
 }
 
 //from https://stackoverflow.com/questions/10020422/deleting-row-from-json-array-leaves-null
@@ -462,9 +717,13 @@ function getItemFromListOfJsonItems(jsonObj, filter) {
 	let items;
 	items = getItemsFromListOfJsonItems(jsonObj, filter);
 	if(items){
-		if(items[0]){
+		if(items.length > 0){
 			return items[0];
+		} else {
+			console.log("[getItemFromListOfJsonItems]: Items was returned as an empty list!")
 		}
+	} else {
+		console.log("[getItemFromListOfJsonItems]: tried to get items from getItemsFromListOfJsonItems, but not items were returned")
 	}
 	return false;
 }
@@ -492,121 +751,6 @@ async function getEditFormDataFromFile(formFileName) {
 		}
 	}
 	return jsonFormObj;
-}
-
-//Builds an editform from a json object and optionally some data.
-function buildRecursiveHtmlEditFormFromJSON(jsonObject, data, jsonFormObj) {
-	let htmlString = "";
-	let formObj;
-	// var y;
-	Object.keys(jsonObject).forEach(function(key) {
-	// for (y=0; y < jsonObject.length; y++) {
-		const mobject = jsonObject[key];
-		formObj = getItemFromListOfJsonItems(jsonFormObj, [["type", "key", true, true], ["keyname", key, true, true]]);
-		htmlString += "<tr title='"+data+"' class='tr"+key+"' id='"+key+"'>"
-		htmlString += "<td class='keytd"+key+"' id='"+key+"'><button onclick='editFormDeleteProperty_click(this)'>X</button></td>"
-		htmlString += "<td title='"+formObj.description+"' class='keytd"+key+"' id='"+key+"'>"+key+"</td>"
-		if(typeof mobject === 'object' && mobject !== null){
-			// It's an object.
-			if(Array.isArray(mobject)){
-				htmlString += "<td title='"+formObj.description+"' class='keytd"+key+"' id='"+key+"'>";
-				if(typeof mobject[0] === 'object' && mobject !== null){ //It's a list of objects
-					let obj;
-					//Loop over the objects in the object list
-					for (obj of mobject) {
-						htmlString += "<table class='table"+key+"' id='"+key+"'>";
-						let validObjectsNotAdded = "";
-						let rowString = "", firstRowString = "";
-						let rowCounter = 1;
-						//Loop over the valid values
-						for (validObj of formObj.valid_values) {
-							//Check that the valid keyname is defined in the object
-							if(obj[validObj.keyname] != null){ //The valid value is defined in the object so we display it with its current value.
-								if(rowCounter == 1){ //The first row will contain the delete button, to be added later
-									firstRowString += "<td colspan='2'>" + validObj.keyname + "</td>";
-									firstRowString += "<td><input type='text' size='60' value='"+obj[validObj.keyname]+"'></td>";
-								} else {
-									rowString += "<tr>";
-									rowString += "<td id='"+key+"'><button id='"+validObj.keyname+"' onclick='editFormDeletePropertyFromObjInObjList_click(this)'>X</button></td>";
-									rowString += "<td>" + validObj.keyname + "</td>";
-									rowString += "<td><input type='text' size='60' value='"+obj[validObj.keyname]+"'></td>";
-									rowString += "</tr>";
-								}
-								rowCounter++
-							} else { //The valid value is not yet defined in the object but the user gets the option to add it.
-								validObjectsNotAdded += "<option value='"+validObj.keyname+"'>"+validObj.keyname+"</option>";
-							}
-						}
-						//Valid values that are not already in the object (so the user has not filled them yet,
-						//Are added to a select item to be added later.
-						rowString += "<tr class='objectValidValuesAvailable'>";
-						if(validObjectsNotAdded.length > 0){
-							rowString += "<td colspan='2'>Add property</td>";
-							rowString += "<td><select class='keytd"+key+"' id='"+key+"' style='width: 150px'>";
-							rowString += validObjectsNotAdded;
-							rowString += "</select><button id='"+key+"' onclick='editFormAddPropertyInObjList_click(this)' style='margin-right:20px'>Add</button></td></tr>";
-						}
-						htmlString += "<tr><td rowspan='"+rowCounter+"'>";
-						htmlString += "<button onclick='editFormDeleteObjFromObjList_click(this)' style='margin-right:20px'>X</button>";
-						htmlString += "</td>"+firstRowString+"</tr>";
-						htmlString += rowString;
-						htmlString += "</table>";
-					}
-					htmlString += "<button title='Add another to this list.' id='"+key+"' onclick='editFormAddObjToObjList_click(this)' style='margin-right:20px'>Add</button>";
-				} else { //It's a list of items
-					htmlString += "<table class='table"+key+"' id='"+key+"'><tr>";
-					htmlString += "<td><select multiple  class='keytd"+key+"' id='"+key+"' style='width: 150px' size='5'>";
-					let selectString = "<td><select multiple style='width: 150px' size='5'>";
-					//Check if the form json entry contains a list of valid values
-					if(formObj.valid_values){
-						let validValues = formObj.valid_values
-						let i;
-						//Loop over the valid values
-						for (i of validValues) {
-							//If i does not have a name, it's a plain list. Otherwise, it's a list of objects with name and description
-							if(i.name) {
-								//Check if the list of the json entry contains the value from the list of valid values.
-								//If this is true, the item will be added to the left select element. Otherwise it will be added to the right.
-								if(mobject.indexOf(i.name) >= 0) {
-									htmlString += "<option ondblclick='addedEntryListItem_doubleclick(this);' value='"+i.name+"'>"+i.name+"</option>";
-								} else {
-									selectString += "<option ondblclick='availableEntryListItem_doubleclick(this);' value='"+i.name+"'>"+i.name+"</option>";
-								}
-							} else {
-								//Check if the list of the json entry contains the value from the list of valid values.
-								//If this is true, the item will be added to the left select element. Otherwise it will be added to the right.
-								if(mobject.indexOf(i) >= 0) {
-									htmlString += "<option ondblclick='addedEntryListItem_doubleclick(this)'; value='"+i+"'>"+i+"</option>";
-								} else {
-									selectString += "<option ondblclick='availableEntryListItem_doubleclick(this);' value='"+i+"'>"+i+"</option>";
-								}
-							}
-						}
-					}
-					selectString += "</select></td>";
-					htmlString += "</select></td><td><br><< add<br>remove >></td>" + selectString;
-					htmlString += "</tr></table>";
-				}
-				htmlString += "</td>";
-			} else { //It is a object but not an array
-				htmlString += "<td title='"+formObj.description+"' class='keytd"+key+"' id='"+key+"'>";
-				htmlString += "<table class='table"+key+"' id='"+key+"'>";
-				htmlString += buildRecursiveHtmlEditFormFromJSON(mobject, data, jsonFormObj);
-				htmlString += "</table></td>";
-			}
-		} else {
-			htmlString += "<td title='"+formObj.description+"' class='valuetd"+key+"' id='"+key+"'>";
-			if(Number.isInteger(mobject)){
-				htmlString += "<input type='number' class='textedit"+key+"' id='"+key+"' size='90' value='"+mobject+"'>";
-			} else {
-				htmlString += "<input type='text' class='textedit"+key+"' id='"+key+"' size='90' value='"+mobject+"'>";
-			}
-			htmlString += "</td>";
-		}
-		htmlString += "</tr>";
-	// }
-	})
-	return htmlString;
 }
 
 //When an user doubleclicks on an entry in one of the lists.
@@ -653,10 +797,9 @@ async function getFilteredJsonItemsFromFolder(folderName, filter){
 		y = 0;
 		objFileContent = await getJsonFromFile(allfiles[i])
 		if(objFileContent){
-			retreivedItems = await getItemsFromListOfJsonItems(objFileContent, filter);
-			//All retreived items get added to our list and get their filenames added.
-			for (; y < retreivedItems.length; y++) {
-				filteredJSONItems.push([retreivedItems[y], allfiles[i]]);
+			retreivedItems = await getItemsFromListOfJsonItems(objFileContent, filter, allfiles[i]);
+			if(retreivedItems.length > 0){
+				filteredJSONItems.push.apply(filteredJSONItems, retreivedItems);
 			}
 		}
 	}
@@ -675,8 +818,9 @@ This will let you do:
 	- All items where faction = marloss or class = marloss
 	- All items that have key chat or key ID
 */
-function getItemsFromListOfJsonItems(jsonObject, filter){
+function getItemsFromListOfJsonItems(jsonObject, filter, fileName = ""){
 	if(!jsonObject){
+		console.log("[getItemsFromListOfJsonItems]: I was called, but no jsonObject was provided!")
 		return false;
 	}
 	let i = 0;
@@ -726,7 +870,7 @@ function getItemsFromListOfJsonItems(jsonObject, filter){
 			}
 			//The amount of matches should be greater then 0.
 			if(intFilterMatches >= amountOfFilters){
-				listOfJSONObjects.push(jsonObject[i]);
+				listOfJSONObjects.push({jsonObject: jsonObject[i], indexInParentObject: i, fileName: fileName});
 			}
 		}
 	}

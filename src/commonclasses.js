@@ -23,10 +23,12 @@ class jsonObjList {
 		this.selectionBox.innerHTML = ""; //Empty the list.
 		
 		let amountOfJSONObjects = retreivedItems.length;
-		let jsonElementID = "";
+		let jsonElementID = "", jsonObject, jsonEntry, retrievedItem;
 		var i = 0;
 		for (; i < amountOfJSONObjects; i++) {
-			jsonElementID = retreivedItems[i][0][this.displayKey];
+			retrievedItem = retreivedItems[i];
+			jsonObject = retrievedItem.jsonObject
+			jsonElementID = jsonObject[this.displayKey];
 			let opt = document.createElement('option');
 			opt.value = jsonElementID;
 			opt.innerHTML = jsonElementID;

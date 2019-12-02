@@ -81,6 +81,42 @@
 	},
 	{
 		"type": "key",
+		"keyname": "damage_type",
+		"default_value": "",
+		"description": "The type of damage."
+	},
+	{
+		"type": "key",
+		"keyname": "message",
+		"default_value": "",
+		"description": "The message to the user."
+	},
+	{
+		"type": "key",
+		"keyname": "final_casting_time",
+		"default_value": "",
+		"description": "The final casting time."
+	},
+	{
+		"type": "key",
+		"keyname": "energy_increment",
+		"default_value": "",
+		"description": "The final casting time."
+	},
+	{
+		"type": "key",
+		"keyname": "casting_time_increment",
+		"default_value": "",
+		"description": "The final casting time."
+	},
+	{
+		"type": "key",
+		"keyname": "//",
+		"default_value": "",
+		"description": "A comment you can leave that will only show up here but not ingame."
+	},
+	{
+		"type": "key",
 		"keyname": "effect_str",
 		"default_value": "",
 		"description": "used to provide input for the effect."
@@ -340,6 +376,12 @@
 	},
 	{
 		"type": "key",
+		"keyname": "final_energy_cost",
+		"default_value": "",
+		"description": "Final energy cost."
+	},
+	{
+		"type": "key",
 		"keyname": "sound_id",
 		"default_value": "",
 		"description": "the sound id"
@@ -347,7 +389,8 @@
 	{
 		"type": "key",
 		"keyname": "learn_spells",
-		"default_value": "",
+		"default_value": { "Your_spell_id": 1 },
+		"valid_values": { "lookup_filter": "all_spells" },
 		"description": "It should be a map of spell_type_id and the level at which the new spell is learned. For example 'learn_spells': { 'create_atomic_light': 5, 'megablast': 10 } added on the spell dark_sight will teach the Magic light spell to the user when they level Dark Sight to 5 (through casting)."
 	},
 	{

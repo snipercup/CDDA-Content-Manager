@@ -1,3 +1,15 @@
+//From https://stackoverflow.com/questions/9066792/get-table-parent-of-an-element
+function getNearestTableAncestor(htmlElementNode) {
+    while (htmlElementNode) {
+        htmlElementNode = htmlElementNode.parentNode;
+        if (htmlElementNode) {
+			if (htmlElementNode.tagName.toLowerCase() === 'table') {
+				return htmlElementNode;
+			}
+        }
+    }
+    return undefined;
+}
 
 //Toggles visiblity of all elements that do not have the given classname
 function setElementVisibilityExceptId(Id, htmlElements, visible){

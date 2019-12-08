@@ -86,7 +86,7 @@ Uncheckig collapsed will expand all the topics.
 
 You can use this in combination with conditions to create the following visualisation (using refugee_beggar4 this time because it has conditions):
 
-![image[(https://i.imgur.com/pPNS4gE.png?1)
+![image](https://i.imgur.com/pPNS4gE.png?1)
 
 Here is a gif summarising collapsing topics:
 

@@ -3,5 +3,10 @@
 		"type": "filter",
 		"filterName": "all_spells",
 		"filter": [["type", "SPELL", true, true]]
+	},
+	{
+		"type": "filter",
+		"filterName": "all_ammo",
+		"filter": [["type", "AMMO", true, true]]
 	}
 ]

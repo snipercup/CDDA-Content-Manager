@@ -21,6 +21,11 @@ ul {
 table, th, td {
   border: 1px solid black;
   border-collapse: collapse;
+  vertical-align: middle;
+}
+
+.editFormList select, .editFormList span {
+	float: left;
 }
 
 .formtable, .buttonsrow, .buttonsrow td {
@@ -291,6 +296,51 @@ ul, #myUL {
 
 
 
+.wrapper {
+  display: grid;
+  grid-template-rows: 150px 150px;
+  grid-template-columns: 150px 150px 150px;
+  grid-gap: 10px;
+  background-color: #fff;
+  color: #444;
+  margin: 40px;
+}
+
+.box, .box a {
+  background-color: #444;
+  color: #fff;
+  border-radius: 5px;
+  text-align: center;
+/*   padding: 20px; */
+  font-size: 120%;
+  cursor: pointer;
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+
+
+td.objectListCell {
+    padding: 10px;
+    margin: 10px;
+    border-width: 0px;
+}
+
+
+/*  Define the background color for all the ODD background rows  */
+tr.objectListRow:nth-child(odd){ 
+  background: #b8d1f3;
+}
+/*  Define the background color for all the EVEN background rows  */
+tr.objectListRow:nth-child(even){
+  background: #dae5f4;
+}
+
+
 /*
 light to dark blue scheme
 .w3-theme-l5 {color:#000 !important; background-color:#f6f9fd !important}
@@ -316,3 +366,6 @@ light to dark blue scheme
 .w3-hover-text-theme:hover {color:#6f9fd8 !important}
 .w3-hover-border-theme:hover {border-color:#6f9fd8 !important}
 */
+
+
+

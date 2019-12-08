@@ -233,11 +233,10 @@ async function buildRecursiveHtmlEditFormFromJSON(jsonObject, data, jsonFormObj,
 					if(validValues){
 						let lookup_filter = validValues.lookup_filter
 						if(lookup_filter){
-							const basePath = getWorkingDirectory();
-							let filePath = basePath + "\\data\\json\\editform\\filters.json";
+							let filePath = getWorkingDirectory() + FILTERS_PATH;
 							let jsonFilterList = await getJsonFromFile(filePath);
 							let filter = getItemFromListOfJsonItems(jsonFilterList, [["filterName", lookup_filter, true, true]]).jsonObject.filter;
-							let filteredItems = await getFilteredJsonItemsFromFolder(DATA_MODS, filter);
+							let filteredItems = await getFilteredJsonItemsFromFolder(getWorkingDirectory() + DATA_MODS, filter);
 							let filteredItem;
 							htmlString += "<tr><td colspan='3'><select style='width: 150px'>"
 							for (let n = 0, filteredItemslength = filteredItems.length; n < filteredItemslength; n++) {
@@ -264,8 +263,13 @@ async function buildRecursiveHtmlEditFormFromJSON(jsonObject, data, jsonFormObj,
 		}
 		htmlString += "</tr>";
 	}
-	// })
 	return htmlString;
+}
+
+async function getFilterFromFiltersFile(filterName){
+	let filePath = getFiltersFilePath();
+	let jsonFilterList = await getJsonFromFile(filePath);
+	return getItemFromListOfJsonItems(jsonFilterList, [["filterName", filterName, true, true]]).jsonObject.filter;						
 }
 
 
@@ -281,8 +285,8 @@ function buildHtmlTableFromJSON_andFile(jsonObject) {
 	let htmlString = "<table>"
 	// jsonObject[0] is the json object itself.
 	// jsonObject[1] is the file name it came from.
-	htmlString += buildHtmlRowsFromJSON(jsonObject[0]);
-	htmlString += "<tr><td>file:</td><td>"+jsonObject[1]+"</td></tr>"
+	htmlString += buildHtmlRowsFromJSON(jsonObject.jsonObject);
+	htmlString += "<tr><td>file:</td><td>"+jsonObject.fileName+"</td></tr>"
 	htmlString += "</table>"
 	return htmlString;
 }
@@ -552,25 +556,6 @@ async function editFormAddProperty_click(){
 	buildHtmlEditFormFromJSON_andFile(jsonObj);
 }
 
-//Makes a list of fields that are not visible but are defined in the editform json.
-function updateHiddenFieldsSelect(jsonObject, jsonFormObj){
-	let hiddenFieldsSelect = document.getElementById("hiddenPropertiesSelect");
-	let editFormEntry, editFormKeyName;
-	let jsonObjectEntry = jsonObject.jsonObject;
-	hiddenFieldsSelect.innerHTML = "";
-	//Loop nodes
-	for (x in jsonFormObj) {
-		editFormEntry = jsonFormObj[x]
-		editFormKeyName = editFormEntry.keyname;
-		if(!editFormKeyName){continue;}
-		if(jsonObjectEntry[editFormKeyName] == null){	//If the id of the editform json corresponds to a key in the json object
-			//The key name is defined in the form, but the json entry does not have that property applied.
-			//The key should not be visible. Instead, add it to the hiddenproperties.
-			hiddenFieldsSelect.innerHTML += "<option value='"+editFormKeyName+"'>"+editFormKeyName+"</option>";
-		}
-	}
-}
-
 //the entry data is stored in a hidden element called jsonObjectContainer
 //Clicking save will get all the values from the edit form and modify the stored json
 //It will then write the json to a file.
@@ -729,63 +714,29 @@ function getItemFromListOfJsonItems(jsonObj, filter) {
 }
 
 
-//Gets the data for the ediform from a file and returns a json object.
-async function getEditFormDataFromFile(formFileName) {
-	const basePath = getWorkingDirectory();
-	let filePath = basePath + "\\data\\json\\editform\\" + formFileName;
-	let jsonFormObj = await getJsonFromFile(filePath);
-	let jsonSubFormObj, jsonEntry, jsonSubEntry;
-	let i = 0, y = 0;
-	let type;
-	let amountOfItems = jsonFormObj.length;
-	for (; i < amountOfItems; i++) {
-		jsonEntry = jsonFormObj[i]
-		type = jsonEntry.type;
-		if(type == "include"){ //An entry can be a include entry. It will append the entries of that included file to this json object.
-			jsonSubFormObj = await getEditFormDataFromFile(jsonEntry.filename);
-			y = 0;
-			for (; y < jsonSubFormObj.length; y++) {
-				jsonSubEntry = jsonSubFormObj[y];
-				jsonFormObj.push(jsonSubEntry);
-			}
-		}
-	}
-	return jsonFormObj;
-}
 
-//When an user doubleclicks on an entry in one of the lists.
-function addedEntryListItem_doubleclick(htmlElement){
-	let addedEntryList = htmlElement.parentElement;
-	let listTrElement = addedEntryList.parentElement.parentElement;
-	let availableEntryList = listTrElement.childNodes[2].childNodes[0];
-	moveEntryBetweenLists(htmlElement, addedEntryList, availableEntryList, function(){availableEntryListItem_doubleclick(this)});
-}
+// When an user doubleclicks on an entry in one of the lists.
+// function addedEntryListItem_doubleclick(htmlElement){
+	// let addedEntryList = htmlElement.parentElement;
+	// let listTrElement = addedEntryList.parentElement.parentElement;
+	// let availableEntryList = listTrElement.childNodes[2].childNodes[0];
+	// moveEntryBetweenLists(htmlElement, addedEntryList, availableEntryList, function(){availableEntryListItem_doubleclick(this)});
+// }
 
-//When an user doubleclicks on an entry in one of the lists.
-function availableEntryListItem_doubleclick(htmlElement){
-	let availableEntryList = htmlElement.parentElement;
-	let listTrElement = availableEntryList.parentElement.parentElement;
-	let addedEntryList = listTrElement.childNodes[0].childNodes[0];
-	moveEntryBetweenLists(htmlElement, availableEntryList, addedEntryList, function(){addedEntryListItem_doubleclick(this)});
-}
-
-//When an user doubleclicks on an entry in one of the lists.
-function moveEntryBetweenLists(entryItem, sourceList, targetList, ondblclickFunction){
-	//Remove the item from the addedEntryList and add it to the availableEntryList
-	let newOption = entryItem.cloneNode(true);
-	newOption.ondblclick = ondblclickFunction;
-	sourceList.removeChild(entryItem);
-	targetList.appendChild(newOption);
-}
+// When an user doubleclicks on an entry in one of the lists.
+// function availableEntryListItem_doubleclick(htmlElement){
+	// let availableEntryList = htmlElement.parentElement;
+	// let listTrElement = availableEntryList.parentElement.parentElement;
+	// let addedEntryList = listTrElement.childNodes[0].childNodes[0];
+	// moveEntryBetweenLists(htmlElement, availableEntryList, addedEntryList, function(){addedEntryListItem_doubleclick(this)});
+// }
 
 		
 //Get all json entries from a given folder.
 //See the description of getItemsFromListOfJsonItems for the filter properties
 async function getFilteredJsonItemsFromFolder(folderName, filter){
 	//Get all files from a folder
-	let cataclysmGameFolder = await getCataclysmGameFolder();
-	let jsonFolder = cataclysmGameFolder + folderName
-	let allfiles = await getAllFiles(jsonFolder, []);
+	let allfiles = await getAllFiles(folderName, []);
 	
 	let i = 0;
 	let amountOfFiles = allfiles.length;

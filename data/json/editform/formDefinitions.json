@@ -1,0 +1,261 @@
+[
+  {
+    "type": "FORMDEFINITION",
+    "id": "generic",
+    "definition": [
+      { "type": "key", "keyname": "id", "description": "unique id of the entry." },
+      { "type": "key", "keyname": "type", "description": "The type of entry." },
+      { "type": "key", "keyname": "name", "description": "The name of entry as it appears ingame." },
+      { "type": "key", "keyname": "description", "description": "The description of entry as it appears ingame." }
+    ]
+  },
+  {
+    "type": "FORMDEFINITION",
+    "id": "all_spells",
+    "definition": [
+      { "type": "include", "formdefinition": "generic" },
+      { "type": "static", "keyname": "type", "value": "SPELL", "description": "The type of spell is always spell." },
+      {
+        "type": "key",
+        "keyname": "valid_targets",
+        "valid_values": [
+          { "name": "hostile", "description": "Target hostile targets." },
+          { "name": "ground", "description": "Target ground." },
+          { "name": "self", "description": "Target self." },
+          { "name": "ally", "description": "Target ally." },
+          {
+            "name": "none",
+            "description": "It skips the targeting menu and casts it on yourself, no matter what the range of the spell is. Technically 'at your location'."
+          }
+        ],
+        "default_value": [  ],
+        "description": "if a valid target is not included, you cannot cast the spell on that target."
+      },
+      {
+        "type": "key",
+        "keyname": "flags",
+        "default_value": [  ],
+        "valid_values": [ "PERMANENT", "LOUD", "IGNORE_WALLS", "SILENT", "NO_LEGS", "NO_HANDS", "VERBAL", "SOMATIC", "CONCENTRATE" ],
+        "description": "Flags applicable to this entry."
+      },
+      {
+        "type": "key",
+        "keyname": "effect",
+        "valid_values": [
+          { "name": "pain_split", "description": "makes all of your limbs' damage even out." },
+          { "name": "move_earth", "description": "'digs' at the target location. some terrain is not diggable this way" },
+          {
+            "name": "target_attack",
+            "description": "deals damage to a target (ignores walls). If 'effect_str' is included, it will add that effect (defined elsewhere in json) to the targets if able, to the body parts defined in effected_body_parts. Any aoe will manifest as a circular area centered on the target, and will only deal damage to valid_targets. (aoe does not ignore walls)"
+          },
+          { "name": "spawn_item", "description": "spawns an item that will disappear at the end of its duration. Default duration is 0." },
+          {
+            "name": "line_attack",
+            "description": "fires a line with width aoe toward the target, being blocked by walls on the way. If 'effect_str' is included, it will add that effect (defined elsewhere in json) to the targets if able, to the body parts defined in effected_body_parts."
+          },
+          { "name": "translocate" }
+        ],
+        "multiple_values_disallowed": true,
+        "default_value": [  ],
+        "description": "the effect of the spell."
+      },
+      {
+        "type": "key",
+        "keyname": "effect_filter",
+        "valid_values": [ "ally", "hostile", "item", "fd_fire", "fd_blood" ],
+        "multiple_values_disallowed": true,
+        "default_value": [  ],
+        "description": "similar to valid_targets but specifies which objects will be affected by area of effect. I've decided to make a separate parameter because AoE logic can affect much more object types than the objects in targeting UI.."
+      },
+      { "type": "key", "keyname": "damage_type", "default_value": "", "description": "The type of damage." },
+      { "type": "key", "keyname": "message", "default_value": "", "description": "The message to the user." },
+      { "type": "key", "keyname": "final_casting_time", "default_value": "", "description": "The final casting time." },
+      { "type": "key", "keyname": "energy_increment", "default_value": "", "description": "The final casting time." },
+      { "type": "key", "keyname": "casting_time_increment", "default_value": "", "description": "The final casting time." },
+      {
+        "type": "key",
+        "keyname": "//",
+        "default_value": "",
+        "description": "A comment you can leave that will only show up here but not ingame."
+      },
+      { "type": "key", "keyname": "effect_str", "default_value": "", "description": "used to provide input for the effect." },
+      {
+        "type": "key",
+        "keyname": "extra_effects",
+        "valid_values": [
+          { "keyname": "id", "default_value": "", "description": "The id of the spell you want this spell to cast as extra effect." },
+          { "keyname": "hit_self", "default_value": false, "description": "Can be true or false" },
+          { "keyname": "max_level", "default_value": 0, "description": "A number" }
+        ],
+        "default_value": [ { "id": "your_id_here" } ],
+        "description": "this allows you to cast multiple spells with only one spell"
+      },
+      {
+        "type": "key",
+        "keyname": "affected_body_parts",
+        "valid_values": [ "HEAD", "TORSO", "MOUTH", "EYES", "ARM_L", "ARM_R", "HAND_R", "HAND_L", "LEG_L", "LEG_R", "FOOT_L", "FOOT_R" ],
+        "default_value": [  ],
+        "datatype": "list",
+        "description": "body parts affected by effects."
+      },
+      { "type": "key", "keyname": "spell_class", "default_value": "", "description": "" },
+      { "type": "key", "keyname": "base_casting_time", "datatype": "integer", "description": "this is the casting time (in moves)" },
+      {
+        "type": "key",
+        "keyname": "base_energy_cost",
+        "datatype": "integer",
+        "description": "the amount of energy (of the requisite type) to cast the spell"
+      },
+      {
+        "type": "key",
+        "keyname": "energy_source",
+        "valid_values": [
+          { "name": "MANA" },
+          { "name": "BIONIC" },
+          { "name": "HP" },
+          { "name": "STAMINA" },
+          { "name": "FATIGUE" },
+          { "name": "BIONIC" },
+          { "name": "NONE", "description": "will not use mana" }
+        ],
+        "default_value": [  ],
+        "description": "the type of energy used to cast the spell."
+      },
+      { "type": "key", "keyname": "difficulty", "default_value": 0, "description": "the difficulty to learn/cast the spell" },
+      { "type": "key", "keyname": "max_level", "default_value": 0, "description": "maximum level you can achieve in the spell" },
+      { "type": "key", "keyname": "min_damage", "default_value": 0, "description": "minimum damage (or 'starting' damage)" },
+      { "type": "key", "keyname": "max_damage", "default_value": 0, "description": "maximum damage the spell can achieve" },
+      {
+        "type": "key",
+        "keyname": "damage_increment",
+        "default_value": 0,
+        "description": "to get damage (and any of the other below stats) multiply this by spell's level and add to minimum damage."
+      },
+      { "type": "key", "keyname": "min_aoe", "default_value": 0, "description": "area of effect (currently not implemented)" },
+      { "type": "key", "keyname": "max_aoe", "default_value": 0, "description": "" },
+      { "type": "key", "keyname": "aoe_increment", "default_value": 0, "description": "" },
+      { "type": "key", "keyname": "min_range", "default_value": 0, "description": "minimum range of the spell" },
+      { "type": "key", "keyname": "max_range", "default_value": 0, "description": "maximum range of the spell" },
+      { "type": "key", "keyname": "range_increment", "default_value": 0, "description": "maximum range of the spell" },
+      { "type": "key", "keyname": "min_dot", "default_value": 0, "description": "damage over time (currently not implemented)" },
+      { "type": "key", "keyname": "max_dot", "default_value": 0, "description": "damage over time (currently not implemented)" },
+      { "type": "key", "keyname": "dot_increment", "default_value": 0, "description": "damage over time (currently not implemented)" },
+      {
+        "type": "key",
+        "keyname": "min_duration",
+        "default_value": 0,
+        "description": "duration of spell effect (if the spell has a special effect)"
+      },
+      {
+        "type": "key",
+        "keyname": "max_duration",
+        "default_value": 0,
+        "description": "duration of spell effect (if the spell has a special effect)"
+      },
+      {
+        "type": "key",
+        "keyname": "duration_increment",
+        "default_value": 0,
+        "description": "duration incdement of spell effect (if the spell has a special effect)"
+      },
+      {
+        "type": "key",
+        "keyname": "min_pierce",
+        "default_value": 0,
+        "description": "how much of the spell pierces armor (currently not implemented)"
+      },
+      {
+        "type": "key",
+        "keyname": "max_pierce",
+        "default_value": 0,
+        "description": "how much of the spell pierces armor (currently not implemented)"
+      },
+      {
+        "type": "key",
+        "keyname": "pierce_increment",
+        "default_value": 0,
+        "description": "how much of the spell pierces armor (currently not implemented)"
+      },
+      { "type": "key", "keyname": "field_id", "default_value": "", "description": "the string id of the field (currently hardcoded)" },
+      {
+        "type": "key",
+        "keyname": "field_chance",
+        "default_value": 0,
+        "description": "one_in( field_chance ) chance of spawning a field per tile in aoe"
+      },
+      { "type": "key", "keyname": "min_field_intensity", "default_value": 0, "description": "field intensity of fields generated" },
+      { "type": "key", "keyname": "max_field_intensity", "default_value": 0, "description": "field intensity of fields generated" },
+      { "type": "key", "keyname": "field_intensity_increment", "default_value": 0, "description": "field intensity of fields generated" },
+      {
+        "type": "key",
+        "keyname": "field_intensity_variance",
+        "default_value": 0,
+        "description": "the field can range in intensity from -variance as a percent to +variance as a percent."
+      },
+      {
+        "type": "key",
+        "keyname": "sound_type",
+        "default_value": "",
+        "description": "the type of sound. possible types are: background, weather, music, movement, speech, activity, destructive_activity, alarm, combat, alert, order"
+      },
+      {
+        "type": "key",
+        "keyname": "sound_description",
+        "default_value": "",
+        "description": "the sound description. in the form of 'You hear %s' by default it is 'an explosion'"
+      },
+      {
+        "type": "key",
+        "keyname": "sound_ambient",
+        "default_value": "",
+        "description": "whether or not this is treated as an ambient sound or not"
+      },
+      { "type": "key", "keyname": "final_energy_cost", "default_value": "", "description": "Final energy cost." },
+      { "type": "key", "keyname": "sound_id", "default_value": "", "description": "the sound id" },
+      {
+        "type": "key",
+        "keyname": "learn_spells",
+        "default_value": { "Your_spell_id": 1 },
+        "valid_values": { "lookup_filter": "all_spells" },
+        "description": "It should be a map of spell_type_id and the level at which the new spell is learned. For example 'learn_spells': { 'create_atomic_light': 5, 'megablast': 10 } added on the spell dark_sight will teach the Magic light spell to the user when they level Dark Sight to 5 (through casting)."
+      },
+      { "type": "key", "keyname": "sound_variant", "default_value": "", "description": "the sound variant" }
+    ]
+  },
+  {
+    "type": "FORMDEFINITION",
+    "id": "formdefinition",
+    "definition": [
+      { "type": "key", "keyname": "id", "description": "unique id of the entry." },
+      { "type": "key", "keyname": "type", "description": "The type of entry." },
+      {
+        "type": "key",
+        "keyname": "definition",
+        "default_value": [ { "Your_field": "fieldname" } ],
+        "description": "Lists all the fields of the form and their valid values and default values."
+      }
+    ]
+  },
+  {
+    "type": "FORMDEFINITION",
+    "id": "all_ammo",
+    "definition": [
+      { "type": "include", "formdefinition": "generic" },
+      { "type": "static", "keyname": "type", "value": "AMMO", "description": "The type of ammo is always ammo." },
+      { "type": "key", "keyname": "flags", "default_value": [  ], "valid_values": [  ], "description": "Flags applicable to this entry." },
+      {
+        "type": "key",
+        "keyname": "//",
+        "default_value": "",
+        "description": "A comment you can leave that will only show up here but not ingame."
+      },
+      {
+        "type": "key",
+        "keyname": "copy-from",
+        "default_value": { "Your_ammo_id": 1 },
+        "valid_values": { "lookup_filter": "all_ammo" },
+        "description": "The ammo entry it should copy the values from"
+      }
+    ]
+  }
+]

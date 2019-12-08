@@ -35,11 +35,11 @@
 			}
 			
 			get id(){
-				return this.jsonObject[0].id;
+				return this.jsonObject.jsonObject.id;
 			}
 			
 			get filePath(){
-				return this.jsonObject[1];
+				return this.jsonObject.fileName;
 			}
 			
 			//Returns wether or not this talk topic has the specified ID.
@@ -62,7 +62,7 @@
 				let span = document.createElement("span");
 				let htmlString = "<table class='talk_topic'>"
 				var obj = {talk_topidID: this.id};
-				htmlString += buildRecursiveHtmlRowsFromJSON(this.jsonObject[0], JSON.stringify(obj));
+				htmlString += buildRecursiveHtmlRowsFromJSON(this.jsonObject.jsonObject, JSON.stringify(obj));
 				htmlString += "</table>"
 				span.innerHTML = htmlString;
 				this.updateResponses(span);
@@ -71,7 +71,7 @@
 			
 			//Returns a list of id's of all child topics
 			get childTopics(){
-				let responses = this.jsonObject[0].responses;
+				let responses = this.jsonObject.jsonObject.responses;
 				let childTopics = [];
 				let childTopic;
 				if(responses){
@@ -299,7 +299,7 @@
 		
 		//Initialize function, it is asynchonous to allow await-ing for the functions called in init.
 		async function init(){
-			npcObjList = new jsonObjList(document.getElementById("npcList"), DATA_JSON_NPCS, "id", [["type", "npc", true, true]]);
+			npcObjList = new jsonObjList(document.getElementById("npcList"), await getCataclysmGameFolder() + DATA_JSON_NPCS, "id", [["type", "npc", true, true]]);
 			readTalkTopicsFromDisk();
 		}
 		
@@ -338,7 +338,7 @@
 		//Updates the list of all talk topics
 		async function readTalkTopicsFromDisk(){
 			//Update variable talk topics to contain all talk topics
-			allTopics = await getFilteredJsonItemsFromFolder(DATA_JSON_NPCS, [["type", "talk_topic", true, true]]);
+			allTopics = await getFilteredJsonItemsFromFolder(await getCataclysmGameFolder() + DATA_JSON_NPCS, [["type", "talk_topic", true, true]]);
 			talk_topics = [];
 			for (i = 0; i < allTopics.length; i++) {
 				var talk_topic = new Talk_topic(allTopics[i]);
@@ -825,17 +825,18 @@
 		//When the user selects an item from the NPC list
 		async function npcList_change(selectElement){
 			//User selects an item
-			//Get item title (it's a json string)
-			let itemTitle = selectElement.options[selectElement.selectedIndex].title;
-			//Transform the title string to a json object
-			var jsonObj = JSON.parse(itemTitle);  
-			//Transform the json object to html
-			let htmlString = buildHtmlTableFromJSON_andFile(jsonObj);
-			//Update the npc basic properties element
-			document.getElementById("npcBasicProperties").innerHTML = htmlString
-			
-			var chat = jsonObj[0].chat;
-			displayTalkTopic(chat, chat);
+      if(selectElement.selectedIndex == -1){return;}
+      //Get item title (it's a json string)
+      let itemTitle = selectElement.options[selectElement.selectedIndex].title;
+      //Transform the title string to a json object
+      var jsonObj = JSON.parse(itemTitle);  
+      //Transform the json object to html
+      let htmlString = buildHtmlTableFromJSON_andFile(jsonObj);
+      //Update the npc basic properties element
+      document.getElementById("npcBasicProperties").innerHTML = htmlString
+      
+      var chat = jsonObj.jsonObject.chat;
+      displayTalkTopic(chat, chat);
 		}
 		
 		//Create custom talk topic html table for TALK_DONE

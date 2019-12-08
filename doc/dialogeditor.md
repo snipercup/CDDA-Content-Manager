@@ -65,6 +65,7 @@ You can use this to click trough differen topics and go back and forth.
 It only shows what topic you came from last time, it does not show a trail of topics you followed to get here.
 
 Here is a gif that summarises navigating:
+
 ![image](https://i.imgur.com/2aXLVVL.gif)
 
 

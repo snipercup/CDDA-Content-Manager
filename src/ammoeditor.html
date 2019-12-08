@@ -24,7 +24,7 @@
 		
 		//Initialize function, it is asynchonous to allow await-ing for the functions called in init.
 		async function init(){
-			entryList = new jsonObjList(document.getElementById("entryList"), await getCataclysmGameFolder() + DATA_MODS, "id", [["type", "SPELL", true, true]]);
+			entryList = new jsonObjList(document.getElementById("entryList"), await getCataclysmGameFolder() + DATA, "id", [["type", "AMMO", true, true]]);
 		}
 		
 		
@@ -41,28 +41,27 @@
 			if(editFormList[0]){
 				editFormList[0].setContent(jsonObj);
 			} else {
-				editFormList[0] = new editForm("all_spells", jsonObj, document.getElementById("editForm"));
+				editFormList[0] = new editForm("all_ammo", jsonObj, document.getElementById("editForm"));
 			}
 			entryList.selectedEntryId = item.value;
 		}
 		
 	</script> 
 		<body>
-		<h1>Cataclysm: Dark Days Ahead spell editor</h1>
+		<h1>Cataclysm: Dark Days Ahead ammo editor</h1>
 		<p>Welcome to the content manager of Cataclysm: Dark Days Ahead. <a href="index.html">back to home</a></p>
 		<div class="mainContent">
 		<table>
 		<tr>
 			<td>
-				<p>List of spells:</p>
-				<p id="listspellsContainer">
+				<p id="listContainer">
 					<select name="entryList" id="entryList"  onchange="entryList_change(this);" size="41">
 					</select>
 				</p>
 			</td>
 			<td>
 				<div class="contentContainer">
-					<p id="editForm">Select a spell to start.</p>
+					<p id="editForm">Select a entry to start.</p>
 				</div>
 			</td>
 		</tr>

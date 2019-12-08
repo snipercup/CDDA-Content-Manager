@@ -39,3 +39,5 @@ Overview of the interface:
 6. Conditions true: Checking this box will display the topic as though the conditions apply (see 7)
 7. U_is_wearing: badge_marshal: This is a condition that is used in a dialog. It just so happens to be u_is_wearing this time but it can be any condition and any number of conditions as long as the condition is used in the dialog. If the condition is unchecked, the dialog is shown as though the condition is false. If you check the condition, the dialog is shown as though the condition is true.
 8. The dialog itself. You can click on the text in the responses to collapse that line to only show the text. You can click on topic in the responses to change to the topic it is referring to.
+
+This concludes the basic functionality. This should help you write the dialog for the NPC and see how it will appear to the player as well as what topics it leads to. More detailed instructions are shown below.

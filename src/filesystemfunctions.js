@@ -3,6 +3,38 @@ const path = require('path');
 const app = require('electron').remote.app
 
 
+//Gets the directory from which the application was launched.
+function getWorkingDirectory(){
+	const basepath = app.getAppPath();
+	return basepath;
+}
+
+
+
+//Gets the cataclysm game folder previously selected by the user
+async function getCataclysmGameFolder(){
+	if(!fileExists("userSettings.json")){
+		return "No game folder set!";
+	}
+	
+	const util = require('util');
+	const readfile = util.promisify(fs.readFile);
+
+	let names;
+	try {
+		data = await readfile('userSettings.json');
+	} catch (err) {
+		console.log(err);
+	}
+	if (data === undefined) {
+		console.log('[getCataclysmGameFolder]:undefined');
+	} else {
+		let jsonParsed = JSON.parse(data);
+		return jsonParsed["cataclysmGameFolder"];
+	}
+}
+
+
 //Takes a directory string, i.e. c:\users\tom\somefolder
 //Returns a list of all the files in the folder and subfolders
 //The returned filenames are full path names, i.e. c:\users\tom\somefolder\somesettings.json
@@ -27,11 +59,6 @@ async function getAllFiles(dirPath, arrayOfFiles) {
 	return arrayOfFiles
 }
 
-function getWorkingDirectory(){
-	const basepath = app.getAppPath();
-	return basepath;
-}
-
 
 		
 //Writes the json object to a json file.
@@ -42,6 +69,11 @@ function writeJsonFile(jsonString, fileName){
 			return console.log(err);
 		}
 	}); 
+}
+		
+function getFiltersFilePath(){
+	const basePath = getWorkingDirectory();
+	return basePath + "\\data\\json\\editform\\filters.json";
 }
 
 
@@ -86,29 +118,6 @@ var printError = function(error, explicit) {
     console.log(`[${explicit ? 'EXPLICIT' : 'INEXPLICIT'}] ${error.name}: ${error.message}`);
 }
 
-
-//Gets the cataclysm game folder previously selected by the user
-async function getCataclysmGameFolder(){
-	if(!fileExists("userSettings.json")){
-		return "No game folder set!";
-	}
-	
-	const util = require('util');
-	const readfile = util.promisify(fs.readFile);
-
-	let names;
-	try {
-		data = await readfile('userSettings.json');
-	} catch (err) {
-		console.log(err);
-	}
-	if (data === undefined) {
-		console.log('[getCataclysmGameFolder]:undefined');
-	} else {
-		let jsonParsed = JSON.parse(data);
-		return jsonParsed["cataclysmGameFolder"];
-	}
-}
 		
 function fileExists(fileName){
 	try {

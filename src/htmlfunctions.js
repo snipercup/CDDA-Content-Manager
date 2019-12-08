@@ -9,6 +9,40 @@ function getNearestTableAncestor(htmlElementNode) {
         }
     }
     return undefined;
+}    
+
+function createElement (tagName, id, attrs, events, innerhtml) {
+  attrs = Object.assign(attrs || {}, { id: id });
+  events = Object.assign(events || {});
+  
+  var el = document.createElement(tagName);
+  Object.keys(attrs).forEach((key) => {
+    if (attrs [key] !== undefined) {
+      el.setAttribute(key, attrs [key]);
+    }
+  });
+  
+  Object.keys(events).forEach((key) => {
+    if (typeof events [key] === 'function') {
+      el.addEventListener(key, events [key]);
+    }
+  });
+
+  if(innerhtml){
+    el.innerHTML = innerhtml;
+  }
+
+  return el;
+}
+
+
+//When an user doubleclicks on an entry in one of the lists.
+function moveEntryBetweenLists(entryItem, sourceList, targetList, ondblclickFunction){
+	//Remove the item from the addedEntryList and add it to the availableEntryList
+	let newOption = entryItem.cloneNode(true);
+	newOption.ondblclick = ondblclickFunction;
+	sourceList.removeChild(entryItem);
+	targetList.appendChild(newOption);
 }
 
 //Toggles visiblity of all elements that do not have the given classname

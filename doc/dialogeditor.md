@@ -43,8 +43,13 @@ Overview of the interface:
 This concludes the basic functionality. This should help you write the dialog for the NPC and see how it will appear to the player as well as what topics it leads to. More detailed instructions are shown below.
 
 
-## Using previous topic
+## Using previous topic (moving between topics)
+You want to use this to switch between topics you are working on. Lets take the dialog of scavenger_hunter:
+![Image](https://i.imgur.com/gFDETXR.png?1)
 
+You know you are at his first topic because the id, previous topic and chat are all the same.
+Now navigate to the first response topic by clicking the response topic:
+![image](https://i.imgur.com/hV93LEe.png)
 
 
 ## Using collapsed

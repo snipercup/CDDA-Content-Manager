@@ -71,6 +71,28 @@ Here is a gif that summarises navigating:
 
 ## Using collapsed
 
+You want to use this to get a quick overview of the topic and responses.
+Difference between not collapsed and collapsed:
+
+![image](https://i.imgur.com/u33BnHW.png?1)
+
+As you can see, the responses collapsed to only their text value.
+click a text response to expand it:
+
+![image](https://i.imgur.com/CsjQgNo.png)
+
+Clicking an expanded response will collapse it again.
+Uncheckig collapsed will expand all the topics.
+
+You can use this in combination with conditions to create the following visualisation (using refugee_beggar4 this time because it has conditions):
+
+![image[(https://i.imgur.com/pPNS4gE.png?1)
+
+Here is a gif summarising collapsing topics:
+
+![image](https://i.imgur.com/aAQNdLV.gif)
+
+
 
 ## Using visualise
 

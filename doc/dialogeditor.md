@@ -58,7 +58,7 @@ You are now at the topic you clicked:
 The ID of the current topic has changed to the topic ID you just clicked and the previous topic link stayed the same this time because it was the first topic.
 Now click the previous topic:
 
-![image](https://i.imgur.com/XaZzjw4.png?1)
+![image](https://i.imgur.com/nSHesBJ.png?1)
 
 The previous topic is now the topic you came from and the current topic is the first topic you saw when clicking a NPC. 
 You can use this to click trough differen topics and go back and forth.

@@ -51,6 +51,9 @@ You know you are at his first topic because the id, previous topic and chat are 
 Now navigate to the first response topic by clicking the response topic:
 ![image](https://i.imgur.com/hV93LEe.png)
 
+You are now at the topic you clicked:
+![image](https://i.imgur.com/wG9lEeI.png?1)
+
 
 ## Using collapsed
 

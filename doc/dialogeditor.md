@@ -41,3 +41,18 @@ Overview of the interface:
 8. The dialog itself. You can click on the text in the responses to collapse that line to only show the text. You can click on topic in the responses to change to the topic it is referring to.
 
 This concludes the basic functionality. This should help you write the dialog for the NPC and see how it will appear to the player as well as what topics it leads to. More detailed instructions are shown below.
+
+
+## Using previous topic
+
+
+
+## Using collapsed
+
+
+## Using visualise
+
+
+## Using conditions
+
+

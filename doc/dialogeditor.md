@@ -28,6 +28,13 @@ Brief overview of the interface:
 
 Select a NPC.For this tutorial a simple one will be used named scavenger_hunter
 
-![Image](https://i.imgur.com/YdBgz9o.png?1)
+![Image](https://i.imgur.com/x8FJxYL.png?1)
 
-
+Overview of the interface:
+1. Shows the basic properties of the NPC
+2. Shows the filename where the NPC is in so you know you are looking at the right file.
+3. Previous topic: this is a link you can click that takes you to the previous topic you came from. If this is the first topic you selected, it does nothing
+4. Collapsed: It will collapse the responses to only show the lines you can select as a player
+5. Depth: 0 and visualise: They go together to visualise the dialog, this will be explained later.
+6. Conditions true: Checking this box will display the topic as though the conditions apply (see 7)
+7: U_is_wearing: badge_marshal: This is a condition that is used in a dialog. It just so happens to be u_is_wearing this time but it can be any condition and any number of conditions as long as the condition is used in the dialog. If the condition is unchecked, the dialog is shown as though the condition is false. If you check the condition, the dialog is shown as though the condition is true.

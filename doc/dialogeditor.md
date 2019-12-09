@@ -96,6 +96,26 @@ Here is a gif summarising collapsing topics:
 
 ## Using conditions
 
+You want to use this to see how your topics turn out when conditions are applied. 
+For this topic the NPC refugee_beggar4 will be used. This is what his dialog looks like, pay attention to his conditions:
+
+![image](https://i.imgur.com/TjmcdIS.png?1)
+
+On top, you see one condition that is used in this dialog. If you select another topic, there may be more conditions that will be shown there.
+
+In the responses, the condition is used 4 times. The first two responses apply when the condition is NOT true. The last two responses apply when the condition is true.
+
+To apply the conditions, first check conditions true:
+
+![image](https://i.imgur.com/SsVio3a.png?1)
+
+Now the conditions are applied. If there is more then 1 condition, all conditions are applied simultaniously and you can check and uncheck the conditions individually. 
+Because the condition npc_has_effect: beggar_has_eaten is unchecked, the dialog will appear as though the condition is false.
+
+If the condition is checked, the dialog will appear as though the condition is true:
+
+![Imgur](https://i.imgur.com/S7wI7j7.png?1)
+
 
 
 

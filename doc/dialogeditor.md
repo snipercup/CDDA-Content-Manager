@@ -7,6 +7,7 @@ This page describes how to use the dialog editor. It assumes you know how to wri
 - Getting started
 - Using previous topic (moving between topics)
 - Using collapsed
+- Using conditions
 - Using visualise
 
 

@@ -117,8 +117,11 @@ If the condition is checked, the dialog will appear as though the condition is t
 ![Imgur](https://i.imgur.com/S7wI7j7.png?1)
 
 Here, the dynamic line shows 'yes' and the responses 2 and 3 are shown, just as you would see in-game. 
+Use this in combination with collapsing to create a simple overview of the spoken lines.
 
+This gif shows a summary of the functionality:
 
+![Imgur](https://i.imgur.com/ezXGykE.gifv)
 
 
 

@@ -5,7 +5,9 @@ This page describes how to use the dialog editor. It assumes you know how to wri
 
 ## Contents:
 - Getting started
-
+- Using previous topic (moving between topics)
+- Using collapsed
+- Using visualise
 
 
 ## Getting started:
@@ -31,7 +33,7 @@ Select a NPC.For this tutorial a simple one will be used named scavenger_hunter
 ![Image](https://i.imgur.com/x8FJxYL.png?1)
 
 Overview of the interface:
-1. Shows the basic properties of the NPC
+1. Shows the basic properties of the NPC. Click on it to collapse to its ID.
 2. Shows the filename where the NPC is in so you know you are looking at the right file.
 3. Previous topic: this is a link you can click that takes you to the previous topic you came from. If this is the first topic you selected, it does nothing
 4. Collapsed: It will collapse the responses to only show the lines you can select as a player
@@ -61,7 +63,7 @@ Now click the previous topic:
 ![image](https://i.imgur.com/nSHesBJ.png?1)
 
 The previous topic is now the topic you came from and the current topic is the first topic you saw when clicking a NPC. 
-You can use this to click trough differen topics and go back and forth.
+You can use this to click trough differen topics and go back and forth. 
 It only shows what topic you came from last time, it does not show a trail of topics you followed to get here.
 
 Here is a gif that summarises navigating:
@@ -126,3 +128,31 @@ This gif shows a summary of the functionality:
 
 
 ## Using visualise
+
+You want to use this to see a web-like view of what topics can be traversed by a player.
+Here, the NPC scavenger_merc will be used.
+
+The basic controls:
+
+![Imgur](https://i.imgur.com/qfqbxP0.png)
+
+Depth will determine how many branches of dialog will be shown. 0 will show the current topic and all parent/child topics. 1 will show the current topic, parent and child topics of the current topic and the parent/child topics of those topics as well. Increasing the depth will continue adding branches and loops. It's recommended to start with default depth of 0.
+
+The button visualise will show a canvas with a graph of the topic and parent/child topics.
+The graph below shows the topics of scavenger_merc at depth 0:
+
+![Imgur](https://i.imgur.com/cGoar8x.png?1)
+
+Description of the components:
+- The center node shows the current topic
+- The blue arrow points to a child of the current topic
+- The orange arrow comes from a parent of the current topic
+- Two arrows show a loop meaning the topic allows the user to return to the current topic.
+- The arrows may not always be cosistent as their color depends on what topic you are viewing it from (it can be a parent in one context and a child in another).
+
+Description of user interaction:
+- You can drag nodes around to better visualise it
+- You can doubleclick a topic to show its parent and child relationships. If nothing happens all relationships for that topic are already shown.
+
+![Imgur](https://i.imgur.com/6qOa3qL.png?1)
+

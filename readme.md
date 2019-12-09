@@ -2,7 +2,7 @@
 
 
 ## Features:
-- Dialog editor (well it only allows viewing atm)
+- [Dialog editor](https://github.com/snipercup/CDDA-Content-Manager/blob/master/doc/dialogeditor.md) (well it only allows viewing atm)
 - Spells editor (only mods folder)
 
 ## Installation:

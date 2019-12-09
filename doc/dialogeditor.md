@@ -156,3 +156,14 @@ Description of user interaction:
 
 ![Imgur](https://i.imgur.com/6qOa3qL.png?1)
 
+
+
+Here is a gif summarizing the functionality:
+
+![Image demoing dialog visualiser1](https://i.imgur.com/8SeqXgC.gif)
+
+
+
+
+
+This concludes this document.

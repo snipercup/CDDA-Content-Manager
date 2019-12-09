@@ -110,13 +110,13 @@ To apply the conditions, first check conditions true:
 ![image](https://i.imgur.com/SsVio3a.png?1)
 
 Now the conditions are applied. If there is more then 1 condition, all conditions are applied simultaniously and you can check and uncheck the conditions individually. 
-Because the condition npc_has_effect: beggar_has_eaten is unchecked, the dialog will appear as though the condition is false.
+Because the condition npc_has_effect: beggar_has_eaten is unchecked, the dialog will appear as though the condition is false. In this case, the dynamic_line is 'no' and topics 0 and 1 are shown.
 
 If the condition is checked, the dialog will appear as though the condition is true:
 
 ![Imgur](https://i.imgur.com/S7wI7j7.png?1)
 
-Here, the responses 2 and 3 are shown, just as you would see in-game. 
+Here, the dynamic line shows 'yes' and the responses 2 and 3 are shown, just as you would see in-game. 
 
 
 

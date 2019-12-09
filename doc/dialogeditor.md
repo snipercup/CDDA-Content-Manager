@@ -1,6 +1,6 @@
 # Dialog editor
 
-This page describes how to use the dialog editor. It assumes you know how to write dialog as per [NPSs.md](https://github.com/CleverRaven/Cataclysm-DDA/blob/master/doc/NPCs.md) and you know how to edit the JSON files.
+This page describes how to use the dialog editor. It assumes you know how to write dialog as per [NPSs.md](https://github.com/CleverRaven/Cataclysm-DDA/blob/master/doc/NPCs.md) and you know how to edit the JSON files. This doc shows an overview followed by different topics. Each topics ends with an animated gif summarizing the topic.
 
 
 ## Contents:

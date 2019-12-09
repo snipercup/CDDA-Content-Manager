@@ -121,7 +121,7 @@ Use this in combination with collapsing to create a simple overview of the spoke
 
 This gif shows a summary of the functionality:
 
-![Imgur](https://i.imgur.com/ezXGykE.gifv)
+![Imgur](https://i.imgur.com/ezXGykE.gif)
 
 
 

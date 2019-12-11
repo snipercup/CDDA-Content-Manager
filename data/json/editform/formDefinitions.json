@@ -231,7 +231,7 @@
       {
         "type": "key",
         "keyname": "definition",
-        "default_value": [ { "Your_field": "fieldname" } ],
+        "default_value": [ { "type": "fieldname" } ],
         "description": "Lists all the fields of the form and their valid values and default values."
       }
     ]
@@ -256,6 +256,14 @@
         "valid_values": { "lookup_filter": "all_ammo" },
         "description": "The ammo entry it should copy the values from"
       }
+    ]
+  },
+  {
+    "type": "FORMDEFINITION",
+    "id": "prices",
+    "definition": [
+      { "type": "key", "keyname": "price", "description": "The price of this item from before the cataclysm" },
+      { "type": "key", "keyname": "price_postapoc", "description": "The price of this item after the cataclysm" }
     ]
   }
 ]

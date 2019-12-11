@@ -67,7 +67,7 @@
             "title": "Id",
             "default": "mon_mi_go_slaver",
             "format": "text",
-            "description": "Description for 'id' Type: 'string' Path: '/properties/id'",
+            "description": "The ID of the monster",
             "options": {
                 "hidden": false
             },
@@ -469,7 +469,7 @@
                     {
                         "type": "array",
                         "id": "/properties/special_attacks/oneof0",
-                        "title": "oneof 0 /properties/special_attacks",
+                        "title": "Simple Special Attacks",
                         "format": "tabs",
                         "options": {
                             "disable_collapse": false,
@@ -486,7 +486,7 @@
                                 {
                                     "type": "string",
                                     "id": "/properties/special_attacks/items/oneof0",
-                                    "title": "oneof 0 /properties/special_attacks/items",
+                                    "title": "Special Attack Name",
                                     "default": "PARROT",
                                     "format": "text",
                                     "description": "Description for 'items' Type: 'string' Path: '/properties/special_attacks/items/items'",
@@ -497,7 +497,7 @@
                                 {
                                     "type": "integer",
                                     "id": "/properties/special_attacks/items/oneof1",
-                                    "title": "oneof 1 /properties/special_attacks/items",
+                                    "title": "Special Attack Value",
                                     "default": 0,
                                     "description": "A description for 'items'  Type: 'integer'",
                                     "options": {
@@ -510,7 +510,7 @@
                     {
                         "type": "object",
                         "id": "/properties/special_attacks/oneof1",
-                        "title": "oneof 1 /properties/special_attacks",
+                        "title": "Special Attack",
                         "options": {
                             "disable_collapse": false,
                             "disable_edit_json": false,
@@ -609,7 +609,7 @@
                     {
                         "type": "object",
                         "id": "/properties/special_attacks/oneof2",
-                        "title": "oneof 2 /properties/special_attacks",
+                        "title": "Special Attack",
                         "options": {
                             "disable_collapse": false,
                             "disable_edit_json": false,

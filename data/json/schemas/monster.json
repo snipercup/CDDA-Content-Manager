@@ -1,0 +1,838 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "additionalProperties": true,
+    "title": "My Schema Title",
+    "definitions": {
+        "comment": {
+            "title": "Comment:",
+            "type": "string",
+            "format": "textarea",
+            "default": ""
+        },
+        "yesno": {
+            "default": "yes",
+            "type": "string",
+            "enum": [
+                "yes",
+                "no"
+            ]
+        }
+    },
+    "type": "object",
+    "id": "https://niebert.github.io/json-editor",
+    "options": {
+        "disable_collapse": false,
+        "disable_edit_json": false,
+        "disable_properties": false,
+        "collapsed": false,
+        "hidden": false
+    },
+    "defaultProperties": [
+        "id",
+        "type",
+        "name",
+        "description",
+        "default_faction",
+        "bodytype",
+        "species",
+        "looks_like",
+        "volume",
+        "weight",
+        "hp",
+        "speed",
+        "material",
+        "symbol",
+        "color",
+        "aggression",
+        "morale",
+        "melee_skill",
+        "melee_dice",
+        "melee_dice_sides",
+        "melee_cut",
+        "dodge",
+        "armor_bash",
+        "armor_cut",
+        "vision_day",
+        "vision_night",
+        "harvest",
+        "path_settings",
+        "special_attacks",
+        "death_function",
+        "flags"
+    ],
+    "properties": {
+        "id": {
+            "type": "string",
+            "id": "/properties/id",
+            "title": "Id",
+            "default": "mon_mi_go_slaver",
+            "format": "text",
+            "description": "Description for 'id' Type: 'string' Path: '/properties/id'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 10
+        },
+        "type": {
+            "type": "string",
+            "id": "/properties/type",
+            "title": "Type",
+            "default": "MONSTER",
+            "format": "text",
+            "description": "Description for 'type' Type: 'string' Path: '/properties/type'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 20
+        },
+        "name": {
+            "type": "object",
+            "id": "/properties/name",
+            "title": "Name",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "str"
+            ],
+            "properties": {
+                "str": {
+                    "type": "string",
+                    "id": "/properties/name/properties/str",
+                    "title": "Str",
+                    "default": "mi-go slaver",
+                    "format": "text",
+                    "description": "Description for 'str' Type: 'string' Path: '/properties/name/properties/str'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 10
+                }
+            },
+            "propertyOrder": 30
+        },
+        "description": {
+            "type": "string",
+            "id": "/properties/description",
+            "title": "Description",
+            "default": "This is an alien creature of uncertain origin.  Its shapeless pink body bears numerous sets of paired appendages of unknown function, and a pair of ribbed, membranous wings which seem to be quite useless.  Its odd, vaguely pyramid-shaped head bristles with numerous wavering antennae, and simply gazing upon the unnatural beast fills you with primordial dread.  It is carrying an oblong object that hums with an odd keening sound.",
+            "format": "text",
+            "description": "Description for 'description' Type: 'string' Path: '/properties/description'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 40
+        },
+        "default_faction": {
+            "type": "string",
+            "id": "/properties/default_faction",
+            "title": "Default Faction",
+            "default": "mi-go",
+            "format": "text",
+            "description": "Description for 'default_faction' Type: 'string' Path: '/properties/default_faction'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 50
+        },
+        "bodytype": {
+            "type": "string",
+            "id": "/properties/bodytype",
+            "title": "Bodytype",
+            "default": "migo",
+            "format": "text",
+            "description": "Description for 'bodytype' Type: 'string' Path: '/properties/bodytype'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 60
+        },
+        "species": {
+            "type": "array",
+            "id": "/properties/species",
+            "title": "Species",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "string",
+                "id": "/properties/species/items",
+                "title": "Title Root Species ",
+                "default": "NETHER",
+                "format": "text",
+                "description": "Description for 'items' Type: 'string' Path: '/properties/species/items'",
+                "options": {
+                    "hidden": false
+                }
+            },
+            "propertyOrder": 70
+        },
+        "looks_like": {
+            "type": "string",
+            "id": "/properties/looks_like",
+            "title": "Looks Like",
+            "default": "mon_mi_go",
+            "format": "text",
+            "description": "Description for 'looks_like' Type: 'string' Path: '/properties/looks_like'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 80
+        },
+        "volume": {
+            "type": "string",
+            "id": "/properties/volume",
+            "title": "Volume",
+            "default": "92500 ml",
+            "format": "text",
+            "description": "Description for 'volume' Type: 'string' Path: '/properties/volume'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 90
+        },
+        "weight": {
+            "type": "string",
+            "id": "/properties/weight",
+            "title": "Weight",
+            "default": "120 kg",
+            "format": "text",
+            "description": "Description for 'weight' Type: 'string' Path: '/properties/weight'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 100
+        },
+        "hp": {
+            "type": "integer",
+            "id": "/properties/hp",
+            "title": "Hp",
+            "default": 240,
+            "description": "A description for 'hp'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 110
+        },
+        "speed": {
+            "type": "integer",
+            "id": "/properties/speed",
+            "title": "Speed",
+            "default": 120,
+            "description": "A description for 'speed'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 120
+        },
+        "material": {
+            "type": "array",
+            "id": "/properties/material",
+            "title": "Material",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "string",
+                "id": "/properties/material/items",
+                "title": "Title Root Material ",
+                "default": "flesh",
+                "format": "text",
+                "description": "Description for 'items' Type: 'string' Path: '/properties/material/items'",
+                "options": {
+                    "hidden": false
+                }
+            },
+            "propertyOrder": 130
+        },
+        "symbol": {
+            "type": "string",
+            "id": "/properties/symbol",
+            "title": "Symbol",
+            "default": "&",
+            "format": "text",
+            "description": "Description for 'symbol' Type: 'string' Path: '/properties/symbol'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 140
+        },
+        "color": {
+            "type": "string",
+            "id": "/properties/color",
+            "title": "Color",
+            "default": "pink",
+            "format": "text",
+            "description": "Description for 'color' Type: 'string' Path: '/properties/color'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 150
+        },
+        "aggression": {
+            "type": "integer",
+            "id": "/properties/aggression",
+            "title": "Aggression",
+            "default": 20,
+            "description": "A description for 'aggression'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 160
+        },
+        "morale": {
+            "type": "integer",
+            "id": "/properties/morale",
+            "title": "Morale",
+            "default": 35,
+            "description": "A description for 'morale'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 170
+        },
+        "melee_skill": {
+            "type": "integer",
+            "id": "/properties/melee_skill",
+            "title": "Melee Skill",
+            "default": 7,
+            "description": "A description for 'melee_skill'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 180
+        },
+        "melee_dice": {
+            "type": "integer",
+            "id": "/properties/melee_dice",
+            "title": "Melee Dice",
+            "default": 4,
+            "description": "A description for 'melee_dice'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 190
+        },
+        "melee_dice_sides": {
+            "type": "integer",
+            "id": "/properties/melee_dice_sides",
+            "title": "Melee Dice Sides",
+            "default": 6,
+            "description": "A description for 'melee_dice_sides'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 200
+        },
+        "melee_cut": {
+            "type": "integer",
+            "id": "/properties/melee_cut",
+            "title": "Melee Cut",
+            "default": 6,
+            "description": "A description for 'melee_cut'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 210
+        },
+        "dodge": {
+            "type": "integer",
+            "id": "/properties/dodge",
+            "title": "Dodge",
+            "default": 4,
+            "description": "A description for 'dodge'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 220
+        },
+        "armor_bash": {
+            "type": "integer",
+            "id": "/properties/armor_bash",
+            "title": "Armor Bash",
+            "default": 4,
+            "description": "A description for 'armor_bash'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 230
+        },
+        "armor_cut": {
+            "type": "integer",
+            "id": "/properties/armor_cut",
+            "title": "Armor Cut",
+            "default": 12,
+            "description": "A description for 'armor_cut'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 240
+        },
+        "vision_day": {
+            "type": "integer",
+            "id": "/properties/vision_day",
+            "title": "Vision Day",
+            "default": 50,
+            "description": "A description for 'vision_day'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 250
+        },
+        "vision_night": {
+            "type": "integer",
+            "id": "/properties/vision_night",
+            "title": "Vision Night",
+            "default": 20,
+            "description": "A description for 'vision_night'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 260
+        },
+        "harvest": {
+            "type": "string",
+            "id": "/properties/harvest",
+            "title": "Harvest",
+            "default": "zombie_meatslug",
+            "format": "text",
+            "description": "Description for 'harvest' Type: 'string' Path: '/properties/harvest'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 270
+        },
+        "path_settings": {
+            "type": "object",
+            "id": "/properties/path_settings",
+            "title": "Path Settings",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "max_dist"
+            ],
+            "properties": {
+                "max_dist": {
+                    "type": "integer",
+                    "id": "/properties/path_settings/properties/max_dist",
+                    "title": "Max Dist",
+                    "default": 50,
+                    "description": "A description for 'max_dist'  Type: 'integer'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 10
+                }
+            },
+            "propertyOrder": 280
+        },
+        "special_attacks": {
+            "type": "array",
+            "id": "/properties/special_attacks",
+            "title": "Special Attacks",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "headerTemplate": "Special Attacks {{i1}}",
+                "oneOf": [
+                    {
+                        "type": "array",
+                        "id": "/properties/special_attacks/oneof0",
+                        "title": "oneof 0 /properties/special_attacks",
+                        "format": "tabs",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "items": {
+                            "headerTemplate": "Title Root Special Attacks  {{i1}}",
+                            "oneOf": [
+                                {
+                                    "type": "string",
+                                    "id": "/properties/special_attacks/items/oneof0",
+                                    "title": "oneof 0 /properties/special_attacks/items",
+                                    "default": "PARROT",
+                                    "format": "text",
+                                    "description": "Description for 'items' Type: 'string' Path: '/properties/special_attacks/items/items'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                },
+                                {
+                                    "type": "integer",
+                                    "id": "/properties/special_attacks/items/oneof1",
+                                    "title": "oneof 1 /properties/special_attacks/items",
+                                    "default": 0,
+                                    "description": "A description for 'items'  Type: 'integer'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "type": "object",
+                        "id": "/properties/special_attacks/oneof1",
+                        "title": "oneof 1 /properties/special_attacks",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_edit_json": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "defaultProperties": [
+                            "id",
+                            "damage_max_instance"
+                        ],
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "id": "/properties/special_attacks/items/properties/id",
+                                "title": "Id",
+                                "default": "scratch",
+                                "format": "text",
+                                "description": "Description for 'id' Type: 'string' Path: '/properties/special_attacks/items/properties/id'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 10
+                            },
+                            "damage_max_instance": {
+                                "type": "array",
+                                "id": "/properties/special_attacks/items/properties/damage_max_instance",
+                                "title": "Damage Max Instance",
+                                "format": "tabs",
+                                "options": {
+                                    "disable_collapse": false,
+                                    "disable_array_add": false,
+                                    "disable_array_delete": false,
+                                    "disable_array_reorder": false,
+                                    "disable_properties": false,
+                                    "collapsed": false,
+                                    "hidden": false
+                                },
+                                "items": {
+                                    "type": "object",
+                                    "id": "/properties/special_attacks/items/properties/damage_max_instance/items",
+                                    "title": "Title Root Special Attacks Damage Max Instance ",
+                                    "options": {
+                                        "disable_collapse": false,
+                                        "disable_edit_json": false,
+                                        "disable_properties": false,
+                                        "collapsed": false,
+                                        "hidden": false
+                                    },
+                                    "defaultProperties": [
+                                        "damage_type",
+                                        "amount",
+                                        "armor_multiplier"
+                                    ],
+                                    "properties": {
+                                        "damage_type": {
+                                            "type": "string",
+                                            "id": "/properties/special_attacks/items/properties/damage_max_instance/items/properties/damage_type",
+                                            "title": "Damage Type",
+                                            "default": "cut",
+                                            "format": "text",
+                                            "description": "Description for 'damage_type' Type: 'string' Path: '/properties/special_attacks/items/properties/damage_max_instance/items/properties/damage_type'",
+                                            "options": {
+                                                "hidden": false
+                                            },
+                                            "propertyOrder": 10
+                                        },
+                                        "amount": {
+                                            "type": "integer",
+                                            "id": "/properties/special_attacks/items/properties/damage_max_instance/items/properties/amount",
+                                            "title": "Amount",
+                                            "default": 23,
+                                            "description": "A description for 'amount'  Type: 'integer'",
+                                            "options": {
+                                                "hidden": false
+                                            },
+                                            "propertyOrder": 20
+                                        },
+                                        "armor_multiplier": {
+                                            "type": "number",
+                                            "id": "/properties/special_attacks/items/properties/damage_max_instance/items/properties/armor_multiplier",
+                                            "title": "Armor Multiplier",
+                                            "default": 0.8,
+                                            "description": "A description for 'armor_multiplier'  Type: 'number'",
+                                            "options": {
+                                                "hidden": false
+                                            },
+                                            "propertyOrder": 30
+                                        }
+                                    }
+                                },
+                                "propertyOrder": 20
+                            }
+                        }
+                    },
+                    {
+                        "type": "object",
+                        "id": "/properties/special_attacks/oneof2",
+                        "title": "oneof 2 /properties/special_attacks",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_edit_json": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "defaultProperties": [
+                            "type",
+                            "spell_id",
+                            "spell_level",
+                            "cooldown"
+                        ],
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "id": "/properties/special_attacks/items/properties/type",
+                                "title": "Type",
+                                "default": "spell",
+                                "format": "text",
+                                "description": "Description for 'type' Type: 'string' Path: '/properties/special_attacks/items/properties/type'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 10
+                            },
+                            "spell_id": {
+                                "type": "string",
+                                "id": "/properties/special_attacks/items/properties/spell_id",
+                                "title": "Spell Id",
+                                "default": "mi-go_slaver_beam",
+                                "format": "text",
+                                "description": "Description for 'spell_id' Type: 'string' Path: '/properties/special_attacks/items/properties/spell_id'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 20
+                            },
+                            "spell_level": {
+                                "type": "integer",
+                                "id": "/properties/special_attacks/items/properties/spell_level",
+                                "title": "Spell Level",
+                                "default": 3,
+                                "description": "A description for 'spell_level'  Type: 'integer'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 30
+                            },
+                            "cooldown": {
+                                "type": "integer",
+                                "id": "/properties/special_attacks/items/properties/cooldown",
+                                "title": "Cooldown",
+                                "default": 100,
+                                "description": "A description for 'cooldown'  Type: 'integer'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 40
+                            }
+                        }
+                    }
+                ]
+            },
+            "propertyOrder": 290
+        },
+        "death_function": {
+            "type": "array",
+            "id": "/properties/death_function",
+            "title": "Death Function",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "string",
+                "id": "/properties/death_function/items",
+                "title": "Title Root Death Function ",
+                "default": "NORMAL",
+                "format": "text",
+                "description": "Description for 'items' Type: 'string' Path: '/properties/death_function/items'",
+                "options": {
+                    "hidden": false
+                }
+            },
+            "propertyOrder": 300
+        },
+        "flags": {
+            "type": "array",
+            "id": "/properties/flags",
+            "title": "Flags",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "headerTemplate": "Flags {{i1}}",
+                "oneOf": [
+                    {
+                        "type": "string",
+                        "id": "/properties/flags/oneof0",
+                        "title": "oneof 0 /properties/flags",
+                        "default": "SEES",
+                        "format": "text",
+                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
+                        "options": {
+                            "hidden": false
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "id": "/properties/flags/oneof1",
+                        "title": "oneof 1 /properties/flags",
+                        "default": "SMELLS",
+                        "format": "text",
+                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
+                        "options": {
+                            "hidden": false
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "id": "/properties/flags/oneof2",
+                        "title": "oneof 2 /properties/flags",
+                        "default": "HEARS",
+                        "format": "text",
+                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
+                        "options": {
+                            "hidden": false
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "id": "/properties/flags/oneof3",
+                        "title": "oneof 3 /properties/flags",
+                        "default": "WARM",
+                        "format": "text",
+                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
+                        "options": {
+                            "hidden": false
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "id": "/properties/flags/oneof4",
+                        "title": "oneof 4 /properties/flags",
+                        "default": "BASHES",
+                        "format": "text",
+                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
+                        "options": {
+                            "hidden": false
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "id": "/properties/flags/oneof5",
+                        "title": "oneof 5 /properties/flags",
+                        "default": "POISON",
+                        "format": "text",
+                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
+                        "options": {
+                            "hidden": false
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "id": "/properties/flags/oneof6",
+                        "title": "oneof 6 /properties/flags",
+                        "default": "NO_BREATHE",
+                        "format": "text",
+                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
+                        "options": {
+                            "hidden": false
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "id": "/properties/flags/oneof7",
+                        "title": "oneof 7 /properties/flags",
+                        "default": "ARTHROPOD_BLOOD",
+                        "format": "text",
+                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
+                        "options": {
+                            "hidden": false
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "id": "/properties/flags/oneof8",
+                        "title": "oneof 8 /properties/flags",
+                        "default": "PATH_AVOID_DANGER_2",
+                        "format": "text",
+                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
+                        "options": {
+                            "hidden": false
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "id": "/properties/flags/oneof9",
+                        "title": "oneof 9 /properties/flags",
+                        "default": "PRIORITIZE_TARGETS",
+                        "format": "text",
+                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
+                        "options": {
+                            "hidden": false
+                        }
+                    }
+                ]
+            },
+            "propertyOrder": 310
+        }
+    }
+}

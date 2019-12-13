@@ -1,0 +1,323 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "additionalProperties": true,
+    "title": "Armor schema",
+    "type": "object",
+    "id": "https://niebert.github.io/json-editor",
+    "options": {
+        "disable_collapse": false,
+        "disable_edit_json": false,
+        "disable_properties": false,
+        "collapsed": false,
+        "hidden": false
+    },
+    "defaultProperties": [
+        "id",
+        "type",
+        "name",
+        "description",
+        "weight",
+        "volume",
+        "price",
+        "bashing",
+        "material",
+        "symbol",
+        "looks_like",
+        "color",
+        "covers",
+        "coverage",
+        "encumbrance",
+        "material_thickness",
+        "use_action",
+        "flags"
+    ],
+    "properties": {
+        "id": {
+          "$ref": "#/definitions/id", 
+          "propertyOrder": 10
+        },
+        "type": {
+          "$ref": "#/definitions/type", 
+          "propertyOrder": 11
+        },
+        "name": {
+          "$ref": "#/definitions/name", 
+          "propertyOrder": 12
+        },
+        "name_plural": {
+          "$ref": "#/definitions/name_plural", 
+          "propertyOrder": 13
+        },
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 13
+        },
+        "weight": {
+          "$ref": "#/definitions/weight", 
+          "propertyOrder": 13
+        },
+        "volume": {
+          "$ref": "#/definitions/volume", 
+          "propertyOrder": 13
+        },
+        "price": {
+          "$ref": "#/definitions/price", 
+          "propertyOrder": 13
+        },
+        "bashing": {
+          "$ref": "#/definitions/bashing", 
+          "propertyOrder": 13
+        },
+        "material": {
+          "$ref": "#/definitions/material", 
+          "propertyOrder": 13
+        },
+        "symbol": {
+          "$ref": "#/definitions/symbol", 
+          "propertyOrder": 13
+        },
+        "color": {
+          "$ref": "#/definitions/color", 
+          "propertyOrder": 13
+        },
+        "looks_like": {
+            "type": "string",
+            "id": "/properties/looks_like",
+            "title": "Looks Like",
+            "default": "sheath",
+            "format": "text",
+            "description": "Description for 'looks_like' Type: 'string' Path: '/properties/looks_like'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 110
+        },
+        "covers": {
+            "type": "array",
+            "id": "/properties/covers",
+            "title": "Covers",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "enum": [ 
+                  "TORSO", 
+                  "ARMS", 
+                  "HANDS", 
+                  "LEGS", 
+                  "FEET", 
+                  "HEAD", 
+                  "EYES", 
+                  "MOUTH"
+                ]
+            },
+            "propertyOrder": 60
+        },
+        "coverage": {
+            "type": "integer",
+            "id": "/properties/coverage",
+            "title": "Coverage",
+            "default": 10,
+            "description": "A description for 'coverage'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 140
+        },
+        "encumbrance": {
+            "type": "integer",
+            "id": "/properties/encumbrance",
+            "title": "Encumbrance",
+            "default": 3,
+            "description": "A description for 'encumbrance'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 150
+        },
+        "material_thickness": {
+            "type": "integer",
+            "id": "/properties/material_thickness",
+            "title": "Material Thickness",
+            "default": 1,
+            "description": "A description for 'material_thickness'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 160
+        },
+        "use_action": {
+            "type": "object",
+            "id": "/properties/use_action",
+            "title": "Use Action",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "type",
+                "holster_prompt",
+                "holster_msg",
+                "max_volume",
+                "draw_cost",
+                "flags"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "id": "/properties/use_action/properties/type",
+                    "title": "Type",
+                    "default": "holster",
+                    "format": "text",
+                    "description": "Description for 'type' Type: 'string' Path: '/properties/use_action/properties/type'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 10
+                },
+                "holster_prompt": {
+                    "type": "string",
+                    "id": "/properties/use_action/properties/holster_prompt",
+                    "title": "Holster Prompt",
+                    "default": "Sheath sword",
+                    "format": "text",
+                    "description": "Description for 'holster_prompt' Type: 'string' Path: '/properties/use_action/properties/holster_prompt'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 20
+                },
+                "holster_msg": {
+                    "type": "string",
+                    "id": "/properties/use_action/properties/holster_msg",
+                    "title": "Holster Msg",
+                    "default": "You sheath your %s",
+                    "format": "text",
+                    "description": "Description for 'holster_msg' Type: 'string' Path: '/properties/use_action/properties/holster_msg'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 30
+                },
+                "max_volume": {
+                    "type": "string",
+                    "id": "/properties/use_action/properties/max_volume",
+                    "title": "Max Volume",
+                    "default": "3 L",
+                    "format": "text",
+                    "description": "Description for 'max_volume' Type: 'string' Path: '/properties/use_action/properties/max_volume'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 40
+                },
+                "draw_cost": {
+                    "type": "integer",
+                    "id": "/properties/use_action/properties/draw_cost",
+                    "title": "Draw Cost",
+                    "default": 10,
+                    "description": "A description for 'draw_cost'  Type: 'integer'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 50
+                },
+                "flags": {
+                    "type": "array",
+                    "id": "/properties/use_action/properties/flags",
+                    "title": "Flags",
+                    "format": "tabs",
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_array_add": false,
+                        "disable_array_delete": false,
+                        "disable_array_reorder": false,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false
+                    },
+                    "items": {
+                        "type": "string",
+                        "id": "/properties/use_action/properties/flags/items",
+                        "title": "Title Root Use Action Flags ",
+                        "default": "SHEATH_SWORD",
+                        "format": "text",
+                        "description": "Description for 'items' Type: 'string' Path: '/properties/use_action/properties/flags/items'",
+                        "options": {
+                            "hidden": false
+                        }
+                    },
+                    "propertyOrder": 60
+                }
+            },
+            "propertyOrder": 170
+        },
+        "flags": {
+            "type": "array",
+            "id": "/properties/flags",
+            "title": "Flags",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "headerTemplate": "Flags {{i1}}",
+                "oneOf": [
+                    {
+                        "type": "string",
+                        "id": "/properties/flags/oneof0",
+                        "title": "oneof 0 /properties/flags",
+                        "default": "WAIST",
+                        "format": "text",
+                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
+                        "options": {
+                            "hidden": false
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "id": "/properties/flags/oneof1",
+                        "title": "oneof 1 /properties/flags",
+                        "default": "OVERSIZE",
+                        "format": "text",
+                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
+                        "options": {
+                            "hidden": false
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "id": "/properties/flags/oneof2",
+                        "title": "oneof 2 /properties/flags",
+                        "default": "WATER_FRIENDLY",
+                        "format": "text",
+                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
+                        "options": {
+                            "hidden": false
+                        }
+                    }
+                ]
+            },
+            "propertyOrder": 180
+        }
+    }
+}

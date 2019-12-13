@@ -1,0 +1,124 @@
+{
+  "title": "morale_type",
+  "schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "additionalProperties": true,
+    "title": "My Schema Title",
+    "definitions": {
+      "comment": {
+        "title": "Comment:",
+        "type": "string",
+        "format": "textarea",
+        "default": ""
+      },
+      "yesno": {
+        "default": "yes",
+        "type": "string",
+        "enum": [
+          "yes",
+          "no"
+        ]
+      }
+    },
+    "type": "object",
+    "id": "https://niebert.github.io/json-editor",
+    "options": {
+      "disable_collapse": false,
+      "disable_edit_json": false,
+      "disable_properties": false,
+      "collapsed": false,
+      "hidden": false
+    },
+    "defaultProperties": [
+      "id",
+      "type",
+      "text"
+    ],
+    "properties": {
+      "id": {
+        "type": "string",
+        "id": "/properties/id",
+        "title": "Id",
+        "default": "your_id_here",
+        "format": "text",
+        "description": "The ID for the morale type",
+        "options": {
+          "hidden": false
+        },
+        "propertyOrder": 10
+      },
+      "type": {
+        "type": "string",
+        "id": "/properties/type",
+        "title": "Type",
+        "default": "morale_type",
+        "format": "text",
+        "description": "The type should always be morale_type",
+        "options": {
+          "hidden": false
+        },
+        "propertyOrder": 20
+      },
+      "text": {
+        "type": "string",
+        "id": "/properties/text",
+        "title": "Text",
+        "default": "Played Video Game",
+        "format": "text",
+        "description": "The text that appears in the morale menu",
+        "options": {
+          "hidden": false
+        },
+        "propertyOrder": 30
+      }
+    }
+  },
+  "startval": {
+    "id": "morale_game",
+    "type": "morale_type",
+    "text": "Played Video Game"
+  },
+  "config": {
+    "theme": "bootstrap3",
+    "iconlib": "bootstrap3",
+    "object_layout": "normal",
+    "template": "default",
+    "show_errors": "interaction",
+    "required_by_default": 0,
+    "no_additional_properties": 0,
+    "display_required_only": 0,
+    "remove_empty_properties": 0,
+    "keep_oneof_values": 1,
+    "ajax": 0,
+    "ajaxCredentials": 0,
+    "show_opt_in": 0,
+    "disable_edit_json": 0,
+    "disable_collapse": 0,
+    "disable_properties": 0,
+    "disable_array_add": 0,
+    "disable_array_reorder": 0,
+    "disable_array_delete": 0,
+    "enable_array_copy": 0,
+    "array_controls_top": 0,
+    "disable_array_delete_all_rows": 0,
+    "disable_array_delete_last_row": 0,
+    "prompt_before_delete": 1,
+    "lib_aceeditor": 0,
+    "lib_autocomplete": 0,
+    "lib_sceditor": 0,
+    "lib_simplemde": 0,
+    "lib_select2": 0,
+    "lib_selectize": 0,
+    "lib_choices": 0,
+    "lib_flatpickr": 0,
+    "lib_signaturepad": 0,
+    "lib_mathjs": 0,
+    "lib_cleavejs": 0,
+    "lib_jodit": 0,
+    "lib_jquery": 0,
+    "lib_dompurify": 0
+  },
+  "code": "// The following lines are mandatory and readonly. You can add custom code above and below.\nif (jseditor instanceof window.JSONEditor) jseditor.destroy();\njseditor = new window.JSONEditor(document.querySelector(\"#json-editor-form\"), jedata);",
+  "style": "",
+  "desc": "Add optional description here. (HTML format)"
+}

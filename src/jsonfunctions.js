@@ -1,4 +1,129 @@
 var stringify = require("@aitodotai\\json-stringify-pretty-compact");
+var collapsible = require('collapsible');
+var JSONEDITOR = require("@json-editor\\json-editor");
+
+async function getIDListOfType(type){
+  let jsonList = await getFilteredJsonItemsFromFolder(await getCataclysmGameFolder() + DATA, [["type", type, true, true]]);
+  let returnList = [];
+		let jsonElementID = "", jsonObject, retrievedItem;
+		var i = 0;
+		for (let i = 0, jsonListLen = jsonList.length; i < jsonListLen; i++) {
+			retrievedItem = jsonList[i];
+			jsonObject = retrievedItem.jsonObject
+			jsonElementID = jsonObject["id"];
+      returnList.push(jsonElementID);
+		}
+  return returnList;
+}
+
+
+
+//from https://github.com/NadaCode/es6-import-test/blob/c6393c45ac5015261eaaa18e46a37f8a54f2202f/es6_test_lib.js
+// https://github.com/lydell/json-stringify-pretty-compact
+const stringifyPrettyCompact = (json, stringify, type) => {
+  // console.log("type = " + type);
+  let options;
+  if(type == "morale_type"){
+    options = { maxNesting: 0, indent: 2, arrayMargins: true, objectMargins: true};
+  } else {
+    options = { maxLength: 140, indent: 2, arrayMargins: true, objectMargins: true};
+  }
+	return stringify(json, options)
+  
+  // var options = {
+    // maxLength: 80,
+    // sameLineBraces: false,
+    // sameLineBrackets: false
+  // };
+  // let jsonString = "[";
+  // let entryString = "";
+  // console.log("json.length = " + json.length);
+  // for(let x = 0, jsonlen = json.length; x < jsonlen; x++){
+    
+    // if(x == 0){
+      // jsonString += "\n"
+    // }
+    ////entryString = collapsible.stringify(json[x], options).replace(/^\s*[\r\n]/gm, "");
+    // entryString = collapsible.stringify(json[x], options);
+    // let ks = entryString.split("\n");
+    // for(let y = 0, kslen = ks.length; y < kslen; y++){
+      // jsonString += "  " +  ks[y];
+      // if(y < kslen-1){
+        // jsonString += "\n"; 
+      // }
+    // }
+    // if(x < jsonlen-1){
+      // jsonString += ",\n";
+    // }
+    // if(x == jsonlen-1){
+      // jsonString += "\n";
+    // }
+  // }
+  // jsonString += "]";
+  // return jsonString;
+}
+
+
+
+
+
+		
+//Loads a json file, appends one entry and writes it to disk.
+async function appendJsonEntryInFile(jsonEntry, fileName){
+	let sourceJSON = await getJsonFromFile(fileName);
+	if(sourceJSON){
+		sourceJSON.push(jsonEntry);
+		writeJsonFile(stringifyPrettyCompact(sourceJSON, stringify, jsonEntry.type), fileName);
+	}
+}
+
+		
+//Loads a json file, updates one entry and writes it to disk.
+async function updateJsonEntryInFileById(jsonEntry, fileName){
+	let sourceJSON = await getJsonFromFile(fileName);
+	if(sourceJSON){
+		for(x in sourceJSON){
+			if(sourceJSON[x].id == jsonEntry.id){
+				sourceJSON[x] = jsonEntry;
+				break;
+			}
+		}
+		writeJsonFile(stringifyPrettyCompact(sourceJSON, stringify, jsonEntry.type), fileName);
+	}
+}
+
+		
+//Loads a json file, updates one entry and writes it to disk.
+async function updateJsonEntryInFileByIndex(jsonEntry, fileName, index){
+	let sourceJSON = await getJsonFromFile(fileName);
+	if(sourceJSON){
+		sourceJSON[index] = jsonEntry;
+		writeJsonFile(stringifyPrettyCompact(sourceJSON, stringify, jsonEntry.type), fileName);
+	}
+}
+
+		
+//Loads a json file, updates one entry and writes it to disk.
+async function deleteJsonEntryInFileByIndex(jsonEntry, fileName, index){
+	let sourceJSON = await getJsonFromFile(fileName);
+	if(sourceJSON){
+		var result1 = deleteEntryFromJSONObjectByIndex(sourceJSON).remove(index);
+		writeJsonFile(stringifyPrettyCompact(result1.data, stringify, jsonEntry.type), fileName);
+	}
+}
+
+		
+//Loads a json file, updates one entry and writes it to disk.
+async function deleteJsonEntryInFileById(jsonEntry, fileName){
+	let sourceJSON = await getJsonFromFile(fileName);
+	if(sourceJSON){
+		var result1 = deleteEntryFromJSONObject(sourceJSON).remove('id', jsonEntry.id);
+		writeJsonFile(stringifyPrettyCompact(result1.data, stringify, jsonEntry.type), fileName);
+	}
+}
+
+
+
 
 
 
@@ -273,12 +398,6 @@ async function getFilterFromFiltersFile(filterName){
 }
 
 
-//from https://github.com/NadaCode/es6-import-test/blob/c6393c45ac5015261eaaa18e46a37f8a54f2202f/es6_test_lib.js
-// https://github.com/lydell/json-stringify-pretty-compact
-const stringifyPrettyCompact = (json, stringify) => {
-	let options = { maxLength: 140, indent: 2, arrayMargins: true, objectMargins: true}
-	return stringify(json, options)
-}
 
 //Takes a basic JSON object and transforms each key and value pair into a HTML table.
 function buildHtmlTableFromJSON_andFile(jsonObject) {
@@ -592,60 +711,6 @@ function editFormDelete_click(){
 
 
 
-		
-//Loads a json file, appends one entry and writes it to disk.
-async function appendJsonEntryInFile(jsonEntry, fileName){
-	let sourceJSON = await getJsonFromFile(fileName);
-	if(sourceJSON){
-		sourceJSON.push(jsonEntry);
-		writeJsonFile(stringifyPrettyCompact(sourceJSON, stringify), fileName);
-	}
-}
-
-		
-//Loads a json file, updates one entry and writes it to disk.
-async function updateJsonEntryInFileById(jsonEntry, fileName){
-	let sourceJSON = await getJsonFromFile(fileName);
-	if(sourceJSON){
-		for(x in sourceJSON){
-			if(sourceJSON[x].id == jsonEntry.id){
-				sourceJSON[x] = jsonEntry;
-				break;
-			}
-		}
-		writeJsonFile(stringifyPrettyCompact(sourceJSON, stringify), fileName);
-	}
-}
-
-		
-//Loads a json file, updates one entry and writes it to disk.
-async function updateJsonEntryInFileByIndex(jsonEntry, fileName, index){
-	let sourceJSON = await getJsonFromFile(fileName);
-	if(sourceJSON){
-		sourceJSON[index] = jsonEntry;
-		writeJsonFile(stringifyPrettyCompact(sourceJSON, stringify), fileName);
-	}
-}
-
-		
-//Loads a json file, updates one entry and writes it to disk.
-async function deleteJsonEntryInFileByIndex(jsonEntry, fileName, index){
-	let sourceJSON = await getJsonFromFile(fileName);
-	if(sourceJSON){
-		var result1 = deleteEntryFromJSONObjectByIndex(sourceJSON).remove(index);
-		writeJsonFile(stringifyPrettyCompact(result1.data, stringify), fileName);
-	}
-}
-
-		
-//Loads a json file, updates one entry and writes it to disk.
-async function deleteJsonEntryInFileById(jsonEntry, fileName){
-	let sourceJSON = await getJsonFromFile(fileName);
-	if(sourceJSON){
-		var result1 = deleteEntryFromJSONObject(sourceJSON).remove('id', jsonEntry.id);
-		writeJsonFile(stringifyPrettyCompact(result1.data, stringify), fileName);
-	}
-}
 
 //from https://stackoverflow.com/questions/10020422/deleting-row-from-json-array-leaves-null
 //similar to jQuery, wrap them in an object

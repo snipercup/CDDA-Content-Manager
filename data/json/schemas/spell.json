@@ -1,0 +1,615 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "additionalProperties": true,
+    "title": "Spell",
+    "definitions": {
+        "comment": {
+            "title": "Comment:",
+            "type": "string",
+            "format": "textarea",
+            "default": ""
+        },
+        "yesno": {
+            "default": "yes",
+            "type": "string",
+            "enum": [
+                "yes",
+                "no"
+            ]
+        }
+    },
+    "type": "object",
+    "id": "https://niebert.github.io/json-editor",
+    "options": {
+        "disable_collapse": false,
+        "disable_edit_json": false,
+        "disable_properties": false,
+        "collapsed": false,
+        "hidden": false
+    },
+    "defaultProperties": [
+        "id",
+        "type",
+        "name",
+        "description",
+        "valid_targets",
+        "flags",
+        "min_damage",
+        "max_damage",
+        "effect",
+        "effect_str",
+        "spell_class",
+        "energy_source",
+        "difficulty",
+        "max_level",
+        "base_casting_time",
+        "base_energy_cost",
+        "min_duration",
+        "max_duration",
+        "duration_increment"
+    ],
+    "properties": {
+        "id": {
+          "$ref": "#/definitions/id", 
+          "propertyOrder": 10
+        },
+        "type": {
+          "$ref": "#/definitions/type", 
+          "propertyOrder": 11
+        },
+        "name": {
+          "$ref": "#/definitions/name", 
+          "propertyOrder": 12
+        },
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 13
+        },
+        "valid_targets": {
+            "type": "array",
+            "id": "/properties/valid_targets",
+            "title": "Valid Targets",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "string",
+                "enum": ["self", "ally", "ground", "hostile", "none"]
+            },
+            "propertyOrder": 40
+        },
+        "flags": {
+            "type": "array",
+            "id": "/properties/flags",
+            "title": "Flags",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "enum": [ "RANDOM_DAMAGE", "PERMANENT", "LOUD", "IGNORE_WALLS", "SILENT", "NO_LEGS", "NO_HANDS", "VERBAL", "SOMATIC", "CONCENTRATE" ]
+            },
+            "propertyOrder": 60
+        },
+        "affected_body_parts": {
+            "type": "array",
+            "id": "/properties/affected_body_parts",
+            "title": "Affected body parts",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "enum": [ "HEAD", "TORSO", "MOUTH", "EYES", "ARM_L", "ARM_R", "HAND_R", "HAND_L", "LEG_L", "LEG_R", "FOOT_L", "FOOT_R" ]
+            },
+            "propertyOrder": 60
+        },
+        "message": {
+            "type": "string",
+            "id": "/properties/message",
+            "title": "Message",
+            "default": "",
+            "format": "text",
+            "description": "The message to the user.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 60
+        },
+        "//": {
+            "type": "string",
+            "id": "/properties///",
+            "title": "Comment",
+            "default": "This is my comment",
+            "format": "text",
+            "description": "A comment you can leave that will only show up here but not ingame.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 70
+        },
+        "min_damage": {
+            "type": "integer",
+            "id": "/properties/min_damage",
+            "title": "Min Damage",
+            "default": 1,
+            "description": "minimum damage (or 'starting' damage)",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 70
+        },
+        "max_damage": {
+            "type": "integer",
+            "id": "/properties/max_damage",
+            "title": "Max Damage",
+            "default": 1,
+            "description": "Maximum damage the spell can achieve",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 80
+        },
+        "damage_type": {
+            "type": "string",
+            "id": "/properties/damage_type",
+            "title": "Damage type",
+            "default": "cold",
+            "format": "text",
+            "description": "The damage type of the spell.",
+            "enum": [ "cold", "fire", "electric", "cut", "stab", "bash", "none" ],
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 90
+        },
+        "effect": {
+            "type": "string",
+            "id": "/properties/effect",
+            "title": "Effect",
+            "default": "spawn_item",
+            "format": "text",
+            "description": "The effect of the spell.",
+            "enum": [ 
+              "pain_split", 
+              "move_earth", 
+              "target_attack", 
+              "projectile_attack", 
+              "cone_attack", 
+              "line_attack", 
+              "spawn_item", 
+              "teleport_random", 
+              "recover_energy", 
+              "ter_transform", 
+              "vomit", 
+              "timed_event", 
+              "explosion", 
+              "flashbang", 
+              "mod_moves", 
+              "map", 
+              "morale", 
+              "charm_monster", 
+              "mutate", 
+              "bash", 
+              "WONDER", 
+              "RANDOM_TARGET", 
+              "noise",
+              "summon",
+              "none",
+              "area_pull",
+              "translocate" 
+             ],
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 90
+        },
+        "effect_str": {
+            "type": "string",
+            "id": "/properties/effect_str",
+            "title": "Effect Str",
+            "default": "stonefist",
+            "format": "text",
+            "description": "Used to provide input for the effect.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 100
+        },
+        "spell_class": {
+            "type": "string",
+            "id": "/properties/spell_class",
+            "title": "Spell Class",
+            "default": "EARTHSHAPER",
+            "format": "text",
+            "description": "The class of the spell.",
+            "enum": [ "EARTHSHAPER", "TECHNOMANCER", "KELVINIST", "DRUID", "STORMSHAPER", "BIOMANCER", "MAGUS", "ANIMIST", "NONE" ],
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 110
+        },
+        "energy_source": {
+            "type": "string",
+            "id": "/properties/energy_source",
+            "title": "Energy Source",
+            "default": "MANA",
+            "format": "text",
+            "description": "the type of energy used to cast the spell.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 120
+        },
+        "difficulty": {
+            "type": "integer",
+            "id": "/properties/difficulty",
+            "title": "Difficulty",
+            "default": 2,
+            "description": "the difficulty to learn/cast the spell",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 130
+        },
+        "aoe_increment": {
+            "type": "number",
+            "id": "/properties/aoe_increment",
+            "title": "aoe_increment",
+            "default": 2.0,
+            "description": "The incrementation of the AOE effect",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 130
+        },
+        "field_id": {
+            "type": "string",
+            "id": "/properties/field_id",
+            "title": "field_id",
+            "default": 2,
+            "description": "The string id of the field (currently hardcoded)",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 130
+        },
+        "min_field_intensity": {
+            "type": "integer",
+            "id": "/properties/min_field_intensity",
+            "title": "min_field_intensity",
+            "default": 2,
+            "description": "The minimum intensity of the field",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 130
+        },
+        "max_field_intensity": {
+            "type": "integer",
+            "id": "/properties/max_field_intensity",
+            "title": "max_field_intensity",
+            "default": 2,
+            "description": "The maximum intensity of the field",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 130
+        },
+        "field_intensity_increment": {
+            "type": "integer",
+            "id": "/properties/field_intensity_increment",
+            "title": "field_intensity_increment",
+            "default": 2,
+            "description": "The incrementation of the field intensity effect",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 130
+        },
+        "max_level": {
+            "type": "integer",
+            "id": "/properties/max_level",
+            "title": "Max Level",
+            "default": 20,
+            "description": "Maximum level you can achieve in the spell",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 140
+        },
+        "base_casting_time": {
+            "type": "integer",
+            "id": "/properties/base_casting_time",
+            "title": "Base Casting Time",
+            "default": 200,
+            "description": "This is the casting time (in moves)",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 150
+        },
+        "base_energy_cost": {
+            "type": "integer",
+            "id": "/properties/base_energy_cost",
+            "title": "Base Energy Cost",
+            "default": 100,
+            "description": "The amount of energy (of the requisite type) to cast the spell",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 160
+        },
+        "min_duration": {
+            "type": "integer",
+            "id": "/properties/min_duration",
+            "title": "Min Duration",
+            "default": 10000,
+            "description": "Duration of spell effect (if the spell has a special effect)",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 170
+        },
+        "max_duration": {
+            "type": "integer",
+            "id": "/properties/max_duration",
+            "title": "Max Duration",
+            "default": 100000,
+            "description": "duration of spell effect (if the spell has a special effect)",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 180
+        },
+        "duration_increment": {
+            "type": "integer",
+            "id": "/properties/duration_increment",
+            "title": "Duration Increment",
+            "default": 2000,
+            "description": "duration increment of spell effect (if the spell has a special effect)",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 190
+        },
+        "casting_time_increment": {
+            "type": "number",
+            "id": "/properties/casting_time_increment",
+            "title": "Casting Time Increment",
+            "default": -2,
+            "description": "The increment of casting time.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 140
+        },
+        "final_casting_time": {
+            "type": "integer",
+            "id": "/properties/final_casting_time",
+            "title": "Final Casting Time",
+            "default": 160,
+            "description": "The final casting time",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 150
+        },
+        "base_energy_cost": {
+            "type": "integer",
+            "id": "/properties/base_energy_cost",
+            "title": "Base Energy Cost",
+            "default": 350,
+            "description": "The base energy cost",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 160
+        },
+        "energy_increment": {
+            "type": "number",
+            "id": "/properties/energy_increment",
+            "title": "Energy Increment",
+            "default": -2,
+            "description": "The increment of energy",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 170
+        },
+        "extra_effects": {
+            "type": "array",
+            "id": "/properties/extra_effects",
+            "title": "Extra Effects",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "headerTemplate": "Extra Effect {{i1}}",
+                "type": "object",
+                "id": "/properties/extra_effects/oneof0",
+                "title": "Extra effect",
+                "options": {
+                    "disable_collapse": true,
+                    "disable_edit_json": true,
+                    "disable_properties": false,
+                    "collapsed": false,
+                    "hidden": false
+                },
+                "defaultProperties": [
+                    "id"
+                ],
+                "properties": {
+                    "id": {"$ref": "#/definitions/SPELL", 
+                        "propertyOrder": 10},
+                    "hit_self": {
+                        "type": "boolean",
+                        "id": "/properties/extra_effects/items/properties/hit_self",
+                        "title": "hit self",
+                        "default": false,
+                        "description": "Should it hit self",
+                        "options": {
+                            "hidden": false
+                        },
+                        "propertyOrder": 20
+                    },
+                    "max_level": {
+                        "type": "integer",
+                        "id": "/properties/extra_effects/items/properties/max_level",
+                        "title": "Max level",
+                        "default": 2,
+                        "description": "The max level",
+                        "options": {
+                            "hidden": false
+                        },
+                        "propertyOrder": 30
+                    }
+                }
+            },
+            "propertyOrder": 80
+        },
+        "final_energy_cost": {
+            "type": "integer",
+            "id": "/properties/final_energy_cost",
+            "title": "Final Energy Cost",
+            "default": 310,
+            "description": "The final energy cost",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 180
+        },
+        "damage_increment": {
+            "type": "number",
+            "id": "/properties/damage_increment",
+            "title": "Damage Increment",
+            "default": 0.15,
+            "description": "To get damage (and any of the other below stats) multiply this by spell's level and add to minimum damage",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 210
+        },
+        "min_range": {
+            "type": "integer",
+            "id": "/properties/min_range",
+            "title": "Min Range",
+            "default": 1,
+            "description": "The minimum range of the spell",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 220
+        },
+        "max_range": {
+            "type": "integer",
+            "id": "/properties/max_range",
+            "title": "Max Range",
+            "default": 5,
+            "description": "The maximum range",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 230
+        },
+        "range_increment": {
+            "type": "number",
+            "id": "/properties/range_increment",
+            "title": "Range Increment",
+            "default": 0.25,
+            "description": "The increment of range",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 240
+        },
+        "min_aoe": {
+            "type": "integer",
+            "id": "/properties/min_aoe",
+            "title": "Min Aoe",
+            "default": 3,
+            "description": "The minimum AOE",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 250
+        },
+        "max_aoe": {
+            "type": "integer",
+            "id": "/properties/max_aoe",
+            "title": "Max Aoe",
+            "default": 3,
+            "description": "The maximum AOE",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 260
+        },
+        "min_duration": {
+            "type": "integer",
+            "id": "/properties/min_duration",
+            "title": "Min Duration",
+            "default": 1000,
+            "description": "The minimum duration",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 270
+        },
+        "max_duration": {
+            "type": "integer",
+            "id": "/properties/max_duration",
+            "title": "Max Duration",
+            "default": 4500,
+            "description": "The maximum duration",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 280
+        },
+        "duration_increment": {
+            "type": "integer",
+            "id": "/properties/duration_increment",
+            "title": "Duration Increment",
+            "default": 200,
+            "description": "The increment of the duration",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 290
+        }
+    }
+}

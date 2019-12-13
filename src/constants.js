@@ -3,6 +3,7 @@ const DATA_JSON_NPCS = "\\data\\json\\npcs";
 const DATA = "\\data";
 const DATA_MODS = "\\data\\mods";
 const EDITFORM_PATH = "\\data\\json\\editform\\";
+const SCHEMAS_PATH = "\\data\\json\\schemas\\";
 const FILTERS_PATH = EDITFORM_PATH + "filters.json";
 const EDITFORM_DEFINITIONS_PATH = EDITFORM_PATH + "formDefinitions.json";
 

@@ -1,0 +1,198 @@
+{
+  "comment": {
+      "title": "Comment:",
+      "type": "string",
+      "format": "textarea",
+      "default": ""
+  },
+  "yesno": {
+      "default": "yes",
+      "type": "string",
+      "enum": [
+          "yes",
+          "no"
+      ]
+  },
+  "id": {
+      "type": "string",
+      "id": "/properties/id",
+      "title": "Id",
+      "default": "46mm",
+      "format": "text",
+      "description": "The ID of the ammo",
+      "options": {
+          "hidden": false
+      },
+      "propertyOrder": 10
+  },
+  "type": {
+      "type": "string",
+      "id": "/properties/type",
+      "title": "Type",
+      "default": "AMMO",
+      "format": "text",
+      "readonly": true,
+      "description": "The type should not be changed.",
+      "options": {
+          "hidden": false
+      },
+      "propertyOrder": 20
+  },
+  "name": {
+      "type": "string",
+      "id": "/properties/name",
+      "title": "Name",
+      "default": "4.6x30mm",
+      "format": "text",
+      "description": "The name as it will appear in-game",
+      "options": {
+          "hidden": false
+      },
+      "propertyOrder": 30
+  },
+  "description": {
+      "type": "string",
+      "id": "/properties/description",
+      "title": "Description",
+      "default": "4.6x30mm ammunition with 31gr copper plated steel bullets.  The 4.6x30mm round was developed by H&K to compete with FN Herstal's 5.7x28mm cartridge.  It has low recoil and excellent armor penetration.",
+      "format": "text",
+      "description": "The description that will appear in-game",
+      "options": {
+          "hidden": false
+      },
+      "propertyOrder": 40
+  },
+  "weight": {
+      "type": "string",
+      "id": "/properties/weight",
+      "title": "Weight",
+      "default": "5 g",
+      "format": "text",
+      "description": "The weight for the ammo",
+      "options": {
+          "hidden": false
+      },
+      "propertyOrder": 50
+  },
+  "volume": {
+      "type": "string",
+      "id": "/properties/volume",
+      "title": "Volume",
+      "default": "250 ml",
+      "format": "text",
+      "description": "The volume of the ammo",
+      "options": {
+          "hidden": false
+      },
+      "propertyOrder": 60
+  },
+  "price": {
+      "type": "integer",
+      "id": "/properties/price",
+      "title": "Price",
+      "default": 300,
+      "description": "The price from before the cataclysm",
+      "options": {
+          "hidden": false
+      },
+      "propertyOrder": 70
+  },
+  "price_postapoc": {
+      "type": "integer",
+      "id": "/properties/price_postapoc",
+      "title": "Price Postapoc",
+      "default": 5200,
+      "description": "The price after the cataclysm",
+      "options": {
+          "hidden": false
+      },
+      "propertyOrder": 80
+  },
+  "material": {
+      "type": "array",
+      "id": "/properties/material",
+      "title": "Material",
+      "format": "table",
+      "options": {
+          "disable_collapse": false,
+          "disable_array_add": false,
+          "disable_array_delete": false,
+          "disable_array_reorder": false,
+          "disable_properties": false,
+          "collapsed": false,
+          "hidden": false
+      },
+      "items": {
+          "headerTemplate": "Material {{i1}}",
+          "type": "string",
+          "id": "/properties/material/0",
+          "title": "Material",
+          "default": "steel",
+          "format": "text",
+          "description": "The material of this ammo",
+          "enum": ["steel", "powder", "wood"],
+          "options": {
+              "hidden": false
+          }
+      },
+      "propertyOrder": 90
+  },
+  "symbol": {
+      "type": "string",
+      "id": "/properties/symbol",
+      "title": "Symbol",
+      "default": "=",
+      "format": "text",
+      "description": "The symbol the entry will have when there is not sprite for it.",
+      "options": {
+          "hidden": false
+      },
+      "propertyOrder": 100
+  },
+  "color": {
+      "type": "string",
+      "id": "/properties/color",
+      "title": "Color",
+      "default": "dark_gray",
+      "format": "text",
+      "description": "The color the symbol will have when the sprite is missing.",
+      "options": {
+          "hidden": false
+      },
+      "propertyOrder": 110
+  },
+  "count": {
+      "type": "integer",
+      "id": "/properties/count",
+      "title": "Count",
+      "default": 40,
+      "description": "The default spawn stack",
+      "options": {
+          "hidden": false
+      },
+      "propertyOrder": 120
+  },
+  "copy-from": {
+      "type": "string",
+      "id": "/properties/copy-from",
+      "title": "Copy From",
+      "default": "46mm",
+      "format": "text",
+      "description": "The entry it should copy its undefined values from",
+      "options": {
+          "hidden": false
+      },
+      "propertyOrder": 20
+  },
+  "bashing": {
+      "type": "integer",
+      "id": "/properties/bashing",
+      "title": "Bashing",
+      "default": 1,
+      "description": "Amount of bashing damage",
+      "options": {
+          "hidden": false
+      },
+      "propertyOrder": 120
+  }
+}

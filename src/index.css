@@ -47,14 +47,6 @@ tr {
 
 
 /* general */
-div.editronContainer{
-  padding-top: 40px;
-  padding-left: 300px;
-  padding-right: 300px;
-  height: 650px;
-  overflow-y: auto;
-}
-
 div.contentContainer {
   overflow: auto;
   height: 650px;
@@ -76,58 +68,6 @@ div.mainContent {
 	background-color:#8cb1df
 }
 /* end id*/
-
-/* Editron */
-.editor {
-  color:#fff !important; background-color:#558dd1 !important
-}
-
-.editron-container {
-  color:#000 !important; background-color:#f6f9fd !important;
-  padding: 25px;
-}
-.editron-container.editron-container--array {
-  color:#000 !important; background-color:#f6f9fd !important;
-  padding: 0px;
-}
-
-.editron-container__child.editron-container__child--array-item, .editron-item{
-  color:#000 !important; background-color:#8cb1df !important;
-}
-
-.editron-container__child.editron-container__child--array-item .editron-value{
-  color:#000 !important; background-color:#8cb1df !important;
-}
-
-.editron-container__header {
-  color:#000 !important; background-color:#c5d8ef !important
-}
-
-.editron-container__children {
-  color:#000 !important; background-color:#8cb1df !important
-}
-
-.editron-container.editron-container--array .editron-container__children {
-  color:#000 !important; background-color:#e2ecf7 !important;
-  padding-bottom: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-.editron-container.editron-container--array .editron-container__children label{
-  /*display: none;*/
-}
-
-.editron-value {
-  color:#000 !important; background-color:#e2ecf7 !important
-}
-
-.mmf-form--input label.mmf-label {
-  top: -6px;
-  font-size: 1em;
-}
-
-/* end Editron */
 
 
 
@@ -357,8 +297,8 @@ ul, #myUL {
 
 .wrapper {
   display: grid;
-  grid-template-rows: 150px 150px;
-  grid-template-columns: 150px 150px 150px;
+  grid-template-rows: 150px 150px 150px; /* Add another 150px to add another row */
+  grid-template-columns: 150px 150px 150px; /* Add another 150px to add another column */
   grid-gap: 10px;
   background-color: #fff;
   color: #444;

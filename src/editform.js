@@ -1,5 +1,99 @@
 var stringify = require("@aitodotai\\json-stringify-pretty-compact");
 
+class EditForm {
+	
+	// class methods
+	constructor(jsonContentData, htmlParent) {
+		this.jsonContentData = jsonContentData;
+		this.htmlParent = htmlParent;
+		this.init();
+	}
+	
+	async init(){
+    this.schemaInst = await getJsonFromFile(await getWorkingDirectory() + SCHEMAS_PATH + this.type + ".json");
+    this.schemaInst.definitions = await getJsonFromFile(await getWorkingDirectory() + SCHEMAS_PATH + "generaldefinitions.json");
+    let IDListOfType = await getIDListOfType(this.type);
+    this.schemaInst.definitions[this.type] = { "type": "string", "description": "The id of another spell", "enum": IDListOfType };
+    if(this.schemaInst.properties["copy-from"]){
+      this.schemaInst.properties["copy-from"].enum = IDListOfType;
+    }
+		this.createForm();
+	}
+  
+  get type(){
+    return this.jsonContentData.jsonObject.type;
+  }
+	
+	createForm(){
+		this.htmlParent.innerHTML = "";
+		//Transform the json object to html
+		this.htmlParent.appendChild(this.createButtonsRow());
+		this.htmlParent.appendChild(createElement("div"));
+    
+    // Initialize the editor with a JSON schema
+    this.editor = new JSONEditor(this.htmlParent.childNodes[1],{
+      schema: this.schemaInst,
+      theme: 'spectre',
+      iconlib: 'spectre',
+      selectize: true
+    });
+    this.editor.setValue(this.jsonContentData.jsonObject);
+	}
+  
+  setValue(jsonContentData){
+		this.jsonContentData = jsonContentData;
+    this.fileNameHTMLElement.innerHTML = jsonContentData.fileName;
+    this.editor.setValue(jsonContentData.jsonObject);
+  }
+	
+	//Create row of buttons
+	createButtonsRow(){
+		let y = document.createElement("DIV"), _this = this;
+		y.appendChild(createElement("BUTTON", undefined, {"title": "Save", "class": "btn btn-sm btn-primary mr-2 my-1"}, {"click": function() {_this.editFormSubmit_click(this);}}, "<i class='icon icon-check'></i> Save"));
+		y.appendChild(createElement("BUTTON", undefined, {"title": "Duplicate", "class": "btn btn-sm btn-primary mr-2 my-1"}, {"click": function() {_this.editFormSubmit_click(this);}}, "<i class='icon icon-copy'></i> Duplicate"));
+		y.appendChild(createElement("BUTTON", undefined, {"title": "Delete", "class": "btn btn-sm btn-primary mr-2 my-1 json-editor-btn-delete json-editor-btntype-deleteall"}, {"click": function() {_this.editFormSubmit_click(this);}}, "<i class='icon icon-delete'></i> Delete"));
+    this.fileNameHTMLElement = createElement("SPAN", undefined, undefined, undefined, this.jsonContentData.fileName);
+		y.appendChild(this.fileNameHTMLElement);
+		return y;
+	}
+	
+  //When the user presses eighter save, duplicate or delete
+	async editFormSubmit_click(btnElement){
+    let jsonObj = this.editor.getValue();
+    this.jsonContentData.jsonObject = jsonObj;
+    let fileName = this.jsonContentData.fileName;
+    let indexInParentObject = this.jsonContentData.indexInParentObject;
+    switch(btnElement.title) {
+      case "Save":
+        //Clicking save will get all the values from the edit form and modify the stored json
+        //It will then write the json to a file.
+        updateJsonEntryInFileByIndex(jsonObj, fileName, indexInParentObject); //jsonObj[0] is the json data, jsonObj[1] is the filename
+        entryList.updateList();
+        break;
+      case "Duplicate":
+        //This will read the json file of the currently selected entry and then append a new item
+        //that is a copy of the currently selected entry and then save the json back to disk.
+        jsonObj.id = jsonObj.id + "_copy"
+        await appendJsonEntryInFile(jsonObj, fileName);
+        entryList.updateList();
+        entryList.selectedEntryId = jsonObj.id;
+        break;
+      case "Delete":
+          //Deletes the selected item from the json file it is in.
+        	var result = confirm("Are you sure you want to delete this entry?");
+          if (result) {
+            deleteJsonEntryInFileByIndex(jsonObj, fileName, indexInParentObject);
+            entryList.updateList();
+            entryList.selectRandom();
+          }
+        break;
+      default:
+        // code block
+    } 
+    this.createForm();
+	}
+}
+/*
 class editForm {
 	
 	// class methods
@@ -86,6 +180,7 @@ class editForm {
     this.init();
 	}
 }
+*/
 
 class editForm_PrimaryObject {
 	// class methods

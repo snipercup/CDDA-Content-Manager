@@ -1,7 +1,7 @@
 {
   "name": "cdda-content-manager",
   "productName": "cdda-content-manager",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Content manager for Cataclysm: Dark Days Ahead",
   "main": "src/index.js",
   "scripts": {
@@ -37,8 +37,9 @@
   },
   "dependencies": {
     "@aitodotai/json-stringify-pretty-compact": "^1.3.0",
-    "electron-squirrel-startup": "^1.0.0",
-    "mithril": "^2.0.4"
+    "@json-editor/json-editor": "^2.0.0-alpha.0",
+    "collapsible": "^1.0.1",
+    "electron-squirrel-startup": "^1.0.0"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.45",

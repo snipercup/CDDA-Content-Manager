@@ -156,7 +156,7 @@
         "type": "key",
         "keyname": "duration_increment",
         "default_value": 0,
-        "description": "duration incdement of spell effect (if the spell has a special effect)"
+        "description": "duration increment of spell effect (if the spell has a special effect)"
       },
       {
         "type": "key",

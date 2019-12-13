@@ -7,11 +7,6 @@
     <link rel="stylesheet" href="style\spectre-exp.min.css">
     <link rel="stylesheet" href="style\spectre-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/jsoneditor.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@latest/dist/js/select2.min.js "></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@latest/dist/css/select2.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/js/standalone/selectize.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/css/selectize.bootstrap3.css">
     <script src="filesystemfunctions.js"></script>
     <script src="commonfunctions.js"></script> 
     <script src="jsonfunctions.js"></script> 
@@ -19,14 +14,6 @@
     <script src="constants.js"></script> 
     <script src="htmlfunctions.js"></script> 
     <script src="editform.js"></script> 
-  <style>
-  .selectize-control.multi .selectize-input > div {
-    color: #FFF;
-  }
-  .selectize-control.multi .selectize-input > div.active {
-    color: #AAA;
-  }
-  </style>
   </head>
   <body style="height:100%">
     <script>
@@ -41,7 +28,7 @@
 		
 		//Initialize function, it is asynchonous to allow await-ing for the functions called in init.
 		async function init(){
-			entryList = new jsonObjList(document.getElementById("entryList"), await getCataclysmGameFolder() + DATA, "id", [["type", "SPELL", true, true]]);
+			entryList = new jsonObjList(document.getElementById("entryList"), await getCataclysmGameFolder() + DATA, "id", [["type", "AMMO", true, true]]);
     }
     
 		//When the user selects an item from the spell list
@@ -69,7 +56,7 @@
     
     
 		<div class="header" style="height:5%;">
-      <h2>Cataclysm: Dark Days Ahead spell editor. <a href="index.html">back to home</a></h2>
+      <h2>Cataclysm: Dark Days Ahead ammo editor. <a href="index.html">back to home</a></h2>
     </div>
 		<div class="mainContent" style="height:95%;">
 		<table style="height:100%;">

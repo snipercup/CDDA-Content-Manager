@@ -1,0 +1,377 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "additionalProperties": true,
+    "title": "My Schema Title",
+    "type": "object",
+    "id": "ammo",
+    "options": {
+        "disable_collapse": false,
+        "disable_edit_json": false,
+        "disable_properties": false,
+        "collapsed": false,
+        "hidden": false
+    },
+    "defaultProperties": [
+        "id",
+        "type",
+        "name",
+        "description",
+        "weight",
+        "volume",
+        "price",
+        "price_postapoc",
+        "material",
+        "symbol",
+        "color",
+        "count",
+        "stack_size",
+        "ammo_type",
+        "casing",
+        "range",
+        "damage",
+        "pierce",
+        "dispersion",
+        "recoil",
+        "effects"
+    ],
+    "properties": {
+        "id": {
+          "$ref": "#/definitions/id", 
+          "propertyOrder": 10
+        },
+        "type": {
+          "$ref": "#/definitions/type", 
+          "propertyOrder": 11
+        },
+        "name": {
+          "$ref": "#/definitions/name", 
+          "propertyOrder": 12
+        },
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 13
+        },
+        "weight": {"$ref": "#/definitions/weight"},
+        "volume": {"$ref": "#/definitions/volume"},
+        "price": {"$ref": "#/definitions/price"},
+        "price_postapoc": {"$ref": "#/definitions/price_postapoc"},
+        "material": {"$ref": "#/definitions/material"},
+        "symbol": {"$ref": "#/definitions/symbol"},
+        "color": {"$ref": "#/definitions/color"},
+        "count": {"$ref": "#/definitions/count"},
+        "stack_size": {
+            "type": "integer",
+            "id": "/properties/stack_size",
+            "title": "Stack Size",
+            "default": 80,
+            "description": "The default stack size",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 130
+        },
+        "ammo_type": {
+            "type": "string",
+            "id": "/properties/ammo_type",
+            "title": "Ammo Type",
+            "default": "46",
+            "format": "text",
+            "description": "The type of ammo",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 140
+        },
+        "casing": {
+            "type": "string",
+            "id": "/properties/casing",
+            "title": "Casing",
+            "default": "46mm_casing",
+            "format": "text",
+            "description": "The casing it will drop.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 150
+        },
+        "range": {
+            "type": "integer",
+            "id": "/properties/range",
+            "title": "Range",
+            "default": 14,
+            "description": "The range of the ammo",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 160
+        },
+        "damage": {
+            "type": "integer",
+            "id": "/properties/damage",
+            "title": "Damage",
+            "default": 18,
+            "description": "The damage it will deal.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 170
+        },
+        "pierce": {
+            "type": "integer",
+            "id": "/properties/pierce",
+            "title": "Pierce",
+            "default": 20,
+            "description": "The amount of piercing damage.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 180
+        },
+        "dispersion": {
+            "type": "integer",
+            "id": "/properties/dispersion",
+            "title": "Dispersion",
+            "default": 40,
+            "description": "The amount of dispersion",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 190
+        },
+        "copy-from": {
+            "type": "string",
+            "id": "/properties/copy-from",
+            "title": "Copy From",
+            "default": "46mm",
+            "format": "text",
+            "description": "The ammo it will copy from",
+            "options": {
+                "hidden": false
+            },
+            "enum": ["46mm", "47mm"],
+            "propertyOrder": 20
+        },
+        "proportional": {
+            "type": "object",
+            "id": "/properties/proportional",
+            "title": "Proportional",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "price",
+                "damage",
+                "recoil",
+                "pierce",
+                "dispersion"
+            ],
+            "properties": {
+                "price": {"$ref": "#/definitions/price"},
+                "damage": {
+                    "type": "number",
+                    "id": "/properties/proportional/properties/damage",
+                    "title": "Damage",
+                    "default": 0.46,
+                    "description": "A description for 'damage'  Type: 'number'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 20
+                },
+                "recoil": {
+                    "type": "number",
+                    "id": "/properties/proportional/properties/recoil",
+                    "title": "Recoil",
+                    "default": 0.46,
+                    "description": "A description for 'recoil'  Type: 'number'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 30
+                },
+                "pierce": {
+                    "type": "number",
+                    "id": "/properties/proportional/properties/pierce",
+                    "title": "Pierce",
+                    "default": 0.1,
+                    "description": "A description for 'pierce'  Type: 'number'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 40
+                },
+                "dispersion": {
+                    "type": "number",
+                    "id": "/properties/proportional/properties/dispersion",
+                    "title": "Dispersion",
+                    "default": 1.2,
+                    "description": "A description for 'dispersion'  Type: 'number'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 50
+                }
+            },
+            "propertyOrder": 60
+        },
+        "extend": {
+            "type": "object",
+            "id": "/properties/extend",
+            "title": "Extend",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "effects"
+            ],
+            "properties": {
+                "effects": {
+                    "type": "array",
+                    "id": "/properties/extend/properties/effects",
+                    "title": "Effects",
+                    "format": "table",
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_array_add": false,
+                        "disable_array_delete": false,
+                        "disable_array_reorder": false,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false
+                    },
+                    "items": {
+                        "headerTemplate": "Effects {{i1}}",
+                        "oneOf": [
+                            {
+                                "type": "string",
+                                "id": "/properties/extend/properties/effects/oneof0",
+                                "title": "oneof 0 /properties/extend/properties/effects",
+                                "default": "RECYCLED",
+                                "format": "text",
+                                "description": "Description for 'items' Type: 'string' Path: '/properties/extend/properties/effects/items'",
+                                "options": {
+                                    "hidden": false
+                                }
+                            },
+                            {
+                                "type": "string",
+                                "id": "/properties/extend/properties/effects/oneof1",
+                                "title": "oneof 1 /properties/extend/properties/effects",
+                                "default": "BLACKPOWDER",
+                                "format": "text",
+                                "description": "Description for 'items' Type: 'string' Path: '/properties/extend/properties/effects/items'",
+                                "options": {
+                                    "hidden": false
+                                }
+                            },
+                            {
+                                "type": "string",
+                                "id": "/properties/extend/properties/effects/oneof2",
+                                "title": "oneof 2 /properties/extend/properties/effects",
+                                "default": "MUZZLE_SMOKE",
+                                "format": "text",
+                                "description": "Description for 'items' Type: 'string' Path: '/properties/extend/properties/effects/items'",
+                                "options": {
+                                    "hidden": false
+                                }
+                            }
+                        ]
+                    },
+                    "propertyOrder": 10
+                }
+            },
+            "propertyOrder": 70
+        },
+        "delete": {
+            "type": "object",
+            "id": "/properties/delete",
+            "title": "Delete",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "effects"
+            ],
+            "properties": {
+                "effects": {
+                    "type": "array",
+                    "id": "/properties/delete/properties/effects",
+                    "title": "Effects",
+                    "format": "table",
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_array_add": false,
+                        "disable_array_delete": false,
+                        "disable_array_reorder": false,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false
+                    },
+                    "items": {
+                        "type": "string",
+                        "id": "/properties/delete/properties/effects/items",
+                        "title": "Effect",
+                        "default": "NEVER_MISFIRES",
+                        "format": "text",
+                        "description": "Description for 'items' Type: 'string' Path: '/properties/delete/properties/effects/items'",
+                        "options": {
+                            "hidden": false
+                        }
+                    },
+                    "propertyOrder": 10
+                }
+            },
+            "propertyOrder": 80
+        },
+        "recoil": {
+            "type": "integer",
+            "id": "/properties/recoil",
+            "title": "Recoil",
+            "default": 90,
+            "description": "A description for 'recoil'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 200
+        },
+        "effects": {
+            "type": "array",
+            "id": "/properties/effects",
+            "title": "Effects",
+            "format": "table",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "string",
+                "id": "/properties/effects/items",
+                "title": "Effect",
+                "default": "COOKOFF",
+                "format": "text",
+                "description": "The effects when using this ammo",
+                "options": {
+                    "hidden": false
+                }
+            },
+            "propertyOrder": 210
+        }
+    }
+}

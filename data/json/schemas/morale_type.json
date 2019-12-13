@@ -1,0 +1,74 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "additionalProperties": true,
+    "title": "Morale type",
+    "definitions": {
+        "comment": {
+            "title": "Comment:",
+            "type": "string",
+            "format": "textarea",
+            "default": ""
+        },
+        "yesno": {
+            "default": "yes",
+            "type": "string",
+            "enum": [
+                "yes",
+                "no"
+            ]
+        }
+    },
+    "type": "object",
+    "id": "https://niebert.github.io/json-editor",
+    "options": {
+        "disable_collapse": false,
+        "disable_edit_json": false,
+        "disable_properties": false,
+        "collapsed": false,
+        "hidden": false
+    },
+    "defaultProperties": [
+        "id",
+        "type",
+        "text"
+    ],
+    "properties": {
+        "id": {
+            "type": "string",
+            "id": "/properties/id",
+            "title": "Id",
+            "default": "your_id_here",
+            "format": "text",
+            "description": "The ID for the morale type",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 10
+        },
+        "type": {
+            "type": "string",
+            "id": "/properties/type",
+            "title": "Type",
+            "default": "morale_type",
+            "format": "text",
+            "readonly": true,
+            "description": "The type should always be morale_type",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 20
+        },
+        "text": {
+            "type": "string",
+            "id": "/properties/text",
+            "title": "Text",
+            "default": "Played Video Game",
+            "format": "text",
+            "description": "The text that appears in the morale menu",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 30
+        }
+    }
+}

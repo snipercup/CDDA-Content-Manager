@@ -301,7 +301,7 @@ ul, #myUL {
 .wrapper {
   display: grid;
   grid-template-rows: 150px 150px 150px; /* Add another 150px to add another row */
-  grid-template-columns: 150px 150px 150px; /* Add another 150px to add another column */
+  grid-template-columns: 150px 150px 150px 150px; /* Add another 150px to add another column */
   grid-gap: 10px;
   background-color: #fff;
   color: #444;

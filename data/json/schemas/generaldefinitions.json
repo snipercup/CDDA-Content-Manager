@@ -13,13 +13,23 @@
           "no"
       ]
   },
+  "category": {
+      "default": "yes",
+      "type": "string",
+      "enum": [
+          "spare_parts",
+          "chems",
+          "fuel",
+          "armor"
+      ]
+  },
   "id": {
       "type": "string",
       "id": "/properties/id",
       "title": "Id",
       "default": "46mm",
       "format": "text",
-      "description": "The ID of the ammo",
+      "description": "The ID of the entry",
       "options": {
           "hidden": false
       },
@@ -42,9 +52,21 @@
       "type": "string",
       "id": "/properties/name",
       "title": "Name",
-      "default": "4.6x30mm",
+      "default": "Name of entry",
       "format": "text",
       "description": "The name as it will appear in-game",
+      "options": {
+          "hidden": false
+      },
+      "propertyOrder": 30
+  },
+  "name_plural": {
+      "type": "string",
+      "id": "/properties/name_plural",
+      "title": "Plural name",
+      "default": "Names of Entries",
+      "format": "text",
+      "description": "The plural name as it will appear in-game",
       "options": {
           "hidden": false
       },
@@ -110,14 +132,15 @@
   },
   "material": {
       "type": "array",
-      "id": "/properties/material",
+      "id": "/definitions/material",
       "title": "Material",
-      "format": "table",
+      "format": "selectize",
+      "uniqueItems": true,
       "options": {
           "disable_collapse": false,
           "disable_array_add": false,
           "disable_array_delete": false,
-          "disable_array_reorder": false,
+          "disable_array_reorder": true,
           "disable_properties": false,
           "collapsed": false,
           "hidden": false
@@ -125,12 +148,22 @@
       "items": {
           "headerTemplate": "Material {{i1}}",
           "type": "string",
-          "id": "/properties/material/0",
+          "id": "/definitions/material/0",
           "title": "Material",
           "default": "steel",
           "format": "text",
-          "description": "The material of this ammo",
-          "enum": ["steel", "powder", "wood"],
+          "description": "The material of this entry",
+          "enum": [
+          "steel", 
+          "powder", 
+          "lead", 
+          "brass", 
+          "cotton",
+          "leather",
+          "bone", 
+          "plastic", 
+          "nomex"
+          ],
           "options": {
               "hidden": false
           }
@@ -139,7 +172,7 @@
   },
   "symbol": {
       "type": "string",
-      "id": "/properties/symbol",
+      "id": "/definitions/symbol",
       "title": "Symbol",
       "default": "=",
       "format": "text",
@@ -151,7 +184,7 @@
   },
   "color": {
       "type": "string",
-      "id": "/properties/color",
+      "id": "/definitions/color",
       "title": "Color",
       "default": "dark_gray",
       "format": "text",
@@ -163,7 +196,7 @@
   },
   "count": {
       "type": "integer",
-      "id": "/properties/count",
+      "id": "/definitions/count",
       "title": "Count",
       "default": 40,
       "description": "The default spawn stack",
@@ -171,18 +204,6 @@
           "hidden": false
       },
       "propertyOrder": 120
-  },
-  "copy-from": {
-      "type": "string",
-      "id": "/properties/copy-from",
-      "title": "Copy From",
-      "default": "46mm",
-      "format": "text",
-      "description": "The entry it should copy its undefined values from",
-      "options": {
-          "hidden": false
-      },
-      "propertyOrder": 20
   },
   "bashing": {
       "type": "integer",

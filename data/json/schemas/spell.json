@@ -473,8 +473,7 @@
                     "id"
                 ],
                 "properties": {
-                    "id": {"$ref": "#/definitions/SPELL", 
-                        "propertyOrder": 10},
+                    "id": {"$ref": "#/definitions/SPELL", "propertyOrder": 10},
                     "hit_self": {
                         "type": "boolean",
                         "id": "/properties/extra_effects/items/properties/hit_self",

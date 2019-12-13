@@ -47,6 +47,10 @@
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
         },
+        "name_plural": {
+          "$ref": "#/definitions/name_plural", 
+          "propertyOrder": 13
+        },
         "description": {
           "$ref": "#/definitions/description", 
           "propertyOrder": 13
@@ -335,6 +339,10 @@
             },
             "propertyOrder": 80
         },
+        "category": {
+          "$ref": "#/definitions/category", 
+          "propertyOrder": 13
+        },
         "recoil": {
             "type": "integer",
             "id": "/properties/recoil",
@@ -350,28 +358,63 @@
             "type": "array",
             "id": "/properties/effects",
             "title": "Effects",
-            "format": "table",
+            "format": "selectize",
+            "uniqueItems": true,
             "options": {
                 "disable_collapse": false,
                 "disable_array_add": false,
                 "disable_array_delete": false,
-                "disable_array_reorder": false,
+                "disable_array_reorder": true,
                 "disable_properties": false,
                 "collapsed": false,
-                "hidden": false
+                "hidden": false,
+                "multiple": true
             },
             "items": {
                 "type": "string",
-                "id": "/properties/effects/items",
-                "title": "Effect",
-                "default": "COOKOFF",
-                "format": "text",
-                "description": "The effects when using this ammo",
-                "options": {
-                    "hidden": false
-                }
+                "enum": [ 
+                "ACIDBOMB", 
+                "BEANBAG", 
+                "BLACKPOWDER", 
+                "BLINDS_EYES", 
+                "BOUNCE", 
+                "COOKOFF", 
+                "CUSTOM_EXPLOSION", 
+                "DRAW_AS_LINE", 
+                "EXPLOSIVE_BIG", 
+                "EXPLOSIVE_HUGE", 
+                "EXPLOSIVE ", 
+                "FLAME", 
+                "FLARE", 
+                "FLASHBANG", 
+                "FRAG", 
+                "INCENDIARY", 
+                "LARGE_BEANBAG", 
+                "LASER", 
+                "LIGHTNING", 
+                "MININUKE_MOD", 
+                "MUZZLE_SMOKE", 
+                "NAPALM", 
+                "NEVER_MISFIRES", 
+                "NOGIB", 
+                "TANGLE", 
+                "NO_EMBED", 
+                "NO_ITEM_DAMAGE", 
+                "PLASMA", 
+                "TANGLE", 
+                "RECOVER_[X]", 
+                "RECYCLED", 
+                "SHOT", 
+                "SMOKE_BIG", 
+                "TANGLE", 
+                "SMOKE", 
+                "STREAM_BIG", 
+                "STREAM", 
+                "TRAIL", 
+                "WIDE "
+                ]
             },
-            "propertyOrder": 210
+            "propertyOrder": 60
         }
     }
 }

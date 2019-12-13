@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html style="height:100%">
+	<head>
+		<meta charset="UTF-8">
+		<title>Cataclysm: Dark Days Ahead content manager</title>
+	</head>
+  <style>
+  
+.modSummaryMainList{ 
+    /*list-style-type: disc;
+    list-style-position: initial;
+    list-style: unset;*/
+    padding-top:5px;
+    padding-bottom:5px;
+    padding-left:5px;
+    padding-right:55px;
+}
+.modSummaryMainList ul{    
+/*
+    list-style-type: disc;
+    list-style-position: initial;
+    list-style: unset;
+    */
+    list-style-type: initial;
+    margin: 10px;
+}
+.modSummaryMainList div{
+    color:#fff !important; 
+	background-color:#558dd1 !important;
+    padding-right:10px;
+    padding-bottom: 1px;
+    font-size: xx-large;
+    margin-bottom: 6px;
+}
+.modSummaryMainList li{    
+/*
+    list-style-type: disc;
+    list-style-position: initial;
+    list-style: unset;
+    display: list-item;
+    */
+    list-style-type: initial;
+    color:#000 !important; 
+	background-color:#e2ecf7 !important;
+    font-size: x-large;
+}
+  </style>
+	<script src="filesystemfunctions.js"></script> 
+	<script src="jsonfunctions.js"></script> 
+	<script src="commonclasses.js"></script> 
+	<script src="constants.js"></script> 
+	<script src="dialog_topic_conditions.js"></script> 
+	<script src="htmlfunctions.js"></script> 
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+	<script>
+		var modFolderList;
+		
+		//When the page finishes loading
+		document.addEventListener("DOMContentLoaded", function(event) {
+			init();
+		});
+    
+		//Initialize function, it is asynchonous to allow await-ing for the functions called in init.
+		async function init(){
+			modFolderList = await getFolderNamesFromFolder(await getCataclysmGameFolder() + DATA_MODS);
+      let selectElement = document.getElementById("entryList")
+			for (let i = 0, modFolderListlen = modFolderList.length; i < modFolderListlen; i++) {
+        let opt = document.createElement('option');
+        opt.value = modFolderList[i];
+        opt.innerHTML = modFolderList[i];
+        opt.title = modFolderList[i];
+        selectElement.appendChild(opt);
+			}
+		}
+		
+		//When the user selects an item from the spell list
+		async function entryList_change(selectElement){
+			//User selects an item
+			let item = selectElement.options[selectElement.selectedIndex];
+			if(!item){return;}
+			let itemTitle = item.title;
+      
+      //Get evertthing that has a type from the mod folder
+			let allEntries = await getFilteredJsonItemsFromFolder(await getCataclysmGameFolder() + DATA_MODS + "\\" + itemTitle, [["type", "generic", true, false]]);
+			let htmlElement = document.getElementById("contentContainer");
+      let htmlString = "";
+      
+      //Seperate all the entries by type
+      let seperatorList = {};
+      let type;
+			for (let x = 0, allEntrieslen = allEntries.length; x < allEntrieslen; x++) {
+        type = allEntries[x].jsonObject.type
+        if(seperatorList[type]){
+          seperatorList[type].push(allEntries[x]);
+        } else {
+          seperatorList[type] = [];
+          seperatorList[type].push(allEntries[x]);
+        }
+			}
+          <!-- htmlString += buildRecursiveHtmlRowsFromJSON(allEntries[i].jsonObject, ""); -->
+      
+      //Make a list of all types and their entries
+      let types = Object.keys(seperatorList); //A list of all types in the seperator list
+      let typeList, typeEntry, typeEntryJsonObj;
+      htmlString += "<div class='modSummaryMainList'>"
+      //Loop over the types from the seperator list
+      for (let n = 0, keysLength = types.length; n < keysLength; n++) {
+        type = types[n];
+        typeList = seperatorList[type];
+        htmlString += "<div>"+type+"<div>"
+        //loop over the list per type
+        for (let i = 0, typeListlen = typeList.length; i < typeListlen; i++) {
+          typeEntry = typeList[i];
+          typeEntryJsonObj = typeEntry.jsonObject;
+          htmlString += "<div><ul>";
+          if(typeEntryJsonObj.id){ htmlString += "<li>id: "+typeEntryJsonObj.id+"</li>"};
+          if(typeEntryJsonObj.ident){ htmlString += "<li>ident: "+typeEntryJsonObj.ident+"</li>"};
+          if(typeEntryJsonObj.result){ htmlString += "<li>result: "+typeEntryJsonObj.result+"</li>"};
+          if(typeEntryJsonObj.category){ htmlString += "<li>category: "+typeEntryJsonObj.category+"</li>"};
+          if(typeEntryJsonObj.name){ htmlString += "<li>name: "+JSON.stringify(typeEntryJsonObj.name)+"</li>"};
+          if(typeEntryJsonObj.description){ htmlString += "<li>description: "+JSON.stringify(typeEntryJsonObj.description)+"</li>"};
+          if(typeEntryJsonObj.categories){ htmlString += "<li>categories: "+JSON.stringify(typeEntryJsonObj.categories)+"</li>"};
+          if(typeEntryJsonObj.compatibility){ htmlString += "<li>compatibility: "+JSON.stringify(typeEntryJsonObj.compatibility)+"</li>"};
+          if(typeEntryJsonObj.nested_mapgen_id){ htmlString += "<li>nested_mapgen_id: "+typeEntryJsonObj.nested_mapgen_id+"</li>"};
+          if(typeEntryJsonObj.om_terrain){ htmlString += "<li>om_terrain: "+typeEntryJsonObj.om_terrain+"</li>"};
+          if(typeEntryJsonObj.species){ htmlString += "<li>species: "+typeEntryJsonObj.species+"</li>"};
+          if(typeEntryJsonObj.items){ htmlString += "<li>items: "+typeEntryJsonObj.items[0]+"</li>"};
+          if(typeEntryJsonObj.monsters){ htmlString += "<li>monsters: "+JSON.stringify(typeEntryJsonObj.monsters[0])+"</li>"};
+          if(typeEntryJsonObj.speaker){ htmlString += "<li>speaker: "+typeEntryJsonObj.speaker+"</li>"};
+          htmlString += "</ul></div>";
+        }
+        htmlString += "</div></div>"
+      }
+      htmlString += "</div>"
+      
+      htmlElement.innerHTML = htmlString;
+		}
+		
+	</script> 
+		<body style="height:100%">
+    
+		<div class="header" style="height:5%;">
+      <h2>Cataclysm: Dark Days Ahead mod summary. <a href="index.html">back to home</a></h2>
+    </div>
+		<div class="mainContent" style="height:95%;">
+		<table style="height:95%;">
+		<tr>
+			<td class="mainListContainer">
+					<select name="entryList" id="entryList"  onchange="entryList_change(this);" size="5" style="height:95%;"></select>
+      </td>
+			<td class="mainContentContainer" style="padding:25px; height:100%; overflow:auto;">
+				<div class="contentContainer" id="contentContainer" style="height:100%; overflow:auto;" id="editForm">
+					<p >Select an entry to start.</p>
+				</div>
+			</td>
+		</tr>
+		</table>
+		</div>
+		
+	</body>
+</html>

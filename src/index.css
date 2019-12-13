@@ -23,6 +23,9 @@ table, th, td {
   vertical-align: middle;
 }
 
+   
+
+
 .editFormList select, .editFormList span {
 	float: left;
 }

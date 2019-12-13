@@ -59,6 +59,27 @@ async function getAllFiles(dirPath, arrayOfFiles) {
 	return arrayOfFiles
 }
 
+//Takes a directory string, i.e. c:\users\tom\somefolder
+//Returns a list of all the folder in the folder
+//The returned folder names i.e. somefolder, anotherfolder
+async function getFolderNamesFromFolder(dirPath) {
+	let files = fs.readdirSync(dirPath);
+	let fullFilePath = "";
+  let arrayOfFolders = [];
+
+  for (let i = 0, amountOfFiles = files.length; i < amountOfFiles; i++) {
+		if (files[i]) {
+			fullFilePath = dirPath + "/" + files[i];
+			if (fs.statSync(fullFilePath).isDirectory()) {
+				arrayOfFolders.push(files[i])
+			}
+		} else {
+			console.log("files[i] does not have a name");
+		}
+  }
+	return arrayOfFolders
+}
+
 
 		
 //Writes the json object to a json file.

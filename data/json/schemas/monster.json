@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "additionalProperties": true,
-    "title": "My Schema Title",
+    "title": "Monster schema",
     "definitions": {
         "comment": {
             "title": "Comment:",
@@ -62,70 +62,24 @@
     ],
     "properties": {
         "id": {
-            "type": "string",
-            "id": "/properties/id",
-            "title": "Id",
-            "default": "mon_mi_go_slaver",
-            "format": "text",
-            "description": "The ID of the monster",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 10
+          "$ref": "#/definitions/id", 
+          "propertyOrder": 10
         },
         "type": {
-            "type": "string",
-            "id": "/properties/type",
-            "title": "Type",
-            "default": "MONSTER",
-            "format": "text",
-            "description": "Description for 'type' Type: 'string' Path: '/properties/type'",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 20
+          "$ref": "#/definitions/type", 
+          "propertyOrder": 11
         },
         "name": {
-            "type": "object",
-            "id": "/properties/name",
-            "title": "Name",
-            "options": {
-                "disable_collapse": false,
-                "disable_edit_json": false,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false
-            },
-            "defaultProperties": [
-                "str"
-            ],
-            "properties": {
-                "str": {
-                    "type": "string",
-                    "id": "/properties/name/properties/str",
-                    "title": "Str",
-                    "default": "mi-go slaver",
-                    "format": "text",
-                    "description": "Description for 'str' Type: 'string' Path: '/properties/name/properties/str'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 10
-                }
-            },
-            "propertyOrder": 30
+          "$ref": "#/definitions/name", 
+          "propertyOrder": 12
         },
         "description": {
-            "type": "string",
-            "id": "/properties/description",
-            "title": "Description",
-            "default": "This is an alien creature of uncertain origin.  Its shapeless pink body bears numerous sets of paired appendages of unknown function, and a pair of ribbed, membranous wings which seem to be quite useless.  Its odd, vaguely pyramid-shaped head bristles with numerous wavering antennae, and simply gazing upon the unnatural beast fills you with primordial dread.  It is carrying an oblong object that hums with an odd keening sound.",
-            "format": "text",
-            "description": "Description for 'description' Type: 'string' Path: '/properties/description'",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 40
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 13
+        },
+        "material": {
+          "$ref": "#/definitions/material", 
+          "propertyOrder": 13
         },
         "default_faction": {
             "type": "string",
@@ -151,33 +105,7 @@
             },
             "propertyOrder": 60
         },
-        "species": {
-            "type": "array",
-            "id": "/properties/species",
-            "title": "Species",
-            "format": "tabs",
-            "options": {
-                "disable_collapse": false,
-                "disable_array_add": false,
-                "disable_array_delete": false,
-                "disable_array_reorder": false,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false
-            },
-            "items": {
-                "type": "string",
-                "id": "/properties/species/items",
-                "title": "Title Root Species ",
-                "default": "NETHER",
-                "format": "text",
-                "description": "Description for 'items' Type: 'string' Path: '/properties/species/items'",
-                "options": {
-                    "hidden": false
-                }
-            },
-            "propertyOrder": 70
-        },
+        "species": {"$ref": "#/definitions/SPECIES", "propertyOrder": 90 },
         "looks_like": {
             "type": "string",
             "id": "/properties/looks_like",
@@ -235,33 +163,6 @@
                 "hidden": false
             },
             "propertyOrder": 120
-        },
-        "material": {
-            "type": "array",
-            "id": "/properties/material",
-            "title": "Material",
-            "format": "tabs",
-            "options": {
-                "disable_collapse": false,
-                "disable_array_add": false,
-                "disable_array_delete": false,
-                "disable_array_reorder": false,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false
-            },
-            "items": {
-                "type": "string",
-                "id": "/properties/material/items",
-                "title": "Title Root Material ",
-                "default": "flesh",
-                "format": "text",
-                "description": "Description for 'items' Type: 'string' Path: '/properties/material/items'",
-                "options": {
-                    "hidden": false
-                }
-            },
-            "propertyOrder": 130
         },
         "symbol": {
             "type": "string",
@@ -707,132 +608,151 @@
             "type": "array",
             "id": "/properties/flags",
             "title": "Flags",
-            "format": "tabs",
+            "format": "selectize",
+            "uniqueItems": true,
             "options": {
                 "disable_collapse": false,
                 "disable_array_add": false,
                 "disable_array_delete": false,
-                "disable_array_reorder": false,
+                "disable_array_reorder": true,
                 "disable_properties": false,
                 "collapsed": false,
-                "hidden": false
+                "hidden": false,
+                "multiple": true
             },
             "items": {
-                "headerTemplate": "Flags {{i1}}",
-                "oneOf": [
-                    {
-                        "type": "string",
-                        "id": "/properties/flags/oneof0",
-                        "title": "oneof 0 /properties/flags",
-                        "default": "SEES",
-                        "format": "text",
-                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
-                        "options": {
-                            "hidden": false
-                        }
-                    },
-                    {
-                        "type": "string",
-                        "id": "/properties/flags/oneof1",
-                        "title": "oneof 1 /properties/flags",
-                        "default": "SMELLS",
-                        "format": "text",
-                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
-                        "options": {
-                            "hidden": false
-                        }
-                    },
-                    {
-                        "type": "string",
-                        "id": "/properties/flags/oneof2",
-                        "title": "oneof 2 /properties/flags",
-                        "default": "HEARS",
-                        "format": "text",
-                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
-                        "options": {
-                            "hidden": false
-                        }
-                    },
-                    {
-                        "type": "string",
-                        "id": "/properties/flags/oneof3",
-                        "title": "oneof 3 /properties/flags",
-                        "default": "WARM",
-                        "format": "text",
-                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
-                        "options": {
-                            "hidden": false
-                        }
-                    },
-                    {
-                        "type": "string",
-                        "id": "/properties/flags/oneof4",
-                        "title": "oneof 4 /properties/flags",
-                        "default": "BASHES",
-                        "format": "text",
-                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
-                        "options": {
-                            "hidden": false
-                        }
-                    },
-                    {
-                        "type": "string",
-                        "id": "/properties/flags/oneof5",
-                        "title": "oneof 5 /properties/flags",
-                        "default": "POISON",
-                        "format": "text",
-                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
-                        "options": {
-                            "hidden": false
-                        }
-                    },
-                    {
-                        "type": "string",
-                        "id": "/properties/flags/oneof6",
-                        "title": "oneof 6 /properties/flags",
-                        "default": "NO_BREATHE",
-                        "format": "text",
-                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
-                        "options": {
-                            "hidden": false
-                        }
-                    },
-                    {
-                        "type": "string",
-                        "id": "/properties/flags/oneof7",
-                        "title": "oneof 7 /properties/flags",
-                        "default": "ARTHROPOD_BLOOD",
-                        "format": "text",
-                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
-                        "options": {
-                            "hidden": false
-                        }
-                    },
-                    {
-                        "type": "string",
-                        "id": "/properties/flags/oneof8",
-                        "title": "oneof 8 /properties/flags",
-                        "default": "PATH_AVOID_DANGER_2",
-                        "format": "text",
-                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
-                        "options": {
-                            "hidden": false
-                        }
-                    },
-                    {
-                        "type": "string",
-                        "id": "/properties/flags/oneof9",
-                        "title": "oneof 9 /properties/flags",
-                        "default": "PRIORITIZE_TARGETS",
-                        "format": "text",
-                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
-                        "options": {
-                            "hidden": false
-                        }
-                    }
+                "type": "string",
+                "enum": [ 
+                  "ABSORBS_SPLITS", 
+                  "ABSORBS", 
+                  "ACIDPROOF", 
+                  "ACIDTRAIL", 
+                  "ACID_BLOOD", 
+                  "ANIMAL", 
+                  "AQUATIC", 
+                  "ARTHROPOD_BLOOD", 
+                  "ATTACKMON", 
+                  "BADVENOM", 
+                  "BASHES", 
+                  "BILE_BLOOD", 
+                  "BIRDFOOD", 
+                  "BLEED", 
+                  "BONES", 
+                  "BORES", 
+                  "CAN_DIG", 
+                  "CAN_OPEN_DOORS", 
+                  "CANPLAY", 
+                  "CATFOOD", 
+                  "CATTLEFODDER", 
+                  "CBM_CIV", 
+                  "CBM_OP", 
+                  "CBM_POWER", 
+                  "CBM_SCI", 
+                  "CBM_SUBS", 
+                  "CBM_TECH", 
+                  "CHITIN", 
+                  "CLIMBS", 
+                  "CURRENT", 
+                  "DESTROYS", 
+                  "DIGS", 
+                  "DOGFOOD", 
+                  "DRIPS_GASOLINE", 
+                  "DRIPS_NAPALM", 
+                  "ELECTRIC", 
+                  "ELECTRONIC", 
+                  "FAT", 
+                  "FEATHER", 
+                  "FILTHY", 
+                  "FIREPROOF", 
+                  "FIREY", 
+                  "FISHABLE", 
+                  "FLAMMABLE", 
+                  "FLIES", 
+                  "FUR", 
+                  "GOODHEARING", 
+                  "GRABS", 
+                  "GROUP_BASH", 
+                  "GROUP_MORALE", 
+                  "GUILT", 
+                  "HARDTOSHOOT", 
+                  "HEARS", 
+                  "HIT_AND_RUN", 
+                  "HUMAN", 
+                  "IMMOBILE", 
+                  "INTERIOR_AMMO", 
+                  "KEENNOSE", 
+                  "LARVA", 
+                  "LEATHER", 
+                  "LOUDMOVES", 
+                  "MECH_RECON_VISION", 
+                  "MECH_DEFENSIVE", 
+                  "MILITARY_MECH", 
+                  "MILKABLE", 
+                  "NIGHT_INVISIBILITY", 
+                  "NOGIB", 
+                  "NOHEAD", 
+                  "NO_BREATHE", 
+                  "NO_BREED", 
+                  "PAY_BOT", 
+                  "PET_MOUNTABLE", 
+                  "PET_HARNESSABLE", 
+                  "NULL", 
+                  "PACIFIST", 
+                  "PARALYZE", 
+                  "PLASTIC", 
+                  "POISON", 
+                  "PUSH_MON", 
+                  "QUEEN", 
+                  "REVIVES", 
+                  "RIDEABLE_MECH", 
+                  "SEES", 
+                  "SLUDGEPROOF", 
+                  "SLUDGETRAIL", 
+                  "SMELLS", 
+                  "STUMBLES", 
+                  "SUNDEATH", 
+                  "SWARMS", 
+                  "SWIMS", 
+                  "VENOM", 
+                  "VERMIN", 
+                  "WARM", 
+                  "WEBWALK", 
+                  "WOOL"
                 ]
             },
-            "propertyOrder": 310
+            "propertyOrder": 60
         }
+    },
+    "definitions": {
+      "SPECIES": {
+          "type": "array",
+          "id": "/definitions/SPECIES",
+          "title": "SPECIES",
+          "format": "selectize",
+          "uniqueItems": true,
+          "options": {
+              "disable_collapse": false,
+              "disable_array_add": false,
+              "disable_array_delete": false,
+              "disable_array_reorder": true,
+              "disable_properties": false,
+              "collapsed": false,
+              "hidden": false
+          },
+          "items": {
+              "headerTemplate": "SPECIES {{i1}}",
+              "type": "string",
+              "id": "/definitions/SPECIES/0",
+              "title": "SPECIES",
+              "default": "ZOMBIE",
+              "format": "text",
+              "description": "The SPECIES of this entry",
+              "enum": [ "ZOMBIE" ],
+              "options": {
+                  "hidden": false
+              }
+          },
+          "propertyOrder": 90
+      }
     }
 }

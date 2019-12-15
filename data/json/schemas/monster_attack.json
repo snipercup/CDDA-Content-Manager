@@ -1,0 +1,262 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "additionalProperties": true,
+    "title": "My Schema Title",
+    "definitions": {
+        "comment": {
+            "title": "Comment:",
+            "type": "string",
+            "format": "textarea",
+            "default": ""
+        },
+        "yesno": {
+            "default": "yes",
+            "type": "string",
+            "enum": [
+                "yes",
+                "no"
+            ]
+        }
+    },
+    "type": "object",
+    "id": "https://niebert.github.io/json-editor",
+    "options": {
+        "disable_collapse": false,
+        "disable_edit_json": false,
+        "disable_properties": false,
+        "collapsed": false,
+        "hidden": false
+    },
+    "defaultProperties": [
+        "type",
+        "attack_type",
+        "id",
+        "cooldown",
+        "move_cost",
+        "damage_max_instance",
+        "body_parts",
+        "hit_dmg_u",
+        "hit_dmg_npc",
+        "no_dmg_msg_u",
+        "no_dmg_msg_npc"
+    ],
+    "properties": {
+        "type": {
+            "type": "string",
+            "id": "/properties/type",
+            "title": "Type",
+            "default": "monster_attack",
+            "format": "text",
+            "description": "Description for 'type' Type: 'string' Path: '/properties/type'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 10
+        },
+        "attack_type": {
+            "type": "string",
+            "id": "/properties/attack_type",
+            "title": "Attack Type",
+            "default": "melee",
+            "format": "text",
+            "description": "Description for 'attack_type' Type: 'string' Path: '/properties/attack_type'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 20
+        },
+        "id": {
+            "type": "string",
+            "id": "/properties/id",
+            "title": "Id",
+            "default": "scratch",
+            "format": "text",
+            "description": "Description for 'id' Type: 'string' Path: '/properties/id'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 30
+        },
+        "cooldown": {
+            "type": "integer",
+            "id": "/properties/cooldown",
+            "title": "Cooldown",
+            "default": 20,
+            "description": "A description for 'cooldown'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 40
+        },
+        "move_cost": {
+            "type": "integer",
+            "id": "/properties/move_cost",
+            "title": "Move Cost",
+            "default": 150,
+            "description": "A description for 'move_cost'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 50
+        },
+        "damage_max_instance": {
+            "type": "array",
+            "id": "/properties/damage_max_instance",
+            "title": "Damage Max Instance",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "object",
+                "id": "/properties/damage_max_instance/items",
+                "title": "Title Root Damage Max Instance ",
+                "options": {
+                    "disable_collapse": false,
+                    "disable_edit_json": false,
+                    "disable_properties": false,
+                    "collapsed": false,
+                    "hidden": false
+                },
+                "defaultProperties": [
+                    "damage_type",
+                    "amount"
+                ],
+                "properties": {
+                    "damage_type": {
+                        "type": "string",
+                        "id": "/properties/damage_max_instance/items/properties/damage_type",
+                        "title": "Damage Type",
+                        "default": "cut",
+                        "format": "text",
+                        "description": "Description for 'damage_type' Type: 'string' Path: '/properties/damage_max_instance/items/properties/damage_type'",
+                        "options": {
+                            "hidden": false
+                        },
+                        "propertyOrder": 10
+                    },
+                    "amount": {
+                        "type": "integer",
+                        "id": "/properties/damage_max_instance/items/properties/amount",
+                        "title": "Amount",
+                        "default": 8,
+                        "description": "A description for 'amount'  Type: 'integer'",
+                        "options": {
+                            "hidden": false
+                        },
+                        "propertyOrder": 20
+                    }
+                }
+            },
+            "propertyOrder": 60
+        },
+        "body_parts": {
+            "type": "array",
+            "id": "/properties/body_parts",
+            "title": "Body Parts",
+            "format": "table",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "headerTemplate": "Body Parts {{i1}}",
+                "type": "array",
+                "id": "/properties/body_parts/oneof0",
+                "title": "Body Parts",
+                "format": "grid",
+                "options": {
+                    "disable_collapse": true,
+                    "disable_array_add": true,
+                    "disable_array_delete": true,
+                    "disable_array_reorder": true,
+                    "disable_properties": true,
+                    "collapsed": false,
+                    "hidden": false
+                },
+                "items": [
+                    {
+                        "type": "string",
+                        "id": "/properties/body_parts/items",
+                        "title": "Body Part",
+                        "options": {
+                            "hidden": false
+                        },
+                        "enum": [ "HEAD", "TORSO", "MOUTH", "EYES", "ARM_L", "ARM_R", "HAND_R", "HAND_L", "LEG_L", "LEG_R", "FOOT_L", "FOOT_R" ],
+                        "propertyOrder": 60
+                    },
+                    {
+                        "type": "integer",
+                        "id": "/properties/body_parts/items/oneof1",
+                        "title": "Amount",
+                        "default": 2,
+                        "description": "The amount",
+                        "options": {
+                            "hidden": false
+                        }
+                    }
+                ]
+            },
+            "propertyOrder": 70
+        },
+        "hit_dmg_u": {
+            "type": "string",
+            "id": "/properties/hit_dmg_u",
+            "title": "Hit Dmg U",
+            "default": "The %1$s claws at you!",
+            "format": "text",
+            "description": "Description for 'hit_dmg_u' Type: 'string' Path: '/properties/hit_dmg_u'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 80
+        },
+        "hit_dmg_npc": {
+            "type": "string",
+            "id": "/properties/hit_dmg_npc",
+            "title": "Hit Dmg Npc",
+            "default": "The %1$s claws at <npcname>!",
+            "format": "text",
+            "description": "Description for 'hit_dmg_npc' Type: 'string' Path: '/properties/hit_dmg_npc'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 90
+        },
+        "no_dmg_msg_u": {
+            "type": "string",
+            "id": "/properties/no_dmg_msg_u",
+            "title": "No Dmg Msg U",
+            "default": "The %1$s tries to claw at you, but fails to.",
+            "format": "text",
+            "description": "Description for 'no_dmg_msg_u' Type: 'string' Path: '/properties/no_dmg_msg_u'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 100
+        },
+        "no_dmg_msg_npc": {
+            "type": "string",
+            "id": "/properties/no_dmg_msg_npc",
+            "title": "No Dmg Msg Npc",
+            "default": "The %1$s tries to claw <npcname>, but fails to.",
+            "format": "text",
+            "description": "Description for 'no_dmg_msg_npc' Type: 'string' Path: '/properties/no_dmg_msg_npc'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 110
+        }
+    }
+}

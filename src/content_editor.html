@@ -41,7 +41,26 @@
 		
 		//Initialize function, it is asynchonous to allow await-ing for the functions called in init.
 		async function init(){
-			entryList = new jsonObjList(document.getElementById("entryList"), await getCataclysmGameFolder() + DATA, "id", [["type", "SPELL", true, true]]);
+		}
+    
+		async function typeList_change(selectElement){
+			//User selects an item
+			let item = selectElement.options[selectElement.selectedIndex];
+			if(!item){return;}
+			let itemValue = item.value; //This will be the type
+			let itemTitle = item.title; //This will be the displaykey
+      if(itemValue){
+        if(entryList){
+          entryList.recreate(document.getElementById("entryList"), await getCataclysmGameFolder() + DATA, itemTitle, [["type", itemValue, true, true]]);
+        } else {
+        	entryList = new jsonObjList(document.getElementById("entryList"), await getCataclysmGameFolder() + DATA, itemTitle, [["type", itemValue, true, true]]);
+        }
+      }
+      let jsonObj = {"jsonObject":{"type":itemValue},"indexInParentObject":-1,"fileName":""}
+			if(editorList[0]){
+				editorList[0] = await new EditForm(jsonObj, document.getElementById('editForm'));
+			}
+      document.getElementById('editForm').style.display = "none";
     }
     
 		//When the user selects an item from the spell list
@@ -61,6 +80,7 @@
         editorList.push(editor);
 			}
 			entryList.selectedEntryId = item.value;
+      document.getElementById('editForm').style.display = "";
 		}
     
     
@@ -69,13 +89,23 @@
     
     
 		<div class="header" style="height:5%;">
-      <h2>Cataclysm: Dark Days Ahead spell editor. <a href="index.html">back to home</a></h2>
+      <h2>Cataclysm: Dark Days Ahead content editor. <a href="index.html">back to home</a></h2>
     </div>
 		<div class="mainContent" style="height:95%;">
 		<table style="height:100%;">
 		<tr>
-			<td class="mainListContainer">
-					<select name="entryList" id="entryList"  onchange="entryList_change(this);" size="5" style="height:99%;"></select>
+			<td class="mainListContainer" style="vertical-align: top;">
+          <select name="typeList" id="typeList"  onchange="typeList_change(this);">
+            <option selected>Select a type</option>
+            <option value="AMMO" title="id">AMMO</option>
+            <option value="SPELL" title="id">SPELL</option>
+            <option value="ammunition_type" title="id">ammunition_type</option>
+            <option value="ARMOR" title="id">ARMOR</option>
+            <option value="monster_attack" title="id">monster_attack</option>
+            <option value="morale_type" title="id">morale_type</option>
+            <option value="MONSTER" title="id">MONSTER</option>
+          </select>
+					<select name="entryList" id="entryList"  onchange="entryList_change(this);" size="5" style="height:94%; display:none;"></select>
 		</td>
 			<td class="mainContentContainer" style="padding:25px; height:100%; overflow:auto;">
 				<div class="contentContainer" style="height:100%; overflow:auto; min-width: 725px;" id="editForm">

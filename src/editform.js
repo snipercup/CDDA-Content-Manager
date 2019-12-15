@@ -10,26 +10,39 @@ class EditForm {
 	}
 	
 	async init(){
-    this.schemaInst = await getJsonFromFile(await getWorkingDirectory() + SCHEMAS_PATH + this.type + ".json");
-    await this.loadExtraDefinitions();
+    await this.updateSchema(this.type);
 		this.createForm();
 	}
   
   //Some fields require looking up other items. The required lists are added here.
-  async loadExtraDefinitions(){
+  async loadExtraDefinitions(type){
     this.schemaInst.definitions = {...this.schemaInst.definitions, ...await getJsonFromFile(await getWorkingDirectory() + SCHEMAS_PATH + "generaldefinitions.json")};
-    let IDListOfType = await getIDListOfType(this.type); //Get all the id's of every item of this type
+    let IDListOfType = await getIDListOfType(type); //Get all the id's of every item of this type
     //Save the list as a definition to the schema, just in case there's a use for it.
-    this.schemaInst.definitions[this.type] = { "type": "string", "description": "The id of another entry", "enum": IDListOfType };
+    this.schemaInst.definitions[type] = { "type": "string", "description": "The id of another entry", "enum": IDListOfType };
     
     if(this.schemaInst.properties["copy-from"]){
       this.schemaInst.properties["copy-from"].enum = IDListOfType; //If there's a copy-from then the id list of this type goes here.
     }
     
-    if(this.type == "ammunition_type"){
+    if(type == "ammunition_type"){
       IDListOfType = await getIDListOfType("AMMO"); //Get all the id's of every item of type ammo
       let c = this.schemaInst.definitions["AMMO"].enum; //Save the list that's already defined in the ammuition type schema.
       this.schemaInst.definitions["AMMO"].enum = c.concat(IDListOfType.filter((item) => c.indexOf(item) < 0)); //Merge the two lists and put it back into the ammo property enumeration.
+    }
+    
+    if(this.type == "MONSTER"){
+      IDListOfType = await getIDListOfType("SPECIES"); //Get all the id's of every item of type ammo
+      let c = this.schemaInst.definitions["SPECIES"].items.enum; //Save the list that's already defined in the ammuition type schema.
+      this.schemaInst.definitions["SPECIES"].items.enum = c.concat(IDListOfType.filter((item) => c.indexOf(item) < 0)); //Merge the two lists and put it back into the ammo property enumeration.
+    }
+  }
+  
+  async updateSchema(type){
+    this.schemaInst = await getJsonFromFile(await getWorkingDirectory() + SCHEMAS_PATH + type + ".json");
+    await this.loadExtraDefinitions(type);
+    if(this.editor){
+      this.editor.schema = this.schemaInst;
     }
   }
   
@@ -41,7 +54,7 @@ class EditForm {
 		this.htmlParent.innerHTML = "";
 		//Transform the json object to html
 		this.htmlParent.appendChild(this.createButtonsRow());
-		this.htmlParent.appendChild(createElement("div"));
+		this.htmlParent.appendChild(createElement("div")); //container for the editor
     
     // Initialize the editor with a JSON schema
     this.editor = new JSONEditor(this.htmlParent.childNodes[1],{

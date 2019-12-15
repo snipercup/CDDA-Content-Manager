@@ -49,16 +49,61 @@
       "propertyOrder": 20
   },
   "name": {
-      "type": "string",
-      "id": "/properties/name",
-      "title": "Name",
-      "default": "Name of entry",
-      "format": "text",
-      "description": "The name as it will appear in-game",
-      "options": {
-          "hidden": false
-      },
-      "propertyOrder": 30
+    "oneOf": [
+        {
+          "type": "string",
+          "id": "/properties/name",
+          "title": "Name",
+          "default": "Name of entry",
+          "format": "text",
+          "description": "The name as it will appear in-game",
+          "options": {
+              "hidden": false
+          },
+          "propertyOrder": 30
+        }, 
+        {
+          "type": "object",
+          "id": "/properties/path_settings",
+          "title": "Name",
+          "format": "grid",
+          "options": {
+              "disable_collapse": false,
+              "disable_edit_json": true,
+              "disable_properties": false,
+              "collapsed": false,
+              "hidden": false
+          },
+          "defaultProperties": [
+              "str"
+          ],
+          "properties": {
+              "str": {
+                  "type": "string",
+                  "id": "/properties/name/properties/str",
+                  "title": "Name",
+                  "default": "Name of entry",
+                  "description": "The name as it will appear in game",
+                  "options": {
+                      "hidden": false
+                  },
+                  "propertyOrder": 10
+              },
+              "str_pl": {
+                  "type": "string",
+                  "id": "/properties/name/properties/str_pl",
+                  "title": "Plural name",
+                  "default": "Plural name of entry",
+                  "description": "The name as it will appear in game",
+                  "options": {
+                      "hidden": false
+                  },
+                  "propertyOrder": 10
+              }
+          },
+          "propertyOrder": 280
+        }
+    ]
   },
   "name_plural": {
       "type": "string",

@@ -14,9 +14,18 @@ class jsonObjList {
 		this.filter = lstFilter;
 		this.updateList();
 	}
+  
+  recreate(selectElement, strJsonFolder, strDisplayKey, lstFilter){
+		this.selectionBox = selectElement;
+		this.jsonFolder = strJsonFolder;
+		this.displayKey = strDisplayKey;
+		this.filter = lstFilter;
+		this.updateList();
+  }
 	
 	//Update the list of items
 	async updateList(){
+    this.selectionBox.style.display = "block";
 		//Gets all json items and their filename from the given filelist.
 		var retreivedItems = await getFilteredJsonItemsFromFolder(this.jsonFolder, this.filter);
 		let selectedIndex = this.selectionBox.selectedIndex;

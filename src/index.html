@@ -7,27 +7,39 @@
 	</head>
 	 <script src="filesystemfunctions.js"></script> 
 	<script>
+    var userSettingsJSON = {};
+  
 		//When the page finishes loading
 		document.addEventListener("DOMContentLoaded", function(event) {
 			init();
 		});
 		
 		async function init(){
-			let cataclysmGameFolder = await getCataclysmGameFolder();
-			document.getElementById("cataclysmGameFolder").innerHTML = "Cataclysm game folder: " + cataclysmGameFolder;
+      userSettingsJSON = await getJsonFromFile("userSettings.json");
+      if(!userSettingsJSON){
+        userSettingsJSON = {}
+        document.getElementById("cataclysmGameFolder").innerHTML = "Cataclysm game folder: not set!";
+      } else {
+        document.getElementById("cataclysmGameFolder").innerHTML = "Cataclysm game folder: " + userSettingsJSON["cataclysmGameFolder"];
+        if(userSettingsJSON.includeCore == false){
+          document.getElementById("addCore").checked = false;
+        } else {
+          document.getElementById("addCore").checked = true;
+        }
+        if(userSettingsJSON.includeMods == false){
+          document.getElementById("addMods").checked = false;
+        } else {
+          document.getElementById("addMods").checked = true;
+        }
+      }
 		}
 		
 		//Writes the settings for the user to a json file.
-		function writeUserSettingsFile(cataclysmGameFolder = ""){
-			// file system module to perform file operations
-			const fs = require('fs');
-			
-			var jsonObj = {};
-			jsonObj["cataclysmGameFolder"] = cataclysmGameFolder;
+		function writeUserSettingsFile(){
+			const fs = require('fs'); // file system module to perform file operations
 			 
-			// stringify JSON Object
-			var jsonContent = JSON.stringify(jsonObj);
-			 
+			// Write the settings to disk
+			var jsonContent = JSON.stringify(userSettingsJSON);
 			fs.writeFile("userSettings.json", jsonContent, 'utf8', function (err) {
 				if (err) {
 					console.log("An error occured while writing JSON Object to File.");
@@ -35,6 +47,23 @@
 				}
 			}); 
 		}
+    
+    function chkContentSelectionClicked(htmlElement){
+        if(htmlElement.value == "core") {
+          if(htmlElement.checked){
+            userSettingsJSON.includeCore = true;
+          } else {
+            userSettingsJSON.includeCore = false;
+          }
+        } else {
+          if(htmlElement.checked){
+            userSettingsJSON.includeMods = true;
+          } else {
+            userSettingsJSON.includeMods = false;
+          }
+        }
+				writeUserSettingsFile();
+    }
 		
 		//When the get caltaclysmgamefolder button is clicked
 		//The user gets a open file dialog and is asked to select a folder
@@ -45,11 +74,10 @@
 			dialog.showOpenDialog({
 			  properties: ['openFile', 'openDirectory']
 			}).then(result => {
-				console.log(result.canceled)
-				console.log(result.filePaths)
 				if(result.filePaths){
 					document.getElementById("cataclysmGameFolder").innerHTML = "Cataclysm game folder: " + result.filePaths;
-					writeUserSettingsFile(result.filePaths[0]);
+          userSettingsJSON["cataclysmGameFolder"] = result.filePaths[0];
+					writeUserSettingsFile();
 				}
 			}).catch(err => {
 			  console.log(err)
@@ -62,7 +90,10 @@
 		<p>Welcome to the content manager of Cataclysm: Dark Days Ahead.</p>
 		<p>
 		<span id="cataclysmGameFolder">Cataclysm game folder: no game folder set!</span> 
-		<button onclick="btnGetCataclysmGameFolderClicked()" id="btnGetCataclysmGameFolder" type="button">Change</button> 
+		<button onclick="btnGetCataclysmGameFolderClicked()" id="btnGetCataclysmGameFolder" type="button">Change</button>
+    <span>Include: </span>
+    <input onclick="chkContentSelectionClicked(this)" type="checkbox" id="addCore" value="core" checked>Core
+    <input onclick="chkContentSelectionClicked(this)" type="checkbox" id="addMods" value="mods" checked>Mods
 		</p>
 		<div>
     <div class="wrapper">

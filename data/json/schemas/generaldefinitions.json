@@ -154,7 +154,7 @@
       "propertyOrder": 60
   },
   "price": {
-      "type": "integer",
+      "type": "number",
       "id": "/properties/price",
       "title": "Price",
       "default": 300,
@@ -165,7 +165,7 @@
       "propertyOrder": 70
   },
   "price_postapoc": {
-      "type": "integer",
+      "type": "number",
       "id": "/properties/price_postapoc",
       "title": "Price Postapoc",
       "default": 5200,
@@ -260,5 +260,19 @@
           "hidden": false
       },
       "propertyOrder": 120
-  }
+  },
+  "damage_type": {
+      "type": "string",
+      "id": "/properties/damage_type",
+      "title": "Damage type",
+      "default": "cut",
+      "format": "text",
+      "description": "The damage type.",
+      "enum": [ "cold", "fire", "electric", "cut", "stab", "bash", "none" ],
+      "options": {
+          "hidden": false
+      },
+      "propertyOrder": 90
+  },
+  "body_parts_enum": { "enum": [ "HEAD", "TORSO", "MOUTH", "EYES", "ARM_L", "ARM_R", "HAND_R", "HAND_L", "LEG_L", "LEG_R", "FOOT_L", "FOOT_R" ] }
 }

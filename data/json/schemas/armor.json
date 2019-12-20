@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "additionalProperties": true,
-    "title": "Armor schema",
+    "title": "Armor",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
     "options": {
@@ -64,6 +64,10 @@
           "$ref": "#/definitions/price", 
           "propertyOrder": 13
         },
+        "price_postapoc": {
+          "$ref": "#/definitions/price_postapoc", 
+          "propertyOrder": 13
+        },
         "bashing": {
           "$ref": "#/definitions/bashing", 
           "propertyOrder": 13
@@ -123,12 +127,16 @@
             },
             "propertyOrder": 60
         },
+        "copy-from": {
+            "type": "string",
+            "enum": [ ]
+        },
         "coverage": {
             "type": "integer",
             "id": "/properties/coverage",
             "title": "Coverage",
             "default": 10,
-            "description": "A description for 'coverage'  Type: 'integer'",
+            "description": "The amount of coverage",
             "options": {
                 "hidden": false
             },
@@ -139,7 +147,7 @@
             "id": "/properties/encumbrance",
             "title": "Encumbrance",
             "default": 3,
-            "description": "A description for 'encumbrance'  Type: 'integer'",
+            "description": "The amount of encumbrance",
             "options": {
                 "hidden": false
             },
@@ -150,7 +158,7 @@
             "id": "/properties/material_thickness",
             "title": "Material Thickness",
             "default": 1,
-            "description": "A description for 'material_thickness'  Type: 'integer'",
+            "description": "The thickness of the material",
             "options": {
                 "hidden": false
             },
@@ -168,156 +176,203 @@
                 "hidden": false
             },
             "defaultProperties": [
-                "type",
-                "holster_prompt",
-                "holster_msg",
-                "max_volume",
-                "draw_cost",
-                "flags"
+                "type"
             ],
-            "properties": {
-                "type": {
-                    "type": "string",
-                    "id": "/properties/use_action/properties/type",
-                    "title": "Type",
-                    "default": "holster",
-                    "format": "text",
-                    "description": "Description for 'type' Type: 'string' Path: '/properties/use_action/properties/type'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 10
-                },
-                "holster_prompt": {
-                    "type": "string",
-                    "id": "/properties/use_action/properties/holster_prompt",
-                    "title": "Holster Prompt",
-                    "default": "Sheath sword",
-                    "format": "text",
-                    "description": "Description for 'holster_prompt' Type: 'string' Path: '/properties/use_action/properties/holster_prompt'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 20
-                },
-                "holster_msg": {
-                    "type": "string",
-                    "id": "/properties/use_action/properties/holster_msg",
-                    "title": "Holster Msg",
-                    "default": "You sheath your %s",
-                    "format": "text",
-                    "description": "Description for 'holster_msg' Type: 'string' Path: '/properties/use_action/properties/holster_msg'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 30
-                },
-                "max_volume": {
-                    "type": "string",
-                    "id": "/properties/use_action/properties/max_volume",
-                    "title": "Max Volume",
-                    "default": "3 L",
-                    "format": "text",
-                    "description": "Description for 'max_volume' Type: 'string' Path: '/properties/use_action/properties/max_volume'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 40
-                },
-                "draw_cost": {
-                    "type": "integer",
-                    "id": "/properties/use_action/properties/draw_cost",
-                    "title": "Draw Cost",
-                    "default": 10,
-                    "description": "A description for 'draw_cost'  Type: 'integer'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 50
-                },
-                "flags": {
-                    "type": "array",
-                    "id": "/properties/use_action/properties/flags",
-                    "title": "Flags",
-                    "format": "tabs",
-                    "options": {
-                        "disable_collapse": false,
-                        "disable_array_add": false,
-                        "disable_array_delete": false,
-                        "disable_array_reorder": false,
-                        "disable_properties": false,
-                        "collapsed": false,
-                        "hidden": false
-                    },
-                    "items": {
-                        "type": "string",
-                        "id": "/properties/use_action/properties/flags/items",
-                        "title": "Title Root Use Action Flags ",
-                        "default": "SHEATH_SWORD",
-                        "format": "text",
-                        "description": "Description for 'items' Type: 'string' Path: '/properties/use_action/properties/flags/items'",
-                        "options": {
-                            "hidden": false
-                        }
-                    },
-                    "propertyOrder": 60
+            "additionalProperties": false,
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                      "type": "string",
+                      "id": "/properties/use_action/properties/type",
+                      "title": "Type",
+                      "default": "holster",
+                      "format": "text",
+                      "description": "Description for 'type' Type: 'string' Path: '/properties/use_action/properties/type'",
+                      "options": {
+                          "hidden": false
+                      },
+                      "enum": [
+                        "holster"
+                      ],
+                      "propertyOrder": 10
+                  },
+                  "holster_prompt": {
+                      "type": "string",
+                      "id": "/properties/use_action/properties/holster_prompt",
+                      "title": "Holster Prompt",
+                      "default": "Sheath sword",
+                      "format": "text",
+                      "description": "Description for 'holster_prompt' Type: 'string' Path: '/properties/use_action/properties/holster_prompt'",
+                      "options": {
+                          "hidden": false
+                      },
+                      "propertyOrder": 20
+                  },
+                  "holster_msg": {
+                      "type": "string",
+                      "id": "/properties/use_action/properties/holster_msg",
+                      "title": "Holster Msg",
+                      "default": "You sheath your %s",
+                      "format": "text",
+                      "description": "Description for 'holster_msg' Type: 'string' Path: '/properties/use_action/properties/holster_msg'",
+                      "options": {
+                          "hidden": false
+                      },
+                      "propertyOrder": 30
+                  },
+                  "max_volume": {
+                      "type": "string",
+                      "id": "/properties/use_action/properties/max_volume",
+                      "title": "Max Volume",
+                      "default": "3 L",
+                      "format": "text",
+                      "description": "Description for 'max_volume' Type: 'string' Path: '/properties/use_action/properties/max_volume'",
+                      "options": {
+                          "hidden": false
+                      },
+                      "propertyOrder": 40
+                  },
+                  "draw_cost": {
+                      "type": "integer",
+                      "id": "/properties/use_action/properties/draw_cost",
+                      "title": "Draw Cost",
+                      "default": 10,
+                      "description": "A description for 'draw_cost'  Type: 'integer'",
+                      "options": {
+                          "hidden": false
+                      },
+                      "propertyOrder": 50
+                  },
+                  "flags": {
+                      "type": "array",
+                      "id": "/properties/use_action/properties/flags",
+                      "title": "Flags",
+                      "format": "tabs",
+                      "options": {
+                          "disable_collapse": false,
+                          "disable_array_add": false,
+                          "disable_array_delete": false,
+                          "disable_array_reorder": false,
+                          "disable_properties": false,
+                          "collapsed": false,
+                          "hidden": false
+                      },
+                      "items": {
+                          "type": "string",
+                          "id": "/properties/use_action/properties/flags/items",
+                          "title": "Title Root Use Action Flags ",
+                          "default": "SHEATH_SWORD",
+                          "format": "text",
+                          "description": "Description for 'items' Type: 'string' Path: '/properties/use_action/properties/flags/items'",
+                          "options": {
+                              "hidden": false
+                          }
+                      },
+                      "propertyOrder": 60
+                  }
                 }
-            },
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                      "type": "string",
+                      "id": "/properties/use_action/properties/type",
+                      "title": "Type",
+                      "default": "transform",
+                      "format": "text",
+                      "description": "Description for 'type' Type: 'string' Path: '/properties/use_action/properties/type'",
+                      "options": {
+                          "hidden": false
+                      },
+                      "enum": [
+                        "transform"
+                      ],
+                      "propertyOrder": 10
+                  },
+                  "target": {
+                      "type": "string",
+                      "id": "/properties/use_action/properties/max_volume",
+                      "title": "Max Volume",
+                      "default": "3 L",
+                      "format": "text",
+                      "$ref": "#/properties/copy-from", 
+                      "description": "The item to transform to.",
+                      "options": {
+                          "hidden": false
+                      },
+                      "propertyOrder": 40
+                  },
+                  "need_charges": {
+                      "type": "integer",
+                      "id": "/properties/use_action/properties/need_charges",
+                      "title": "Need charges",
+                      "default": 10,
+                      "description": "A description for 'need_charges'  Type: 'integer'",
+                      "options": {
+                          "hidden": false
+                      },
+                      "propertyOrder": 50
+                  }
+                }
+              }
+            ],
             "propertyOrder": 170
         },
         "flags": {
             "type": "array",
             "id": "/properties/flags",
             "title": "Flags",
-            "format": "tabs",
+            "format": "selectize",
+            "uniqueItems": true,
             "options": {
                 "disable_collapse": false,
                 "disable_array_add": false,
                 "disable_array_delete": false,
-                "disable_array_reorder": false,
+                "disable_array_reorder": true,
                 "disable_properties": false,
                 "collapsed": false,
-                "hidden": false
+                "hidden": false,
+                "multiple": true
             },
             "items": {
-                "headerTemplate": "Flags {{i1}}",
-                "oneOf": [
-                    {
-                        "type": "string",
-                        "id": "/properties/flags/oneof0",
-                        "title": "oneof 0 /properties/flags",
-                        "default": "WAIST",
-                        "format": "text",
-                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
-                        "options": {
-                            "hidden": false
-                        }
-                    },
-                    {
-                        "type": "string",
-                        "id": "/properties/flags/oneof1",
-                        "title": "oneof 1 /properties/flags",
-                        "default": "OVERSIZE",
-                        "format": "text",
-                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
-                        "options": {
-                            "hidden": false
-                        }
-                    },
-                    {
-                        "type": "string",
-                        "id": "/properties/flags/oneof2",
-                        "title": "oneof 2 /properties/flags",
-                        "default": "WATER_FRIENDLY",
-                        "format": "text",
-                        "description": "Description for 'items' Type: 'string' Path: '/properties/flags/items'",
-                        "options": {
-                            "hidden": false
-                        }
-                    }
+                "type": "string",
+                "enum": [ 
+                  "VARSIZE", 
+                  "STURDY", 
+                  "HELMET_COMPAT", 
+                  "ELECTRIC_IMMUNE", 
+                  "OUTER", 
+                  "MAG_COMPACT", 
+                  "SKINTIGHT", 
+                  "OVERSIZE", 
+                  "WATERPROOF", 
+                  "HOOD", 
+                  "RAINPROOF", 
+                  "RAD_RESIST", 
+                  "FANCY", 
+                  "POCKETS", 
+                  "SUPER_FANCY", 
+                  "COLLAR", 
+                  "BELTED", 
+                  "SUN_GLASSES", 
+                  "ALLOWS_NATURAL_ATTACKS", 
+                  "BLOCK_WHILE_WORN", 
+                  "NO_QUICKDRAW", 
+                  "WAIST", 
+                  "DEAF", 
+                  "GAS_PROOF", 
+                  "FRAGILE", 
+                  "FLOTATION", 
+                  "FIRESTARTER", 
+                  "FIX_NEARSIGHT", 
+                  "FIX_FARSIGHT", 
+                  "WATER_FRIENDLY"
                 ]
             },
-            "propertyOrder": 180
+            "propertyOrder": 60
         }
     }
 }

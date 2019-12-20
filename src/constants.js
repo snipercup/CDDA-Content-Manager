@@ -1,6 +1,7 @@
 //Folder names
 const DATA_JSON_NPCS = "\\data\\json\\npcs";
 const DATA = "\\data";
+const DATA_JSON = "\\data\\json";
 const DATA_MODS = "\\data\\mods";
 const EDITFORM_PATH = "\\data\\json\\editform\\";
 const SCHEMAS_PATH = "\\data\\json\\schemas\\";

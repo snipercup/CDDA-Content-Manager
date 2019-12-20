@@ -41,17 +41,13 @@
         "no_dmg_msg_npc"
     ],
     "properties": {
+        "id": {
+          "$ref": "#/definitions/id", 
+          "propertyOrder": 10
+        },
         "type": {
-            "type": "string",
-            "id": "/properties/type",
-            "title": "Type",
-            "default": "monster_attack",
-            "format": "text",
-            "description": "Description for 'type' Type: 'string' Path: '/properties/type'",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 10
+          "$ref": "#/definitions/type", 
+          "propertyOrder": 11
         },
         "attack_type": {
             "type": "string",
@@ -59,23 +55,11 @@
             "title": "Attack Type",
             "default": "melee",
             "format": "text",
-            "description": "Description for 'attack_type' Type: 'string' Path: '/properties/attack_type'",
+            "description": "The type of attack",
             "options": {
                 "hidden": false
             },
             "propertyOrder": 20
-        },
-        "id": {
-            "type": "string",
-            "id": "/properties/id",
-            "title": "Id",
-            "default": "scratch",
-            "format": "text",
-            "description": "Description for 'id' Type: 'string' Path: '/properties/id'",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 30
         },
         "cooldown": {
             "type": "integer",
@@ -116,7 +100,7 @@
             "items": {
                 "type": "object",
                 "id": "/properties/damage_max_instance/items",
-                "title": "Title Root Damage Max Instance ",
+                "title": "Instance",
                 "options": {
                     "disable_collapse": false,
                     "disable_edit_json": false,
@@ -130,27 +114,41 @@
                 ],
                 "properties": {
                     "damage_type": {
-                        "type": "string",
-                        "id": "/properties/damage_max_instance/items/properties/damage_type",
-                        "title": "Damage Type",
-                        "default": "cut",
-                        "format": "text",
-                        "description": "Description for 'damage_type' Type: 'string' Path: '/properties/damage_max_instance/items/properties/damage_type'",
-                        "options": {
-                            "hidden": false
-                        },
-                        "propertyOrder": 10
+                      "$ref": "#/definitions/damage_type", 
+                      "propertyOrder": 11
                     },
                     "amount": {
                         "type": "integer",
                         "id": "/properties/damage_max_instance/items/properties/amount",
                         "title": "Amount",
                         "default": 8,
-                        "description": "A description for 'amount'  Type: 'integer'",
+                        "description": "The amount",
                         "options": {
                             "hidden": false
                         },
                         "propertyOrder": 20
+                    },
+                    "armor_penetration": {
+                        "type": "integer",
+                        "id": "/properties/armor_penetration",
+                        "title": "Armor Penetration",
+                        "default": 150,
+                        "description": "The armor penetration",
+                        "options": {
+                            "hidden": false
+                        },
+                        "propertyOrder": 50
+                    },
+                    "armor_multiplier": {
+                        "type": "number",
+                        "id": "/properties/armor_multiplier",
+                        "title": "Armor Multiplier",
+                        "default": 150,
+                        "description": "The armor multiplier",
+                        "options": {
+                            "hidden": false
+                        },
+                        "propertyOrder": 50
                     }
                 }
             },
@@ -160,7 +158,67 @@
             "type": "array",
             "id": "/properties/body_parts",
             "title": "Body Parts",
-            "format": "table",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": true,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "enable_array_copy": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "headerTemplate": "Body Part {{i1}}",
+                "type": "array",
+                "id": "/properties/body_parts/oneof0",
+                "title": "Body Part",
+                "format": "tabs",
+                "options": {
+                    "disable_collapse": true,
+                    "disable_array_add": true,
+                    "disable_array_delete": true,
+                    "disable_array_reorder": true,
+                    "disable_properties": true,
+                    "collapsed": false,
+                    "hidden": false,
+                    "compact": true,
+                    "infoText": "the amount"
+                },
+                "items": [
+                    {
+                        "type": "string",
+                        "id": "/properties/body_parts/items",
+                        "title": "Body Part",
+                        "default": "HEAD",
+                        "options": {
+                            "hidden": false,
+                            "compact": true
+                        },
+                        "$ref": "#/definitions/body_parts_enum", 
+                        "propertyOrder": 60
+                    },
+                    {
+                        "type": "integer",
+                        "id": "/properties/body_parts/items/oneof1",
+                        "title": "Amount",
+                        "default": 2,
+                        "options": {
+                            "hidden": false,
+                            "compact": true, 
+                            "infoText": "the amount"
+                        }
+                    }
+                ]
+            },
+            "propertyOrder": 70
+        },
+        "effects": {
+            "type": "array",
+            "id": "/properties/effects",
+            "title": "Effects",
+            "format": "tabs",
             "options": {
                 "disable_collapse": false,
                 "disable_array_add": false,
@@ -171,92 +229,104 @@
                 "hidden": false
             },
             "items": {
-                "headerTemplate": "Body Parts {{i1}}",
-                "type": "array",
-                "id": "/properties/body_parts/oneof0",
-                "title": "Body Parts",
-                "format": "grid",
+                "headerTemplate": "Effects {{i1}}",
+                "type": "object",
+                "id": "/properties/effects/oneof0",
+                "title": "effect",
                 "options": {
-                    "disable_collapse": true,
-                    "disable_array_add": true,
-                    "disable_array_delete": true,
-                    "disable_array_reorder": true,
-                    "disable_properties": true,
+                    "disable_collapse": false,
+                    "disable_edit_json": false,
+                    "disable_properties": false,
                     "collapsed": false,
                     "hidden": false
                 },
-                "items": [
-                    {
-                        "type": "string",
-                        "id": "/properties/body_parts/items",
-                        "title": "Body Part",
+                "defaultProperties": [
+                    "id"
+                ],
+                "properties": {
+                    "id": {"$ref": "#/definitions/effect_type", "propertyOrder": 10 },
+                    "duration": {
+                        "type": "integer",
+                        "id": "/properties/effects/items/properties/duration",
+                        "title": "Duration",
+                        "default": 100,
+                        "description": "The duration of the effect",
                         "options": {
                             "hidden": false
                         },
-                        "enum": [ "HEAD", "TORSO", "MOUTH", "EYES", "ARM_L", "ARM_R", "HAND_R", "HAND_L", "LEG_L", "LEG_R", "FOOT_L", "FOOT_R" ],
-                        "propertyOrder": 60
+                        "propertyOrder": 20
                     },
-                    {
-                        "type": "integer",
-                        "id": "/properties/body_parts/items/oneof1",
-                        "title": "Amount",
-                        "default": 2,
-                        "description": "The amount",
+                    "bp": {
+                        "type": "string",
+                        "id": "/properties/effects/items/properties/bp",
+                        "title": "Bp",
+                        "default": "TORSO",
+                        "format": "text",
+                        "$ref": "#/definitions/body_parts_enum", 
+                        "description": "The affected body part",
                         "options": {
                             "hidden": false
-                        }
+                        },
+                        "propertyOrder": 30
                     }
-                ]
+                }
             },
-            "propertyOrder": 70
+            "propertyOrder": 80
         },
         "hit_dmg_u": {
             "type": "string",
             "id": "/properties/hit_dmg_u",
-            "title": "Hit Dmg U",
+            "title": "Message on damage player (hit_dmg_u)",
             "default": "The %1$s claws at you!",
             "format": "text",
-            "description": "Description for 'hit_dmg_u' Type: 'string' Path: '/properties/hit_dmg_u'",
+            "description": "The message to the user when the attack is aimed at the player",
             "options": {
                 "hidden": false
             },
-            "propertyOrder": 80
+            "propertyOrder": 200
         },
         "hit_dmg_npc": {
             "type": "string",
             "id": "/properties/hit_dmg_npc",
-            "title": "Hit Dmg Npc",
+            "title": "Message on damage NPC (hit_dmg_npc)",
             "default": "The %1$s claws at <npcname>!",
             "format": "text",
-            "description": "Description for 'hit_dmg_npc' Type: 'string' Path: '/properties/hit_dmg_npc'",
+            "description": "The message to the user when the attack is aimed at a NPC",
             "options": {
                 "hidden": false
             },
-            "propertyOrder": 90
+            "propertyOrder": 210
         },
         "no_dmg_msg_u": {
             "type": "string",
             "id": "/properties/no_dmg_msg_u",
-            "title": "No Dmg Msg U",
+            "title": "Message on miss player (no_dmg_msg_u)",
             "default": "The %1$s tries to claw at you, but fails to.",
             "format": "text",
-            "description": "Description for 'no_dmg_msg_u' Type: 'string' Path: '/properties/no_dmg_msg_u'",
+            "description": "The message when the attack is aimed at the player but fails",
             "options": {
                 "hidden": false
             },
-            "propertyOrder": 100
+            "propertyOrder": 220
         },
         "no_dmg_msg_npc": {
             "type": "string",
             "id": "/properties/no_dmg_msg_npc",
-            "title": "No Dmg Msg Npc",
+            "title": "Message on miss NPC (no_dmg_msg_npc)",
             "default": "The %1$s tries to claw <npcname>, but fails to.",
             "format": "text",
-            "description": "Description for 'no_dmg_msg_npc' Type: 'string' Path: '/properties/no_dmg_msg_npc'",
+            "description": "The message when the attack is aimed at a NPC but fails",
             "options": {
                 "hidden": false
             },
-            "propertyOrder": 110
+            "propertyOrder": 230
         }
+    },
+    "definitions": {
+      "effect_type": {
+        "type": "string", 
+        "description": "The id of an effect_type entry", 
+        "enum": [ "downed" ]
+      }
     }
 }

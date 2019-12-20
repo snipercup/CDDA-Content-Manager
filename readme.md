@@ -3,7 +3,8 @@
 
 ## Features:
 - [Dialog editor](https://github.com/snipercup/CDDA-Content-Manager/blob/master/doc/dialogeditor.md) (well it only allows viewing atm)
-- Spells editor (only mods folder)
+- Content editor
+- [Mod summary](https://discourse.cataclysmdda.org/t/tool-mod-summary/22204)
 
 ## Installation:
 
@@ -24,12 +25,12 @@
 - scroll to the bottom of [this](https://github.com/electron/electron/blob/master/docs/tutorial/first-app.md) page. 
 - Execute the commands you see there (npm install and npm start).
 
-#### Demo of the spells editor:
-Basic editing of fields. Pressing save will save the json to the file, linted. Pressing delete will delete the entry from the file. Pressing duplicate will create a new entry for you to edit.
-![Image demoing spell editor](https://i.imgur.com/sdN5H2B.gif)
+#### Demo of the content editor:
+Basic editing of fields. Pressing save will save the json to the file, linted. Pressing delete will delete the entry from the file. Pressing duplicate will create a new entry for you to edit. 
+![Image demoing content editor](https://i.imgur.com/UzaGa7T.gif)
 
-Browse trough the spells in the mods folder. Add and delete properties you want to use. Copy spells and edit them. After you are done editing you can load up the game and it works.
-![Image demoing spell editor](https://i.imgur.com/JMzVq86.gif)
+Simple editing of arrays, lookup field for copy-from, only the properties you add are visible and you can add more.
+![Content Editor Demo 2](https://i.imgur.com/rVSDTnI.gif)
 
 
 #### Demo of the dialog editor:

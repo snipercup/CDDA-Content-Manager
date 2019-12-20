@@ -26,6 +26,12 @@
   .selectize-control.multi .selectize-input > div.active {
     color: #AAA;
   }
+  .btn-group:empty, .form-group + div:empty {
+    display: none;
+  }
+  .form-group {
+    margin: 0;
+  }
   </style>
   </head>
   <body style="height:100%">
@@ -51,9 +57,9 @@
 			let itemTitle = item.title; //This will be the displaykey
       if(itemValue){
         if(entryList){
-          entryList.recreate(document.getElementById("entryList"), await getCataclysmGameFolder() + DATA, itemTitle, [["type", itemValue, true, true]]);
+          entryList.recreate(document.getElementById("entryList"), await getContentFolderList(), itemTitle, [["type", itemValue, true, true]]);
         } else {
-        	entryList = new jsonObjList(document.getElementById("entryList"), await getCataclysmGameFolder() + DATA, itemTitle, [["type", itemValue, true, true]]);
+        	entryList = new jsonObjList(document.getElementById("entryList"), await getContentFolderList(), itemTitle, [["type", itemValue, true, true]]);
         }
       }
       let jsonObj = {"jsonObject":{"type":itemValue},"indexInParentObject":-1,"fileName":""}

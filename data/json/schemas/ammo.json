@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "additionalProperties": true,
-    "title": "My Schema Title",
+    "title": "Ammo",
     "type": "object",
     "id": "ammo",
     "options": {
@@ -142,19 +142,6 @@
             },
             "propertyOrder": 190
         },
-        "copy-from": {
-            "type": "string",
-            "id": "/properties/copy-from",
-            "title": "Copy From",
-            "default": "46mm",
-            "format": "text",
-            "description": "The ammo it will copy from",
-            "options": {
-                "hidden": false
-            },
-            "enum": ["46mm", "47mm"],
-            "propertyOrder": 20
-        },
         "proportional": {
             "type": "object",
             "id": "/properties/proportional",
@@ -180,7 +167,7 @@
                     "id": "/properties/proportional/properties/damage",
                     "title": "Damage",
                     "default": 0.46,
-                    "description": "A description for 'damage'  Type: 'number'",
+                    "description": "The amount of damage",
                     "options": {
                         "hidden": false
                     },
@@ -191,7 +178,7 @@
                     "id": "/properties/proportional/properties/recoil",
                     "title": "Recoil",
                     "default": 0.46,
-                    "description": "A description for 'recoil'  Type: 'number'",
+                    "description": "The amount of Recoil",
                     "options": {
                         "hidden": false
                     },
@@ -202,7 +189,7 @@
                     "id": "/properties/proportional/properties/pierce",
                     "title": "Pierce",
                     "default": 0.1,
-                    "description": "A description for 'pierce'  Type: 'number'",
+                    "description": "The amount of pierce",
                     "options": {
                         "hidden": false
                     },
@@ -213,7 +200,7 @@
                     "id": "/properties/proportional/properties/dispersion",
                     "title": "Dispersion",
                     "default": 1.2,
-                    "description": "A description for 'dispersion'  Type: 'number'",
+                    "description": "The amount of dispersion",
                     "options": {
                         "hidden": false
                     },
@@ -237,60 +224,7 @@
                 "effects"
             ],
             "properties": {
-                "effects": {
-                    "type": "array",
-                    "id": "/properties/extend/properties/effects",
-                    "title": "Effects",
-                    "format": "table",
-                    "options": {
-                        "disable_collapse": false,
-                        "disable_array_add": false,
-                        "disable_array_delete": false,
-                        "disable_array_reorder": false,
-                        "disable_properties": false,
-                        "collapsed": false,
-                        "hidden": false
-                    },
-                    "items": {
-                        "headerTemplate": "Effects {{i1}}",
-                        "oneOf": [
-                            {
-                                "type": "string",
-                                "id": "/properties/extend/properties/effects/oneof0",
-                                "title": "oneof 0 /properties/extend/properties/effects",
-                                "default": "RECYCLED",
-                                "format": "text",
-                                "description": "Description for 'items' Type: 'string' Path: '/properties/extend/properties/effects/items'",
-                                "options": {
-                                    "hidden": false
-                                }
-                            },
-                            {
-                                "type": "string",
-                                "id": "/properties/extend/properties/effects/oneof1",
-                                "title": "oneof 1 /properties/extend/properties/effects",
-                                "default": "BLACKPOWDER",
-                                "format": "text",
-                                "description": "Description for 'items' Type: 'string' Path: '/properties/extend/properties/effects/items'",
-                                "options": {
-                                    "hidden": false
-                                }
-                            },
-                            {
-                                "type": "string",
-                                "id": "/properties/extend/properties/effects/oneof2",
-                                "title": "oneof 2 /properties/extend/properties/effects",
-                                "default": "MUZZLE_SMOKE",
-                                "format": "text",
-                                "description": "Description for 'items' Type: 'string' Path: '/properties/extend/properties/effects/items'",
-                                "options": {
-                                    "hidden": false
-                                }
-                            }
-                        ]
-                    },
-                    "propertyOrder": 10
-                }
+                "effects": { "$ref": "#/definitions/effects" }
             },
             "propertyOrder": 70
         },
@@ -309,35 +243,8 @@
                 "effects"
             ],
             "properties": {
-                "effects": {
-                    "type": "array",
-                    "id": "/properties/delete/properties/effects",
-                    "title": "Effects",
-                    "format": "table",
-                    "options": {
-                        "disable_collapse": false,
-                        "disable_array_add": false,
-                        "disable_array_delete": false,
-                        "disable_array_reorder": false,
-                        "disable_properties": false,
-                        "collapsed": false,
-                        "hidden": false
-                    },
-                    "items": {
-                        "type": "string",
-                        "id": "/properties/delete/properties/effects/items",
-                        "title": "Effect",
-                        "default": "NEVER_MISFIRES",
-                        "format": "text",
-                        "description": "Description for 'items' Type: 'string' Path: '/properties/delete/properties/effects/items'",
-                        "options": {
-                            "hidden": false
-                        }
-                    },
-                    "propertyOrder": 10
-                }
-            },
-            "propertyOrder": 80
+                "effects": { "$ref": "#/definitions/effects" }
+            }
         },
         "category": {
           "$ref": "#/definitions/category", 
@@ -348,12 +255,132 @@
             "id": "/properties/recoil",
             "title": "Recoil",
             "default": 90,
-            "description": "A description for 'recoil'  Type: 'integer'",
+            "description": "The amount of recoil",
             "options": {
                 "hidden": false
             },
             "propertyOrder": 200
         },
+        "effects": { "$ref": "#/definitions/effects" },
+        "copy-from": {
+            "type": "string",
+            "enum": [ ]
+        },
+        "looks_like": {
+            "type": "string",
+            "format": "selectize",
+            "enum": [ ]
+        },
+        "fuel": {
+            "type": "object",
+            "id": "/properties/fuel",
+            "title": "Fuel",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "energy",
+                "explosion_data"
+            ],
+            "properties": {
+                "energy": {
+                    "type": "number",
+                    "id": "/properties/fuel/properties/energy",
+                    "title": "Energy",
+                    "default": 15.6,
+                    "description": "A description for 'energy'  Type: 'number'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 10
+                },
+                "explosion_data": {
+                    "type": "object",
+                    "id": "/properties/fuel/properties/explosion_data",
+                    "title": "Explosion Data",
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_edit_json": false,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false
+                    },
+                    "defaultProperties": [
+                        "chance_hot",
+                        "chance_cold",
+                        "factor",
+                        "fiery",
+                        "size_factor"
+                    ],
+                    "properties": {
+                        "chance_hot": {
+                            "type": "integer",
+                            "id": "/properties/fuel/properties/explosion_data/properties/chance_hot",
+                            "title": "Chance Hot",
+                            "default": 5,
+                            "description": "A description for 'chance_hot'  Type: 'integer'",
+                            "options": {
+                                "hidden": false
+                            },
+                            "propertyOrder": 10
+                        },
+                        "chance_cold": {
+                            "type": "integer",
+                            "id": "/properties/fuel/properties/explosion_data/properties/chance_cold",
+                            "title": "Chance Cold",
+                            "default": 10,
+                            "description": "A description for 'chance_cold'  Type: 'integer'",
+                            "options": {
+                                "hidden": false
+                            },
+                            "propertyOrder": 20
+                        },
+                        "factor": {
+                            "type": "number",
+                            "id": "/properties/fuel/properties/explosion_data/properties/factor",
+                            "title": "Factor",
+                            "default": 0.2,
+                            "description": "A description for 'factor'  Type: 'number'",
+                            "options": {
+                                "hidden": false
+                            },
+                            "propertyOrder": 30
+                        },
+                        "fiery": {
+                            "type": "boolean",
+                            "id": "/properties/fuel/properties/explosion_data/properties/fiery",
+                            "title": "Fiery",
+                            "format": "checkbox",
+                            "default": true,
+                            "description": "A description for 'fiery'  Type: 'boolean'",
+                            "options": {
+                                "hidden": false
+                            },
+                            "propertyOrder": 40
+                        },
+                        "size_factor": {
+                            "type": "number",
+                            "id": "/properties/fuel/properties/explosion_data/properties/size_factor",
+                            "title": "Size Factor",
+                            "default": 0.1,
+                            "description": "A description for 'size_factor'  Type: 'number'",
+                            "options": {
+                                "hidden": false
+                            },
+                            "propertyOrder": 50
+                        }
+                    },
+                    "propertyOrder": 20
+                }
+            },
+            "propertyOrder": 190
+        }
+    },
+    "definitions": {
         "effects": {
             "type": "array",
             "id": "/properties/effects",

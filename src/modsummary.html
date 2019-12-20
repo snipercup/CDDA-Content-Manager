@@ -62,7 +62,8 @@
     
 		//Initialize function, it is asynchonous to allow await-ing for the functions called in init.
 		async function init(){
-			modFolderList = await getFolderNamesFromFolder(await getCataclysmGameFolder() + DATA_MODS);
+       //Because the last parameter is set to true, This will return only the folder names, not the entire path
+			modFolderList = await getFoldersFromFolder(await getCataclysmGameFolder() + DATA_MODS, true);
       let selectElement = document.getElementById("entryList")
 			for (let i = 0, modFolderListlen = modFolderList.length; i < modFolderListlen; i++) {
         let opt = document.createElement('option');

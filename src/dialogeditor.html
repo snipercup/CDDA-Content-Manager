@@ -299,11 +299,9 @@
 		
 		//Initialize function, it is asynchonous to allow await-ing for the functions called in init.
 		async function init(){
-			npcObjList = new jsonObjList(document.getElementById("npcList"), await getCataclysmGameFolder() + DATA_JSON_NPCS, "id", [["type", "npc", true, true]]);
+			npcObjList = new jsonObjList(document.getElementById("npcList"), await getContentFolderList(), "id", [["type", "npc", true, true]]);
 			readTalkTopicsFromDisk();
 		}
-		
-		
 		
 		//Get a talk topics by ID. Some talk topics have multiple id's if one id appears in multiple talk topics, return all of them.
 		function getTalkTopicsById(strID){

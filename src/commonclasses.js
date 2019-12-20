@@ -1,23 +1,23 @@
 //This class takes a select html element and fills it with items based on the properties you provide it with.
 class jsonObjList {
 	selectionBox; //An element in the DOM that will get updated with its content
-	jsonFolder; //Look in this folder for items to add to the list
+	folderList; //Look in this folder list for items to add to the list
 	displayKey; //The key to display in the list. for example ID.
 	filter; //A list reprisenting a filter. See getItemsFromListOfJsonItems in jsonfunctions.js for a description.
 	selectedEntryId; //The id of the selected entry.
 	
 	// class methods
-	constructor(selectElement, strJsonFolder, strDisplayKey, lstFilter) {
+	constructor(selectElement, folderList, strDisplayKey, lstFilter) {
 		this.selectionBox = selectElement;
-		this.jsonFolder = strJsonFolder;
+		this.folderList = folderList;
 		this.displayKey = strDisplayKey;
 		this.filter = lstFilter;
 		this.updateList();
 	}
   
-  recreate(selectElement, strJsonFolder, strDisplayKey, lstFilter){
+  recreate(selectElement, folderList, strDisplayKey, lstFilter){
 		this.selectionBox = selectElement;
-		this.jsonFolder = strJsonFolder;
+		this.folderList = folderList;
 		this.displayKey = strDisplayKey;
 		this.filter = lstFilter;
 		this.updateList();
@@ -27,7 +27,7 @@ class jsonObjList {
 	async updateList(){
     this.selectionBox.style.display = "block";
 		//Gets all json items and their filename from the given filelist.
-		var retreivedItems = await getFilteredJsonItemsFromFolder(this.jsonFolder, this.filter);
+		var retreivedItems = await getFilteredJsonItemsFromFolderList(this.folderList, this.filter);
 		let selectedIndex = this.selectionBox.selectedIndex;
 		this.selectionBox.innerHTML = ""; //Empty the list.
 		

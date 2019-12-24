@@ -2,7 +2,7 @@ var stringify = require("@aitodotai\\json-stringify-pretty-compact");
 var collapsible = require('collapsible');
 var JSONEDITOR = require("@json-editor\\json-editor");
 
-async function getIDListOfType(type){
+async function getIDListOfType(type, includeAbstract = false){
   let jsonList = await getFilteredJsonItemsFromFolderList(await getContentFolderList(), [["type", type, true, true]]);
   let returnList = [];
 		let jsonElementID = "", jsonObject, retrievedItem;
@@ -11,7 +11,14 @@ async function getIDListOfType(type){
 			retrievedItem = jsonList[i];
 			jsonObject = retrievedItem.jsonObject
 			jsonElementID = jsonObject["id"];
-      returnList.push(jsonElementID);
+      if(jsonElementID){
+        returnList.push(jsonElementID);
+      } else if(includeAbstract){
+        jsonElementID = jsonObject["abstract"];
+        if(jsonElementID){
+          returnList.push(jsonElementID);
+        } 
+      }
 		}
   return returnList;
 }

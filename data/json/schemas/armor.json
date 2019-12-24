@@ -52,6 +52,9 @@
           "$ref": "#/definitions/description", 
           "propertyOrder": 13
         },
+        "category": {
+          "$ref": "#/definitions/category"
+        },
         "weight": {
           "$ref": "#/definitions/weight", 
           "propertyOrder": 13
@@ -90,7 +93,19 @@
             "title": "Looks Like",
             "default": "sheath",
             "format": "text",
-            "description": "Description for 'looks_like' Type: 'string' Path: '/properties/looks_like'",
+            "description": "The entity that this should look like if the sprite is missing.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 110
+        },
+        "storage": {
+            "type": "string",
+            "id": "/properties/storage",
+            "title": "storage",
+            "default": "sheath",
+            "format": "text",
+            "description": "The amount of storage",
             "options": {
                 "hidden": false
             },
@@ -320,6 +335,66 @@
               }
             ],
             "propertyOrder": 170
+        },
+        "warmth": {
+            "type": "integer",
+            "id": "/properties/warmth",
+            "title": "Warmth",
+            "default": 25,
+            "description": "The warmth",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 180
+        },
+        "environmental_protection": {
+            "type": "integer",
+            "id": "/properties/environmental_protection",
+            "title": "Environmental Protection",
+            "default": 1,
+            "description": "The environmental protection",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 100
+        },
+        "to_hit": {
+            "type": "integer",
+            "id": "/properties/to_hit",
+            "title": "To Hit",
+            "default": 1,
+            "description": "To hit damage",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 100
+        },
+        "valid_mods": {
+            "type": "array",
+            "id": "/properties/valid_mods",
+            "title": "Valid Mods",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "string",
+                "id": "/properties/valid_mods/items",
+                "title": "Clothing Mod",
+                "default": "steel_padded",
+                "format": "text",
+                "description": "The valid clothing mod applicable to this armor",
+                "options": {
+                    "hidden": false
+                }
+            },
+            "propertyOrder": 200
         },
         "flags": {
             "type": "array",

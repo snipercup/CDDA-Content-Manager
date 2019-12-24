@@ -11,14 +11,18 @@ class EditForm {
 	}
 	
 	async init(){
-    await this.updateSchema(this.type);
+    this.schemaInst = await getJsonFromFile(await getWorkingDirectory() + SCHEMAS_PATH + this.type + ".json");
+    await this.loadExtraDefinitions(this.type);
+    if(this.editor){
+      this.editor.schema = this.schemaInst;
+    }
 		this.createForm();
 	}
   
   //Some fields require looking up other items. The required lists are added here.
   async loadExtraDefinitions(type){
     this.schemaInst.definitions = {...this.schemaInst.definitions, ...await getJsonFromFile(await getWorkingDirectory() + SCHEMAS_PATH + "generaldefinitions.json")};
-    let IDListOfType = await getIDListOfType(type); //Get all the id's of every item of this type
+    let IDListOfType = await getIDListOfType(type, true); //Get all the id's of every item of this type
     //Save the list as a definition to the schema, just in case there's a use for it.
     this.schemaInst.definitions[type] = { "type": "string", "description": "The id of another entry", "enum": IDListOfType };
     
@@ -58,14 +62,6 @@ class EditForm {
     }
   }
   
-  async updateSchema(type){
-    this.schemaInst = await getJsonFromFile(await getWorkingDirectory() + SCHEMAS_PATH + type + ".json");
-    await this.loadExtraDefinitions(type);
-    if(this.editor){
-      this.editor.schema = this.schemaInst;
-    }
-  }
-  
   get type(){
     return this.jsonContentData.jsonObject.type;
   }
@@ -81,7 +77,8 @@ class EditForm {
       schema: this.schemaInst,
       theme: 'spectre',
       iconlib: 'spectre',
-      selectize: true
+      selectize: true,
+      remove_empty_properties: false
     });
     this.editor.setValue(this.jsonContentData.jsonObject);
 	}
@@ -104,11 +101,41 @@ class EditForm {
 		y.appendChild(this.fileNameHTMLElement);
 		return y;
 	}
+  
+  
+  //Ensures the order of the keys in the object is the same as it was when loaded from disk
+	async getValueKeepOrder(oldObj, newObj){
+    let key, keys;
+    
+    //Iterate over the keys in the new object to see if there is any new property
+    keys = Object.keys(newObj);
+    for(let y = 0, keyslength = keys.length; y<keyslength; y++){
+      key = keys[y];
+      if(typeof newObj[key] === 'object' && newObj[key] !== null){ //Check if the new key is an object
+        if(typeof oldObj[key] === 'object' && oldObj[key] !== null){ //The old key is an object
+          oldObj[key] = await this.getValueKeepOrder(oldObj[key], newObj[key]);
+        } else { //The old key is not an object. replace it entirely
+          oldObj[key] = newObj[key];
+        }
+      } else {
+        oldObj[key] = newObj[key];
+      }
+    }
+    
+    //Iterate over the keys in the old object delete keys that no longer exist in the new object
+    keys = Object.keys(oldObj);
+    for(let i = 0, keyslength = keys.length; i<keyslength; i++){
+      key = keys[i];
+      if (typeof newObj[key] === 'undefined'){
+        delete oldObj[key]; 
+      }
+    }
+    return oldObj;
+  }
 	
   //When the user presses eighter save, duplicate or delete
 	async editFormSubmit_click(btnElement){
-    let jsonObj = this.editor.getValue();
-    this.jsonContentData.jsonObject = jsonObj;
+    let jsonObj = await this.getValueKeepOrder(this.jsonContentData.jsonObject, this.editor.getValue());
     let fileName = this.jsonContentData.fileName;
     let indexInParentObject = this.jsonContentData.indexInParentObject;
     switch(btnElement.title) {

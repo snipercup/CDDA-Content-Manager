@@ -36,24 +36,27 @@
     ],
     "properties": {
         "id": {
-          "$ref": "#/definitions/id", 
-          "propertyOrder": 10
+          "$ref": "#/definitions/id"
+        },
+        "copyfrom": {
+          "type": "string",
+          "$ref": "#/definitions/copyfrom"
+        },
+        "copy-from": {
+          "type": "string",
+          "$ref": "#/definitions/copy-from"
         },
         "type": {
-          "$ref": "#/definitions/type", 
-          "propertyOrder": 11
+          "$ref": "#/definitions/type"
         },
         "name": {
-          "$ref": "#/definitions/name", 
-          "propertyOrder": 12
+          "$ref": "#/definitions/name"
         },
         "name_plural": {
-          "$ref": "#/definitions/name_plural", 
-          "propertyOrder": 13
+          "$ref": "#/definitions/name_plural"
         },
         "description": {
-          "$ref": "#/definitions/description", 
-          "propertyOrder": 13
+          "$ref": "#/definitions/description"
         },
         "weight": {"$ref": "#/definitions/weight"},
         "volume": {"$ref": "#/definitions/volume"},
@@ -63,6 +66,16 @@
         "symbol": {"$ref": "#/definitions/symbol"},
         "color": {"$ref": "#/definitions/color"},
         "count": {"$ref": "#/definitions/count"},
+        "//": {
+            "type": "string",
+            "title": "Description",
+            "default": "This is a comment",
+            "format": "text",
+            "description": "This is a comment that will only appear here but not in-game",
+            "options": {
+                "hidden": false
+            }
+        },
         "stack_size": {
             "type": "integer",
             "id": "/properties/stack_size",
@@ -71,8 +84,7 @@
             "description": "The default stack size",
             "options": {
                 "hidden": false
-            },
-            "propertyOrder": 130
+            }
         },
         "ammo_type": {
             "type": "string",
@@ -83,20 +95,7 @@
             "description": "The type of ammo",
             "options": {
                 "hidden": false
-            },
-            "propertyOrder": 140
-        },
-        "casing": {
-            "type": "string",
-            "id": "/properties/casing",
-            "title": "Casing",
-            "default": "46mm_casing",
-            "format": "text",
-            "description": "The casing it will drop.",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 150
+            }
         },
         "range": {
             "type": "integer",
@@ -106,8 +105,7 @@
             "description": "The range of the ammo",
             "options": {
                 "hidden": false
-            },
-            "propertyOrder": 160
+            }
         },
         "damage": {
             "type": "integer",
@@ -117,8 +115,17 @@
             "description": "The damage it will deal.",
             "options": {
                 "hidden": false
-            },
-            "propertyOrder": 170
+            }
+        },
+        "loudness": {
+            "type": "number",
+            "id": "/properties/proportional/properties/loudness",
+            "title": "Damage",
+            "default": 0.46,
+            "description": "The amount of noise",
+            "options": {
+                "hidden": false
+            }
         },
         "pierce": {
             "type": "integer",
@@ -128,8 +135,7 @@
             "description": "The amount of piercing damage.",
             "options": {
                 "hidden": false
-            },
-            "propertyOrder": 180
+            }
         },
         "dispersion": {
             "type": "integer",
@@ -139,8 +145,7 @@
             "description": "The amount of dispersion",
             "options": {
                 "hidden": false
-            },
-            "propertyOrder": 190
+            }
         },
         "proportional": {
             "type": "object",
@@ -170,8 +175,7 @@
                     "description": "The amount of damage",
                     "options": {
                         "hidden": false
-                    },
-                    "propertyOrder": 20
+                    }
                 },
                 "recoil": {
                     "type": "number",
@@ -181,8 +185,17 @@
                     "description": "The amount of Recoil",
                     "options": {
                         "hidden": false
-                    },
-                    "propertyOrder": 30
+                    }
+                },
+                "range": {
+                    "type": "number",
+                    "id": "/properties/proportional/properties/range",
+                    "title": "Range",
+                    "default": 0.1,
+                    "description": "The amount of range",
+                    "options": {
+                        "hidden": false
+                    }
                 },
                 "pierce": {
                     "type": "number",
@@ -192,8 +205,7 @@
                     "description": "The amount of pierce",
                     "options": {
                         "hidden": false
-                    },
-                    "propertyOrder": 40
+                    }
                 },
                 "dispersion": {
                     "type": "number",
@@ -203,11 +215,9 @@
                     "description": "The amount of dispersion",
                     "options": {
                         "hidden": false
-                    },
-                    "propertyOrder": 50
+                    }
                 }
-            },
-            "propertyOrder": 60
+            }
         },
         "extend": {
             "type": "object",
@@ -225,8 +235,7 @@
             ],
             "properties": {
                 "effects": { "$ref": "#/definitions/effects" }
-            },
-            "propertyOrder": 70
+            }
         },
         "delete": {
             "type": "object",
@@ -247,8 +256,33 @@
             }
         },
         "category": {
-          "$ref": "#/definitions/category", 
-          "propertyOrder": 13
+          "$ref": "#/definitions/category"
+        },
+        "flags": {
+            "type": "array",
+            "id": "/properties/flags",
+            "title": "Flags",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "enum": [ 
+                  "NOGIB", 
+                  "TANGLE", 
+                  "PRIMITIVE_RANGED_WEAPON"
+                ]
+            },
+            "propertyOrder": 60
         },
         "recoil": {
             "type": "integer",
@@ -258,14 +292,20 @@
             "description": "The amount of recoil",
             "options": {
                 "hidden": false
-            },
-            "propertyOrder": 200
+            }
+        },
+        "casing": {
+            "type": "string",
+            "id": "/properties/casing",
+            "title": "Casing",
+            "default": "46mm_casing",
+            "format": "text",
+            "description": "The casing it will drop.",
+            "options": {
+                "hidden": false
+            }
         },
         "effects": { "$ref": "#/definitions/effects" },
-        "copy-from": {
-            "type": "string",
-            "enum": [ ]
-        },
         "looks_like": {
             "type": "string",
             "format": "selectize",
@@ -295,8 +335,7 @@
                     "description": "A description for 'energy'  Type: 'number'",
                     "options": {
                         "hidden": false
-                    },
-                    "propertyOrder": 10
+                    }
                 },
                 "explosion_data": {
                     "type": "object",
@@ -325,8 +364,7 @@
                             "description": "A description for 'chance_hot'  Type: 'integer'",
                             "options": {
                                 "hidden": false
-                            },
-                            "propertyOrder": 10
+                            }
                         },
                         "chance_cold": {
                             "type": "integer",
@@ -336,8 +374,7 @@
                             "description": "A description for 'chance_cold'  Type: 'integer'",
                             "options": {
                                 "hidden": false
-                            },
-                            "propertyOrder": 20
+                            }
                         },
                         "factor": {
                             "type": "number",
@@ -347,8 +384,7 @@
                             "description": "A description for 'factor'  Type: 'number'",
                             "options": {
                                 "hidden": false
-                            },
-                            "propertyOrder": 30
+                            }
                         },
                         "fiery": {
                             "type": "boolean",
@@ -359,8 +395,7 @@
                             "description": "A description for 'fiery'  Type: 'boolean'",
                             "options": {
                                 "hidden": false
-                            },
-                            "propertyOrder": 40
+                            }
                         },
                         "size_factor": {
                             "type": "number",
@@ -370,14 +405,179 @@
                             "description": "A description for 'size_factor'  Type: 'number'",
                             "options": {
                                 "hidden": false
-                            },
-                            "propertyOrder": 50
+                            }
                         }
-                    },
-                    "propertyOrder": 20
+                    }
                 }
+            }
+        },
+        "relative": {
+            "type": "object",
+            "id": "/properties/relative",
+            "title": "Relative",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
             },
-            "propertyOrder": 190
+            "defaultProperties": [
+                "damage",
+                "pierce"
+            ],
+            "properties": {
+                "damage": {
+                    "type": "integer",
+                    "id": "/properties/relative/properties/damage",
+                    "title": "Damage",
+                    "default": -10,
+                    "description": "The relative damage",
+                    "options": {
+                        "hidden": false
+                    }
+                },
+                "range": {
+                    "type": "integer",
+                    "id": "/properties/relative/properties/range",
+                    "title": "Range",
+                    "default": 20,
+                    "description": "The relative range",
+                    "options": {
+                        "hidden": false
+                    }
+                },
+                "pierce": {
+                    "type": "integer",
+                    "id": "/properties/relative/properties/pierce",
+                    "title": "Pierce",
+                    "default": 20,
+                    "description": "The relative piercing damage",
+                    "options": {
+                        "hidden": false
+                    }
+                }
+            }
+        },
+        "bashing": {
+            "type": "integer",
+            "id": "/properties/bashing",
+            "title": "Bashing",
+            "default": 1,
+            "description": "The amount of bashing damage",
+            "options": {
+                "hidden": false
+            }
+        },
+        "explode_in_fire": {
+            "type": "boolean",
+            "id": "/properties/explode_in_fire",
+            "title": "Explode In Fire",
+            "format": "checkbox",
+            "default": true,
+            "options": {
+                "hidden": false
+            }
+        },
+        "explosion": {
+            "type": "object",
+            "id": "/properties/explosion",
+            "title": "Explosion",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "power",
+                "distance_factor",
+                "shrapnel"
+            ],
+            "properties": {
+                "power": {
+                    "type": "integer",
+                    "id": "/properties/explosion/properties/power",
+                    "title": "Power",
+                    "default": 24,
+                    "description": "Power of the explosion",
+                    "options": {
+                        "hidden": false
+                    }
+                },
+                "distance_factor": {
+                    "type": "number",
+                    "id": "/properties/explosion/properties/distance_factor",
+                    "title": "Distance Factor",
+                    "default": 0.6,
+                    "description": "The distance factor",
+                    "options": {
+                        "hidden": false
+                    }
+                },
+                "shrapnel": {
+                    "type": "object",
+                    "id": "/properties/explosion/properties/shrapnel",
+                    "title": "Shrapnel",
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_edit_json": false,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false
+                    },
+                    "defaultProperties": [
+                        "count",
+                        "mass",
+                        "recovery",
+                        "drop"
+                    ],
+                    "properties": {
+                        "count": {
+                            "type": "integer",
+                            "id": "/properties/explosion/properties/shrapnel/properties/count",
+                            "title": "Count",
+                            "default": 40,
+                            "description": "The amount of schrapnel",
+                            "options": {
+                                "hidden": false
+                            }
+                        },
+                        "mass": {
+                            "type": "integer",
+                            "id": "/properties/explosion/properties/shrapnel/properties/mass",
+                            "title": "Mass",
+                            "default": 5,
+                            "description": "The mass of schrapnel",
+                            "options": {
+                                "hidden": false
+                            }
+                        },
+                        "recovery": {
+                            "type": "integer",
+                            "id": "/properties/explosion/properties/shrapnel/properties/recovery",
+                            "title": "Recovery",
+                            "default": 100,
+                            "description": "The recovery",
+                            "options": {
+                                "hidden": false
+                            }
+                        },
+                        "drop": {
+                            "type": "string",
+                            "id": "/properties/explosion/properties/shrapnel/properties/drop",
+                            "title": "Drop",
+                            "default": "shrapnel",
+                            "format": "text",
+                            "description": "The drop",
+                            "options": {
+                                "hidden": false
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -440,8 +640,7 @@
                 "TRAIL", 
                 "WIDE "
                 ]
-            },
-            "propertyOrder": 60
+            }
         }
     }
 }

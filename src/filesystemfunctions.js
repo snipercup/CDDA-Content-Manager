@@ -272,6 +272,6 @@ function fileExists(fileName){
 	  }
 	} catch(err) {
 	  console.log(err);
-	return false;
+    return false;
 	}
 }

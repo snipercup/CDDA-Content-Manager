@@ -12,6 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/js/standalone/selectize.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/css/selectize.bootstrap3.css">
+    <script src="lib/lokijs.min.js"></script>
     <script src="filesystemfunctions.js"></script>
     <script src="commonfunctions.js"></script> 
     <script src="jsonfunctions.js"></script> 
@@ -19,6 +20,7 @@
     <script src="constants.js"></script> 
     <script src="htmlfunctions.js"></script> 
     <script src="editform.js"></script> 
+    <script src="schemas.js"></script> 
   <style>
   .selectize-control.multi .selectize-input > div {
     color: #FFF;
@@ -38,6 +40,9 @@
     <script>
     var entryList;
 		var editorList = [];
+    var db = new loki();
+    var entries = db.addCollection("entries", { indices: ['jsonObject.type'] });
+    var schemas = db.addCollection("schemas");
 		
 		//When the page finishes loading
 		document.addEventListener("DOMContentLoaded", function(event) {
@@ -47,25 +52,34 @@
 		
 		//Initialize function, it is asynchonous to allow await-ing for the functions called in init.
 		async function init(){
+      await addItemsToCollectionFromFolderList(await getContentFolderList(), entries); //Get all entries from all json file and put them in one big collection. at the time of writing this is about 25600 entries.
+      await addItemsToCollectionFromFolderList([await getWorkingDirectory() + SCHEMAS_PATH], schemas); //Put all the schemas in one collection
+      await loadExtraDefinitions(schemas, entries); //Add the dynamic content to the schemas.
+      //Populate the filters list
+      let filters = await getJsonFromFile("data\\json\\collectionList\\filters.json");
+      let filter;
+      for (let i = 0, amountOfFilters = filters.length; i < amountOfFilters; i++) {
+        filter = filters[i];
+        let opt = document.createElement('option');
+        opt.value = filter.name;
+        opt.innerHTML = filter.display_name;
+        opt.title = JSON.stringify(filter);
+        document.getElementById("filterList").appendChild(opt);
+      }
+      document.getElementById("filterList").style.display = "";
+      document.getElementById("editForm").innerHTML = "select an entry to start"
 		}
     
-		async function typeList_change(selectElement){
+		async function filterList_change(selectElement){
 			//User selects an item
 			let item = selectElement.options[selectElement.selectedIndex];
 			if(!item){return;}
-			let itemValue = item.value; //This will be the type
-			let itemTitle = item.title; //This will be the displaykey
-      if(itemValue){
-        if(entryList){
-          entryList.recreate(document.getElementById("entryList"), await getContentFolderList(), itemTitle, [["type", itemValue, true, true]]);
-        } else {
-        	entryList = new jsonObjList(document.getElementById("entryList"), await getContentFolderList(), itemTitle, [["type", itemValue, true, true]]);
-        }
+			let jsonObj = JSON.parse(item.title);
+      if(entryList){ //Check to see if there is already an entrylist. Otherwise, create one
+        entryList.recreate(document.getElementById("entryList"), entries, jsonObj.display_key, jsonObj.filter);
+      } else {
+        entryList = new collectionList(document.getElementById("entryList"), entries, jsonObj.display_key, jsonObj.filter);
       }
-      let jsonObj = {"jsonObject":{"type":itemValue},"indexInParentObject":-1,"fileName":""}
-			if(editorList[0]){
-				editorList[0] = await new EditForm(jsonObj, document.getElementById('editForm'));
-			}
       document.getElementById('editForm').style.display = "none";
     }
     
@@ -80,9 +94,9 @@
 			var jsonObj = JSON.parse(itemTitle);  
 			//Transform the json object to html
 			if(editorList[0]){
-				editorList[0].setValue(jsonObj);
+				editorList[0].setValue(jsonObj["$loki"]);
 			} else {
-        var editor = new EditForm(jsonObj, document.getElementById('editForm'));
+        var editor = new EditForm(jsonObj["$loki"], document.getElementById('editForm'), entries, schemas);
         editorList.push(editor);
 			}
 			entryList.selectedEntryId = item.value;
@@ -101,21 +115,14 @@
 		<table style="height:100%;">
 		<tr>
 			<td class="mainListContainer" style="vertical-align: top;">
-          <select name="typeList" id="typeList"  onchange="typeList_change(this);">
-            <option selected>Select a type</option>
-            <option value="AMMO" title="id">AMMO</option>
-            <option value="SPELL" title="id">SPELL</option>
-            <option value="ammunition_type" title="id">ammunition_type</option>
-            <option value="ARMOR" title="id">ARMOR</option>
-            <option value="monster_attack" title="id">monster_attack</option>
-            <option value="morale_type" title="id">morale_type</option>
-            <option value="MONSTER" title="id">MONSTER</option>
+          <select name="filterList" id="filterList"  onchange="filterList_change(this);" style="display:none;">
+            <option selected>Select a filter</option>
           </select>
 					<select name="entryList" id="entryList"  onchange="entryList_change(this);" size="5" style="height:94%; display:none;"></select>
 		</td>
 			<td class="mainContentContainer" style="padding:25px; height:100%; overflow:auto;">
 				<div class="contentContainer" style="height:100%; overflow:auto; min-width: 725px;" id="editForm">
-					<p >Select an entry to start.</p>
+					<p >Loading.</p>
 				</div>
 			</td>
 		</tr>

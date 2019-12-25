@@ -1,0 +1,51 @@
+[
+	{
+		"type": "filter",
+		"name": "all_spells",
+		"display_name": "Type: SPELL",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "SPELL" } }
+	},
+	{
+		"type": "filter",
+		"name": "all_ammo",
+		"display_name": "Type: AMMO",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "AMMO" } }
+	},
+	{
+		"type": "filter",
+		"name": "all_ammunition_type",
+		"display_name": "Type: ammunition_type",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "ammunition_type" } }
+	},
+	{
+		"type": "filter",
+		"name": "all_ARMOR",
+		"display_name": "Type: ARMOR",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "ARMOR" } }
+	},
+	{
+		"type": "filter",
+		"name": "all_monster_attack",
+		"display_name": "Type: monster_attack",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "monster_attack" } }
+	},
+	{
+		"type": "filter",
+		"name": "all_morale_type",
+		"display_name": "Type: morale_type",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "morale_type" } }
+	},
+	{
+		"type": "filter",
+		"name": "all_MONSTER",
+		"display_name": "Type: MONSTER",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "MONSTER" } }
+	}
+]

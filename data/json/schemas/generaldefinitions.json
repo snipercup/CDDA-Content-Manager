@@ -32,23 +32,21 @@
       "description": "The ID of the entry",
       "options": {
           "hidden": false
-      },
-      "propertyOrder": 10
+      }
   },
   "type": {
       "type": "string",
       "id": "/properties/type",
       "title": "Type",
-      "default": "AMMO",
       "format": "text",
       "readonly": true,
       "description": "The type should not be changed.",
       "options": {
           "hidden": false
-      },
-      "propertyOrder": 20
+      }
   },
   "name": {
+    "title": "Name",
     "oneOf": [
         {
           "type": "string",
@@ -59,12 +57,11 @@
           "description": "The name as it will appear in-game",
           "options": {
               "hidden": false
-          },
-          "propertyOrder": 30
+          }
         }, 
         {
           "type": "object",
-          "id": "/properties/path_settings",
+          "id": "/properties/name",
           "title": "Name",
           "format": "grid",
           "options": {
@@ -86,8 +83,7 @@
                   "description": "The name as it will appear in game",
                   "options": {
                       "hidden": false
-                  },
-                  "propertyOrder": 10
+                  }
               },
               "str_pl": {
                   "type": "string",
@@ -97,11 +93,9 @@
                   "description": "The name as it will appear in game",
                   "options": {
                       "hidden": false
-                  },
-                  "propertyOrder": 10
+                  }
               }
-          },
-          "propertyOrder": 280
+          }
         }
     ]
   },
@@ -114,8 +108,7 @@
       "description": "The plural name as it will appear in-game",
       "options": {
           "hidden": false
-      },
-      "propertyOrder": 30
+      }
   },
   "description": {
       "type": "string",
@@ -126,8 +119,7 @@
       "description": "The description that will appear in-game",
       "options": {
           "hidden": false
-      },
-      "propertyOrder": 40
+      }
   },
   "weight": {
       "type": "string",
@@ -138,8 +130,7 @@
       "description": "The weight for the ammo",
       "options": {
           "hidden": false
-      },
-      "propertyOrder": 50
+      }
   },
   "volume": {
       "type": "string",
@@ -150,8 +141,7 @@
       "description": "The volume of the ammo",
       "options": {
           "hidden": false
-      },
-      "propertyOrder": 60
+      }
   },
   "price": {
       "type": "number",
@@ -161,8 +151,7 @@
       "description": "The price from before the cataclysm",
       "options": {
           "hidden": false
-      },
-      "propertyOrder": 70
+      }
   },
   "price_postapoc": {
       "type": "number",
@@ -172,8 +161,7 @@
       "description": "The price after the cataclysm",
       "options": {
           "hidden": false
-      },
-      "propertyOrder": 80
+      }
   },
   "material": {
       "type": "array",
@@ -207,13 +195,15 @@
           "leather",
           "bone", 
           "plastic", 
-          "nomex"
+          "nomex",
+          "flesh",
+          "iflesh",
+          "veggy"
           ],
           "options": {
               "hidden": false
           }
-      },
-      "propertyOrder": 90
+      }
   },
   "symbol": {
       "type": "string",
@@ -224,8 +214,7 @@
       "description": "The symbol the entry will have when there is not sprite for it.",
       "options": {
           "hidden": false
-      },
-      "propertyOrder": 100
+      }
   },
   "color": {
       "type": "string",
@@ -236,8 +225,7 @@
       "description": "The color the symbol will have when the sprite is missing.",
       "options": {
           "hidden": false
-      },
-      "propertyOrder": 110
+      }
   },
   "count": {
       "type": "integer",
@@ -247,8 +235,7 @@
       "description": "The default spawn stack",
       "options": {
           "hidden": false
-      },
-      "propertyOrder": 120
+      }
   },
   "bashing": {
       "type": "integer",
@@ -258,8 +245,7 @@
       "description": "Amount of bashing damage",
       "options": {
           "hidden": false
-      },
-      "propertyOrder": 120
+      }
   },
   "damage_type": {
       "type": "string",
@@ -271,8 +257,7 @@
       "enum": [ "cold", "fire", "electric", "cut", "stab", "bash", "none" ],
       "options": {
           "hidden": false
-      },
-      "propertyOrder": 90
+      }
   },
   "body_parts_enum": { "enum": [ "HEAD", "TORSO", "MOUTH", "EYES", "ARM_L", "ARM_R", "HAND_R", "HAND_L", "LEG_L", "LEG_R", "FOOT_L", "FOOT_R" ] }
 }

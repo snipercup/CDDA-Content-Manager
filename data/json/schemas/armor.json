@@ -4,6 +4,9 @@
     "title": "Armor",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
+    "stringifyOptions": {
+      "maxLength": 130
+    },
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -38,7 +41,8 @@
         },
         "type": {
           "$ref": "#/definitions/type", 
-          "propertyOrder": 11
+          "propertyOrder": 11,
+          "default": "ARMOR"
         },
         "name": {
           "$ref": "#/definitions/name", 

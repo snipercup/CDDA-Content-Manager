@@ -1,23 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "additionalProperties": true,
-    "title": "My Schema Title",
-    "definitions": {
-        "comment": {
-            "title": "Comment:",
-            "type": "string",
-            "format": "textarea",
-            "default": ""
-        },
-        "yesno": {
-            "default": "yes",
-            "type": "string",
-            "enum": [
-                "yes",
-                "no"
-            ]
-        }
-    },
+    "title": "Monster attack",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
     "options": {
@@ -47,6 +31,7 @@
         },
         "type": {
           "$ref": "#/definitions/type", 
+          "default": "monster_attack",
           "propertyOrder": 11
         },
         "attack_type": {

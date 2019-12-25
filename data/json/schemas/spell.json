@@ -2,22 +2,6 @@
     "$schema": "http://json-schema.org/draft-04/schema#",
     "additionalProperties": true,
     "title": "Spell",
-    "definitions": {
-        "comment": {
-            "title": "Comment:",
-            "type": "string",
-            "format": "textarea",
-            "default": ""
-        },
-        "yesno": {
-            "default": "yes",
-            "type": "string",
-            "enum": [
-                "yes",
-                "no"
-            ]
-        }
-    },
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
     "options": {
@@ -55,7 +39,8 @@
         },
         "type": {
           "$ref": "#/definitions/type", 
-          "propertyOrder": 11
+          "propertyOrder": 11,
+          "default": "SPELL"
         },
         "name": {
           "$ref": "#/definitions/name", 

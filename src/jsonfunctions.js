@@ -23,55 +23,81 @@ async function getIDListOfType(type, includeAbstract = false){
   return returnList;
 }
 
-
-
-//from https://github.com/NadaCode/es6-import-test/blob/c6393c45ac5015261eaaa18e46a37f8a54f2202f/es6_test_lib.js
-// https://github.com/lydell/json-stringify-pretty-compact
-const stringifyPrettyCompact = (json, stringify, type) => {
-  // console.log("type = " + type);
-  let options;
-  if(type == "morale_type"){
-    options = { maxNesting: 0, indent: 2, arrayMargins: true, objectMargins: true};
-  } else {
-    options = { maxLength: 140, indent: 2, arrayMargins: true, objectMargins: true};
+async function getIDListOfTypeFromCollection(type, collection, includeAbstract = false){
+  let jsonList = collection.find({ "jsonObject.type": { $eq: type } });
+  let returnList = [], jsonElementID = "", jsonObject, retrievedItem;
+  for (let i = 0, jsonListLen = jsonList.length; i < jsonListLen; i++) {
+    retrievedItem = jsonList[i];
+    jsonObject = retrievedItem.jsonObject
+    jsonElementID = jsonObject["id"];
+    if(jsonElementID){
+      returnList.push(jsonElementID);
+    } else if(includeAbstract){
+      jsonElementID = jsonObject["abstract"];
+      if(jsonElementID){
+        returnList.push(jsonElementID);
+      } 
+    }
   }
-	return stringify(json, options)
-  
-  // var options = {
-    // maxLength: 80,
-    // sameLineBraces: false,
-    // sameLineBrackets: false
-  // };
-  // let jsonString = "[";
-  // let entryString = "";
-  // console.log("json.length = " + json.length);
-  // for(let x = 0, jsonlen = json.length; x < jsonlen; x++){
-    
-    // if(x == 0){
-      // jsonString += "\n"
-    // }
-    ////entryString = collapsible.stringify(json[x], options).replace(/^\s*[\r\n]/gm, "");
-    // entryString = collapsible.stringify(json[x], options);
-    // let ks = entryString.split("\n");
-    // for(let y = 0, kslen = ks.length; y < kslen; y++){
-      // jsonString += "  " +  ks[y];
-      // if(y < kslen-1){
-        // jsonString += "\n"; 
-      // }
-    // }
-    // if(x < jsonlen-1){
-      // jsonString += ",\n";
-    // }
-    // if(x == jsonlen-1){
-      // jsonString += "\n";
-    // }
-  // }
-  // jsonString += "]";
-  // return jsonString;
+  return returnList;
 }
 
 
 
+//from https://github.com/NadaCode/es6-import-test/blob/c6393c45ac5015261eaaa18e46a37f8a54f2202f/es6_test_lib.js
+// https://github.com/lydell/json-stringify-pretty-compact
+const stringifyPrettyCompact = (json) => {
+  // console.log("type = " + type);
+  
+  let schemaDefinition, stringifyOptions, keys;
+  let jsonString = "[";
+  let entryString = "";
+  let type, getTypeOptions = false;
+  for(let x = 0, jsonlen = json.length; x < jsonlen; x++){
+    if(x == 0){
+      jsonString += "\n"
+    }
+    
+    //Keep the options of the previous unless the type has changed
+    if(type){
+      if(type != json[x].type){
+        getTypeOptions = true;
+      }
+    } else {
+      type = json[x].type;
+      getTypeOptions = true;
+    }
+    if(getTypeOptions) {
+      options = { maxLength: 140, indent: 2, arrayMargins: true, objectMargins: true}; //defaults
+      //Set options defined in the schema
+      schemaDefinition = schemas.findOne({ "jsonObject.properties.type.default": { "$eq": type } }).jsonObject;
+      if(schemaDefinition.stringifyOptions){
+        stringifyOptions = schemaDefinition.stringifyOptions;
+        keys = Object.keys(stringifyOptions);
+        for(let n = 0, keyLen = keys.length; n < keyLen; n++){
+          options[keys[n]] = stringifyOptions[keys[n]];
+        }
+      }
+    }
+    
+    entryString = stringify(json[x], options); //forward the options to the stringify function
+    let line = entryString.split("\n");
+    for(let y = 0, kslen = line.length; y < kslen; y++){
+      jsonString += "  " +  line[y];
+      if(y < kslen-1){
+        jsonString += "\n"; 
+      }
+    }
+    if(x < jsonlen-1){
+      jsonString += ",\n";
+    }
+    if(x == jsonlen-1){
+      jsonString += "\n";
+    }
+  }
+  jsonString += "]";
+  return jsonString;
+}
 
 
 		
@@ -346,21 +372,6 @@ function getItemFromListOfJsonItems(jsonObj, filter) {
 
 
 
-// When an user doubleclicks on an entry in one of the lists.
-// function addedEntryListItem_doubleclick(htmlElement){
-	// let addedEntryList = htmlElement.parentElement;
-	// let listTrElement = addedEntryList.parentElement.parentElement;
-	// let availableEntryList = listTrElement.childNodes[2].childNodes[0];
-	// moveEntryBetweenLists(htmlElement, addedEntryList, availableEntryList, function(){availableEntryListItem_doubleclick(this)});
-// }
-
-// When an user doubleclicks on an entry in one of the lists.
-// function availableEntryListItem_doubleclick(htmlElement){
-	// let availableEntryList = htmlElement.parentElement;
-	// let listTrElement = availableEntryList.parentElement.parentElement;
-	// let addedEntryList = listTrElement.childNodes[0].childNodes[0];
-	// moveEntryBetweenLists(htmlElement, availableEntryList, addedEntryList, function(){addedEntryListItem_doubleclick(this)});
-// }
 
 		
 //Get all json entries from a given folder.
@@ -408,6 +419,28 @@ async function getFilteredJsonItemsFromFolderList(folderList, filter){
 	}
 	return filteredJSONItems;
 }
+		
+//Get all json entries from a given folder list.
+async function addItemsToCollectionFromFolderList(folderList, collection){
+	//Get all files from a folderlist
+  let allfiles = await getJSONFilesFromFolderList(folderList);
+	
+	let objFileContent; //JSON object representing the contents of the file
+	let retreivedItems = [];
+	for (let i = 0, amountOfFiles = allfiles.length; i < amountOfFiles; i++) {
+		objFileContent = await getJsonFromFile(allfiles[i])
+		if(objFileContent){
+      if(Array.isArray(objFileContent)){
+        for (let y = 0, amountOfItems = objFileContent.length; y < amountOfItems; y++) {
+          collection.insert({jsonObject: objFileContent[y], indexInParentObject: y, fileName: allfiles[i]});
+        }
+      } else {
+        collection.insert({jsonObject: objFileContent, indexInParentObject: 0, fileName: allfiles[i]});
+      }
+		}
+	}
+}
+
 
 
 /*

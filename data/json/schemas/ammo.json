@@ -47,7 +47,8 @@
           "$ref": "#/definitions/copy-from"
         },
         "type": {
-          "$ref": "#/definitions/type"
+          "$ref": "#/definitions/type",
+          "default": "AMMO"
         },
         "name": {
           "$ref": "#/definitions/name"

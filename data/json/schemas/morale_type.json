@@ -2,6 +2,9 @@
     "$schema": "http://json-schema.org/draft-04/schema#",
     "additionalProperties": true,
     "title": "Morale type",
+    "stringifyOptions": {
+      "maxNesting": 0
+    },
     "definitions": {
         "comment": {
             "title": "Comment:",
@@ -34,29 +37,13 @@
     ],
     "properties": {
         "id": {
-            "type": "string",
-            "id": "/properties/id",
-            "title": "Id",
-            "default": "your_id_here",
-            "format": "text",
-            "description": "The ID for the morale type",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 10
+          "$ref": "#/definitions/id", 
+          "propertyOrder": 10
         },
         "type": {
-            "type": "string",
-            "id": "/properties/type",
-            "title": "Type",
-            "default": "morale_type",
-            "format": "text",
-            "readonly": true,
-            "description": "The type should always be morale_type",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 20
+          "$ref": "#/definitions/type", 
+          "propertyOrder": 11,
+          "default": "morale_type"
         },
         "text": {
             "type": "string",

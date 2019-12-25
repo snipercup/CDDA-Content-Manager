@@ -1,9 +1,12 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "additionalProperties": true,
-    "title": "My Schema Title",
+    "title": "Ammunition type",
     "type": "object",
     "id": "ammo",
+    "stringifyOptions": {
+      "maxNesting": 0
+    },
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -24,7 +27,8 @@
         },
         "type": {
           "$ref": "#/definitions/type", 
-          "propertyOrder": 11
+          "propertyOrder": 11,
+          "default": "ammunition_type"
         },
         "name": {
           "$ref": "#/definitions/name", 

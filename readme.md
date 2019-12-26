@@ -8,7 +8,7 @@
 
 ## Installation:
 
-#### Windows binary:
+#### For windows users:
 - Go to [releases](https://github.com/snipercup/CDDA-Content-Manager/releases) and download the latest release
 - extract the zip file and run the .exe file. There is no installation.
 - first step is to select your cataclysm game folder. After that you're ready to go.

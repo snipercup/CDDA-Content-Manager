@@ -8,18 +8,18 @@
 
 ## Installation:
 
-### Windows binary:
+#### Windows binary:
 - Go to [releases](https://github.com/snipercup/CDDA-Content-Manager/releases) and download the latest release
 - extract the zip file and run the .exe file. There is no installation.
 - first step is to select your cataclysm game folder. After that you're ready to go.
 
-### Windows developer environment:
+#### Windows developer environment:
 - download a copy of the source
 - download and install [node.js](https://nodejs.org/en/download/) (it includes npm)
 - scroll to the bottom of [this](https://github.com/electron/electron/blob/master/docs/tutorial/first-app.md) page. 
 - Execute the commands you see there (npm install and npm start).
 
-### Linux:
+#### Linux:
 - download a copy of the source
 - download and install [node.js](https://nodejs.org/en/download/) (it includes npm)
 - scroll to the bottom of [this](https://github.com/electron/electron/blob/master/docs/tutorial/first-app.md) page. 

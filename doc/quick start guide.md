@@ -13,4 +13,4 @@ This guide helps you getting started using the content manager.
   
   4c. Dialog editor - This helps you to get insicht into how your NPC dialog will look like in-game and the relationships between different topics.
   
-  5c. Mod summary - Gives a summary of a mod selected from the mod folder of your cataclysm game.
+  4d. Mod summary - Gives a summary of a mod selected from the mod folder of your cataclysm game.

@@ -25,6 +25,10 @@
 - scroll to the bottom of [this](https://github.com/electron/electron/blob/master/docs/tutorial/first-app.md) page. 
 - Execute the commands you see there (npm install and npm start).
 
+
+
+## Demo:
+
 #### Demo of the content editor:
 Basic editing of fields. Pressing save will save the json to the file, linted. Pressing delete will delete the entry from the file. Pressing duplicate will create a new entry for you to edit. 
 ![Image demoing content editor](https://i.imgur.com/UzaGa7T.gif)

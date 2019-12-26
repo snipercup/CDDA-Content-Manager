@@ -32,6 +32,7 @@ Please see the quick start guide to get started.
 ## Alternative projects:
 
 - See https://github.com/KorGgenT/cdda-item-creator for an alternative item creator.
+- See https://github.com/I-am-Erk/CDDA-Tilesets for a tileset for Cataclysm you can contribute to.
 
 ## Demo:
 

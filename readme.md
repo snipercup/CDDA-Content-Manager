@@ -25,7 +25,13 @@
 - scroll to the bottom of [this](https://github.com/electron/electron/blob/master/docs/tutorial/first-app.md) page. 
 - Execute the commands you see there (npm install and npm start).
 
+## Using the content manager:
 
+Please see the quick start guide to get started.
+
+## Alternative projects:
+
+- See https://github.com/KorGgenT/cdda-item-creator for an alternative item creator.
 
 ## Demo:
 

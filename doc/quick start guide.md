@@ -9,5 +9,5 @@ This guide helps you getting started using the content manager.
 1. Select the tool you want to use
    1. Content editor - this allows you to modify the game content files (json)  
    1. Map editor (coming soon)  
-   1. Dialog editor - This helps you to get insicht into how your NPC dialog will look like in-game and the relationships between different topics.  
-   1. Mod summary - Gives a summary of a mod selected from the mod folder of your cataclysm game. 
+   1. [Dialog editor](https://github.com/snipercup/CDDA-Content-Manager/blob/master/doc/dialogeditor.md) - This helps you to get insicht into how your NPC dialog will look like in-game and the relationships between different topics.  
+   1. [Mod summary](https://discourse.cataclysmdda.org/t/tool-mod-summary/22204) - Gives a summary of a mod selected from the mod folder of your cataclysm game. 

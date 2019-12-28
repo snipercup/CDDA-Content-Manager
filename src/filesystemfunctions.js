@@ -247,7 +247,44 @@ async function getJsonFromFile(filepath){
 	} else {
 		let jsonObj;
 		try {
-			jsonObj = JSON.parse(data);
+      //There may be comments in the file in the form of "//": keys. These will be replaced by "commentx": where x is a number.
+      //This is neede because there may be more then 1 comment and then there are duplicate keys, which have to be resolved.
+      let strjson = String(data)
+      if(strjson.includes('"//":')){
+        let jsonArray = strjson.split('    "//":'), newstr = "";
+        for(let n = 0, arrayLen = jsonArray.length; n < arrayLen; n++){
+          newstr += jsonArray[n]; //Put the json string together again
+          if(n < arrayLen-1){
+            newstr += "    \"comment" + n + "\":"; //Replace the comment key with a unique key
+          }
+        }
+        
+        strjson = newstr;
+      }
+      //Here we convert starting_ammo from an object to an array. This is required because starting_ammo may use numeric keys and it messes up the order of properties.
+      newstr = "";
+      let line = ""
+      if(strjson.includes("starting_ammo") && !filepath.includes("schema")){
+        var lines = strjson.split('\n');
+        for(var i = 0;i < lines.length;i++){
+          line = lines[i];
+          if (line.includes("starting_ammo")){
+            // console.log("1starting_ammo = " + line);
+            line = replaceAll(line, "{", "[ [");
+            line = replaceAll(line, "},", "______");
+            line = replaceAll(line, ",", " ], [");
+            line = replaceAll(line, "______", "] ],");
+            line = replaceAll(line, ":", ",");
+            line = replaceAll(line, "starting_ammo\",", "starting_ammo\":");
+            // console.log("2starting_ammo = " + line);
+          }
+          newstr += line;
+        }
+        jsonObj = JSON.parse(newstr);
+      } else {
+        jsonObj = JSON.parse(strjson);
+      }
+ 
 		} catch (e) {
 			if (e instanceof SyntaxError) {
 				console.log('[getJsonFromFile]: file \"'+filepath+'\", contains bad syntax');

@@ -43,8 +43,8 @@
           "$ref": "#/definitions/copyfrom"
         },
         "copy-from": {
-          "type": "string",
-          "$ref": "#/definitions/copy-from"
+            "type": "string",
+            "enum": [ ]
         },
         "type": {
           "$ref": "#/definitions/type",
@@ -639,7 +639,11 @@
                 "STREAM_BIG", 
                 "STREAM", 
                 "TRAIL", 
-                "WIDE "
+                "WIDE",
+                "STREAM_GAS_INSECTICIDAL",
+                "NEVER_MISFIRES",
+                "JET",
+                "RECOVER_15"
                 ]
             }
         }

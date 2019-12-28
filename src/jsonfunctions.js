@@ -47,29 +47,29 @@ async function getIDListOfTypeFromCollection(type, collection, includeAbstract =
 //from https://github.com/NadaCode/es6-import-test/blob/c6393c45ac5015261eaaa18e46a37f8a54f2202f/es6_test_lib.js
 // https://github.com/lydell/json-stringify-pretty-compact
 const stringifyPrettyCompact = (json) => {
-  // console.log("type = " + type);
   
-  let schemaDefinition, stringifyOptions, keys;
+  let schemaDefinition, stringifyOptions, keys, key, value, jsonEntry;
   let jsonString = "[";
   let entryString = "";
   let type, getTypeOptions = false;
-  for(let x = 0, jsonlen = json.length; x < jsonlen; x++){
+  for(let x = 0, jsonlen = json.length; x < jsonlen; x++){ //Loop over every item in the file
+    jsonEntry = json[x];
     if(x == 0){
       jsonString += "\n"
     }
     
     //Keep the options of the previous unless the type has changed
     if(type){
-      if(type != json[x].type){
+      if(type != jsonEntry.type){
         getTypeOptions = true;
       }
     } else {
-      type = json[x].type;
+      type = jsonEntry.type;
       getTypeOptions = true;
     }
     if(getTypeOptions) {
-      options = { maxLength: 140, indent: 2, arrayMargins: true, objectMargins: true}; //defaults
-      //Set options defined in the schema
+      options = { maxLength: 140, indent: 6, arrayMargins: true, objectMargins: true}; //defaults
+      //Set options defined in the schema. these are the top-level options for the whole entry.
       schemaDefinition = schemas.findOne({ "jsonObject.properties.type.default": { "$eq": type } }).jsonObject;
       if(schemaDefinition.stringifyOptions){
         stringifyOptions = schemaDefinition.stringifyOptions;
@@ -80,14 +80,10 @@ const stringifyPrettyCompact = (json) => {
       }
     }
     
-    entryString = stringify(json[x], options); //forward the options to the stringify function
-    let line = entryString.split("\n");
-    for(let y = 0, kslen = line.length; y < kslen; y++){
-      jsonString += "  " +  line[y];
-      if(y < kslen-1){
-        jsonString += "\n"; 
-      }
-    }
+    jsonString += recursiveStringify(jsonEntry, schemaDefinition, options);
+    
+    
+    //Add newline
     if(x < jsonlen-1){
       jsonString += ",\n";
     }
@@ -95,9 +91,222 @@ const stringifyPrettyCompact = (json) => {
       jsonString += "\n";
     }
   }
-  jsonString += "]";
+  jsonString += "]"; //end of the file
   return jsonString;
 }
+
+function recursiveStringify(jsonEntry, schemaDefinition, options, depth = 0){
+  let jsonString = "", keys, key, value, tempstring = "", arrItem, addSpace, schemakey, optionsCopy, optionsKeys;
+  
+  if(typeof jsonEntry === 'object' && jsonEntry !== null){
+    if(Array.isArray(jsonEntry)){
+      for(let x = 0, arrLen = jsonEntry.length; x < arrLen; x++){ //Loop over every item in the array
+        arrItem = jsonEntry[x];
+        if(typeof arrItem === 'object' && arrItem !== null){
+          tempstring += recursiveStringify(arrItem, schemaDefinition, options, depth+1);
+        } else {
+          tempstring += stringify(arrItem, options);
+        }
+        if(x < arrLen-1){
+          tempstring += "||==|| ";
+        }
+      }
+      addSpace = ""
+      for(let x = 0; x < depth; x++){ addSpace = addSpace + "  " }
+      if(tempstring.length - (jsonEntry.length-1)*5  > options.maxLength){
+        tempstring = "[\n    " + addSpace + replaceAll(tempstring, "||==|| ", ",\n    " + addSpace) + "\n  " + addSpace + "]"
+      } else {
+        tempstring = "[ " + replaceAll(tempstring, "||==|| ", ", ") + " ]";
+      }
+      jsonString += tempstring;
+    } else {
+      optionsCopy = options
+      keys = Object.keys(jsonEntry);
+      for(let y = 0, keyLen = keys.length; y < keyLen; y++){ //Loop over every key in the entry
+        key = keys[y];
+        value = jsonEntry[key];
+        if(key.includes("comment")){key = "//"} //Comments are transformed from // to commentx where x is a number. Transform them back to // here.
+        if(depth == 0){ jsonString += "    " }
+        jsonString += "\"" +key+ "\": "
+        schemakey = schemaDefinition.properties[key];
+        if(schemakey){
+          stringifyOptions = schemakey.stringifyOptions;
+          if(stringifyOptions){
+            optionsKeys = Object.keys(stringifyOptions);
+            for(let n = 0, optkeyLen = optionsKeys.length; n < optkeyLen; n++){
+              optionsCopy[optionsKeys[n]] = stringifyOptions[optionsKeys[n]];
+            }
+          } else {
+            optionsCopy = options;
+          }
+        }
+        if(typeof value === 'object' && value !== null){
+          if(key == "starting_ammo"){ //Here we convert key starting_ammo back to a object. This is required because it sometimes uses numeric keys that will always sort on top and we want to maintain order.
+            jsonString += "{ "
+            for(let x = 0, valLen = value.length; x < valLen; x++){
+              jsonString += "\"" + value[x][0] + "\": " + value[x][1];
+              if(x<valLen-1){jsonString+= ", "}
+            }
+            jsonString += " }"
+          } else {
+            jsonString += recursiveStringify(value, schemaDefinition, optionsCopy, depth+1);
+          }
+        } else {
+          jsonString += stringify(value, optionsCopy); //forward the options to the stringify function
+        }
+        
+        if(y < keyLen-1){
+          if(depth == 0){ 
+            jsonString += ",\n";
+          } else {
+            jsonString += "||==|| "; //||==|| represents a comma that will be replaced later
+          }
+        }
+      }
+      if(depth == 0){
+        jsonString = "  {\n" + jsonString + "\n  }";
+      } else {
+        if(jsonString.length - (keys.length-1)*5 > optionsCopy.maxLength){
+          addSpace = ""
+          for(let x = 0; x < depth; x++){ addSpace = addSpace + "  " }
+          jsonString = replaceAll(jsonString, "||==|| ", ",\n    " + addSpace);
+          jsonString = "{\n    " + addSpace + jsonString + "\n  " + addSpace + "}"
+        } else {
+          jsonString = replaceAll(jsonString, "||==|| ", ", ");
+          jsonString = "{ " + jsonString + " }";
+        }
+      }
+      
+      
+      // if(jsonString.length - (keys.length-1)*5 > optionsCopy.maxLength){
+        // addSpace = ""
+        // for(let x = 0; x < depth; x++){ addSpace = addSpace + "  " }
+        // jsonString = replaceAll(jsonString, "||==|| ", ",\n    " + addSpace);
+        // if(depth == 0){
+          // jsonString = "  {\n" + jsonString + "\n  }";
+        // } else {
+          // jsonString = "{\n    " + addSpace + jsonString + "\n  " + addSpace + "}"
+        // }
+      // } else {
+        // jsonString = replaceAll(jsonString, "||==|| ", ", ");
+        // if(depth == 0){
+          // jsonString = "  {\n" + jsonString + "\n  }";
+        // } else {
+          // jsonString = "{ " + jsonString + " }";
+        // }
+      // }
+      
+      
+      // if(tempstring.length > options.maxLength){
+        // tempstring = replaceAll(tempstring, "||==|| ", ",\n      ");
+        // jsonString += "" + tempstring + "";
+      // } else {
+        // tempstring = replaceAll(tempstring, "||==|| ", ", ");
+        // if(Array.isArray(value)){
+          // jsonString += "" + tempstring + "";
+        // } else {
+          // jsonString += "" + tempstring + "";
+        // }
+      // }
+      // if(depth == 0){
+        // jsonString += "\n  }";
+      // } else {
+        // jsonString += " }"
+      // }
+    }
+  } else {
+    return stringify(jsonEntry, options)
+  }
+  return jsonString;
+}
+
+// function recursiveStringify(jsonEntry, schemaDefinition, options, depth = 0){
+  // let jsonString = "", keys, key, value, tempstring, arrItem;
+  
+  // if(typeof jsonEntry === 'object' && jsonEntry !== null && !Array.isArray(jsonEntry)){
+    // keys = Object.keys(jsonEntry);
+    // for(let y = 0, keyLen = keys.length; y < keyLen; y++){ //Loop over every key in the entry
+        // key = keys[y]
+        // value = jsonEntry[key];
+        // if(key.includes("comment")){key = "//"} //Comments are transformed from // to commentx where x is a number. Transform them back to // here.
+        
+        // if(key == "special_attacks"){ 
+          // console.log("special_attacks") 
+        // };
+        // if(typeof value === 'object' && value !== null){
+          // if(Array.isArray(value)){
+            // jsonString += "    " + "\"" +key+ "\": " + "[ ";
+            // for(let x = 0, arrLen = value.length; x < arrLen; x++){ //Loop over every item in the array
+              // arrItem = value[x];
+              // if(typeof arrItem === 'object' && arrItem !== null){
+                // if(Array.isArray(arrItem)){
+                  // jsonString += "[ "
+                // } else {
+                  // jsonString += "{ "
+                // }
+                // if(depth == 0){
+                  // jsonString += recursiveStringify(arrItem, schemaDefinition, options, depth+1);
+                // } else {
+                  // tempstring = recursiveStringify(arrItem, schemaDefinition, options, depth+1);
+                  // if(tempstring.length > options.maxLength){
+                    // tempstring.split(",").join(",\n");
+                  // }
+                  // jsonString += tempstring;
+                // }
+                // if(Array.isArray(arrItem)){
+                  // jsonString += " ]"
+                // } else {
+                  // jsonString += " }"
+                // }
+              // } else {
+                // jsonString += stringify(arrItem, options);
+              // }
+              // if(x < arrLen-1){
+                // jsonString += ", ";
+              // }
+            // }
+            // jsonString += " ]";
+          // } else {
+            // if(depth == 0){
+              // jsonString += "    " + "\"" +key+ "\": " + "{ " + recursiveStringify(value, schemaDefinition, options, depth+1) + " }";
+            // } else {
+              // tempstring = recursiveStringify(value, schemaDefinition, options, depth+1);
+              // if(tempstring.length > options.maxLength){
+                // tempstring.split(",").join(",\n");
+              // }
+              // jsonString += "\"" +key+ "\": " + "{ " + tempstring + " }";
+            // }
+          // }
+        // } else {
+          // if(depth == 0){
+            // jsonString += "    " + "\"" +key+ "\": " + stringify(value, options); //forward the options to the stringify function
+          // } else {
+            // jsonString += "\"" +key+ "\": " + stringify(value, options); //forward the options to the stringify function
+          // }
+          // if(jsonString.substr(jsonString.length - 2) == "\n]"){ //Detect that the last characters are just newline and ]
+            // jsonString = jsonString.slice(0, -1); //Remove last character
+            // jsonString += "    ]"; //Append the formatted character (yes this is a hacky solution)
+          // }
+          // if(jsonString.substr(jsonString.length - 2) == "\n}"){ //Detect that the last characters are just newline and }
+            // jsonString = jsonString.slice(0, -1); //Remove last character
+            // jsonString += "    }"; //Append the formatted character (yes this is a hacky solution)
+          // }
+        // }
+        
+        // if(y < keyLen-1){
+          // jsonString += ",";
+          // if(depth == 0){ 
+            // jsonString += "\n"
+          // } else {
+            // jsonString += " "
+          // }
+        // }
+    // }
+  // } else {
+    // return stringify(jsonEntry, options)
+  // }
+  // return jsonString;
+// }
 
 
 		

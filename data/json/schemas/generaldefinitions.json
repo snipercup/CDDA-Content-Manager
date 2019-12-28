@@ -188,6 +188,7 @@
           "description": "The material of this entry",
           "enum": [
           "steel", 
+          "iron",
           "powder", 
           "lead", 
           "brass", 
@@ -198,7 +199,8 @@
           "nomex",
           "flesh",
           "iflesh",
-          "veggy"
+          "veggy",
+          "water"
           ],
           "options": {
               "hidden": false

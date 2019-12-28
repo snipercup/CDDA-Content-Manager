@@ -5,7 +5,7 @@
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
     "stringifyOptions": {
-      "maxLength": 130
+      "maxLength": 120
     },
     "options": {
         "disable_collapse": false,
@@ -104,15 +104,8 @@
         "species": {"$ref": "#/definitions/SPECIES", "propertyOrder": 90 },
         "looks_like": {
             "type": "string",
-            "id": "/properties/looks_like",
-            "title": "Looks Like",
-            "default": "mon_mi_go",
-            "format": "text",
-            "description": "Description for 'looks_like' Type: 'string' Path: '/properties/looks_like'",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 80
+            "format": "selectize",
+            "enum": [ ]
         },
         "hp": {
             "type": "integer",
@@ -125,29 +118,183 @@
             },
             "propertyOrder": 110
         },
+        "copy-from": {
+            "type": "string",
+            "enum": [ ]
+        },
+        "reproduction": {
+            "type": "object",
+            "id": "/properties/reproduction",
+            "title": "Reproduction",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "baby_monster",
+                "baby_count",
+                "baby_timer"
+            ],
+            "properties": {
+                "baby_monster": {
+                    "type": "string",
+                    "id": "/properties/reproduction/properties/baby_monster",
+                    "title": "Baby Monster",
+                    "default": "mon_dog_gpyrenees_pup",
+                    "format": "text",
+                    "description": "The monster that will spawn when giving birth",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 10
+                },
+                "baby_count": {
+                    "type": "integer",
+                    "id": "/properties/reproduction/properties/baby_count",
+                    "title": "Baby Count",
+                    "default": 7,
+                    "description": "The amount of monsters that will spawn",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 20
+                },
+                "baby_timer": {
+                    "type": "integer",
+                    "id": "/properties/reproduction/properties/baby_timer",
+                    "title": "Baby Timer",
+                    "default": 320,
+                    "description": "How long it takes to reproduce",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 30
+                }
+            },
+            "propertyOrder": 190
+        },
+        "upgrades": {
+            "type": "object",
+            "id": "/properties/upgrades",
+            "title": "Upgrades",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "age_grow",
+                "into"
+            ],
+            "properties": {
+                "age_grow": {
+                    "type": "integer",
+                    "id": "/properties/reproduction/upgrades/age_grow",
+                    "title": "Age grow",
+                    "default": 7,
+                    "description": "The age at which this monster will upgrade",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 20
+                },
+                "into": {
+                    "type": "string",
+                    "id": "/properties/reproduction/upgrades/into",
+                    "title": "Baby Monster",
+                    "default": "mon_dog_gpyrenees_pup",
+                    "format": "text",
+                    "description": "The monster that this monster will upgrade into",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 10
+                }
+            },
+            "propertyOrder": 190
+        },
+        "starting_ammo": {
+            "type": "array",
+            "id": "/properties/starting_ammo",
+            "title": "Starting ammo",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "headerTemplate": "Starting ammo {{i1}}",
+                "type": "array",
+                "id": "/properties/starting_ammo/oneof0",
+                "title": "Simple Special Attack",
+                "format": "tabs",
+                "options": {
+                    "disable_collapse": false,
+                    "disable_array_add": true,
+                    "disable_array_delete": true,
+                    "disable_array_reorder": true,
+                    "disable_properties": false,
+                    "collapsed": false,
+                    "hidden": false
+                },
+                "items": [
+                    {
+                        "type": "string",
+                        "id": "/properties/starting_ammo/items/oneof0",
+                        "title": "Ammo",
+                        "default": "558",
+                        "format": "text",
+                        "description": "The id of the ammo",
+                        "options": {
+                            "hidden": false
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "id": "/properties/starting_ammo/items/oneof1",
+                        "title": "Amount",
+                        "default": 0,
+                        "description": "The amount of ammo",
+                        "options": {
+                            "hidden": false
+                        }
+                    }
+                ]
+            },
+            "propertyOrder": 290
+        },
+        "//": {
+            "type": "string",
+            "title": "Comment",
+            "default": "This is a comment",
+            "format": "text",
+            "description": "This is a comment that will only appear here but not in-game",
+            "options": {
+                "hidden": false
+            }
+        },
         "speed": {
             "type": "integer",
             "id": "/properties/speed",
             "title": "Speed",
             "default": 120,
-            "description": "A description for 'speed'  Type: 'integer'",
+            "description": "Monster speed. 100 is the normal speed for a human being - higher values are faster and lower values are slower.",
             "options": {
                 "hidden": false
             },
             "propertyOrder": 120
         },
-        "symbol": {
-            "type": "string",
-            "id": "/properties/symbol",
-            "title": "Symbol",
-            "default": "&",
-            "format": "text",
-            "description": "Description for 'symbol' Type: 'string' Path: '/properties/symbol'",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 140
-        },
+        "symbol": {"$ref": "#/definitions/symbol"},
         "color": {
             "type": "string",
             "id": "/properties/color",
@@ -292,7 +439,14 @@
                 "default": "FRIEND_ATTACKED",
                 "format": "text",
                 "description": "What makes the monster angry. See JSON_FLAGS.md for a full list",
-                "enum": [],
+                "enum": [ 
+                  "HURT",
+                  "PLAYER_NEAR_BABY",
+                  "FRIEND_DIED",
+                  "PLAYER_CLOSE",
+                  "FRIEND_ATTACKED",
+                  "PLAYER_WEAK"
+                ],
                 "options": {
                     "hidden": false
                 }
@@ -355,7 +509,7 @@
             "type": "array",
             "id": "/properties/special_attacks",
             "title": "Special Attacks",
-            "format": "tabs",
+            "format": "grid",
             "options": {
                 "disable_collapse": false,
                 "disable_array_add": false,
@@ -446,6 +600,134 @@
                                 },
                                 "propertyOrder": 10
                             },
+                            "require_targeting_npc": {
+                                "type": "boolean",
+                                "id": "/properties/special_attacks/items/properties/require_targeting_npc",
+                                "title": "Require Targeting Npc",
+                                "format": "checkbox",
+                                "default": true,
+                                "description": "A description for 'require_targeting_npc'  Type: 'boolean'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 90
+                            },
+                            "require_targeting_monster": {
+                                "type": "boolean",
+                                "id": "/properties/special_attacks/items/properties/require_targeting_monster",
+                                "title": "Require Targeting Monster",
+                                "format": "checkbox",
+                                "default": true,
+                                "description": "A description for 'require_targeting_monster'  Type: 'boolean'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 100
+                            },
+                            "laser_lock": {
+                                "type": "boolean",
+                                "id": "/properties/special_attacks/items/properties/laser_lock",
+                                "title": "Laser Lock",
+                                "format": "checkbox",
+                                "default": false,
+                                "description": "A description for 'laser_lock'  Type: 'boolean'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 110
+                            },
+                            "targeting_cost": {
+                                "type": "integer",
+                                "id": "/properties/special_attacks/items/properties/targeting_cost",
+                                "title": "Targeting Cost",
+                                "default": 400,
+                                "description": "A description for 'targeting_cost'  Type: 'integer'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 120
+                            },
+                            "targeting_timeout_extend": {
+                                "type": "integer",
+                                "id": "/properties/special_attacks/items/properties/targeting_timeout_extend",
+                                "title": "Targeting Timeout Extend",
+                                "default": -10,
+                                "description": "A description for 'targeting_timeout_extend'  Type: 'integer'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 130
+                            },
+                            "targeting_sound": {
+                                "type": "string",
+                                "id": "/properties/special_attacks/items/properties/targeting_sound",
+                                "title": "Targeting Sound",
+                                "default": "\"Hostile detected.\"",
+                                "format": "text",
+                                "description": "Description for 'targeting_sound' Type: 'string' Path: '/properties/special_attacks/items/properties/targeting_sound'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 140
+                            },
+                            "targeting_volume": {
+                                "type": "integer",
+                                "id": "/properties/special_attacks/items/properties/targeting_volume",
+                                "title": "Targeting Volume",
+                                "default": 20,
+                                "description": "A description for 'targeting_volume'  Type: 'integer'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 150
+                            },
+                            "no_ammo_sound": {
+                                "type": "string",
+                                "id": "/properties/special_attacks/items/properties/no_ammo_sound",
+                                "title": "No Ammo Sound",
+                                "default": "a chk!",
+                                "format": "text",
+                                "description": "Description for 'no_ammo_sound' Type: 'string' Path: '/properties/special_attacks/items/properties/no_ammo_sound'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 160
+                            },
+                            "move_cost": {
+                                "type": "integer",
+                                "id": "/properties/special_attacks/items/properties/move_cost",
+                                "title": "Move Cost",
+                                "default": 150,
+                                "description": "A description for 'move_cost'  Type: 'integer'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 30
+                            },
+                            "gun_type": {
+                                "type": "string",
+                                "id": "/properties/special_attacks/items/properties/gun_type",
+                                "title": "Gun Type",
+                                "default": "hk_mp5",
+                                "format": "text",
+                                "description": "Description for 'gun_type' Type: 'string' Path: '/properties/special_attacks/items/properties/gun_type'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 40
+                            },
+                            "ammo_type": {
+                                "type": "string",
+                                "id": "/properties/special_attacks/items/properties/ammo_type",
+                                "title": "Ammo Type",
+                                "default": "9mm",
+                                "format": "text",
+                                "description": "Description for 'ammo_type' Type: 'string' Path: '/properties/special_attacks/items/properties/ammo_type'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 50
+                            },
                             "cooldown": {
                                 "type": "integer",
                                 "id": "/properties/special_attacks/items/properties/cooldown",
@@ -457,6 +739,17 @@
                                     "hidden": false
                                 },
                                 "propertyOrder": 10
+                            },
+                            "fake_dex": {
+                                "type": "integer",
+                                "id": "/properties/special_attacks/items/properties/fake_dex",
+                                "title": "Fake Dex",
+                                "default": 12,
+                                "description": "A description for 'fake_dex'  Type: 'integer'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 70
                             },
                             "damage_max_instance": {
                                 "type": "array",
@@ -524,8 +817,127 @@
                                             "propertyOrder": 30
                                         }
                                     }
+                                }
+                            },
+                            "fake_skills": {
+                                "type": "array",
+                                "id": "/properties/special_attacks/items/properties/fake_skills",
+                                "title": "Fake skills",
+                                "format": "grid",
+                                "options": {
+                                    "disable_collapse": false,
+                                    "disable_array_add": false,
+                                    "disable_array_delete": false,
+                                    "disable_array_reorder": false,
+                                    "disable_properties": false,
+                                    "collapsed": false,
+                                    "hidden": false
                                 },
-                                "propertyOrder": 20
+                                "items": {
+                                    "headerTemplate": "Fake skill {{i1}}",
+                                    "type": "array",
+                                    "id": "/properties/special_attacks/items/properties/fake_skills/oneof0",
+                                    "title": "Fake Skills",
+                                    "format": "tabs",
+                                    "options": {
+                                        "disable_collapse": false,
+                                        "disable_array_add": true,
+                                        "disable_array_delete": true,
+                                        "disable_array_reorder": true,
+                                        "disable_properties": false,
+                                        "collapsed": false,
+                                        "hidden": false
+                                    },
+                                    "items": [
+                                        {
+                                            "type": "string",
+                                            "id": "/properties/special_attacks/items/properties/fake_skills/items/oneof0",
+                                            "title": "Skill",
+                                            "default": "gun",
+                                            "format": "text",
+                                            "description": "The id of the skill",
+                                            "options": {
+                                                "hidden": false
+                                            }
+                                        },
+                                        {
+                                            "type": "integer",
+                                            "id": "/properties/special_attacks/items/properties/fake_skills/items/oneof1",
+                                            "title": "Amount",
+                                            "default": 0,
+                                            "description": "The amount of skill",
+                                            "options": {
+                                                "hidden": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "propertyOrder": 290
+                            },
+                            "ranges": {
+                                "type": "array",
+                                "id": "/properties/special_attacks/items/properties/ranges",
+                                "title": "Ranges",
+                                "format": "grid",
+                                "options": {
+                                    "disable_collapse": false,
+                                    "disable_array_add": false,
+                                    "disable_array_delete": false,
+                                    "disable_array_reorder": false,
+                                    "disable_properties": false,
+                                    "collapsed": false,
+                                    "hidden": false
+                                },
+                                "items": {
+                                    "headerTemplate": "Range {{i1}}",
+                                    "type": "array",
+                                    "id": "/properties/special_attacks/items/properties/ranges/oneof0",
+                                    "title": "Range",
+                                    "format": "tabs",
+                                    "options": {
+                                        "disable_collapse": false,
+                                        "disable_array_add": true,
+                                        "disable_array_delete": true,
+                                        "disable_array_reorder": true,
+                                        "disable_properties": false,
+                                        "collapsed": false,
+                                        "hidden": false
+                                    },
+                                    "items": [
+                                        {
+                                            "type": "integer",
+                                            "id": "/properties/special_attacks/items/properties/ranges/items/oneof1",
+                                            "title": "Min",
+                                            "default": 0,
+                                            "description": "The minumum range",
+                                            "options": {
+                                                "hidden": false
+                                            }
+                                        },
+                                        {
+                                            "type": "integer",
+                                            "id": "/properties/special_attacks/items/properties/ranges/items/oneof0",
+                                            "title": "Max",
+                                            "default": 50,
+                                            "description": "The maximum range",
+                                            "options": {
+                                                "hidden": false
+                                            }
+                                        },
+                                        {
+                                            "type": "string",
+                                            "id": "/properties/special_attacks/items/properties/ranges/items/oneof0",
+                                            "title": "Mode",
+                                            "default": "DEFAULT",
+                                            "format": "text",
+                                            "description": "The mode the range applies to",
+                                            "options": {
+                                                "hidden": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "propertyOrder": 290
                             }
                         }
                     }
@@ -564,6 +976,9 @@
             "type": "array",
             "id": "/properties/flags",
             "title": "Flags",
+            "stringifyOptions": {
+              "maxLength": 116
+            },
             "format": "selectize",
             "uniqueItems": true,
             "options": {
@@ -674,7 +1089,15 @@
                   "WARM", 
                   "WEBWALK", 
                   "WOOL",
-                  "PATH_AVOID_DANGER_1"
+                  "PATH_AVOID_DANGER_1",
+                  "PATH_AVOID_DANGER_2",
+                  "PATH_AVOID_FIRE",
+                  "SHORTACIDTRAIL",
+                  "PATH_AVOID_FALL",
+                  "PET_WONT_FOLLOW",
+                  "NOT_HALLUCINATION",
+                  "DROPS_AMMO",
+                  "PRIORITIZE_TARGETS"
                 ]
             },
             "propertyOrder": 60
@@ -712,7 +1135,8 @@
                 "NETHER", 
                 "HUMAN", 
                 "MUTANT",
-                "BIRD" 
+                "BIRD",
+                "ROBOT"
               ],
               "options": {
                   "hidden": false

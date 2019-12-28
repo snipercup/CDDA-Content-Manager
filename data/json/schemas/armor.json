@@ -93,15 +93,8 @@
         },
         "looks_like": {
             "type": "string",
-            "id": "/properties/looks_like",
-            "title": "Looks Like",
-            "default": "sheath",
-            "format": "text",
-            "description": "The entity that this should look like if the sprite is missing.",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 110
+            "format": "selectize",
+            "enum": [ ]
         },
         "storage": {
             "type": "string",

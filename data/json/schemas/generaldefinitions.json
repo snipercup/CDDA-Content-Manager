@@ -164,48 +164,47 @@
       }
   },
   "material": {
-      "type": "array",
-      "id": "/definitions/material",
       "title": "Material",
-      "format": "selectize",
-      "uniqueItems": true,
-      "options": {
-          "disable_collapse": false,
-          "disable_array_add": false,
-          "disable_array_delete": false,
-          "disable_array_reorder": true,
-          "disable_properties": false,
-          "collapsed": false,
-          "hidden": false
-      },
-      "items": {
-          "headerTemplate": "Material {{i1}}",
-          "type": "string",
-          "id": "/definitions/material/0",
-          "title": "Material",
-          "default": "steel",
-          "format": "text",
-          "description": "The material of this entry",
-          "enum": [
-          "steel", 
-          "iron",
-          "powder", 
-          "lead", 
-          "brass", 
-          "cotton",
-          "leather",
-          "bone", 
-          "plastic", 
-          "nomex",
-          "flesh",
-          "iflesh",
-          "veggy",
-          "water"
-          ],
-          "options": {
-              "hidden": false
+      "id": "/definitions/material",
+      "oneOf": [
+          {
+              "type": "string",
+              "default": "250 ml",
+              "format": "text",
+              "description": "The volume of the ammo",
+              "enum": [ "steel" ],
+              "options": {
+                  "hidden": false
+              }
+          },
+          {
+              "type": "array",
+              "format": "selectize",
+              "uniqueItems": true,
+              "options": {
+                  "disable_collapse": false,
+                  "disable_array_add": false,
+                  "disable_array_delete": false,
+                  "disable_array_reorder": true,
+                  "disable_properties": false,
+                  "collapsed": false,
+                  "hidden": false
+              },
+              "items": {
+                  "headerTemplate": "Material {{i1}}",
+                  "type": "string",
+                  "id": "/definitions/material/0",
+                  "title": "Material",
+                  "default": "steel",
+                  "format": "text",
+                  "description": "The material of this entry",
+                  "enum": [ "steel" ],
+                  "options": {
+                      "hidden": false
+                  }
+              }
           }
-      }
+      ]
   },
   "symbol": {
       "type": "string",
@@ -224,7 +223,7 @@
       "title": "Color",
       "default": "dark_gray",
       "format": "text",
-      "description": "The color the symbol will have when the sprite is missing.",
+      "description": "The color the symbol will have when the sprite is missing. Color representing monster in-game. The color must be a valid color id",
       "options": {
           "hidden": false
       }

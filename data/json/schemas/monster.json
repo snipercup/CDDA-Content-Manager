@@ -7,6 +7,7 @@
     "stringifyOptions": {
       "maxLength": 120
     },
+    "get_ids_of_type": [ { "type": "SPECIES", "display_key": "id" } ],
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -236,7 +237,7 @@
                 "headerTemplate": "Starting ammo {{i1}}",
                 "type": "array",
                 "id": "/properties/starting_ammo/oneof0",
-                "title": "Simple Special Attack",
+                "title": "Starting ammo",
                 "format": "tabs",
                 "options": {
                     "disable_collapse": false,
@@ -295,18 +296,7 @@
             "propertyOrder": 120
         },
         "symbol": {"$ref": "#/definitions/symbol"},
-        "color": {
-            "type": "string",
-            "id": "/properties/color",
-            "title": "Color",
-            "default": "pink",
-            "format": "text",
-            "description": "Description for 'color' Type: 'string' Path: '/properties/color'",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 150
-        },
+        "color": {"$ref": "#/definitions/color"},
         "aggression": {
             "type": "integer",
             "id": "/properties/aggression",
@@ -822,13 +812,13 @@
                             "fake_skills": {
                                 "type": "array",
                                 "id": "/properties/special_attacks/items/properties/fake_skills",
-                                "title": "Fake skills",
+                                "title": "Fake skill",
                                 "format": "grid",
                                 "options": {
                                     "disable_collapse": false,
                                     "disable_array_add": false,
                                     "disable_array_delete": false,
-                                    "disable_array_reorder": false,
+                                    "disable_array_reorder": true,
                                     "disable_properties": false,
                                     "collapsed": false,
                                     "hidden": false
@@ -883,7 +873,7 @@
                                     "disable_collapse": false,
                                     "disable_array_add": false,
                                     "disable_array_delete": false,
-                                    "disable_array_reorder": false,
+                                    "disable_array_reorder": true,
                                     "disable_properties": false,
                                     "collapsed": false,
                                     "hidden": false

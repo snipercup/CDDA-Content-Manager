@@ -4,6 +4,7 @@
     "title": "Monster attack",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
+    "get_ids_of_type": [ { "type": "effect_type", "display_key": "id" } ],
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,

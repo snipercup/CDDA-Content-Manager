@@ -7,10 +7,10 @@ async function loadExtraDefinitions(schemas, entries){
 	let genericDefinitions = schemas.find({ "jsonObject.properties.type.default": { $exists: false } })[0];
   
   let schema, schemaJSONObj, type, IDListOfType;
-  for (let i = 0, amountOfSchemas = retreivedItems.length; i < amountOfSchemas; i++) {
+  for (let i = 0, amountOfSchemas = retreivedItems.length; i < amountOfSchemas; i++) { //Loop over the actual schemas, not generaldefinition
     schema = retreivedItems[i];
     schemaJSONObj = schema.jsonObject;
-    type = schemaJSONObj.properties.type.default;
+    type = schemaJSONObj.properties.type.default; //Get the type from the default value of the type property in the schema
     schemaJSONObj.definitions = {...schemaJSONObj.definitions, ...genericDefinitions.jsonObject}; //Load the general properties as definitions
     IDListOfType = await getIDListOfTypeFromCollection(type, entries, true); //Get all the id's of every item of this type
     // Save the list as a definition to the schema, just in case there's a use for it.
@@ -31,22 +31,63 @@ async function loadExtraDefinitions(schemas, entries){
       schemaJSONObj.properties["looks_like"].enum = collectedItems;
     }
     
-    if(type == "ammunition_type"){
-      IDListOfType = await getIDListOfTypeFromCollection("AMMO", entries); //Get all the id's of every item of type ammo
-      let c = schemaJSONObj.definitions["AMMO"].enum; //Save the list that's already defined in the ammuition type schema.
-      schemaJSONObj.definitions["AMMO"].enum = c.concat(IDListOfType.filter((item) => c.indexOf(item) < 0)); //Merge the two lists and put it back into the ammo property enumeration.
+    //The schema can include a request to add the list of id's of a certain type.
+    if(schemaJSONObj.get_ids_of_type){
+      let ids = schemaJSONObj.get_ids_of_type;
+      let c, definition, oneOf, one, defType, displayKey;
+      
+      //Loop over all the requested types that the schema wants id's from. Usually only one
+      for (let x = 0, idsLen = ids.length; x < idsLen; x++) {
+        defType = ids[x].type;
+        displayKey = ids[x].display_key;
+        IDListOfType = await getTypeFromCollection(defType, entries, false, displayKey); //Get all the id's of every item of type ids[x]
+        if(IDListOfType.length < 1){ 
+          console.log("Tried to get list of ids for type \"" + ids[x] + "\" but got nothing")
+          continue;
+        }
+        definition = schemaJSONObj.definitions[defType]; //Get the currently defined definition from the schema
+        
+        if (typeof definition["oneOf"] === 'undefined'){
+          if(definition.type == "array") {
+            c = definition.items.enum; //Save the list that's already defined in the schema.
+            definition.items.enum = c.concat(IDListOfType.filter((item) => c.indexOf(item) < 0)); //Merge the two lists and put it back into the enumeration.
+          } else { //assume string
+            c = definition.enum; //Save the list that's already defined in the schema.
+            definition.enum = c.concat(IDListOfType.filter((item) => c.indexOf(item) < 0)); //Merge the two lists and put it back into the enumeration.
+          }
+        } else {
+          oneOf = definition["oneOf"];
+          for (let i = 0, oneOfLen = oneOf.length; i < oneOfLen; i++) {
+            one = oneOf[i];
+            if(one.type == "array") {
+              c = one.items.enum; //Save the list that's already defined in the schema.
+              one.items.enum = c.concat(IDListOfType.filter((item) => c.indexOf(item) < 0)); //Merge the two lists and put it back into the enumeration.
+            } else { //assume string
+              c = one.enum; //Save the list that's already defined in the schema.
+              one.enum = c.concat(IDListOfType.filter((item) => c.indexOf(item) < 0)); //Merge the two lists and put it back into the enumeration.
+            }
+          }
+        }
+        schemaJSONObj.definitions[defType] = definition;
+      }
     }
     
-    if(this.type == "MONSTER"){
-      IDListOfType = await getIDListOfTypeFromCollection("SPECIES", entries); //Get all the id's of every item of type ammo
-      let c = schemaJSONObj.definitions["SPECIES"].items.enum; //Save the list that's already defined in the ammuition type schema.
-      schemaJSONObj.definitions["SPECIES"].items.enum = c.concat(IDListOfType.filter((item) => c.indexOf(item) < 0)); //Merge the two lists and put it back into the ammo property enumeration.
-    }
+    // if(type == "ammunition_type"){
+      // IDListOfType = await getIDListOfTypeFromCollection("AMMO", entries); //Get all the id's of every item of type ammo
+      // let c = schemaJSONObj.definitions["AMMO"].enum; //Save the list that's already defined in the ammuition type schema.
+      // schemaJSONObj.definitions["AMMO"].enum = c.concat(IDListOfType.filter((item) => c.indexOf(item) < 0)); //Merge the two lists and put it back into the ammo property enumeration.
+    // }
     
-    if(this.type == "monster_attack"){
-      IDListOfType = await getIDListOfTypeFromCollection("effect_type", entries); //Get all the id's of every item of type ammo
-      let c = schemaJSONObj.definitions["effect_type"].enum; //Save the list that's already defined in the ammuition type schema.
-      schemaJSONObj.definitions["effect_type"].enum = c.concat(IDListOfType.filter((item) => c.indexOf(item) < 0)); //Merge the two lists and put it back into the ammo property enumeration.
-    }
+    // if(this.type == "MONSTER"){
+      // IDListOfType = await getIDListOfTypeFromCollection("SPECIES", entries); //Get all the id's of every item of type ammo
+      // let c = schemaJSONObj.definitions["SPECIES"].items.enum; //Save the list that's already defined in the ammuition type schema.
+      // schemaJSONObj.definitions["SPECIES"].items.enum = c.concat(IDListOfType.filter((item) => c.indexOf(item) < 0)); //Merge the two lists and put it back into the ammo property enumeration.
+    // }
+    
+    // if(this.type == "monster_attack"){
+      // IDListOfType = await getIDListOfTypeFromCollection("effect_type", entries); //Get all the id's of every item of type ammo
+      // let c = schemaJSONObj.definitions["effect_type"].enum; //Save the list that's already defined in the ammuition type schema.
+      // schemaJSONObj.definitions["effect_type"].enum = c.concat(IDListOfType.filter((item) => c.indexOf(item) < 0)); //Merge the two lists and put it back into the ammo property enumeration.
+    // }
   }
 }

@@ -7,6 +7,7 @@
     "stringifyOptions": {
       "maxNesting": 0
     },
+    "get_ids_of_type": [ { "type": "AMMO", "display_key": "id" } ],
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,

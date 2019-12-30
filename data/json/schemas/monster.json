@@ -119,6 +119,17 @@
             },
             "propertyOrder": 110
         },
+        "diff": {
+            "type": "integer",
+            "id": "/properties/diff",
+            "title": "Difficulty (diff)",
+            "default": 2,
+            "description": "Monster baseline difficulty. Impacts the shade used to label the monster, and if it is above 30 a kill will be recorded in the memorial log.  Difficulty should only be used for exceptional, ranged, special attacks.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 110
+        },
         "copy-from": {
             "type": "string",
             "enum": [ ]

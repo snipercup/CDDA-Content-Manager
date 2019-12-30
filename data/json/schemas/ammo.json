@@ -4,6 +4,7 @@
     "title": "Ammo",
     "type": "object",
     "id": "ammo",
+    "get_ids_of_type": [ { "type": "CONTAINER", "display_key": "id" } ],
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -121,9 +122,19 @@
         "loudness": {
             "type": "number",
             "id": "/properties/proportional/properties/loudness",
-            "title": "Damage",
+            "title": "Loudness",
             "default": 0.46,
             "description": "The amount of noise",
+            "options": {
+                "hidden": false
+            }
+        },
+        "prop_damage": {
+            "type": "number",
+            "id": "/properties/proportional/properties/prop_damage",
+            "title": "Proportinal damage",
+            "default": 0.46,
+            "description": "Multiplies the damage of weapon by amount (overrides damage field)",
             "options": {
                 "hidden": false
             }
@@ -259,6 +270,17 @@
         "category": {
           "$ref": "#/definitions/category"
         },
+        "cutting": {
+            "type": "integer",
+            "id": "/properties/cutting",
+            "title": "Cutting damage",
+            "default": 6,
+            "description": "Amount of cutting damage.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 210
+        },
         "flags": {
             "type": "array",
             "id": "/properties/flags",
@@ -280,7 +302,8 @@
                 "enum": [ 
                   "NOGIB", 
                   "TANGLE", 
-                  "PRIMITIVE_RANGED_WEAPON"
+                  "PRIMITIVE_RANGED_WEAPON",
+                  "NO_SALVAGE"
                 ]
             },
             "propertyOrder": 60
@@ -306,7 +329,19 @@
                 "hidden": false
             }
         },
+        "phase": {
+            "type": "string",
+            "id": "/properties/phase",
+            "title": "Phase",
+            "default": "solid",
+            "format": "text",
+            "description": "(Optional, default = \"solid\") What phase it is",
+            "options": {
+                "hidden": false
+            }
+        },
         "effects": { "$ref": "#/definitions/effects" },
+        "container": { "$ref": "#/definitions/CONTAINER" },
         "looks_like": {
             "type": "string",
             "format": "selectize",
@@ -601,51 +636,57 @@
             "items": {
                 "type": "string",
                 "enum": [ 
-                "ACIDBOMB", 
-                "BEANBAG", 
-                "BLACKPOWDER", 
-                "BLINDS_EYES", 
-                "BOUNCE", 
-                "COOKOFF", 
-                "CUSTOM_EXPLOSION", 
-                "DRAW_AS_LINE", 
-                "EXPLOSIVE_BIG", 
-                "EXPLOSIVE_HUGE", 
-                "EXPLOSIVE ", 
-                "FLAME", 
-                "FLARE", 
-                "FLASHBANG", 
-                "FRAG", 
-                "INCENDIARY", 
-                "LARGE_BEANBAG", 
-                "LASER", 
-                "LIGHTNING", 
-                "MININUKE_MOD", 
-                "MUZZLE_SMOKE", 
-                "NAPALM", 
-                "NEVER_MISFIRES", 
-                "NOGIB", 
-                "TANGLE", 
-                "NO_EMBED", 
-                "NO_ITEM_DAMAGE", 
-                "PLASMA", 
-                "TANGLE", 
-                "RECOVER_[X]", 
-                "RECYCLED", 
-                "SHOT", 
-                "SMOKE_BIG", 
-                "TANGLE", 
-                "SMOKE", 
-                "STREAM_BIG", 
-                "STREAM", 
-                "TRAIL", 
-                "WIDE",
-                "STREAM_GAS_INSECTICIDAL",
-                "NEVER_MISFIRES",
-                "JET",
-                "RECOVER_15"
+                    "ACIDBOMB", 
+                    "BEANBAG", 
+                    "BLACKPOWDER", 
+                    "BLINDS_EYES", 
+                    "BOUNCE", 
+                    "COOKOFF", 
+                    "CUSTOM_EXPLOSION", 
+                    "DRAW_AS_LINE", 
+                    "EXPLOSIVE_BIG", 
+                    "EXPLOSIVE_HUGE", 
+                    "EXPLOSIVE ", 
+                    "FLAME", 
+                    "FLARE", 
+                    "FLASHBANG", 
+                    "FRAG", 
+                    "INCENDIARY", 
+                    "LARGE_BEANBAG", 
+                    "LASER", 
+                    "LIGHTNING", 
+                    "MININUKE_MOD", 
+                    "MUZZLE_SMOKE", 
+                    "NAPALM", 
+                    "NEVER_MISFIRES", 
+                    "NOGIB", 
+                    "TANGLE", 
+                    "NO_EMBED", 
+                    "NO_ITEM_DAMAGE", 
+                    "PLASMA", 
+                    "TANGLE", 
+                    "RECOVER_[X]", 
+                    "RECYCLED", 
+                    "SHOT", 
+                    "SMOKE_BIG", 
+                    "TANGLE", 
+                    "SMOKE", 
+                    "STREAM_BIG", 
+                    "STREAM", 
+                    "TRAIL", 
+                    "WIDE",
+                    "STREAM_GAS_INSECTICIDAL",
+                    "JET",,
+                    "RECOVER_5",
+                    "RECOVER_6",
+                    "RECOVER_15"
                 ]
             }
+        },
+        "CONTAINER": {
+            "type": "string",
+            "format": "selectize",
+            "enum": [ ]
         }
     }
 }

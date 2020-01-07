@@ -264,7 +264,7 @@ async function getJsonFromFile(filepath){
       //Here we convert starting_ammo from an object to an array. This is required because starting_ammo may use numeric keys and it messes up the order of properties.
       newstr = "";
       let line = ""
-      if(strjson.includes("starting_ammo") && !filepath.includes("schema")){
+      if(strjson.includes("starting_ammo") && !filepath.includes("schema") && !filepath.includes("filter")){
         var lines = strjson.split('\n');
         for(var i = 0;i < lines.length;i++){
           line = lines[i];

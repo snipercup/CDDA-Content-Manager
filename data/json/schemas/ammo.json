@@ -119,16 +119,7 @@
                 "hidden": false
             }
         },
-        "loudness": {
-            "type": "number",
-            "id": "/properties/proportional/properties/loudness",
-            "title": "Loudness",
-            "default": 0.46,
-            "description": "The amount of noise",
-            "options": {
-                "hidden": false
-            }
-        },
+        "loudness": {"$ref": "#/definitions/loudness"},
         "prop_damage": {
             "type": "number",
             "id": "/properties/proportional/properties/prop_damage",
@@ -228,7 +219,8 @@
                     "options": {
                         "hidden": false
                     }
-                }
+                },    
+                "loudness": {"$ref": "#/definitions/loudness"}
             }
         },
         "extend": {
@@ -264,7 +256,8 @@
                 "effects"
             ],
             "properties": {
-                "effects": { "$ref": "#/definitions/effects" }
+                "effects": { "$ref": "#/definitions/effects" },
+                "casing": { "$ref": "#/definitions/casing" }
             }
         },
         "category": {
@@ -318,17 +311,7 @@
                 "hidden": false
             }
         },
-        "casing": {
-            "type": "string",
-            "id": "/properties/casing",
-            "title": "Casing",
-            "default": "46mm_casing",
-            "format": "text",
-            "description": "The casing it will drop.",
-            "options": {
-                "hidden": false
-            }
-        },
+        "casing": { "$ref": "#/definitions/casing" },
         "phase": {
             "type": "string",
             "id": "/properties/phase",
@@ -676,10 +659,11 @@
                     "TRAIL", 
                     "WIDE",
                     "STREAM_GAS_INSECTICIDAL",
-                    "JET",,
+                    "JET",
                     "RECOVER_5",
                     "RECOVER_6",
-                    "RECOVER_15"
+                    "RECOVER_15",
+                    "RECOVER_40"
                 ]
             }
         },
@@ -687,6 +671,27 @@
             "type": "string",
             "format": "selectize",
             "enum": [ ]
+        },
+        "loudness": {
+            "type": "number",
+            "id": "/properties/proportional/properties/loudness",
+            "title": "Loudness",
+            "default": 0.46,
+            "description": "The amount of noise",
+            "options": {
+                "hidden": false
+            }
+        },
+        "casing": {
+            "type": "string",
+            "id": "/properties/casing",
+            "title": "Casing",
+            "default": "46mm_casing",
+            "format": "text",
+            "description": "The casing it will drop.",
+            "options": {
+                "hidden": false
+            }
         }
     }
 }

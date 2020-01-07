@@ -1,0 +1,1237 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "additionalProperties": true,
+    "title": "Mutation",
+    "type": "object",
+    "id": "https://niebert.github.io/json-editor",
+    "get_ids_of_type": [ { "type": "mutation_category", "display_key": "id" } ],
+    "get_enums_from_definition": [ { "from": "body_parts_enum", "to": "encumbrance_always.items.items.0" } ],
+    "options": {
+        "disable_collapse": false,
+        "disable_edit_json": false,
+        "disable_properties": false,
+        "collapsed": false,
+        "hidden": false
+    },
+    "defaultProperties": [
+        "type",
+        "id",
+        "name",
+        "points",
+        "description",
+        "social_modifiers",
+        "valid",
+        "purifiable",
+        "prereqs",
+        "prereqs2",
+        "leads_to",
+        "changes_to",
+        "threshreq",
+        "cancels",
+        "category",
+        "passive_mods"
+    ],
+    "properties": {
+        "id": {
+          "$ref": "#/definitions/id", 
+          "propertyOrder": 10
+        },
+        "type": {
+          "$ref": "#/definitions/type", 
+          "propertyOrder": 11,
+          "default": "mutation"
+        },
+        "name": {
+          "$ref": "#/definitions/name", 
+          "propertyOrder": 12
+        },
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 13
+        },
+        "points": {
+            "type": "integer",
+            "id": "/properties/points",
+            "title": "Points",
+            "default": 3,
+            "description": "A description for 'points'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 40
+        },
+        "social_modifiers": {
+            "type": "object",
+            "id": "/properties/social_modifiers",
+            "title": "Social Modifiers",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "intimidate"
+            ],
+            "properties": {
+                "intimidate": {
+                    "type": "integer",
+                    "id": "/properties/social_modifiers/properties/intimidate",
+                    "title": "Intimidate",
+                    "default": 4,
+                    "description": "The amount of intimidate to modify",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 10
+                },
+                "persuade": {
+                    "type": "integer",
+                    "id": "/properties/social_modifiers/properties/persuade",
+                    "title": "persuade",
+                    "default": 4,
+                    "description": "The amount of persuade to modify",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 10
+                },
+                "lie": {
+                    "type": "integer",
+                    "id": "/properties/social_modifiers/properties/lie",
+                    "title": "lie",
+                    "default": 4,
+                    "description": "The amount of lie to modify",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 10
+                }
+            },
+            "propertyOrder": 60
+        },
+        "valid": {
+            "type": "boolean",
+            "id": "/properties/valid",
+            "title": "Valid",
+            "format": "checkbox",
+            "default": false,
+            "description": "Can be mutated ingame (default: true)",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 70
+        },
+        "threshold": {
+            "type": "boolean",
+            "id": "/properties/threshold",
+            "title": "threshold",
+            "format": "checkbox",
+            "default": false,
+            "description": "True if this is a threshold.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 70
+        },
+        "player_display": {
+            "type": "boolean",
+            "id": "/properties/player_display",
+            "title": "player_display",
+            "format": "checkbox",
+            "default": false,
+            "description": "A description for 'player_display'  Type: 'boolean'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 70
+        },
+        "starting_trait": {
+            "type": "boolean",
+            "id": "/properties/starting_trait",
+            "title": "starting_trait",
+            "format": "checkbox",
+            "default": false,
+            "description": "If it's a starting trait",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 70
+        },
+        "starts_active": {
+            "type": "boolean",
+            "id": "/properties/starts_active",
+            "title": "starts_active",
+            "format": "checkbox",
+            "default": false,
+            "description": "Whether it starts active",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 70
+        },
+        "allow_soft_gear": {
+            "type": "boolean",
+            "id": "/properties/allow_soft_gear",
+            "title": "allow_soft_gear",
+            "format": "checkbox",
+            "default": false,
+            "description": "Whether it allows soft gear",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 70
+        },
+        "purifiable": {
+            "type": "boolean",
+            "id": "/properties/purifiable",
+            "title": "Purifiable",
+            "format": "checkbox",
+            "default": false,
+            "description": "Sets if the mutation be purified (default: true)",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 80
+        },
+        "prereqs": {
+            "type": "array",
+            "id": "/properties/prereqs",
+            "title": "prerequisites",
+            "description": "Needs these mutations before you can mutate toward this mutation",
+            "stringifyOptions": {
+              "maxLength": 116
+            },
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "$ref": "#/definitions/mutation"
+            },
+            "propertyOrder": 60
+        },
+        "prereqs2": {
+            "type": "array",
+            "id": "/properties/prereqs2",
+            "title": "prerequisites 2",
+            "description": "Also need these mutations before you can mutate towards this mutation. When both set creates 2 different mutation paths, random from one is picked. Only use together with \"prereqs\"",
+            "stringifyOptions": {
+              "maxLength": 116
+            },
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "$ref": "#/definitions/mutation"
+            },
+            "propertyOrder": 60
+        },
+        "leads_to": {
+            "type": "array",
+            "id": "/properties/leads_to",
+            "title": "Leads To",
+            "description": "Mutations that add to this one",
+            "format": "selectize",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "string",
+                "$ref": "#/definitions/mutation"
+            },
+            "propertyOrder": 110
+        },
+        "changes_to": {
+            "type": "array",
+            "id": "/properties/changes_to",
+            "title": "Changes to",
+            "description": "Can change into these mutations when mutating further",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "$ref": "#/definitions/mutation"
+            },
+            "propertyOrder": 60
+        },
+        "threshreq": {
+            "type": "array",
+            "id": "/properties/threshreq",
+            "title": "Threshreq",
+            "description": "Required threshold for this mutation to be possible",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "headerTemplate": "Threshreq {{i1}}",
+                "type": "string",
+                "id": "/properties/threshreq/oneof0",
+                "title": "oneof 0 /properties/threshreq",
+                "default": "THRESH_BEAST",
+                "format": "text",
+                "options": {
+                    "hidden": false
+                }
+            },
+            "propertyOrder": 130
+        },
+        "cancels": {
+            "type": "array",
+            "id": "/properties/cancels",
+            "title": "Cancels",
+            "description": "Cancels these mutations when mutating",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "$ref": "#/definitions/mutation"
+            },
+            "propertyOrder": 60
+        },
+        "category": {
+            "type": "array",
+            "id": "/properties/category",
+            "title": "category",
+            "description": "Categories containing this mutation",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "$ref": "#/definitions/mutation_category"
+            },
+            "propertyOrder": 60
+        },
+        "passive_mods": {
+            "type": "object",
+            "id": "/properties/passive_mods",
+            "title": "Passive Mods",
+            "description": "increases stats with the listed value. Negative means a stat reduction",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "int_mod"
+            ],
+            "properties": {
+                "int_mod": {
+                    "type": "integer",
+                    "id": "/properties/passive_mods/properties/int_mod",
+                    "title": "Int Mod",
+                    "default": -1,
+                    "description": "The amount of intelligence to modify",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 10
+                },
+                "per_mod": {
+                    "type": "integer",
+                    "id": "/properties/passive_mods/properties/per_mod",
+                    "title": "Int Mod",
+                    "default": -1,
+                    "description": "The amount of perception to modify",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 10
+                },
+                "str_mod": {
+                    "type": "integer",
+                    "id": "/properties/passive_mods/properties/str_mod",
+                    "title": "Int Mod",
+                    "default": -1,
+                    "description": "The amount of strength to modify",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 10
+                },
+                "dex_mod": {
+                    "type": "integer",
+                    "id": "/properties/passive_mods/properties/dex_mod",
+                    "title": "Int Mod",
+                    "default": -1,
+                    "description": "The amount of dexterity to modify",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 10
+                }
+            },
+            "propertyOrder": 160
+        },
+        "visibility": {
+            "type": "integer",
+            "id": "/properties/visibility",
+            "title": "Visibility",
+            "default": 2,
+            "description": "Visibility of the trait for purposes of NPC interaction (default: 0)",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 50
+        },
+        "ugliness": {
+            "type": "integer",
+            "id": "/properties/ugliness",
+            "title": "Ugliness",
+            "default": 2,
+            "description": "Ugliness of the trait for purposes of NPC interaction (default: 0)",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 60
+        },
+        "mixed_effect": {
+            "type": "boolean",
+            "id": "/properties/mixed_effect",
+            "title": "Mixed Effect",
+            "format": "checkbox",
+            "default": true,
+            "description": "Whether the trait has both positive and negative effects. This is purely declarative and is only used for the user interface. (default: false)",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 70
+        },
+        "types": {
+            "type": "array",
+            "id": "/properties/types",
+            "title": "types",
+            "description": "Types of this mutation",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "id": "/properties/types/items",
+                "title": "Title Root Types ",
+                "default": "LEGS",
+                "format": "text",
+                "enum": [ "HORNS", "TEETH", "MUZZLE", "HANDS", "facial_hair", "SKIN", "skin_tone" ],
+                "options": {
+                    "hidden": false
+                }
+            },
+            "propertyOrder": 60
+        },
+        "wet_protection": {
+            "type": "array",
+            "id": "/properties/wet_protection",
+            "title": "Wet Protection",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "headerTemplate": "Wet Protection {{i1}}",
+                "oneOf": [
+                    {
+                        "type": "object",
+                        "id": "/properties/wet_protection/oneof0",
+                        "title": "oneof 0 /properties/wet_protection",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_edit_json": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "defaultProperties": [
+                            "part",
+                            "neutral"
+                        ],
+                        "properties": {
+                            "part": {
+                                "type": "string",
+                                "id": "/properties/wet_protection/items/properties/part",
+                                "title": "Part",
+                                "default": "FOOT_L",
+                                "format": "text",
+                                "description": "Description for 'part' Type: 'string' Path: '/properties/wet_protection/items/properties/part'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 10
+                            },
+                            "neutral": {
+                                "type": "integer",
+                                "id": "/properties/wet_protection/items/properties/neutral",
+                                "title": "Neutral",
+                                "default": 10,
+                                "description": "A description for 'neutral'  Type: 'integer'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 20
+                            }
+                        }
+                    },
+                    {
+                        "type": "object",
+                        "id": "/properties/wet_protection/oneof1",
+                        "title": "oneof 1 /properties/wet_protection",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_edit_json": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "defaultProperties": [
+                            "part",
+                            "neutral"
+                        ],
+                        "properties": {
+                            "part": {
+                                "type": "string",
+                                "id": "/properties/wet_protection/items/properties/part",
+                                "title": "Part",
+                                "default": "FOOT_R",
+                                "format": "text",
+                                "description": "Description for 'part' Type: 'string' Path: '/properties/wet_protection/items/properties/part'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 10
+                            },
+                            "neutral": {
+                                "type": "integer",
+                                "id": "/properties/wet_protection/items/properties/neutral",
+                                "title": "Neutral",
+                                "default": 10,
+                                "description": "A description for 'neutral'  Type: 'integer'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 20
+                            }
+                        }
+                    }
+                ]
+            },
+            "propertyOrder": 110
+        },
+        "restricts_gear": {
+            "type": "array",
+            "id": "/properties/restricts_gear",
+            "title": "Restricts Gear",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "headerTemplate": "Restricts Gear {{i1}}",
+                "oneOf": [
+                    {
+                        "type": "string",
+                        "id": "/properties/restricts_gear/oneof0",
+                        "title": "oneof 0 /properties/restricts_gear",
+                        "default": "FOOT_L",
+                        "format": "text",
+                        "description": "Description for 'items' Type: 'string' Path: '/properties/restricts_gear/items'",
+                        "options": {
+                            "hidden": false
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "id": "/properties/restricts_gear/oneof1",
+                        "title": "oneof 1 /properties/restricts_gear",
+                        "default": "FOOT_R",
+                        "format": "text",
+                        "description": "Description for 'items' Type: 'string' Path: '/properties/restricts_gear/items'",
+                        "options": {
+                            "hidden": false
+                        }
+                    }
+                ]
+            },
+            "propertyOrder": 120
+        },
+        "destroys_gear": {
+            "type": "boolean",
+            "id": "/properties/destroys_gear",
+            "title": "Destroys Gear",
+            "format": "checkbox",
+            "default": true,
+            "description": "A description for 'destroys_gear'  Type: 'boolean'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 130
+        },
+        "armor": {
+            "type": "array",
+            "id": "/properties/armor",
+            "title": "Armor",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "object",
+                "id": "/properties/armor/items",
+                "title": "Title Root Armor ",
+                "options": {
+                    "disable_collapse": false,
+                    "disable_edit_json": false,
+                    "disable_properties": false,
+                    "collapsed": false,
+                    "hidden": false
+                },
+                "defaultProperties": [
+                    "parts",
+                    "bash"
+                ],
+                "properties": {
+                    "parts": {
+                        "type": "array",
+                        "id": "/properties/armor/items/properties/parts",
+                        "title": "Parts",
+                        "format": "tabs",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "items": {
+                            "headerTemplate": "Parts {{i1}}",
+                            "oneOf": [
+                                {
+                                    "type": "string",
+                                    "id": "/properties/armor/items/properties/parts/oneof0",
+                                    "title": "oneof 0 /properties/armor/items/properties/parts",
+                                    "default": "FOOT_L",
+                                    "format": "text",
+                                    "description": "Description for 'items' Type: 'string' Path: '/properties/armor/items/properties/parts/items'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                },
+                                {
+                                    "type": "string",
+                                    "id": "/properties/armor/items/properties/parts/oneof1",
+                                    "title": "oneof 1 /properties/armor/items/properties/parts",
+                                    "default": "FOOT_R",
+                                    "format": "text",
+                                    "description": "Description for 'items' Type: 'string' Path: '/properties/armor/items/properties/parts/items'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                }
+                            ]
+                        },
+                        "propertyOrder": 10
+                    },
+                    "bash": {
+                        "type": "integer",
+                        "id": "/properties/armor/items/properties/bash",
+                        "title": "Bash",
+                        "default": 1,
+                        "description": "A description for 'bash'  Type: 'integer'",
+                        "options": {
+                            "hidden": false
+                        },
+                        "propertyOrder": 20
+                    }
+                }
+            },
+            "propertyOrder": 140
+        },
+        "attacks": {
+            "type": "object",
+            "id": "/properties/attacks",
+            "title": "Attacks",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "attack_text_u",
+                "attack_text_npc",
+                "chance",
+                "strength_damage"
+            ],
+            "properties": {
+                "attack_text_u": {
+                    "type": "string",
+                    "id": "/properties/attacks/properties/attack_text_u",
+                    "title": "Attack Text U",
+                    "default": "You kick %s with your hooves",
+                    "format": "text",
+                    "description": "Description for 'attack_text_u' Type: 'string' Path: '/properties/attacks/properties/attack_text_u'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 10
+                },
+                "attack_text_npc": {
+                    "type": "string",
+                    "id": "/properties/attacks/properties/attack_text_npc",
+                    "title": "Attack Text Npc",
+                    "default": "%1$s kicks %2$s with their hooves",
+                    "format": "text",
+                    "description": "Description for 'attack_text_npc' Type: 'string' Path: '/properties/attacks/properties/attack_text_npc'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 20
+                },
+                "chance": {
+                    "type": "integer",
+                    "id": "/properties/attacks/properties/chance",
+                    "title": "Chance",
+                    "default": 15,
+                    "description": "A description for 'chance'  Type: 'integer'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 30
+                },
+                "strength_damage": {
+                    "type": "object",
+                    "id": "/properties/attacks/properties/strength_damage",
+                    "title": "Strength Damage",
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_edit_json": false,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false
+                    },
+                    "defaultProperties": [
+                        "damage_type",
+                        "amount"
+                    ],
+                    "properties": {
+                        "damage_type": {
+                            "type": "string",
+                            "id": "/properties/attacks/properties/strength_damage/properties/damage_type",
+                            "title": "Damage Type",
+                            "default": "bash",
+                            "format": "text",
+                            "description": "Description for 'damage_type' Type: 'string' Path: '/properties/attacks/properties/strength_damage/properties/damage_type'",
+                            "options": {
+                                "hidden": false
+                            },
+                            "propertyOrder": 10
+                        },
+                        "amount": {
+                            "type": "integer",
+                            "id": "/properties/attacks/properties/strength_damage/properties/amount",
+                            "title": "Amount",
+                            "default": 3,
+                            "description": "A description for 'amount'  Type: 'integer'",
+                            "options": {
+                                "hidden": false
+                            },
+                            "propertyOrder": 20
+                        }
+                    },
+                    "propertyOrder": 40
+                }
+            },
+            "propertyOrder": 150
+        },
+        "active": {
+            "type": "boolean",
+            "id": "/properties/active",
+            "title": "Active",
+            "format": "checkbox",
+            "default": true,
+            "description": "A description for 'active'  Type: 'boolean'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 110
+        },
+        "cost": {
+            "type": "integer",
+            "id": "/properties/cost",
+            "title": "Cost",
+            "default": 20,
+            "description": "A description for 'cost'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 120
+        },
+        "time": {
+            "type": "integer",
+            "id": "/properties/time",
+            "title": "Time",
+            "default": 10,
+            "description": "A description for 'time'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 130
+        },
+        "fatigue": {
+            "type": "boolean",
+            "id": "/properties/fatigue",
+            "title": "Fatigue",
+            "format": "checkbox",
+            "default": true,
+            "description": "A description for 'fatigue'  Type: 'boolean'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 140
+        },
+        "hunger": {
+            "type": "boolean",
+            "id": "/properties/hunger",
+            "title": "Hunger",
+            "format": "checkbox",
+            "default": true,
+            "description": "A description for 'hunger'  Type: 'boolean'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 150
+        },
+        "thirst": {
+            "type": "boolean",
+            "id": "/properties/thirst",
+            "title": "Thirst",
+            "format": "checkbox",
+            "default": true,
+            "description": "A description for 'thirst'  Type: 'boolean'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 160
+        },
+        "movecost_modifier": {
+            "type": "number",
+            "id": "/properties/movecost_modifier",
+            "title": "Movecost Modifier",
+            "default": 0.75,
+            "description": "A description for 'movecost_modifier'  Type: 'number'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 170
+        },
+        "thirst_modifier": {
+            "type": "number",
+            "id": "/properties/thirst_modifier",
+            "title": "Thirst Modifier",
+            "default": 0.75,
+            "description": "The modifier for thirst",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 170
+        },
+        "vitamins_absorb_multi": {
+            "type": "array",
+            "id": "/properties/vitamins_absorb_multi",
+            "title": "Vitamins Absorb Multi",
+            "description": "multiplier of vitamin absorption based on material. \"all\" is every material. supports multiple materials.",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "array",
+                "id": "/properties/vitamins_absorb_multi/items",
+                "title": "Vitamins Absorb Multi ",
+                "format": "tabs",
+                "options": {
+                    "disable_collapse": false,
+                    "disable_array_add": false,
+                    "disable_array_delete": false,
+                    "disable_array_reorder": true,
+                    "disable_properties": false,
+                    "collapsed": false,
+                    "hidden": false
+                },
+                "items": [
+                    {
+                      "type": "string",
+                      "enum": [ "steel", "junk", "wheat" ]
+                    },
+                    {
+                        "type": "array",
+                        "id": "/properties/vitamins_absorb_multi/items/oneof1",
+                        "title": "Vitamins",
+                        "format": "tabs",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": true,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "items": [
+                            {
+                                "type": "array",
+                                "id": "/properties/vitamins_absorb_multi/items/items/oneof0",
+                                "title": "Vitamin",
+                                "format": "table",
+                                "options": {
+                                    "disable_collapse": false,
+                                    "disable_array_add": false,
+                                    "disable_array_delete": false,
+                                    "disable_array_reorder": true,
+                                    "disable_properties": false,
+                                    "collapsed": false,
+                                    "hidden": false
+                                },
+                                "items": [
+                                    {
+                                        "type": "string",
+                                        "id": "/properties/vitamins_absorb_multi/items/items/items/oneof0",
+                                        "title": "Vitamin",
+                                        "default": "vitA",
+                                        "format": "text",
+                                        "description": "The vitamin to modify",
+                                        "options": {
+                                            "hidden": false
+                                        }
+                                    },
+                                    {
+                                        "type": "integer",
+                                        "id": "/properties/vitamins_absorb_multi/items/items/items/oneof1",
+                                        "title": "Modifier",
+                                        "default": 0,
+                                        "description": "The modifier for the vitamin",
+                                        "options": {
+                                            "hidden": false
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "propertyOrder": 80
+        },
+        "hp_adjustment": {
+            "type": "integer",
+            "id": "/properties/hp_adjustment",
+            "title": "Hp Adjustment",
+            "default": -6,
+            "description": "A description for 'hp_adjustment'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 150
+        },
+        "hp_modifier": {
+            "type": "number",
+            "id": "/properties/hp_modifier",
+            "title": "Hp modifier",
+            "default": -0.75,
+            "description": "A description for 'hp_modifier'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 150
+        },
+        "hearing_modifier": {
+            "type": "number",
+            "id": "/properties/hearing_modifier",
+            "title": "hearing modifier",
+            "default": -0.75,
+            "description": "A description for 'hearing_modifier'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 150
+        },
+        "attackcost_modifier": {
+            "type": "number",
+            "id": "/properties/attackcost_modifier",
+            "title": "attack cost modifier",
+            "default": -0.75,
+            "description": "A description for 'attackcost_modifier'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 150
+        },
+        "encumbrance_always": {
+            "type": "array",
+            "id": "/properties/encumbrance_always",
+            "title": "Encumbrance Always",
+            "description": "Adds this much encumbrance to selected body parts",
+            "format": "table",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "array",
+                "id": "/properties/encumbrance_always/oneof0",
+                "default": [ "HAND_L", 20 ],
+                "title": "Body part",
+                "format": "tabs",
+                "options": {
+                    "disable_collapse": true,
+                    "disable_array_add": true,
+                    "disable_array_delete": true,
+                    "disable_array_reorder": true,
+                    "disable_properties": true,
+                    "collapsed": false,
+                    "compact": true,
+                    "hidden": false
+                },
+                "items": [
+                    {
+                        "type": "string",
+                        "id": "/properties/encumbrance_always/items/oneof0",
+                        "default": "HAND_L",
+                        "format": "text",
+                        "enum": [],
+                        "options": {
+                            "hidden": false,
+                          "compact": true
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "id": "/properties/encumbrance_always/items/oneof1",
+                        "default": 20,
+                        "options": {
+                            "hidden": false,
+                          "compact": true
+                        }
+                    }
+                ]
+            },
+            "propertyOrder": 90
+        },
+        "encumbrance_covered": {
+            "type": "array",
+            "id": "/properties/encumbrance_covered",
+            "title": "Encumbrance Covered",
+            "description": "Adds this much encumbrance to selected body parts",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "headerTemplate": "Encumbrance Covered {{i1}}",
+                "type": "array",
+                "id": "/properties/encumbrance_covered/oneof0",
+                "title": "Encumbrance Covered",
+                "format": "tabs",
+                "options": {
+                    "disable_collapse": false,
+                    "disable_array_add": false,
+                    "disable_array_delete": false,
+                    "disable_array_reorder": true,
+                    "disable_properties": false,
+                    "collapsed": false,
+                    "hidden": false
+                },
+                "items": [
+                    {
+                        "type": "string",
+                        "id": "/properties/encumbrance_covered/items/oneof0",
+                        "title": "Bodypart",
+                        "default": "HAND_L",
+                        "format": "text",
+                        "description": "The body part to add encumbrance",
+                        "$ref": "#/definitions/body_parts_enum", 
+                        "options": {
+                            "hidden": false
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "id": "/properties/encumbrance_covered/items/oneof1",
+                        "title": "Encumbrance",
+                        "default": 20,
+                        "description": "The amount of encumbrance",
+                        "options": {
+                            "hidden": false
+                        }
+                    }
+                ]
+            },
+            "propertyOrder": 90
+        },
+        "flags": {
+            "type": "array",
+            "id": "/properties/flags",
+            "title": "Flags",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "enum": [ 
+                    "BG_SURVIVAL_STORY"
+                ]
+            },
+            "propertyOrder": 60
+        },
+        "fatigue_modifier": {
+            "type": "number",
+            "id": "/properties/fatigue_modifier",
+            "title": "Fatigue Modifier",
+            "format": "selectize",
+            "default": 0.15,
+            "description": "The modifier for fatigue",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 160
+        },
+        "weight_capacity_modifier": {
+            "type": "number",
+            "id": "/properties/weight_capacity_modifier",
+            "title": "Weight Capacity Modifier",
+            "default": 1.1,
+            "description": "A description for 'weight_capacity_modifier'  Type: 'number'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 190
+        }
+    },
+    "definitions": {
+      "mutation_category": {
+        "type": "string", 
+        "description": "The id of an mutation_category entry", 
+        "enum": [ ]
+      }
+    }
+}

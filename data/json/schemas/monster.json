@@ -234,13 +234,15 @@
             "type": "array",
             "id": "/properties/starting_ammo",
             "title": "Starting ammo",
-            "format": "grid",
+            "default": [ "9mm", 10 ],
+            "format": "table",
             "options": {
-                "disable_collapse": false,
-                "disable_array_add": false,
+                "disable_collapse": true,
+                "disable_array_add": true,
                 "disable_array_delete": false,
-                "disable_array_reorder": false,
+                "disable_array_reorder": true,
                 "disable_properties": false,
+                "enable_array_copy": true,
                 "collapsed": false,
                 "hidden": false
             },
@@ -251,7 +253,7 @@
                 "title": "Starting ammo",
                 "format": "tabs",
                 "options": {
-                    "disable_collapse": false,
+                    "disable_collapse": true,
                     "disable_array_add": true,
                     "disable_array_delete": true,
                     "disable_array_reorder": true,
@@ -264,11 +266,12 @@
                         "type": "string",
                         "id": "/properties/starting_ammo/items/oneof0",
                         "title": "Ammo",
-                        "default": "558",
+                        "default": "9mm",
                         "format": "text",
                         "description": "The id of the ammo",
                         "options": {
-                            "hidden": false
+                            "hidden": false,
+                            "compact": true
                         }
                     },
                     {
@@ -278,7 +281,8 @@
                         "default": 0,
                         "description": "The amount of ammo",
                         "options": {
-                            "hidden": false
+                            "hidden": false,
+                            "compact": true
                         }
                     }
                 ]
@@ -422,15 +426,17 @@
             "type": "array",
             "id": "/properties/anger_triggers",
             "title": "Anger Triggers",
-            "format": "tabs",
+            "format": "selectize",
+            "uniqueItems": true,
             "options": {
                 "disable_collapse": false,
                 "disable_array_add": false,
                 "disable_array_delete": false,
-                "disable_array_reorder": false,
+                "disable_array_reorder": true,
                 "disable_properties": false,
                 "collapsed": false,
-                "hidden": false
+                "hidden": false,
+                "multiple": true
             },
             "items": {
                 "headerTemplate": "Anger Triggers {{i1}}",
@@ -452,7 +458,7 @@
                     "hidden": false
                 }
             },
-            "propertyOrder": 320
+            "propertyOrder": 60
         },
         "vision_night": {
             "type": "integer",
@@ -465,6 +471,104 @@
             },
             "propertyOrder": 260
         },
+        "death_drops": {
+            "type": "object",
+            "id": "/properties/death_drops",
+            "title": "Death Drops",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "subtype",
+                "groups"
+            ],
+            "properties": {
+                "subtype": {
+                    "type": "string",
+                    "id": "/properties/death_drops/properties/subtype",
+                    "title": "Subtype",
+                    "default": "collection",
+                    "format": "text",
+                    "description": "The subtype of death drops",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 10
+                },
+                "groups": {
+                    "type": "array",
+                    "id": "/properties/death_drops/properties/groups",
+                    "title": "Groups",
+                    "format": "tabs",
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_array_add": true,
+                        "disable_array_delete": false,
+                        "disable_array_reorder": true,
+                        "enable_array_copy": true,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false
+                    },
+                    "items": {
+                        "headerTemplate": "Groups {{i1}}",
+                        "type": "array",
+                        "id": "/properties/death_drops/properties/groups/oneof0",
+                        "title": "Group",
+                        "format": "tabs",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": true,
+                            "disable_array_delete": true,
+                            "disable_array_reorder": true,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "items": [
+                            {
+                                "type": "string",
+                                "id": "/properties/death_drops/properties/groups/items/oneof0",
+                                "title": "Group name",
+                                "default": "default_zombie_clothes",
+                                "format": "text",
+                                "description": "The name of the group to drop from",
+                                "options": {
+                                    "hidden": false
+                                }
+                            },
+                            {
+                                "type": "integer",
+                                "id": "/properties/death_drops/properties/groups/items/oneof1",
+                                "title": "Chance",
+                                "default": 100,
+                                "description": "The drop chance",
+                                "options": {
+                                    "hidden": false
+                                }
+                            }
+                        ]
+                    },
+                    "propertyOrder": 20
+                }
+            },
+            "propertyOrder": 270
+        },
+        "half_life": {
+            "type": "integer",
+            "id": "/properties/half_life",
+            "title": "Half life",
+            "default": 20,
+            "description": "(int) Time in which half of the monsters upgrade according to an approximated exponential progression. It is scaled with the evolution scaling factor which defaults to 4 days.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 260
+        },
         "harvest": {
             "type": "string",
             "id": "/properties/harvest",
@@ -472,6 +576,18 @@
             "default": "zombie_meatslug",
             "format": "text",
             "description": "An item that can be harvested from the corpse",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 270
+        },
+        "burn_into": {
+            "type": "string",
+            "id": "/properties/burn_into",
+            "title": "Burn into",
+            "default": "mon_zombie_child_scorched",
+            "format": "text",
+            "description": "What it will turn into after being burned",
             "options": {
                 "hidden": false
             },
@@ -515,7 +631,8 @@
                 "disable_collapse": false,
                 "disable_array_add": false,
                 "disable_array_delete": false,
-                "disable_array_reorder": false,
+                "disable_array_reorder": true,
+                "enable_array_copy": true,
                 "disable_properties": false,
                 "collapsed": false,
                 "hidden": false

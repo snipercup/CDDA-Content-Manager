@@ -1,0 +1,292 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "additionalProperties": true,
+    "title": "Mutation category",
+    "type": "object",
+    "id": "https://niebert.github.io/json-editor",
+    "options": {
+        "disable_collapse": false,
+        "disable_edit_json": false,
+        "disable_properties": false,
+        "collapsed": false,
+        "hidden": false
+    },
+    "defaultProperties": [
+        "type",
+        "id",
+        "name",
+        "threshold_mut",
+        "mutagen_message",
+        "iv_message",
+        "memorial_message",
+        "junkie_message"
+    ],
+    "properties": {
+        "id": {
+          "$ref": "#/definitions/id", 
+          "propertyOrder": 10
+        },
+        "type": {
+          "$ref": "#/definitions/type", 
+          "propertyOrder": 11,
+          "default": "mutation_category"
+        },
+        "name": {
+          "$ref": "#/definitions/name", 
+          "propertyOrder": 12
+        },
+        "threshold_mut": {
+            "type": "string",
+            "id": "/properties/threshold_mut",
+            "title": "Threshold Mut",
+            "default": "THRESH_SLIME",
+            "format": "text",
+            "description": "The id of the threshold for this category",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 40
+        },
+        "mutagen_message": {
+            "type": "string",
+            "id": "/properties/mutagen_message",
+            "title": "Mutagen Message",
+            "default": "Your body loses all rigidity for a moment.",
+            "format": "text",
+            "description": "The message the user will see when he drinks mutagen or serum of this category",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 50
+        },
+        "iv_message": {
+            "type": "string",
+            "id": "/properties/iv_message",
+            "title": "Iv Message",
+            "default": "This stuff takes you back.  Downright primordial!",
+            "format": "text",
+            "description": "The message the user will see when he injects mutagen or serum of this category",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 60
+        },
+        "memorial_message": {
+            "type": "string",
+            "id": "/properties/memorial_message",
+            "title": "Memorial Message",
+            "default": "Gave up on rigid human norms.",
+            "format": "text",
+            "description": "The message logged into the memorial when this threshold is reached",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 70
+        },
+        "iv_min_mutations": {
+            "type": "integer",
+            "id": "/properties/iv_min_mutations",
+            "title": "Iv Min Mutations",
+            "default": 3,
+            "description": "The minimum amount of mutations gained when injecting",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 70
+        },
+        "iv_additional_mutations": {
+            "type": "integer",
+            "id": "/properties/iv_additional_mutations",
+            "title": "Iv Additional Mutations",
+            "default": 2,
+            "description": "Maximum amount of additional mutations when injecting",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 80
+        },
+        "iv_hunger": {
+            "type": "integer",
+            "id": "/properties/iv_hunger",
+            "title": "Iv Hunger",
+            "default": 20,
+            "description": "Hunger modifier when injecting",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 10
+        },
+        "iv_thirst": {
+            "type": "integer",
+            "id": "/properties/iv_thirst",
+            "title": "Iv Thirst",
+            "default": 20,
+            "description": "Thirst modifier when injecting",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 20
+        },
+        "iv_additional_mutations_chance": {
+            "type": "integer",
+            "id": "/properties/iv_additional_mutations_chance",
+            "title": "Iv Additional Mutations Chance",
+            "default": 4,
+            "description": "The chance of additional mutations when injecting",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 90
+        },
+        "iv_fatigue": {
+            "type": "integer",
+            "id": "/properties/iv_fatigue",
+            "title": "Iv Fatigue",
+            "default": 20,
+            "description": "Fatigue modifier when injecting mutagen of this category",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 100
+        },
+        "iv_sound": {
+            "type": "boolean",
+            "id": "/properties/iv_sound",
+            "title": "Iv Sound",
+            "format": "checkbox",
+            "default": true,
+            "description": "The sound when injecting mutagen of this category",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 110
+        },
+        "iv_sound_message": {
+            "type": "string",
+            "id": "/properties/iv_sound_message",
+            "title": "Iv Sound Message",
+            "default": "yourself scream in agony!",
+            "format": "text",
+            "description": "The message when injecting mutagen of this category",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 120
+        },
+        "iv_sound_id": {
+            "type": "string",
+            "id": "/properties/iv_sound_id",
+            "title": "Iv Sound Id",
+            "default": "shout",
+            "format": "text",
+            "description": "The sound id when injecting mutagen of this category",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 130
+        },
+        "iv_sound_variant": {
+            "type": "string",
+            "id": "/properties/iv_sound_variant",
+            "title": "Iv Sound Variant",
+            "default": "scream",
+            "format": "text",
+            "description": "The sound variant when injecting mutagen of this category",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 140
+        },
+        "iv_noise": {
+            "type": "integer",
+            "id": "/properties/iv_noise",
+            "title": "Iv Noise",
+            "default": 15,
+            "description": "The amount of noise when injecting mutagen of this category",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 150
+        },
+        "iv_sleep": {
+            "type": "boolean",
+            "id": "/properties/iv_sleep",
+            "title": "Iv Sleep",
+            "format": "checkbox",
+            "default": true,
+            "description": "Wether you go to sleep when injected",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 160
+        },
+        "iv_sleep_message": {
+            "type": "string",
+            "id": "/properties/iv_sleep_message",
+            "title": "Iv Sleep Message",
+            "default": "You writhe and collapse to the ground.",
+            "format": "text",
+            "description": "The message when you sleep when injecting mutagen of this category",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 170
+        },
+        "iv_pain": {
+            "type": "integer",
+            "id": "/properties/iv_pain",
+            "title": "Iv Pain",
+            "default": 4,
+            "description": "Amount of pain from injecting",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 10
+        },
+        "iv_morale": {
+            "type": "integer",
+            "id": "/properties/iv_morale",
+            "title": "Iv Morale",
+            "default": -40,
+            "description": "Morale modifier when injecting",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 20
+        },
+        "iv_morale_max": {
+            "type": "integer",
+            "id": "/properties/iv_morale_max",
+            "title": "Iv Morale Max",
+            "default": -200,
+            "description": "Maximum morale modifier",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 30
+        },
+        "iv_sleep_dur": {
+            "type": "integer",
+            "id": "/properties/iv_sleep_dur",
+            "title": "Inject sleep duration",
+            "default": 400,
+            "description": "Sleep duration when injecting mutagen of this category",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 180
+        },
+        "junkie_message": {
+            "type": "string",
+            "id": "/properties/junkie_message",
+            "title": "Junkie Message",
+            "default": "Maybe if you drank enough, you'd become mutagen...",
+            "format": "text",
+            "description": "The message the user will see when he drinks mutagen too often and becomes addicted",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 80
+        }
+    }
+}

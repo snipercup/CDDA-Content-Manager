@@ -89,7 +89,18 @@
             },
             "items": {
                 "type": "string",
-                "enum": [ "RANDOM_DAMAGE", "PERMANENT", "LOUD", "IGNORE_WALLS", "SILENT", "NO_LEGS", "NO_HANDS", "VERBAL", "SOMATIC", "CONCENTRATE" ]
+                "enum": [ 
+                    "RANDOM_DAMAGE", 
+                    "PERMANENT", 
+                    "LOUD", 
+                    "IGNORE_WALLS", 
+                    "SILENT", 
+                    "NO_LEGS", 
+                    "NO_HANDS", 
+                    "VERBAL", 
+                    "SOMATIC", 
+                    "CONCENTRATE" 
+                ]
             },
             "propertyOrder": 60
         },
@@ -111,7 +122,7 @@
             },
             "items": {
                 "type": "string",
-                "enum": [ "HEAD", "TORSO", "MOUTH", "EYES", "ARM_L", "ARM_R", "HAND_R", "HAND_L", "LEG_L", "LEG_R", "FOOT_L", "FOOT_R" ]
+                "$ref": "#/definitions/body_parts_enum"
             },
             "propertyOrder": 60
         },

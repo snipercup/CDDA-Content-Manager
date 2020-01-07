@@ -169,9 +169,9 @@
       "oneOf": [
           {
               "type": "string",
-              "default": "250 ml",
+              "default": "steel",
               "format": "text",
-              "description": "The volume of the ammo",
+              "description": "The material",
               "enum": [ "steel" ],
               "options": {
                   "hidden": false

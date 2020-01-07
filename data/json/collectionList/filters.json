@@ -47,5 +47,51 @@
 		"display_name": "Type: MONSTER",
 		"display_key": "id",
 		"filter": { "jsonObject.type": { "$eq": "MONSTER" } }
+	},
+	{
+		"type": "filter",
+		"name": "all_mutation",
+		"display_name": "Mutations",
+		"display_key": "id",
+		"filter": { "$and": [ 
+        { "jsonObject.type": { "$eq": "mutation" } }, 
+        { "$or": [
+            { "jsonObject.valid": { "$eq": true } },
+            { "jsonObject.valid": { "$exists": false } },
+            { "jsonObject.threshold": { "$exists": true } }
+        ] }
+    ] }
+	},
+	{
+		"type": "filter",
+		"name": "all_mutation_traits",
+		"display_name": "Traits",
+		"display_key": "id",
+		"filter": { "$and": [ 
+        { "jsonObject.type": { "$eq": "mutation" } }, 
+        { "jsonObject.valid": { "$eq": false } } ,
+        { "jsonObject.threshold": { "$exists": false } }
+    ] }
+	},
+	{
+		"type": "filter",
+		"name": "all_mutation_category",
+		"display_name": "Type: mutation category",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "mutation_category" } }
+	},
+	{
+		"type": "filter",
+		"name": "types_exists",
+		"display_name": "Exists: types",
+		"display_key": "id",
+		"filter": { "jsonObject.types": { "$exists": true } }
+	},
+	{
+		"type": "filter",
+		"name": "fatigue_modifier_exists",
+		"display_name": "Exists: fatigue_modifier",
+		"display_key": "id",
+		"filter": { "jsonObject.fatigue_modifier": { "$exists": true } }
 	}
 ]

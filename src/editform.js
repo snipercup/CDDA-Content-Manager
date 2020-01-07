@@ -40,7 +40,8 @@ class EditForm {
   
   //Returns the first schema it can find of the given type.
   get schemaInst(){
-    return this.schemas.findOne({ "jsonObject.properties.type.default": { $eq: this.type } }).jsonObject;
+    let schemaInst = this.schemas.findOne({ "jsonObject.properties.type.default": { $eq: this.type } }).jsonObject;
+    return schemaInst;
   }
 	
 	createForm(){

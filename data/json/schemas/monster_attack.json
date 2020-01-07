@@ -4,6 +4,8 @@
     "title": "Monster attack",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
+    "format": "categories",
+    "basicCategoryTitle": "Main",
     "get_ids_of_type": [ { "type": "effect_type", "display_key": "id" } ],
     "options": {
         "disable_collapse": false,
@@ -41,10 +43,11 @@
             "title": "Attack Type",
             "default": "melee",
             "format": "text",
-            "description": "The type of attack",
+            "description": "Attack definitions have a \"monster_attack\" type, \"attack_type\" set to one of actor types, and an \"id\" (set to value that isn't taken yet). For compatibility \"attack_type\" defaults to the same value as \"type\". For example, specifying \"type\": \"gun\" will internally be treated as \"type\": \"monster_attack\", \"attack_type\": \"gun\". This will be removed in the future, so all new definitions should specify \"type\": \"monster_attack\". Hardcoded attacks do not have json definitions, but are implemented in C++. It is possible to treat hardcoded attacks as actor types, but there is no reason to do so as they have no variables to configure.",
             "options": {
                 "hidden": false
             },
+            "enum": [ "leap", "melee", "bite", "gun" ],
             "propertyOrder": 20
         },
         "cooldown": {
@@ -52,7 +55,7 @@
             "id": "/properties/cooldown",
             "title": "Cooldown",
             "default": 20,
-            "description": "A description for 'cooldown'  Type: 'integer'",
+            "description": "The cooldown for that attack in amount of turns.",
             "options": {
                 "hidden": false
             },
@@ -63,7 +66,7 @@
             "id": "/properties/move_cost",
             "title": "Move Cost",
             "default": 150,
-            "description": "A description for 'move_cost'  Type: 'integer'",
+            "description": "Turns needed to complete special attack. 100 move_cost with 100 speed is equal to 1 second/turn.",
             "options": {
                 "hidden": false
             },
@@ -73,25 +76,29 @@
             "type": "array",
             "id": "/properties/damage_max_instance",
             "title": "Damage Max Instance",
-            "format": "tabs",
+            "description": "Max damage it can deal on one attack.",
+            "format": "grid",
             "options": {
-                "disable_collapse": false,
+                "disable_collapse": true,
                 "disable_array_add": false,
                 "disable_array_delete": false,
-                "disable_array_reorder": false,
+                "disable_array_reorder": true,
                 "disable_properties": false,
                 "collapsed": false,
+                "compact": true,
                 "hidden": false
             },
             "items": {
                 "type": "object",
                 "id": "/properties/damage_max_instance/items",
-                "title": "Instance",
+                "title": "Damage Max Instance",
+                "format": "grid",
                 "options": {
                     "disable_collapse": false,
                     "disable_edit_json": false,
                     "disable_properties": false,
                     "collapsed": false,
+                    "compact": true,
                     "hidden": false
                 },
                 "defaultProperties": [
@@ -144,10 +151,11 @@
             "type": "array",
             "id": "/properties/body_parts",
             "title": "Body Parts",
-            "format": "tabs",
+            "description": "Left column: the body part affected. Right column: the amount of damage",
+            "format": "table",
             "options": {
-                "disable_collapse": false,
-                "disable_array_add": true,
+                "disable_collapse": true,
+                "disable_array_add": false,
                 "disable_array_delete": false,
                 "disable_array_reorder": true,
                 "enable_array_copy": true,
@@ -161,6 +169,7 @@
                 "id": "/properties/body_parts/oneof0",
                 "title": "Body Part",
                 "format": "tabs",
+                "default": [ "HEAD", 2 ],
                 "options": {
                     "disable_collapse": true,
                     "disable_array_add": true,
@@ -174,16 +183,15 @@
                 },
                 "items": [
                     {
-                        "type": "string",
-                        "id": "/properties/body_parts/items",
-                        "title": "Body Part",
-                        "default": "HEAD",
-                        "options": {
-                            "hidden": false,
-                            "compact": true
-                        },
-                        "$ref": "#/definitions/body_parts_enum", 
-                        "propertyOrder": 60
+                      "type": "string",
+                      "id": "/properties/body_parts_enum",
+                      "default": "HEAD",
+                      "format": "text",
+                      "enum": [ "HEAD", "TORSO", "MOUTH", "EYES", "ARM_L", "ARM_R", "HAND_R", "HAND_L", "LEG_L", "LEG_R", "FOOT_L", "FOOT_R" ],
+                      "options": {
+                          "hidden": false,
+                          "compact": true
+                      }
                     },
                     {
                         "type": "integer",
@@ -204,26 +212,29 @@
             "type": "array",
             "id": "/properties/effects",
             "title": "Effects",
-            "format": "tabs",
+            "format": "grid",
             "options": {
-                "disable_collapse": false,
+                "disable_collapse": true,
                 "disable_array_add": false,
                 "disable_array_delete": false,
                 "disable_array_reorder": true,
                 "disable_properties": false,
                 "collapsed": false,
+                "compact": true,
                 "hidden": false
             },
             "items": {
-                "headerTemplate": "Effects {{i1}}",
+                "headerTemplate": "{{self.id}}",
                 "type": "object",
                 "id": "/properties/effects/oneof0",
                 "title": "effect",
+                "format": "grid",
                 "options": {
                     "disable_collapse": false,
                     "disable_edit_json": false,
                     "disable_properties": false,
                     "collapsed": false,
+                    "compact": true,
                     "hidden": false
                 },
                 "defaultProperties": [
@@ -245,7 +256,7 @@
                     "bp": {
                         "type": "string",
                         "id": "/properties/effects/items/properties/bp",
-                        "title": "Bp",
+                        "title": "Body part",
                         "default": "TORSO",
                         "format": "text",
                         "$ref": "#/definitions/body_parts_enum", 

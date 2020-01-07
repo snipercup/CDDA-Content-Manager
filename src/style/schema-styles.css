@@ -1,0 +1,80 @@
+
+
+[data-schemapath='root.starting_ammo'] div.je-panel {
+    display: inline-block;
+}
+
+/* ############################################################################## */
+/* ########################## --- Monster schema --- ########################## */
+/* ############################################################################## */
+[data-schemapath='root.starting_ammo'] div.je-panel {
+    display: inline-block;
+}
+[data-schemapath='root.starting_ammo'] div.je-panel, td, p {
+  margin: 1px !important;
+  padding: 1px !important;
+}
+[data-schemapath='root.starting_ammo'] .form-group {
+  margin: 0;
+}
+[data-schemapath='root.starting_ammo'] table {
+    overflow: visible !important;
+}
+[data-schemapath='root.starting_ammo'] .btn-group:empty, .form-group + div:empty {
+  display: none;
+}
+[data-schemapath='root.starting_ammo'] tr h4, th {
+  display: none;
+}
+
+/* ############################################################################## */
+/* ########################## --- Mutations schema --- ########################## */
+/* ############################################################################## */
+[data-schemapath='root.encumbrance_always'] div.je-panel {
+    display: inline-block;
+}
+[data-schemapath='root.encumbrance_always'] div.je-panel, td, p {
+  margin: 1px !important;
+  padding: 1px !important;
+}
+[data-schemapath='root.encumbrance_always'] .form-group {
+  margin: 0;
+}
+[data-schemapath='root.encumbrance_always'] table {
+    overflow: visible !important;
+}
+[data-schemapath='root.encumbrance_always'] .btn-group:empty, .form-group + div:empty {
+  display: none;
+}
+[data-schemapath='root.encumbrance_always'] tr h4, th {
+  display: none;
+}
+
+
+
+/* ################################################################################### */
+/* ########################## --- Monster attack schema --- ########################## */
+/* ################################################################################### */
+[data-schemapath='root.body_parts'] div.je-panel {
+  display: inline-block;
+}
+[data-schemapath='root.body_parts'] div.je-panel, td, p {
+  margin: 1px !important;
+  padding: 1px !important;
+}
+[data-schemapath='root.body_parts'] .form-group {
+  margin: 0;
+}
+[data-schemapath='root.body_parts'] .btn-group:empty, .form-group + div:empty {
+  display: none;
+}
+[data-schemapath='root.body_parts'] tr h4, th {
+  display: none;
+}
+
+[data-schemapath='root.effects'] button.json-editor-btn-collapse {
+  display: none;
+}
+[data-schemapath='root.damage_max_instance'] button.json-editor-btn-collapse {
+  display: none;
+}

@@ -72,22 +72,33 @@ async function loadExtraDefinitions(schemas, entries){
       }
     }
     
-    // if(type == "ammunition_type"){
-      // IDListOfType = await getIDListOfTypeFromCollection("AMMO", entries); //Get all the id's of every item of type ammo
-      // let c = schemaJSONObj.definitions["AMMO"].enum; //Save the list that's already defined in the ammuition type schema.
-      // schemaJSONObj.definitions["AMMO"].enum = c.concat(IDListOfType.filter((item) => c.indexOf(item) < 0)); //Merge the two lists and put it back into the ammo property enumeration.
-    // }
-    
-    // if(this.type == "MONSTER"){
-      // IDListOfType = await getIDListOfTypeFromCollection("SPECIES", entries); //Get all the id's of every item of type ammo
-      // let c = schemaJSONObj.definitions["SPECIES"].items.enum; //Save the list that's already defined in the ammuition type schema.
-      // schemaJSONObj.definitions["SPECIES"].items.enum = c.concat(IDListOfType.filter((item) => c.indexOf(item) < 0)); //Merge the two lists and put it back into the ammo property enumeration.
-    // }
-    
-    // if(this.type == "monster_attack"){
-      // IDListOfType = await getIDListOfTypeFromCollection("effect_type", entries); //Get all the id's of every item of type ammo
-      // let c = schemaJSONObj.definitions["effect_type"].enum; //Save the list that's already defined in the ammuition type schema.
-      // schemaJSONObj.definitions["effect_type"].enum = c.concat(IDListOfType.filter((item) => c.indexOf(item) < 0)); //Merge the two lists and put it back into the ammo property enumeration.
-    // }
+    //The schema can include a request to move a enum property from a definition to a certain property.
+    //This is a workaround because the reference in a nested array fails when the editor is created again.
+    if(schemaJSONObj.get_enums_from_definition){
+      let getEnums = schemaJSONObj.get_enums_from_definition;
+      let from, to, enumProperty, pathArray, traverseStep, traverseProperty, pathInt;
+      
+      //Loop over the defined path and set the property in the end
+      for (let x = 0, gLen = getEnums.length; x < gLen; x++) {
+        from = schemaJSONObj.definitions[getEnums[x].from];
+        to = getEnums[x].to;
+        enumProperty = from["enum"];
+        pathArray = to.split(".")
+        
+        traverseProperty = schemaJSONObj.properties
+        for (let i = 0, pathLen = pathArray.length; i < pathLen; i++) {
+          traverseStep = pathArray[i];
+          pathInt = parseInt(traverseStep); //Sometimes it can be items.0 and we want to get the 0 to get the correct property
+          if(isNaN(pathInt)){
+            traverseProperty = traverseProperty[traverseStep];
+          } else {
+            traverseProperty = traverseProperty[pathInt];
+          }
+          if(i == pathLen-1){ //When at the end of the path, set the enum for the property
+            traverseProperty.enum = enumProperty;
+          }
+        }
+      }
+    }
   }
 }

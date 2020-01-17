@@ -117,10 +117,10 @@ const stringifyPrettyCompact = (json) => {
 }
 
 function recursiveStringify(jsonEntry, schemaDefinition, options, depth = 0){
-  let jsonString = "", keys, key, value, tempstring = "", arrItem, addSpace, schemakey, optionsCopy, optionsKeys;
+  let jsonString = "", keys, key, value, tempstring = "", arrItem, addSpace, schemakey, optionsCopy, optionsKeys, isNumber;
   
   if(typeof jsonEntry === 'object' && jsonEntry !== null){
-    if(Array.isArray(jsonEntry)){
+    if(Array.isArray(jsonEntry)){ //It's an array
       for(let x = 0, arrLen = jsonEntry.length; x < arrLen; x++){ //Loop over every item in the array
         arrItem = jsonEntry[x];
         if(typeof arrItem === 'object' && arrItem !== null){
@@ -140,17 +140,21 @@ function recursiveStringify(jsonEntry, schemaDefinition, options, depth = 0){
         tempstring = "[ " + replaceAll(tempstring, "||==|| ", ", ") + " ]";
       }
       jsonString += tempstring;
-    } else {
+    } else { //It's an object
       optionsCopy = options
       keys = Object.keys(jsonEntry);
       for(let y = 0, keyLen = keys.length; y < keyLen; y++){ //Loop over every key in the entry
         key = keys[y];
         value = jsonEntry[key];
+        if(key == "metabolism_modifier"){ 
+          console.log("metabolism_modifier")
+        }
         if(key.includes("comment")){key = "//"} //Comments are transformed from // to commentx where x is a number. Transform them back to // here.
         if(depth == 0){ jsonString += "    " }
         jsonString += "\"" +key+ "\": "
         schemakey = schemaDefinition.properties[key];
         if(schemakey){
+          isNumber = schemakey.type == "number";
           stringifyOptions = schemakey.stringifyOptions;
           if(stringifyOptions){
             optionsKeys = Object.keys(stringifyOptions);
@@ -174,6 +178,11 @@ function recursiveStringify(jsonEntry, schemaDefinition, options, depth = 0){
           }
         } else {
           jsonString += stringify(value, optionsCopy); //forward the options to the stringify function
+          // if(isNumber && Number.isInteger(value)){ 
+            //jsonString.replace(/.$/,".0\"");
+            // jsonString = jsonString.slice(0, -1) + '.0\"'; 
+            // jsonString += ".0"
+          // } //If the value is a integer but the schema sais it's a number, put a .0 in the string to make it a number again.
         }
         
         if(y < keyLen-1){
@@ -197,137 +206,15 @@ function recursiveStringify(jsonEntry, schemaDefinition, options, depth = 0){
           jsonString = "{ " + jsonString + " }";
         }
       }
-      
-      
-      // if(jsonString.length - (keys.length-1)*5 > optionsCopy.maxLength){
-        // addSpace = ""
-        // for(let x = 0; x < depth; x++){ addSpace = addSpace + "  " }
-        // jsonString = replaceAll(jsonString, "||==|| ", ",\n    " + addSpace);
-        // if(depth == 0){
-          // jsonString = "  {\n" + jsonString + "\n  }";
-        // } else {
-          // jsonString = "{\n    " + addSpace + jsonString + "\n  " + addSpace + "}"
-        // }
-      // } else {
-        // jsonString = replaceAll(jsonString, "||==|| ", ", ");
-        // if(depth == 0){
-          // jsonString = "  {\n" + jsonString + "\n  }";
-        // } else {
-          // jsonString = "{ " + jsonString + " }";
-        // }
-      // }
-      
-      
-      // if(tempstring.length > options.maxLength){
-        // tempstring = replaceAll(tempstring, "||==|| ", ",\n      ");
-        // jsonString += "" + tempstring + "";
-      // } else {
-        // tempstring = replaceAll(tempstring, "||==|| ", ", ");
-        // if(Array.isArray(value)){
-          // jsonString += "" + tempstring + "";
-        // } else {
-          // jsonString += "" + tempstring + "";
-        // }
-      // }
-      // if(depth == 0){
-        // jsonString += "\n  }";
-      // } else {
-        // jsonString += " }"
-      // }
     }
   } else {
+   if(typeof jsonEntry == 'number'){
+    console.log("it's a number");
+   }
     return stringify(jsonEntry, options)
   }
   return jsonString;
 }
-
-// function recursiveStringify(jsonEntry, schemaDefinition, options, depth = 0){
-  // let jsonString = "", keys, key, value, tempstring, arrItem;
-  
-  // if(typeof jsonEntry === 'object' && jsonEntry !== null && !Array.isArray(jsonEntry)){
-    // keys = Object.keys(jsonEntry);
-    // for(let y = 0, keyLen = keys.length; y < keyLen; y++){ //Loop over every key in the entry
-        // key = keys[y]
-        // value = jsonEntry[key];
-        // if(key.includes("comment")){key = "//"} //Comments are transformed from // to commentx where x is a number. Transform them back to // here.
-        
-        // if(key == "special_attacks"){ 
-          // console.log("special_attacks") 
-        // };
-        // if(typeof value === 'object' && value !== null){
-          // if(Array.isArray(value)){
-            // jsonString += "    " + "\"" +key+ "\": " + "[ ";
-            // for(let x = 0, arrLen = value.length; x < arrLen; x++){ //Loop over every item in the array
-              // arrItem = value[x];
-              // if(typeof arrItem === 'object' && arrItem !== null){
-                // if(Array.isArray(arrItem)){
-                  // jsonString += "[ "
-                // } else {
-                  // jsonString += "{ "
-                // }
-                // if(depth == 0){
-                  // jsonString += recursiveStringify(arrItem, schemaDefinition, options, depth+1);
-                // } else {
-                  // tempstring = recursiveStringify(arrItem, schemaDefinition, options, depth+1);
-                  // if(tempstring.length > options.maxLength){
-                    // tempstring.split(",").join(",\n");
-                  // }
-                  // jsonString += tempstring;
-                // }
-                // if(Array.isArray(arrItem)){
-                  // jsonString += " ]"
-                // } else {
-                  // jsonString += " }"
-                // }
-              // } else {
-                // jsonString += stringify(arrItem, options);
-              // }
-              // if(x < arrLen-1){
-                // jsonString += ", ";
-              // }
-            // }
-            // jsonString += " ]";
-          // } else {
-            // if(depth == 0){
-              // jsonString += "    " + "\"" +key+ "\": " + "{ " + recursiveStringify(value, schemaDefinition, options, depth+1) + " }";
-            // } else {
-              // tempstring = recursiveStringify(value, schemaDefinition, options, depth+1);
-              // if(tempstring.length > options.maxLength){
-                // tempstring.split(",").join(",\n");
-              // }
-              // jsonString += "\"" +key+ "\": " + "{ " + tempstring + " }";
-            // }
-          // }
-        // } else {
-          // if(depth == 0){
-            // jsonString += "    " + "\"" +key+ "\": " + stringify(value, options); //forward the options to the stringify function
-          // } else {
-            // jsonString += "\"" +key+ "\": " + stringify(value, options); //forward the options to the stringify function
-          // }
-          // if(jsonString.substr(jsonString.length - 2) == "\n]"){ //Detect that the last characters are just newline and ]
-            // jsonString = jsonString.slice(0, -1); //Remove last character
-            // jsonString += "    ]"; //Append the formatted character (yes this is a hacky solution)
-          // }
-          // if(jsonString.substr(jsonString.length - 2) == "\n}"){ //Detect that the last characters are just newline and }
-            // jsonString = jsonString.slice(0, -1); //Remove last character
-            // jsonString += "    }"; //Append the formatted character (yes this is a hacky solution)
-          // }
-        // }
-        
-        // if(y < keyLen-1){
-          // jsonString += ",";
-          // if(depth == 0){ 
-            // jsonString += "\n"
-          // } else {
-            // jsonString += " "
-          // }
-        // }
-    // }
-  // } else {
-    // return stringify(jsonEntry, options)
-  // }
-  // return jsonString;
-// }
 
 
 		

@@ -199,7 +199,7 @@
                   "title": "Type",
                   "default": "holster",
                   "format": "text",
-                  "description": "Description for 'type' Type: 'string' Path: '/properties/use_action/properties/type'",
+                  "description": "The type of method. The contents of use_action fields can either be a string indicating a built-in function to call when the item is activated (defined in iuse.cpp), or one of several special definitions that invoke a more structured function.",
                   "options": {
                       "hidden": false
                   },
@@ -214,7 +214,7 @@
                   "title": "Holster Prompt",
                   "default": "Sheath sword",
                   "format": "text",
-                  "description": "Description for 'holster_prompt' Type: 'string' Path: '/properties/use_action/properties/holster_prompt'",
+                  "description": "Prompt to use when selecting an item",
                   "options": {
                       "hidden": false
                   },
@@ -226,7 +226,7 @@
                   "title": "Holster Msg",
                   "default": "You sheath your %s",
                   "format": "text",
-                  "description": "Description for 'holster_msg' Type: 'string' Path: '/properties/use_action/properties/holster_msg'",
+                  "description": "Message to show when holstering an item",
                   "options": {
                       "hidden": false
                   },
@@ -238,7 +238,7 @@
                   "title": "Max Volume",
                   "default": "3 L",
                   "format": "text",
-                  "description": "Description for 'max_volume' Type: 'string' Path: '/properties/use_action/properties/max_volume'",
+                  "description": "Maximal volume that can be used to store items here. Volume in ml and L can be used - \"50 ml\" or \"2 L\"",
                   "options": {
                       "hidden": false
                   },
@@ -249,7 +249,7 @@
                   "id": "/properties/use_action/properties/draw_cost",
                   "title": "Draw Cost",
                   "default": 10,
-                  "description": "A description for 'draw_cost'  Type: 'integer'",
+                  "description": "Base move cost per unit volume when wielding the contained item",
                   "options": {
                       "hidden": false
                   },
@@ -300,7 +300,7 @@
                   "id": "/properties/use_action/properties/need_charges",
                   "title": "Need charges",
                   "default": 10,
-                  "description": "A description for 'need_charges'  Type: 'integer'",
+                  "description": "Number of charges the item needs to transform.",
                   "options": {
                       "hidden": false
                   },

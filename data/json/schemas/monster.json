@@ -644,7 +644,8 @@
                         "type": "array",
                         "id": "/properties/special_attacks/oneof0",
                         "title": "Simple Special Attack",
-                        "format": "tabs",
+                        "default": [ "PARROT", 0 ],
+                        "format": "grid",
                         "options": {
                             "disable_collapse": false,
                             "disable_array_add": true,

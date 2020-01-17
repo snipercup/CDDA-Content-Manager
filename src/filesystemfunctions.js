@@ -269,14 +269,12 @@ async function getJsonFromFile(filepath){
         for(var i = 0;i < lines.length;i++){
           line = lines[i];
           if (line.includes("starting_ammo")){
-            // console.log("1starting_ammo = " + line);
             line = replaceAll(line, "{", "[ [");
             line = replaceAll(line, "},", "______");
             line = replaceAll(line, ",", " ], [");
             line = replaceAll(line, "______", "] ],");
             line = replaceAll(line, ":", ",");
             line = replaceAll(line, "starting_ammo\",", "starting_ammo\":");
-            // console.log("2starting_ammo = " + line);
           }
           newstr += line;
         }

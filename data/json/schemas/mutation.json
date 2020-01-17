@@ -4,7 +4,7 @@
     "title": "Mutation",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
-    "get_ids_of_type": [ { "type": "mutation_category", "display_key": "id" } ],
+    "get_ids_of_type": [ { "type": "mutation_category", "display_key": "id" }, { "type": "mutation_type", "display_key": "id" } ],
     "get_enums_from_definition": [ { "from": "body_parts_enum", "to": "encumbrance_always.items.items.0" } ],
     "options": {
         "disable_collapse": false,
@@ -221,6 +221,31 @@
             },
             "propertyOrder": 60
         },
+        "initial_ma_styles": {
+            "type": "array",
+            "id": "/properties/initial_ma_styles",
+            "title": "prerequisites",
+            "description": "initial_ma_styles",
+            "stringifyOptions": {
+              "maxLength": 116
+            },
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string"
+            },
+            "propertyOrder": 60
+        },
         "prereqs2": {
             "type": "array",
             "id": "/properties/prereqs2",
@@ -325,6 +350,9 @@
             "id": "/properties/cancels",
             "title": "Cancels",
             "description": "Cancels these mutations when mutating",
+            "stringifyOptions": {
+              "maxLength": 116
+            },
             "format": "selectize",
             "uniqueItems": true,
             "options": {
@@ -385,7 +413,7 @@
                 "int_mod": {
                     "type": "integer",
                     "id": "/properties/passive_mods/properties/int_mod",
-                    "title": "Int Mod",
+                    "title": "Intelligence Mod",
                     "default": -1,
                     "description": "The amount of intelligence to modify",
                     "options": {
@@ -396,7 +424,7 @@
                 "per_mod": {
                     "type": "integer",
                     "id": "/properties/passive_mods/properties/per_mod",
-                    "title": "Int Mod",
+                    "title": "Perception Mod",
                     "default": -1,
                     "description": "The amount of perception to modify",
                     "options": {
@@ -407,7 +435,7 @@
                 "str_mod": {
                     "type": "integer",
                     "id": "/properties/passive_mods/properties/str_mod",
-                    "title": "Int Mod",
+                    "title": "Strength Mod",
                     "default": -1,
                     "description": "The amount of strength to modify",
                     "options": {
@@ -418,7 +446,7 @@
                 "dex_mod": {
                     "type": "integer",
                     "id": "/properties/passive_mods/properties/dex_mod",
-                    "title": "Int Mod",
+                    "title": "Dexterity Mod",
                     "default": -1,
                     "description": "The amount of dexterity to modify",
                     "options": {
@@ -467,7 +495,7 @@
             "type": "array",
             "id": "/properties/types",
             "title": "types",
-            "description": "Types of this mutation",
+            "description": "The ID of a JSON entry of type mutation_type",
             "format": "selectize",
             "uniqueItems": true,
             "options": {
@@ -483,10 +511,10 @@
             "items": {
                 "type": "string",
                 "id": "/properties/types/items",
-                "title": "Title Root Types ",
+                "title": "Type",
                 "default": "LEGS",
                 "format": "text",
-                "enum": [ "HORNS", "TEETH", "MUZZLE", "HANDS", "facial_hair", "SKIN", "skin_tone" ],
+                "$ref": "#/definitions/mutation_type",
                 "options": {
                     "hidden": false
                 }
@@ -600,44 +628,24 @@
             "type": "array",
             "id": "/properties/restricts_gear",
             "title": "Restricts Gear",
-            "format": "tabs",
+            "description": "list of bodyparts that get restricted by this mutation",
+            "format": "selectize",
+            "uniqueItems": true,
             "options": {
                 "disable_collapse": false,
                 "disable_array_add": false,
                 "disable_array_delete": false,
-                "disable_array_reorder": false,
+                "disable_array_reorder": true,
                 "disable_properties": false,
                 "collapsed": false,
-                "hidden": false
+                "hidden": false,
+                "multiple": true
             },
             "items": {
-                "headerTemplate": "Restricts Gear {{i1}}",
-                "oneOf": [
-                    {
-                        "type": "string",
-                        "id": "/properties/restricts_gear/oneof0",
-                        "title": "oneof 0 /properties/restricts_gear",
-                        "default": "FOOT_L",
-                        "format": "text",
-                        "description": "Description for 'items' Type: 'string' Path: '/properties/restricts_gear/items'",
-                        "options": {
-                            "hidden": false
-                        }
-                    },
-                    {
-                        "type": "string",
-                        "id": "/properties/restricts_gear/oneof1",
-                        "title": "oneof 1 /properties/restricts_gear",
-                        "default": "FOOT_R",
-                        "format": "text",
-                        "description": "Description for 'items' Type: 'string' Path: '/properties/restricts_gear/items'",
-                        "options": {
-                            "hidden": false
-                        }
-                    }
-                ]
+                "type": "string",
+                "$ref": "#/definitions/body_parts_enum"
             },
-            "propertyOrder": 120
+            "propertyOrder": 60
         },
         "destroys_gear": {
             "type": "boolean",
@@ -961,7 +969,7 @@
                 "items": [
                     {
                       "type": "string",
-                      "enum": [ "steel", "junk", "wheat" ]
+                      "enum": [ "steel", "junk", "wheat", "veggy", "milk", "flesh" ]
                     },
                     {
                         "type": "array",
@@ -970,10 +978,10 @@
                         "format": "tabs",
                         "options": {
                             "disable_collapse": false,
-                            "disable_array_add": false,
-                            "disable_array_delete": false,
+                            "disable_array_add": true,
+                            "disable_array_delete": true,
                             "disable_array_reorder": true,
-                            "disable_properties": false,
+                            "disable_properties": true,
                             "collapsed": false,
                             "hidden": false
                         },
@@ -982,15 +990,15 @@
                                 "type": "array",
                                 "id": "/properties/vitamins_absorb_multi/items/items/oneof0",
                                 "title": "Vitamin",
-                                "format": "table",
+                                "format": "grid",
                                 "options": {
-                                    "disable_collapse": false,
-                                    "disable_array_add": false,
-                                    "disable_array_delete": false,
-                                    "disable_array_reorder": true,
-                                    "disable_properties": false,
-                                    "collapsed": false,
-                                    "hidden": false
+                                  "disable_collapse": false,
+                                  "disable_array_add": true,
+                                  "disable_array_delete": true,
+                                  "disable_array_reorder": true,
+                                  "disable_properties": true,
+                                  "collapsed": false,
+                                  "hidden": false
                                 },
                                 "items": [
                                     {
@@ -1209,7 +1217,55 @@
             "title": "Fatigue Modifier",
             "format": "selectize",
             "default": 0.15,
-            "description": "The modifier for fatigue",
+            "description": "Extra fatigue rate multiplier. 1.0 doubles usage, -0.5 halves.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 160
+        },
+        "fatigue_regen_modifier": {
+            "type": "number",
+            "id": "/properties/fatigue_regen_modifier",
+            "title": "Fatigue regen Modifier",
+            "format": "selectize",
+            "default": 0.15,
+            "description": "Modifier for the rate at which fatigue and sleep deprivation drops when resting.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 160
+        },
+        "metabolism_modifier": {
+            "type": "number",
+            "id": "/properties/metabolism_modifier",
+            "title": "Metabolism modifier",
+            "format": "selectize",
+            "default": 1.0,
+            "description": "Extra metabolism rate multiplier. 1.0 doubles usage, -0.5 halves.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 160
+        },
+        "healing_awake": {
+            "type": "number",
+            "id": "/properties/healing_awake",
+            "title": "Healing awake",
+            "format": "selectize",
+            "default": 0.15,
+            "description": "Healing rate per turn while awake.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 160
+        },
+        "healing_resting": {
+            "type": "number",
+            "id": "/properties/healing_resting",
+            "title": "Healing resting",
+            "format": "selectize",
+            "default": 0.15,
+            "description": "Healing rate per turn while resting.",
             "options": {
                 "hidden": false
             },
@@ -1220,7 +1276,7 @@
             "id": "/properties/weight_capacity_modifier",
             "title": "Weight Capacity Modifier",
             "default": 1.1,
-            "description": "A description for 'weight_capacity_modifier'  Type: 'number'",
+            "description": "(Optional, default = 1) Factor modifying base weight carrying capacity.",
             "options": {
                 "hidden": false
             },
@@ -1231,6 +1287,11 @@
       "mutation_category": {
         "type": "string", 
         "description": "The id of an mutation_category entry", 
+        "enum": [ ]
+      },
+      "mutation_type": {
+        "type": "string", 
+        "description": "The id of an mutation_type entry", 
         "enum": [ ]
       }
     }

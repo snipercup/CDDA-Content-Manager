@@ -1,0 +1,29 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "additionalProperties": true,
+    "title": "Mutation Type",
+    "type": "object",
+    "id": "https://niebert.github.io/json-editor",
+    "options": {
+        "disable_collapse": false,
+        "disable_edit_json": false,
+        "disable_properties": false,
+        "collapsed": false,
+        "hidden": false
+    },
+    "defaultProperties": [
+        "type",
+        "id"
+    ],
+    "properties": {
+        "id": {
+          "$ref": "#/definitions/id", 
+          "propertyOrder": 10
+        },
+        "type": {
+          "$ref": "#/definitions/type", 
+          "propertyOrder": 11,
+          "default": "mutation_type"
+        }
+    }
+}

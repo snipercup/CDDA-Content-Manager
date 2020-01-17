@@ -51,7 +51,7 @@
         {
           "type": "string",
           "id": "/properties/name",
-          "title": "Name",
+          "title": "Old format",
           "default": "Name of entry",
           "format": "text",
           "description": "The name as it will appear in-game",
@@ -62,7 +62,7 @@
         {
           "type": "object",
           "id": "/properties/name",
-          "title": "Name",
+          "title": "New format",
           "format": "grid",
           "options": {
               "disable_collapse": false,

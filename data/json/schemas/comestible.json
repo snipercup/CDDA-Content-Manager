@@ -1,0 +1,397 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "additionalProperties": true,
+    "title": "Comestible",
+    "type": "object",
+    "id": "https://niebert.github.io/json-editor",
+    "get_ids_of_type": [ { "type": "CONTAINER", "display_key": "id" } ],
+    "options": {
+        "disable_collapse": false,
+        "disable_edit_json": false,
+        "disable_properties": false,
+        "collapsed": false,
+        "hidden": false
+    },
+    "defaultProperties": [
+        "type",
+        "id",
+        "name",
+        "weight",
+        "color",
+        "spoils_in",
+        "comestible_type",
+        "symbol",
+        "quench",
+        "healthy",
+        "calories",
+        "description",
+        "price",
+        "material",
+        "volume",
+        "fun",
+        "flags",
+        "smoking_result",
+        "vitamins"
+    ],
+    "properties": {
+        "id": {
+          "$ref": "#/definitions/id", 
+          "propertyOrder": 10
+        },
+        "type": {
+          "$ref": "#/definitions/type", 
+          "propertyOrder": 11,
+          "default": "COMESTIBLE"
+        },
+        "name": {
+          "$ref": "#/definitions/name", 
+          "propertyOrder": 12
+        },
+        "copy-from": {
+            "type": "string",
+            "enum": [ ]
+        },
+        "flags": {
+            "type": "array",
+            "id": "/properties/flags",
+            "title": "Flags",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "enum": [ 
+                    "NO_INGEST"
+                ]
+            },
+            "propertyOrder": 60
+        },
+        "weight": {
+            "type": "string",
+            "id": "/properties/weight",
+            "title": "Weight",
+            "default": "182 g",
+            "format": "text",
+            "description": "Description for 'weight' Type: 'string' Path: '/properties/weight'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 40
+        },
+        "color": {
+            "type": "string",
+            "id": "/properties/color",
+            "title": "Color",
+            "default": "red",
+            "format": "text",
+            "description": "Description for 'color' Type: 'string' Path: '/properties/color'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 50
+        },
+        "spoils_in": {
+            "type": "string",
+            "id": "/properties/spoils_in",
+            "title": "Spoils In",
+            "default": "6 days 16 hours",
+            "format": "text",
+            "description": "Description for 'spoils_in' Type: 'string' Path: '/properties/spoils_in'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 60
+        },
+        "comestible_type": {
+            "type": "string",
+            "id": "/properties/comestible_type",
+            "title": "Comestible Type",
+            "default": "FOOD",
+            "format": "text",
+            "description": "Description for 'comestible_type' Type: 'string' Path: '/properties/comestible_type'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 70
+        },
+        "container": { "$ref": "#/definitions/CONTAINER" },
+        "phase": {
+            "type": "string",
+            "id": "/properties/phase",
+            "title": "Phase",
+            "default": "solid",
+            "format": "text",
+            "description": "(Optional, default = \"solid\") What phase it is",
+            "options": {
+                "hidden": false
+            }
+        },
+        "symbol": {
+            "type": "string",
+            "id": "/properties/symbol",
+            "title": "Symbol",
+            "default": "%",
+            "format": "text",
+            "description": "Description for 'symbol' Type: 'string' Path: '/properties/symbol'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 80
+        },
+        "quench": {
+            "type": "integer",
+            "id": "/properties/quench",
+            "title": "Quench",
+            "default": 3,
+            "description": "A description for 'quench'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 90
+        },
+        "healthy": {
+            "type": "integer",
+            "id": "/properties/healthy",
+            "title": "Healthy",
+            "default": 1,
+            "description": "A description for 'healthy'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 100
+        },
+        "calories": {
+            "type": "integer",
+            "id": "/properties/calories",
+            "title": "Calories",
+            "default": 95,
+            "description": "A description for 'calories'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 110
+        },
+        "description": {
+            "type": "string",
+            "id": "/properties/description",
+            "title": "Description",
+            "default": "An apple a day keeps the doctor away.",
+            "format": "text",
+            "description": "Description for 'description' Type: 'string' Path: '/properties/description'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 120
+        },
+        "price": {
+            "type": "integer",
+            "id": "/properties/price",
+            "title": "Price",
+            "default": 900,
+            "description": "A description for 'price'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 130
+        },
+        "material": {
+            "type": "string",
+            "id": "/properties/material",
+            "title": "Material",
+            "default": "fruit",
+            "format": "text",
+            "description": "Description for 'material' Type: 'string' Path: '/properties/material'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 140
+        },
+        "volume": {
+          "$ref": "#/definitions/volume", 
+          "propertyOrder": 13
+        },
+        "fun": {
+            "type": "integer",
+            "id": "/properties/fun",
+            "title": "Fun",
+            "default": 3,
+            "description": "A description for 'fun'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 160
+        },
+        "smoking_result": {
+            "type": "string",
+            "id": "/properties/smoking_result",
+            "title": "Smoking Result",
+            "default": "dry_fruit",
+            "format": "text",
+            "description": "Description for 'smoking_result' Type: 'string' Path: '/properties/smoking_result'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 180
+        },
+        "vitamins": {
+            "type": "array",
+            "id": "/properties/vitamins",
+            "title": "Vitamins",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "headerTemplate": "Vitamins {{i1}}",
+                "oneOf": [
+                    {
+                        "type": "array",
+                        "id": "/properties/vitamins/oneof0",
+                        "title": "oneof 0 /properties/vitamins",
+                        "format": "tabs",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "items": {
+                            "headerTemplate": "Title Root Vitamins  {{i1}}",
+                            "oneOf": [
+                                {
+                                    "type": "string",
+                                    "id": "/properties/vitamins/items/oneof0",
+                                    "title": "oneof 0 /properties/vitamins/items",
+                                    "default": "vitA",
+                                    "format": "text",
+                                    "description": "Description for 'items' Type: 'string' Path: '/properties/vitamins/items/items'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                },
+                                {
+                                    "type": "integer",
+                                    "id": "/properties/vitamins/items/oneof1",
+                                    "title": "oneof 1 /properties/vitamins/items",
+                                    "default": 2,
+                                    "description": "A description for 'items'  Type: 'integer'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "type": "array",
+                        "id": "/properties/vitamins/oneof1",
+                        "title": "oneof 1 /properties/vitamins",
+                        "format": "tabs",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "items": {
+                            "headerTemplate": "Title Root Vitamins  {{i1}}",
+                            "oneOf": [
+                                {
+                                    "type": "string",
+                                    "id": "/properties/vitamins/items/oneof0",
+                                    "title": "oneof 0 /properties/vitamins/items",
+                                    "default": "vitC",
+                                    "format": "text",
+                                    "description": "Description for 'items' Type: 'string' Path: '/properties/vitamins/items/items'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                },
+                                {
+                                    "type": "integer",
+                                    "id": "/properties/vitamins/items/oneof1",
+                                    "title": "oneof 1 /properties/vitamins/items",
+                                    "default": 14,
+                                    "description": "A description for 'items'  Type: 'integer'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "type": "array",
+                        "id": "/properties/vitamins/oneof2",
+                        "title": "oneof 2 /properties/vitamins",
+                        "format": "tabs",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "items": {
+                            "headerTemplate": "Title Root Vitamins  {{i1}}",
+                            "oneOf": [
+                                {
+                                    "type": "string",
+                                    "id": "/properties/vitamins/items/oneof0",
+                                    "title": "oneof 0 /properties/vitamins/items",
+                                    "default": "iron",
+                                    "format": "text",
+                                    "description": "Description for 'items' Type: 'string' Path: '/properties/vitamins/items/items'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                },
+                                {
+                                    "type": "integer",
+                                    "id": "/properties/vitamins/items/oneof1",
+                                    "title": "oneof 1 /properties/vitamins/items",
+                                    "default": 1,
+                                    "description": "A description for 'items'  Type: 'integer'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "propertyOrder": 190
+        }
+    },
+    "definitions": {
+        "CONTAINER": {
+            "type": "string",
+            "format": "selectize",
+            "enum": [ ]
+        }
+    }
+}

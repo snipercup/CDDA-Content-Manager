@@ -851,7 +851,7 @@
             "title": "Active",
             "format": "checkbox",
             "default": true,
-            "description": "A description for 'active'  Type: 'boolean'",
+            "description": "When set the mutation is an active mutation that the player needs to activate (default: false)",
             "options": {
                 "hidden": false
             },
@@ -1281,6 +1281,48 @@
                 "hidden": false
             },
             "propertyOrder": 190
+        },
+        "ranged_mutation": {
+            "type": "object",
+            "id": "/properties/ranged_mutation",
+            "title": "Ranged Mutation",
+            "description": "The fake gun, if any, spawned and fired by the ranged mutation",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "type",
+                "message"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "id": "/properties/ranged_mutation/properties/type",
+                    "title": "Type",
+                    "default": "mut_quills",
+                    "format": "text",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 10
+                },
+                "message": {
+                    "type": "string",
+                    "id": "/properties/ranged_mutation/properties/message",
+                    "title": "Message",
+                    "default": "You fire off some of your quills.",
+                    "format": "text",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 20
+                }
+            },
+            "propertyOrder": 110
         }
     },
     "definitions": {

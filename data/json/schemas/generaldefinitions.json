@@ -127,7 +127,7 @@
       "title": "Weight",
       "default": "5 g",
       "format": "text",
-      "description": "The weight for the ammo",
+      "description": "The weight for the item",
       "options": {
           "hidden": false
       }
@@ -171,6 +171,7 @@
               "type": "string",
               "default": "steel",
               "format": "text",
+              "title": "Single",
               "description": "The material",
               "enum": [ "steel" ],
               "options": {
@@ -180,6 +181,7 @@
           {
               "type": "array",
               "format": "selectize",
+              "title": "Multiple",
               "uniqueItems": true,
               "options": {
                   "disable_collapse": false,
@@ -240,7 +242,7 @@
   },
   "bashing": {
       "type": "integer",
-      "id": "/properties/bashing",
+      "id": "/definitions/bashing",
       "title": "Bashing",
       "default": 1,
       "description": "Amount of bashing damage",
@@ -250,12 +252,22 @@
   },
   "damage_type": {
       "type": "string",
-      "id": "/properties/damage_type",
+      "id": "/definitions/damage_type",
       "title": "Damage type",
       "default": "cut",
       "format": "text",
       "description": "The damage type.",
       "enum": [ "cold", "fire", "electric", "cut", "stab", "bash", "none" ],
+      "options": {
+          "hidden": false
+      }
+  },
+  "stack_size": {
+      "type": "integer",
+      "id": "/definitions/stack_size",
+      "title": "Stack Size",
+      "default": 80,
+      "description": "The default stack size",
       "options": {
           "hidden": false
       }

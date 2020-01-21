@@ -96,13 +96,6 @@
 	},
 	{
 		"type": "filter",
-		"name": "types_exists",
-		"display_name": "Exists: types",
-		"display_key": "id",
-		"filter": { "jsonObject.types": { "$exists": true } }
-	},
-	{
-		"type": "filter",
 		"name": "vitamins_absorb_multi_exists",
 		"display_name": "Exists: vitamins_absorb_multi",
 		"display_key": "id",

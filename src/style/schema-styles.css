@@ -4,6 +4,33 @@
     display: inline-block;
 }
 
+
+
+
+/* ############################################################################### */
+/* ########################## --- Comestible schema --- ########################## */
+/* ############################################################################### */
+[data-schemapath='root.vitamins'] div.je-panel {
+    display: inline-block;
+}
+[data-schemapath='root.vitamins'] div.je-panel, td, p {
+  margin: 1px !important;
+  padding: 1px !important;
+}
+[data-schemapath='root.vitamins'] .form-group {
+  margin: 0;
+}
+[data-schemapath='root.vitamins'] table {
+    overflow: visible !important;
+}
+[data-schemapath='root.vitamins'] .btn-group:empty, .form-group + div:empty {
+  display: none;
+}
+[data-schemapath='root.vitamins'] tr h4, th {
+  display: none;
+}
+
+
 /* ############################################################################## */
 /* ########################## --- Monster schema --- ########################## */
 /* ############################################################################## */

@@ -68,22 +68,13 @@
         "symbol": {"$ref": "#/definitions/symbol"},
         "color": {"$ref": "#/definitions/color"},
         "count": {"$ref": "#/definitions/count"},
+        "stack_size": {"$ref": "#/definitions/stack_size"},
         "//": {
             "type": "string",
             "title": "Description",
             "default": "This is a comment",
             "format": "text",
             "description": "This is a comment that will only appear here but not in-game",
-            "options": {
-                "hidden": false
-            }
-        },
-        "stack_size": {
-            "type": "integer",
-            "id": "/properties/stack_size",
-            "title": "Stack Size",
-            "default": 80,
-            "description": "The default stack size",
             "options": {
                 "hidden": false
             }

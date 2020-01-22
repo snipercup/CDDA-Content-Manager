@@ -27,7 +27,7 @@
 
 ## Using the content manager:
 
-Please see the quick start guide to get started.
+Please see the [quick start guide](https://github.com/snipercup/CDDA-Content-Manager/blob/master/doc/quick%20start%20guide.md) to get started.
 
 ## Alternative projects:
 

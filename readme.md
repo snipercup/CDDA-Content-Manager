@@ -3,7 +3,7 @@
 
 ## Features:
 - [Dialog editor](https://github.com/snipercup/CDDA-Content-Manager/blob/master/doc/dialogeditor.md) (well it only allows viewing atm)
-- [Content editor](https://github.com/snipercup/CDDA-Content-Manager/blob/master/doc/Content%20Editor.md)
+- [Content editor](https://github.com/snipercup/CDDA-Content-Manager/blob/master/doc/Using%20the%20Content%20Editor.md)
 - [Mod summary](https://discourse.cataclysmdda.org/t/tool-mod-summary/22204)
 
 ## Installation:

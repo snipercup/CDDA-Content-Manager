@@ -96,9 +96,56 @@
 	},
 	{
 		"type": "filter",
+		"name": "wet_protection_exists",
+		"display_name": "Exists: wet_protection",
+		"display_key": "id",
+		"filter": { "jsonObject.wet_protection": { "$exists": true } }
+	},
+	{
+		"type": "filter",
 		"name": "vitamins_absorb_multi_exists",
 		"display_name": "Exists: vitamins_absorb_multi",
 		"display_key": "id",
 		"filter": { "jsonObject.vitamins_absorb_multi": { "$exists": true } }
+	},
+	{
+		"type": "filter",
+		"name": "proportional_exists",
+		"display_name": "Exists: proportional",
+		"display_key": "id",
+		"filter": { "jsonObject.proportional": { "$exists": true } }
+	},
+	{
+		"type": "filter",
+		"name": "old_name",
+		"display_name": "Old name string",
+		"display_key": "name",
+		"filter": { "$and": [ 
+        { "jsonObject.name": { "$type": "string" } },
+        { "jsonObject.type": { "$ne": "ammunition_type" } },
+        { "jsonObject.type": { "$ne": "AMMO" } },
+        { "jsonObject.type": { "$ne": "trap" } },
+        { "jsonObject.type": { "$ne": "MAGAZINE" } },
+        { "jsonObject.type": { "$ne": "CONTAINER" } },
+        { "jsonObject.type": { "$ne": "overmap_terrain" } },
+        { "jsonObject.type": { "$ne": "vehicle_part" } },
+        { "jsonObject.type": { "$ne": "vehicle" } },
+        { "jsonObject.type": { "$ne": "ENGINE" } },
+        { "jsonObject.type": { "$ne": "mission_definition" } },
+        { "jsonObject.looks_like": { "$exists": false } },
+        { "fileName": { "$containsNone": "obsolete" } }
+    ] }
+	},
+	{
+		"type": "filter",
+		"name": "wrong_plural",
+		"display_name": "Wrong plural name",
+		"display_key": "id",
+		"filter": { "$and": [ 
+        { "jsonObject.name": { "$type": "object" } },
+        { "jsonObject.type": { "$ne": "ammunition_type" } },
+        { "jsonObject.looks_like": { "$exists": false } },
+        { "jsonObject.name_plural": { "$exists": true } }
+    ] }
 	}
 ]

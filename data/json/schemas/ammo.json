@@ -255,15 +255,8 @@
           "$ref": "#/definitions/category"
         },
         "cutting": {
-            "type": "integer",
-            "id": "/properties/cutting",
-            "title": "Cutting damage",
-            "default": 6,
-            "description": "Amount of cutting damage.",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 210
+          "$ref": "#/definitions/cutting", 
+          "propertyOrder": 13
         },
         "flags": {
             "type": "array",

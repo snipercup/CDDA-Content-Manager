@@ -5,7 +5,10 @@
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
     "get_ids_of_type": [ { "type": "mutation_category", "display_key": "id" }, { "type": "mutation_type", "display_key": "id" } ],
-    "get_enums_from_definition": [ { "from": "body_parts_enum", "to": "encumbrance_always.items.items.0" } ],
+    "get_enums_from_definition": [ 
+        { "from": "body_parts_enum", "to": "encumbrance_always.items.items.0" },
+        { "from": "body_parts_enum", "to": "wet_protection.items.properties.part" }
+    ],
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -524,105 +527,80 @@
         "wet_protection": {
             "type": "array",
             "id": "/properties/wet_protection",
-            "title": "Wet Protection",
-            "format": "tabs",
+            "title": "Wet protection",
+            "description": "Wet Protection on specific bodyparts",
+            "format": "grid",
             "options": {
                 "disable_collapse": false,
                 "disable_array_add": false,
                 "disable_array_delete": false,
-                "disable_array_reorder": false,
+                "disable_array_reorder": true,
                 "disable_properties": false,
                 "collapsed": false,
                 "hidden": false
             },
             "items": {
-                "headerTemplate": "Wet Protection {{i1}}",
-                "oneOf": [
-                    {
-                        "type": "object",
-                        "id": "/properties/wet_protection/oneof0",
-                        "title": "oneof 0 /properties/wet_protection",
+                "type": "object",
+                "id": "/properties/wet_protection/oneof0",
+                "title": "Part",
+                "format": "grid",
+                "options": {
+                    "disable_collapse": false,
+                    "disable_edit_json": true,
+                    "disable_properties": false,
+                    "collapsed": false,
+                    "compact": true,
+                    "hidden": false
+                },
+                "defaultProperties": [
+                    "part",
+                    "neutral"
+                ],
+                "properties": {
+                    "part": {
+                        "type": "string",
+                        "id": "/properties/wet_protection/items/properties/part",
+                        "title": "part",
+                        "default": "HAND_L",
+                        "enum": [],
+                        "description": "The body part",
                         "options": {
-                            "disable_collapse": false,
-                            "disable_edit_json": false,
-                            "disable_properties": false,
-                            "collapsed": false,
                             "hidden": false
-                        },
-                        "defaultProperties": [
-                            "part",
-                            "neutral"
-                        ],
-                        "properties": {
-                            "part": {
-                                "type": "string",
-                                "id": "/properties/wet_protection/items/properties/part",
-                                "title": "Part",
-                                "default": "FOOT_L",
-                                "format": "text",
-                                "description": "Description for 'part' Type: 'string' Path: '/properties/wet_protection/items/properties/part'",
-                                "options": {
-                                    "hidden": false
-                                },
-                                "propertyOrder": 10
-                            },
-                            "neutral": {
-                                "type": "integer",
-                                "id": "/properties/wet_protection/items/properties/neutral",
-                                "title": "Neutral",
-                                "default": 10,
-                                "description": "A description for 'neutral'  Type: 'integer'",
-                                "options": {
-                                    "hidden": false
-                                },
-                                "propertyOrder": 20
-                            }
                         }
                     },
-                    {
-                        "type": "object",
-                        "id": "/properties/wet_protection/oneof1",
-                        "title": "oneof 1 /properties/wet_protection",
+                    "good": {
+                        "type": "integer",
+                        "id": "/properties/wet_protection/items/properties/good",
+                        "title": "good",
+                        "default": "5",
+                        "description": "Good increases pos and cancels neg,",
                         "options": {
-                            "disable_collapse": false,
-                            "disable_edit_json": false,
-                            "disable_properties": false,
-                            "collapsed": false,
                             "hidden": false
-                        },
-                        "defaultProperties": [
-                            "part",
-                            "neutral"
-                        ],
-                        "properties": {
-                            "part": {
-                                "type": "string",
-                                "id": "/properties/wet_protection/items/properties/part",
-                                "title": "Part",
-                                "default": "FOOT_R",
-                                "format": "text",
-                                "description": "Description for 'part' Type: 'string' Path: '/properties/wet_protection/items/properties/part'",
-                                "options": {
-                                    "hidden": false
-                                },
-                                "propertyOrder": 10
-                            },
-                            "neutral": {
-                                "type": "integer",
-                                "id": "/properties/wet_protection/items/properties/neutral",
-                                "title": "Neutral",
-                                "default": 10,
-                                "description": "A description for 'neutral'  Type: 'integer'",
-                                "options": {
-                                    "hidden": false
-                                },
-                                "propertyOrder": 20
-                            }
+                        }
+                    },
+                    "neutral": {
+                        "type": "integer",
+                        "id": "/properties/wet_protection/items/properties/neutral",
+                        "title": "neutral",
+                        "default": "5",
+                        "description": "neut cancels neg",
+                        "options": {
+                            "hidden": false
+                        }
+                    },
+                    "ignored": {
+                        "type": "integer",
+                        "id": "/properties/wet_protection/items/properties/ignored",
+                        "title": "ignored",
+                        "default": "5",
+                        "description": "ignored cancels both good and neutral",
+                        "options": {
+                            "hidden": false
                         }
                     }
-                ]
+                }
             },
-            "propertyOrder": 110
+            "propertyOrder": 90
         },
         "restricts_gear": {
             "type": "array",

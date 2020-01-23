@@ -1,0 +1,355 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "additionalProperties": true,
+    "title": "Gunmod",
+    "type": "object",
+    "id": "https://niebert.github.io/json-editor",
+    "get_ids_of_type": [ { "type": "AMMO", "display_key": "id" } ],
+    "options": {
+        "disable_collapse": false,
+        "disable_edit_json": false,
+        "disable_properties": false,
+        "collapsed": false,
+        "hidden": false
+    },
+    "defaultProperties": [
+        "id",
+        "type",
+        "name",
+        "description",
+        "weight",
+        "volume",
+        "integral_volume",
+        "price",
+        "material",
+        "symbol",
+        "color",
+        "location",
+        "mod_targets",
+        "acceptable_ammo",
+        "dispersion_modifier",
+        "ammo_modifier",
+        "min_skills",
+        "flags"
+    ],
+    "properties": {
+        "id": {
+          "$ref": "#/definitions/id", 
+          "propertyOrder": 10
+        },
+        "type": {
+          "$ref": "#/definitions/type", 
+          "propertyOrder": 11,
+          "default": "GUNMOD"
+        },
+        "name": {
+          "$ref": "#/definitions/name", 
+          "propertyOrder": 12
+        },
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 13
+        },
+        "weight": {
+          "$ref": "#/definitions/weight", 
+          "propertyOrder": 13
+        },
+        "volume": {
+          "$ref": "#/definitions/volume", 
+          "propertyOrder": 13
+        },
+        "integral_volume": {
+            "type": "integer",
+            "id": "/properties/integral_volume",
+            "title": "Integral Volume",
+            "default": 0,
+            "description": "A description for 'integral_volume'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 70
+        },
+        "price": {
+          "$ref": "#/definitions/price", 
+          "propertyOrder": 13
+        },
+        "material": {
+          "$ref": "#/definitions/material", 
+          "propertyOrder": 13
+        },
+        "symbol": {
+          "$ref": "#/definitions/symbol", 
+          "propertyOrder": 13
+        },
+        "color": {
+          "$ref": "#/definitions/color", 
+          "propertyOrder": 13
+        },
+        "location": {
+            "type": "string",
+            "id": "/properties/location",
+            "title": "Location",
+            "default": "bore",
+            "format": "text",
+            "description": "Description for 'location' Type: 'string' Path: '/properties/location'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 120
+        },
+        "mod_targets": {
+            "type": "array",
+            "id": "/properties/mod_targets",
+            "title": "mod_targets",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "enum": [ 
+                    "pistol",
+                    "smg",
+                    "rifle",
+                    "shotgun",
+                    "launcher", 
+                    "crossbow"
+                ]
+            },
+            "propertyOrder": 60
+        },
+        "acceptable_ammo": {
+            "type": "array",
+            "id": "/properties/acceptable_ammo",
+            "title": "acceptable_ammo",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "$ref": "#/definitions/AMMO"
+            },
+            "propertyOrder": 60
+        },
+        "ammo_modifier": {
+            "type": "array",
+            "id": "/properties/ammo_modifier",
+            "title": "ammo_modifier",
+            "description": "Optional field which if specified modifies parent gun to use these ammo types",
+            "default": [ "9mm" ],
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "$ref": "#/definitions/AMMO"
+            },
+            "propertyOrder": 60
+        },
+        "gun_data": {
+            "type": "object",
+            "id": "/properties/gun_data",
+            "title": "Gun Data",
+            "stringifyOptions": {
+                "maxLength": 100
+            },
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "ammo",
+                "skill",
+                "dispersion",
+                "durability",
+                "clip_size"
+            ],
+            "properties": {
+                "ammo": {
+                    "type": "string",
+                    "id": "/properties/gun_data/properties/ammo",
+                    "title": "Ammo",
+                    "default": "40x46mm",
+                    "format": "text",
+                    "description": "Description for 'ammo' Type: 'string' Path: '/properties/gun_data/properties/ammo'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 10
+                },
+                "skill": {
+                    "type": "string",
+                    "id": "/properties/gun_data/properties/skill",
+                    "title": "Skill",
+                    "default": "launcher",
+                    "format": "text",
+                    "description": "Description for 'skill' Type: 'string' Path: '/properties/gun_data/properties/skill'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 20
+                },
+                "dispersion": {
+                    "type": "integer",
+                    "id": "/properties/gun_data/properties/dispersion",
+                    "title": "Dispersion",
+                    "default": 450,
+                    "description": "A description for 'dispersion'  Type: 'integer'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 30
+                },
+                "durability": {
+                    "type": "integer",
+                    "id": "/properties/gun_data/properties/durability",
+                    "title": "Durability",
+                    "default": 10,
+                    "description": "A description for 'durability'  Type: 'integer'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 40
+                },
+                "clip_size": {
+                    "type": "integer",
+                    "id": "/properties/gun_data/properties/clip_size",
+                    "title": "Clip Size",
+                    "default": 1,
+                    "description": "A description for 'clip_size'  Type: 'integer'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 50
+                }
+            },
+            "propertyOrder": 130
+        },
+        "dispersion_modifier": {
+            "type": "integer",
+            "id": "/properties/dispersion_modifier",
+            "title": "Dispersion Modifier",
+            "default": 15,
+            "description": "Optional field increasing or decreasing base gun dispersion",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 150
+        },
+        "min_skills": {
+            "type": "array",
+            "id": "/properties/min_skills",
+            "title": "min_skills",
+            "description": "Minimum skills",
+            "format": "table",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "array",
+                "id": "/properties/min_skills/oneof0",
+                "default": [ "weapon", 4 ],
+                "title": "Skill",
+                "format": "tabs",
+                "options": {
+                    "disable_collapse": true,
+                    "disable_array_add": true,
+                    "disable_array_delete": true,
+                    "disable_array_reorder": true,
+                    "disable_properties": true,
+                    "collapsed": false,
+                    "compact": true,
+                    "hidden": false
+                },
+                "items": [
+                    {
+                        "type": "string",
+                        "id": "/properties/min_skills/items/oneof0",
+                        "default": "weapon",
+                        "format": "text",
+                        "enum": [ "weapon", "mechanics", "launcher" ],
+                        "options": {
+                          "hidden": false,
+                          "compact": true
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "id": "/properties/min_skills/items/oneof1",
+                        "default": 4,
+                        "options": {
+                          "hidden": false,
+                          "compact": true
+                        }
+                    }
+                ]
+            },
+            "propertyOrder": 90
+        },
+        "flags": {
+            "type": "array",
+            "id": "/properties/flags",
+            "title": "Flags",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "enum": [ 
+                    "INSTALL_DIFFICULT"
+                ]
+            },
+            "propertyOrder": 60
+        }
+    },
+    "definitions": {
+        "AMMO": {
+          "type": "string", 
+          "enum": [ ]
+        }
+    }
+}

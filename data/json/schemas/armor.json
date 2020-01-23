@@ -76,6 +76,10 @@
           "$ref": "#/definitions/price_postapoc", 
           "propertyOrder": 13
         },
+        "to_hit": {
+          "$ref": "#/definitions/to_hit", 
+          "propertyOrder": 13
+        },
         "bashing": {
           "$ref": "#/definitions/bashing", 
           "propertyOrder": 13
@@ -326,17 +330,6 @@
             "title": "Environmental Protection",
             "default": 1,
             "description": "The environmental protection",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 100
-        },
-        "to_hit": {
-            "type": "integer",
-            "id": "/properties/to_hit",
-            "title": "To Hit",
-            "default": 1,
-            "description": "To hit damage",
             "options": {
                 "hidden": false
             },

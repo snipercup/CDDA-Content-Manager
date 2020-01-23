@@ -20,7 +20,8 @@
           "spare_parts",
           "chems",
           "fuel",
-          "armor"
+          "armor",
+          "other"
       ]
   },
   "id": {
@@ -240,12 +241,32 @@
           "hidden": false
       }
   },
+  "to_hit": {
+      "type": "integer",
+      "id": "/properties/to_hit",
+      "title": "To Hit",
+      "default": 1,
+      "description": "To hit damage",
+      "options": {
+          "hidden": false
+      }
+  },
   "bashing": {
       "type": "integer",
       "id": "/definitions/bashing",
       "title": "Bashing",
       "default": 1,
       "description": "Amount of bashing damage",
+      "options": {
+          "hidden": false
+      }
+  },
+  "cutting": {
+      "type": "integer",
+      "id": "/properties/cutting",
+      "title": "Cutting damage",
+      "default": 6,
+      "description": "Amount of cutting damage.",
       "options": {
           "hidden": false
       }

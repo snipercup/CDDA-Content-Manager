@@ -219,22 +219,14 @@
                     "propertyOrder": 20
                 },
                 "dispersion": {
-                    "type": "integer",
-                    "id": "/properties/gun_data/properties/dispersion",
-                    "title": "Dispersion",
-                    "default": 450,
-                    "description": "A description for 'dispersion'  Type: 'integer'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 30
+                  "$ref": "#/definitions/dispersion"
                 },
                 "durability": {
                     "type": "integer",
                     "id": "/properties/gun_data/properties/durability",
                     "title": "Durability",
                     "default": 10,
-                    "description": "A description for 'durability'  Type: 'integer'",
+                    "description": "Resistance to damage/rusting, also determines misfire chance",
                     "options": {
                         "hidden": false
                     },
@@ -260,6 +252,17 @@
             "title": "Dispersion Modifier",
             "default": 15,
             "description": "Optional field increasing or decreasing base gun dispersion",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 150
+        },
+        "sight_dispersion": {
+            "type": "integer",
+            "id": "/properties/sight_dispersion",
+            "title": "Dispersion Modifier",
+            "default": 15,
+            "description": "Inaccuracy of gun derived from the sight mechanism in quarter-degrees",
             "options": {
                 "hidden": false
             },

@@ -7,7 +7,8 @@
     "get_ids_of_type": [ { "type": "mutation_category", "display_key": "id" }, { "type": "mutation_type", "display_key": "id" } ],
     "get_enums_from_definition": [ 
         { "from": "body_parts_enum", "to": "encumbrance_always.items.items.0" },
-        { "from": "body_parts_enum", "to": "wet_protection.items.properties.part" }
+        { "from": "body_parts_enum", "to": "wet_protection.items.properties.part" },
+        { "from": "body_parts_enum", "to": "armor.items.properties.parts.oneOf.1.items" }
     ],
     "options": {
         "disable_collapse": false,
@@ -322,31 +323,25 @@
         "threshreq": {
             "type": "array",
             "id": "/properties/threshreq",
-            "title": "Threshreq",
+            "title": "threshreq",
+            "format": "selectize",
             "description": "Required threshold for this mutation to be possible",
-            "format": "tabs",
+            "uniqueItems": true,
             "options": {
                 "disable_collapse": false,
                 "disable_array_add": false,
                 "disable_array_delete": false,
-                "disable_array_reorder": false,
+                "disable_array_reorder": true,
                 "disable_properties": false,
                 "collapsed": false,
                 "hidden": false,
                 "multiple": true
             },
             "items": {
-                "headerTemplate": "Threshreq {{i1}}",
                 "type": "string",
-                "id": "/properties/threshreq/oneof0",
-                "title": "oneof 0 /properties/threshreq",
-                "default": "THRESH_BEAST",
-                "format": "text",
-                "options": {
-                    "hidden": false
-                }
+                "$ref": "#/definitions/mutation"
             },
-            "propertyOrder": 130
+            "propertyOrder": 60
         },
         "cancels": {
             "type": "array",
@@ -641,89 +636,87 @@
             "type": "array",
             "id": "/properties/armor",
             "title": "Armor",
-            "format": "tabs",
+            "description": "Protects selected body parts this much.",
+            "format": "grid",
             "options": {
                 "disable_collapse": false,
                 "disable_array_add": false,
                 "disable_array_delete": false,
-                "disable_array_reorder": false,
+                "disable_array_reorder": true,
                 "disable_properties": false,
                 "collapsed": false,
                 "hidden": false
             },
             "items": {
                 "type": "object",
-                "id": "/properties/armor/items",
-                "title": "Title Root Armor ",
+                "id": "/properties/armor/oneof0",
+                "title": "Part",
+                "format": "grid",
                 "options": {
                     "disable_collapse": false,
-                    "disable_edit_json": false,
+                    "disable_edit_json": true,
                     "disable_properties": false,
                     "collapsed": false,
+                    "compact": true,
                     "hidden": false
                 },
                 "defaultProperties": [
-                    "parts",
-                    "bash"
+                    "part",
+                    "neutral"
                 ],
                 "properties": {
                     "parts": {
-                        "type": "array",
-                        "id": "/properties/armor/items/properties/parts",
-                        "title": "Parts",
-                        "format": "tabs",
-                        "options": {
-                            "disable_collapse": false,
-                            "disable_array_add": false,
-                            "disable_array_delete": false,
-                            "disable_array_reorder": false,
-                            "disable_properties": false,
-                            "collapsed": false,
-                            "hidden": false
-                        },
-                        "items": {
-                            "headerTemplate": "Parts {{i1}}",
-                            "oneOf": [
-                                {
+                        "oneOf": [
+                            {
+                                "type": "string",
+                                "default": "ALL",
+                                "format": "text",
+                                "title": "All",
+                                "readonly": true,
+                                "description": "applies the selected resistance to the entire body",
+                                "enum": [ "ALL" ],
+                                "options": {
+                                    "hidden": false
+                                }
+                            },
+                            {
+                                "type": "array",
+                                "format": "selectize",
+                                "title": "Selected",
+                                "uniqueItems": true,
+                                "default": [ "FOOT_L" ],
+                                "options": {
+                                    "disable_collapse": false,
+                                    "disable_array_add": false,
+                                    "disable_array_delete": false,
+                                    "disable_array_reorder": true,
+                                    "disable_properties": false,
+                                    "collapsed": false,
+                                    "hidden": false
+                                },
+                                "items": {
+                                    "headerTemplate": "Part {{i1}}",
                                     "type": "string",
-                                    "id": "/properties/armor/items/properties/parts/oneof0",
-                                    "title": "oneof 0 /properties/armor/items/properties/parts",
+                                    "id": "/properties/armor/oneof0/part/0",
+                                    "title": "Part",
                                     "default": "FOOT_L",
                                     "format": "text",
-                                    "description": "Description for 'items' Type: 'string' Path: '/properties/armor/items/properties/parts/items'",
-                                    "options": {
-                                        "hidden": false
-                                    }
-                                },
-                                {
-                                    "type": "string",
-                                    "id": "/properties/armor/items/properties/parts/oneof1",
-                                    "title": "oneof 1 /properties/armor/items/properties/parts",
-                                    "default": "FOOT_R",
-                                    "format": "text",
-                                    "description": "Description for 'items' Type: 'string' Path: '/properties/armor/items/properties/parts/items'",
+                                    "description": "Applies resistance to these body parts",
+                                    "enum": [ "FOOT_L" ],
                                     "options": {
                                         "hidden": false
                                     }
                                 }
-                            ]
-                        },
-                        "propertyOrder": 10
+                            }
+                        ]
                     },
                     "bash": {
-                        "type": "integer",
-                        "id": "/properties/armor/items/properties/bash",
-                        "title": "Bash",
-                        "default": 1,
-                        "description": "A description for 'bash'  Type: 'integer'",
-                        "options": {
-                            "hidden": false
-                        },
-                        "propertyOrder": 20
+                      "$ref": "#/definitions/bashing", 
+                      "propertyOrder": 13
                     }
                 }
             },
-            "propertyOrder": 140
+            "propertyOrder": 90
         },
         "attacks": {
             "type": "object",

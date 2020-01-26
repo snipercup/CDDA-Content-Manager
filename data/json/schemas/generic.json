@@ -46,6 +46,10 @@
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
         },
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 13
+        },
         "bashing": {
           "$ref": "#/definitions/bashing", 
           "propertyOrder": 13
@@ -256,18 +260,6 @@
                 "hidden": false
             },
             "propertyOrder": 110
-        },
-        "description": {
-            "type": "string",
-            "id": "/properties/description",
-            "title": "Description",
-            "default": "An apple a day keeps the doctor away.",
-            "format": "text",
-            "description": "Description for 'description' Type: 'string' Path: '/properties/description'",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 120
         },
         "price": {
             "type": "integer",

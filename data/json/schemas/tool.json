@@ -1,0 +1,301 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "additionalProperties": true,
+    "title": "Tool",
+    "type": "object",
+    "id": "https://niebert.github.io/json-editor",
+    "options": {
+        "disable_collapse": false,
+        "disable_edit_json": false,
+        "disable_properties": false,
+        "collapsed": false,
+        "hidden": false
+    },
+    "defaultProperties": [
+        "id",
+        "type",
+        "category",
+        "name",
+        "description",
+        "weight",
+        "volume",
+        "price",
+        "to_hit",
+        "bashing",
+        "material",
+        "symbol",
+        "color",
+        "explode_in_fire",
+        "explosion",
+        "use_action",
+        "flags"
+    ],
+    "properties": {
+        "id": {
+          "$ref": "#/definitions/id", 
+          "propertyOrder": 10
+        },
+        "type": {
+          "$ref": "#/definitions/type", 
+          "propertyOrder": 11,
+          "default": "TOOL"
+        },
+        "name": {
+          "$ref": "#/definitions/name", 
+          "propertyOrder": 12
+        },
+        "category": {
+          "$ref": "#/definitions/category"
+        },
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 13
+        },
+        "weight": {
+          "$ref": "#/definitions/weight", 
+          "propertyOrder": 13
+        },
+        "volume": {
+          "$ref": "#/definitions/volume", 
+          "propertyOrder": 13
+        },
+        "price": {
+          "$ref": "#/definitions/price", 
+          "propertyOrder": 12
+        },
+        "to_hit": {
+          "$ref": "#/definitions/to_hit", 
+          "propertyOrder": 13
+        },
+        "bashing": {
+          "$ref": "#/definitions/bashing", 
+          "propertyOrder": 13
+        },
+        "material": {"$ref": "#/definitions/material"},
+        "symbol": {
+          "$ref": "#/definitions/symbol", 
+          "propertyOrder": 13
+        },
+        "color": {
+          "$ref": "#/definitions/color", 
+          "propertyOrder": 13
+        },
+        "explode_in_fire": {
+            "type": "boolean",
+            "id": "/properties/explode_in_fire",
+            "title": "Explode In Fire",
+            "format": "checkbox",
+            "default": true,
+            "description": "A description for 'explode_in_fire'  Type: 'boolean'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 140
+        },
+        "explosion": {
+            "type": "object",
+            "id": "/properties/explosion",
+            "title": "Explosion",
+            "stringifyOptions": {
+              "maxLength": 106
+            },
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "power",
+                "//",
+                "shrapnel"
+            ],
+            "properties": {
+                "power": {
+                    "type": "integer",
+                    "id": "/properties/explosion/properties/power",
+                    "title": "Power",
+                    "default": 25000,
+                    "description": "A description for 'power'  Type: 'integer'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 10
+                },
+                "//": {
+                    "type": "string",
+                    "id": "/properties/explosion/properties///",
+                    "title": "Title Root Explosion ",
+                    "default": "Fire would burn away/degrade some of the ANFO before the detonator would trigger.",
+                    "format": "text",
+                    "description": "Description for '' Type: 'string' Path: '/properties/explosion/properties///'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 20
+                },
+                "shrapnel": {
+                    "type": "integer",
+                    "id": "/properties/explosion/properties/shrapnel",
+                    "title": "Shrapnel",
+                    "default": 12600,
+                    "description": "A description for 'shrapnel'  Type: 'integer'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 30
+                }
+            },
+            "propertyOrder": 150
+        },
+        "use_action": {
+            "type": "object",
+            "id": "/properties/use_action",
+            "title": "Use Action",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "target",
+                "msg",
+                "target_charges",
+                "active",
+                "need_fire",
+                "menu_text",
+                "type"
+            ],
+            "properties": {
+                "target": {
+                    "type": "string",
+                    "id": "/properties/use_action/properties/target",
+                    "title": "Target",
+                    "default": "tool_anfo_charge_act",
+                    "format": "text",
+                    "description": "Description for 'target' Type: 'string' Path: '/properties/use_action/properties/target'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 10
+                },
+                "msg": {
+                    "type": "string",
+                    "id": "/properties/use_action/properties/msg",
+                    "title": "Msg",
+                    "default": "You light the fuse on the ANFO charge.  Run survivor, run!",
+                    "format": "text",
+                    "description": "Description for 'msg' Type: 'string' Path: '/properties/use_action/properties/msg'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 20
+                },
+                "target_charges": {
+                    "type": "integer",
+                    "id": "/properties/use_action/properties/target_charges",
+                    "title": "Target Charges",
+                    "default": 100,
+                    "description": "A description for 'target_charges'  Type: 'integer'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 30
+                },
+                "active": {
+                    "type": "boolean",
+                    "id": "/properties/use_action/properties/active",
+                    "title": "Active",
+                    "format": "checkbox",
+                    "default": true,
+                    "description": "A description for 'active'  Type: 'boolean'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 40
+                },
+                "need_fire": {
+                    "type": "integer",
+                    "id": "/properties/use_action/properties/need_fire",
+                    "title": "Need Fire",
+                    "default": 1,
+                    "description": "A description for 'need_fire'  Type: 'integer'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 50
+                },
+                "menu_text": {
+                    "type": "string",
+                    "id": "/properties/use_action/properties/menu_text",
+                    "title": "Menu Text",
+                    "default": "Light fuse",
+                    "format": "text",
+                    "description": "Description for 'menu_text' Type: 'string' Path: '/properties/use_action/properties/menu_text'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 60
+                },
+                "type": {
+                    "type": "string",
+                    "id": "/properties/use_action/properties/type",
+                    "title": "Type",
+                    "default": "transform",
+                    "format": "text",
+                    "description": "Description for 'type' Type: 'string' Path: '/properties/use_action/properties/type'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 70
+                }
+            },
+            "propertyOrder": 160
+        },
+        "flags": {
+            "type": "array",
+            "id": "/properties/flags",
+            "title": "Flags",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "enum": [ 
+                  "RADIO_MODABLE",
+                  "RADIO_INVOKE_PROC",
+                  "BOMB"
+                ]
+            },
+            "propertyOrder": 60
+        }
+    },
+    "definitions": {
+        "comment": {
+            "title": "Comment:",
+            "type": "string",
+            "format": "textarea",
+            "default": ""
+        },
+        "yesno": {
+            "default": "yes",
+            "type": "string",
+            "enum": [
+                "yes",
+                "no"
+            ]
+        }
+    }
+}

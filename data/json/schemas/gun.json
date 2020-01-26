@@ -1,0 +1,223 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "additionalProperties": true,
+    "title": "GUN",
+    "type": "object",
+    "id": "https://niebert.github.io/json-editor",
+    "get_ids_of_type": [ { "type": "GUNMOD", "display_key": "id" }, { "type": "ammunition_type", "display_key": "id" } ],
+    "options": {
+        "disable_collapse": false,
+        "disable_edit_json": false,
+        "disable_properties": false,
+        "collapsed": false,
+        "hidden": false
+    },
+    "defaultProperties": [
+        "type",
+        "id",
+        "name"
+    ],
+    "properties": {
+        "id": {
+          "$ref": "#/definitions/id", 
+          "propertyOrder": 10
+        },
+        "type": {
+          "$ref": "#/definitions/type", 
+          "propertyOrder": 11,
+          "default": "GUN"
+        },
+        "name": {
+          "$ref": "#/definitions/name", 
+          "propertyOrder": 12
+        },
+        "copy-from": {
+            "type": "string",
+            "enum": [ ]
+        },
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 13
+        },
+        "weight": {
+          "$ref": "#/definitions/weight", 
+          "propertyOrder": 13
+        },
+        "volume": {
+          "$ref": "#/definitions/volume", 
+          "propertyOrder": 13
+        },
+        "price": {
+          "$ref": "#/definitions/price", 
+          "propertyOrder": 13
+        },
+        "to_hit": {
+          "$ref": "#/definitions/to_hit", 
+          "propertyOrder": 13
+        },
+        "bashing": {
+          "$ref": "#/definitions/bashing", 
+          "propertyOrder": 13
+        },
+        "material": {
+          "$ref": "#/definitions/material", 
+          "propertyOrder": 13
+        },
+        "symbol": {
+          "$ref": "#/definitions/symbol", 
+          "propertyOrder": 12
+        },
+        "color": {"$ref": "#/definitions/color"},
+        "default_mods": {
+            "type": "array",
+            "id": "/properties/default_mods",
+            "title": "default mods",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "$ref": "#/definitions/GUNMOD" 
+            },
+            "propertyOrder": 60
+        },
+        "ammo": {
+            "type": "string", 
+            "title": "Ammo",
+            "$ref": "#/definitions/AMMO", 
+            "description": "Ammo types accepted for reloading", 
+            "propertyOrder": 13
+        },
+        "durability": {
+            "type": "integer",
+            "id": "properties/durability",
+            "title": "Durability",
+            "default": 10,
+            "description": "Resistance to damage/rusting, also determines misfire chance",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 40
+        },
+        "extend": {
+            "type": "object",
+            "id": "/properties/extend",
+            "title": "Extend",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "flags"
+            ],
+            "properties": {
+                "flags": {
+                    "type": "array",
+                    "id": "/properties/extend/properties/flags",
+                    "title": "Flags",
+                    "format": "selectize",
+                    "uniqueItems": true,
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_array_add": false,
+                        "disable_array_delete": false,
+                        "disable_array_reorder": true,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false,
+                        "multiple": true
+                    },
+                    "items": {
+                        "type": "string",
+                        "enum": [ 
+                            "FIRE_TWOHAND",
+                            "NO_REPAIR"
+                        ]
+                    },
+                    "propertyOrder": 60
+                }
+            }
+        },
+        "dispersion": {
+          "$ref": "#/definitions/dispersion"
+        },
+        "valid_mod_locations": {
+            "type": "array",
+            "id": "/properties/valid_mod_locations",
+            "title": "valid_mod_locations",
+            "description": "The valid_mod_locations this item provides",
+            "format": "table",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "array",
+                "id": "/properties/valid_mod_locations/oneof0",
+                "default": [ "grip", 1 ],
+                "title": "Mod location",
+                "format": "tabs",
+                "options": {
+                    "disable_collapse": true,
+                    "disable_array_add": true,
+                    "disable_array_delete": true,
+                    "disable_array_reorder": true,
+                    "disable_properties": true,
+                    "collapsed": false,
+                    "compact": true,
+                    "hidden": false
+                },
+                "items": [
+                    {
+                        "type": "string",
+                        "id": "/properties/valid_mod_locations/items/oneof0",
+                        "default": "grip",
+                        "format": "text",
+                        "enum": [ "grip", "accessories", "mechanism", "sights", "rail mount", "underbarrel mount" ],
+                        "options": {
+                          "hidden": false,
+                          "compact": true
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "id": "/properties/valid_mod_locations/items/oneof1",
+                        "default": 20,
+                        "options": {
+                          "hidden": false,
+                          "compact": true
+                        }
+                    }
+                ]
+            },
+            "propertyOrder": 90
+        }
+    },
+    "definitions": {
+        "GUNMOD": {
+          "type": "string", 
+          "enum": [ ]
+        },
+        "ammunition_type": {
+            "type": "string", 
+            "enum": [ ]
+        }
+    }
+}

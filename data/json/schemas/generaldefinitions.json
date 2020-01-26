@@ -21,7 +21,8 @@
           "chems",
           "fuel",
           "armor",
-          "other"
+          "other",
+          "weapons"
       ]
   },
   "id": {
@@ -289,6 +290,16 @@
       "title": "Stack Size",
       "default": 80,
       "description": "The default stack size",
+      "options": {
+          "hidden": false
+      }
+  },
+  "dispersion": {
+      "type": "integer",
+      "id": "/definitions/dispersion",
+      "title": "Dispersion",
+      "default": 40,
+      "description": "Inaccuracy, measured in quarter-degrees",
       "options": {
           "hidden": false
       }

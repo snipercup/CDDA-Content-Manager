@@ -180,7 +180,7 @@ function recursiveStringify(jsonEntry, schemaDefinition, options, depth = 0){
           jsonString += stringify(value, optionsCopy); //forward the options to the stringify function
           if(isNumber && Number.isInteger(value)){ 
             jsonString.replace(/.$/,".0\"");
-            jsonString = jsonString.slice(0, -1) + '.0\"'; 
+            // jsonString = jsonString.slice(0, -1) + '.0\"'; 
             jsonString += ".0"
           } //If the value is a integer but the schema sais it's a number, put a .0 in the string to make it a number again.
         }

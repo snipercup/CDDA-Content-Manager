@@ -132,14 +132,7 @@
             }
         },
         "dispersion": {
-            "type": "integer",
-            "id": "/properties/dispersion",
-            "title": "Dispersion",
-            "default": 40,
-            "description": "The amount of dispersion",
-            "options": {
-                "hidden": false
-            }
+          "$ref": "#/definitions/dispersion"
         },
         "proportional": {
             "type": "object",
@@ -463,14 +456,8 @@
             }
         },
         "bashing": {
-            "type": "integer",
-            "id": "/properties/bashing",
-            "title": "Bashing",
-            "default": 1,
-            "description": "The amount of bashing damage",
-            "options": {
-                "hidden": false
-            }
+          "$ref": "#/definitions/bashing", 
+          "propertyOrder": 13
         },
         "explode_in_fire": {
             "type": "boolean",

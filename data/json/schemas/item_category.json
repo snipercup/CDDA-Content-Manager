@@ -1,0 +1,147 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "additionalProperties": true,
+    "title": "Item category",
+    "type": "object",
+    "id": "https://niebert.github.io/json-editor",
+    "get_ids_of_type": [ { "type": "LOOT_ZONE", "display_key": "id" } ],
+    "options": {
+        "disable_collapse": false,
+        "disable_edit_json": false,
+        "disable_properties": false,
+        "collapsed": false,
+        "hidden": false
+    },
+    "defaultProperties": [
+        "type",
+        "id",
+        "name"
+    ],
+    "properties": {
+        "id": {
+          "$ref": "#/definitions/id", 
+          "propertyOrder": 10
+        },
+        "type": {
+          "$ref": "#/definitions/type", 
+          "propertyOrder": 11,
+          "default": "ITEM_CATEGORY"
+        },
+        "name": {
+          "$ref": "#/definitions/name", 
+          "propertyOrder": 12
+        },
+        "zone": {
+            "type": "string",
+            "id": "/properties/sort_rank",
+            "title": "Zone",
+            "default": 3,
+            "description": "The corresponding loot_zone (see loot_zones.json)",
+            "$ref": "#/definitions/LOOT_ZONE", 
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 90
+        },
+        "sort_rank": {
+            "type": "integer",
+            "id": "/properties/sort_rank",
+            "title": "Sort rank",
+            "default": 3,
+            "description": "Used to sort categories when displaying.  Lower values are shown first.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 90
+        },
+        "priority_zones": {
+            "type": "array",
+            "id": "/properties/priority_zones",
+            "title": "Priority zones",
+            "description": "When set, items in this category will be sorted to the priority zone if the conditions are met. If the user does not have the priority zone in the zone manager, the items get sorted into zone set in the 'zone' property.",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "object",
+                "id": "/properties/priority_zones/oneof0",
+                "title": "Zone",
+                "format": "grid",
+                "options": {
+                    "disable_collapse": false,
+                    "disable_edit_json": true,
+                    "disable_properties": false,
+                    "collapsed": false,
+                    "compact": true,
+                    "hidden": false
+                },
+                "defaultProperties": [
+                    "id",
+                    "filthy"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "id": "/properties/priority_zones/items/properties/id",
+                        "title": "id",
+                        "default": "LOOT_FARMOR",
+                        "enum": [ "LOOT_FARMOR" ],
+                        "description": "The id of a LOOT_ZONE (see LOOT_ZONES.json)",
+                        "options": {
+                            "hidden": false
+                        }
+                    },
+                    "filthy": {
+                        "type": "boolean",
+                        "id": "/properties/priority_zones/items/properties/filthy",
+                        "title": "filthy",
+                        "default": "false",
+                        "description": "setting this means filthy items of this category will be sorted to the priority zone",
+                        "options": {
+                            "hidden": false
+                        }
+                    },
+                    "flags": {
+                        "type": "array",
+                        "id": "/properties/priority_zones/items/properties/flags",
+                        "title": "Flags",
+                        "format": "selectize",
+                        "default": [ "RAINPROOF" ],
+                        "uniqueItems": true,
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": true,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false,
+                            "multiple": true
+                        },
+                        "items": {
+                            "type": "string",
+                            "enum": [ 
+                                "RAINPROOF"
+                            ]
+                        },
+                        "propertyOrder": 60
+                    }
+                }
+            },
+            "propertyOrder": 90
+        }
+    },
+    "definitions": {
+        "LOOT_ZONE": {
+          "type": "string", 
+          "enum": [ ]
+        }
+    }
+}

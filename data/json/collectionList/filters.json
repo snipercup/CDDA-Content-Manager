@@ -29,6 +29,20 @@
 	},
 	{
 		"type": "filter",
+		"name": "all_ITEM_CATEGORY",
+		"display_name": "Type: ITEM_CATEGORY",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "ITEM_CATEGORY" } }
+	},
+	{
+		"type": "filter",
+		"name": "all_GUNMOD",
+		"display_name": "Type: GUNMOD",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "GUNMOD" } }
+	},
+	{
+		"type": "filter",
 		"name": "all_monster_attack",
 		"display_name": "Type: monster_attack",
 		"display_key": "id",
@@ -57,6 +71,20 @@
 	},
 	{
 		"type": "filter",
+		"name": "all_mutation_category",
+		"display_name": "Type: mutation category",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "mutation_category" } }
+	},
+	{
+		"type": "filter",
+		"name": "all_mutation_type",
+		"display_name": "Type: mutation type",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "mutation_type" } }
+	},
+	{
+		"type": "filter",
 		"name": "all_mutation",
 		"display_name": "Mutations",
 		"display_key": "id",
@@ -82,38 +110,10 @@
 	},
 	{
 		"type": "filter",
-		"name": "all_mutation_category",
-		"display_name": "Type: mutation category",
-		"display_key": "id",
-		"filter": { "jsonObject.type": { "$eq": "mutation_category" } }
-	},
-	{
-		"type": "filter",
-		"name": "all_mutation_type",
-		"display_name": "Type: mutation type",
-		"display_key": "id",
-		"filter": { "jsonObject.type": { "$eq": "mutation_type" } }
-	},
-	{
-		"type": "filter",
-		"name": "wet_protection_exists",
-		"display_name": "Exists: wet_protection",
-		"display_key": "id",
-		"filter": { "jsonObject.wet_protection": { "$exists": true } }
-	},
-	{
-		"type": "filter",
 		"name": "vitamins_absorb_multi_exists",
 		"display_name": "Exists: vitamins_absorb_multi",
 		"display_key": "id",
 		"filter": { "jsonObject.vitamins_absorb_multi": { "$exists": true } }
-	},
-	{
-		"type": "filter",
-		"name": "proportional_exists",
-		"display_name": "Exists: proportional",
-		"display_key": "id",
-		"filter": { "jsonObject.proportional": { "$exists": true } }
 	},
 	{
 		"type": "filter",
@@ -130,9 +130,24 @@
         { "jsonObject.type": { "$ne": "overmap_terrain" } },
         { "jsonObject.type": { "$ne": "vehicle_part" } },
         { "jsonObject.type": { "$ne": "vehicle" } },
-        { "jsonObject.type": { "$ne": "ENGINE" } },
+        { "jsonObject.type": { "$ne": "GUNMOD" } },
+        { "jsonObject.type": { "$ne": "GENERIC" } },
+        { "jsonObject.type": { "$ne": "faction" } },
         { "jsonObject.type": { "$ne": "mission_definition" } },
         { "jsonObject.looks_like": { "$exists": false } },
+        { "fileName": { "$containsNone": "obsolete" } }
+    ] }
+	},
+	{
+		"type": "filter",
+		"name": "old_name",
+		"display_name": "Old name string in type",
+		"display_key": "name",
+		"filter": { "$and": [ 
+        { "jsonObject.name": { "$type": "string" } },
+        { "jsonObject.type": { "$eq": "mutation" } },
+        { "jsonObject.looks_like": { "$exists": false } },
+        { "jsonObject.armor": { "$exists": true } },
         { "fileName": { "$containsNone": "obsolete" } }
     ] }
 	},

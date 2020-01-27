@@ -63,6 +63,27 @@ async function getTypeFromCollection(type, collection, includeAbstract = false, 
   return returnList;
 }
 
+//Will return a list of values provided by the displaykey. Filters by type
+//Will only return items where the displaykey is present or if abstract is present and includeabstract is true.
+async function getFilteredListFromCollection(filter, collection, includeAbstract = false, displayKey){
+  let jsonList = collection.find(filter);
+  let returnList = [], displayKeyValue = "", jsonObject, retrievedItem;
+  for (let i = 0, jsonListLen = jsonList.length; i < jsonListLen; i++) {
+    retrievedItem = jsonList[i];
+    jsonObject = retrievedItem.jsonObject
+    displayKeyValue = jsonObject[displayKey];
+    if(displayKeyValue){
+      returnList.push(displayKeyValue);
+    } else if(includeAbstract){
+      displayKeyValue = jsonObject["abstract"];
+      if(displayKeyValue){
+        returnList.push(displayKeyValue);
+      } 
+    }
+  }
+  return returnList;
+}
+
 
 
 //from https://github.com/NadaCode/es6-import-test/blob/c6393c45ac5015261eaaa18e46a37f8a54f2202f/es6_test_lib.js
@@ -180,7 +201,7 @@ function recursiveStringify(jsonEntry, schemaDefinition, options, depth = 0){
           jsonString += stringify(value, optionsCopy); //forward the options to the stringify function
           if(isNumber && Number.isInteger(value)){ 
             jsonString.replace(/.$/,".0\"");
-            jsonString = jsonString.slice(0, -1) + '.0\"'; 
+            // jsonString = jsonString.slice(0, -1) + '.0\"'; 
             jsonString += ".0"
           } //If the value is a integer but the schema sais it's a number, put a .0 in the string to make it a number again.
         }

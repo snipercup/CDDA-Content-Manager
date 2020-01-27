@@ -1,5 +1,6 @@
 
 //Some fields require looking up other items. The required lists are added here.
+//schemas = collection of json schemas. entries = collection of all entries of the game
 async function loadExtraDefinitions(schemas, entries){
   
   //Get all the schemas that have a default value for type. Only the generic defenitions schema does not have that.
@@ -76,7 +77,7 @@ async function loadExtraDefinitions(schemas, entries){
     //This is a workaround because the reference in a nested array fails when the editor is created again.
     if(schemaJSONObj.get_enums_from_definition){
       let getEnums = schemaJSONObj.get_enums_from_definition;
-      let from, to, enumProperty, pathArray, traverseStep, traverseProperty, pathInt;
+      let from, to, enumProperty, pathArray, traverseStep, traverseProperty, pathInt, c;
       
       //Loop over the defined path and set the property in the end
       for (let x = 0, gLen = getEnums.length; x < gLen; x++) {
@@ -95,10 +96,45 @@ async function loadExtraDefinitions(schemas, entries){
             traverseProperty = traverseProperty[pathInt];
           }
           if(i == pathLen-1){ //When at the end of the path, set the enum for the property
-            traverseProperty.enum = enumProperty;
+            if(traverseProperty.enum){ //If the enum property is there, append to it. otherwise, set it.
+              c = traverseProperty.enum; //Save the list that's already defined in the schema.
+              traverseProperty.enum = c.concat(enumProperty.filter((item) => c.indexOf(item) < 0)); //Merge the two lists and put it back into the enumeration.
+            } else {
+              traverseProperty.enum = enumProperty;
+            }
           }
         }
       }
     }
+    
+    schemaJSONObj = await recursiveSetFilteredEnums(schemaJSONObj, entries);
   }
+}
+
+
+
+async function recursiveSetFilteredEnums(schemaDefinition, entries){
+  let jsonString = "", keys, key, value, tempstring = "", arrItem, addSpace, schemakey, optionsCopy, optionsKeys, isNumber;
+  
+  if(typeof schemaDefinition === 'object' && schemaDefinition !== null){
+    if(Array.isArray(schemaDefinition)){ //It's an array
+      for(let x = 0, arrLen = schemaDefinition.length; x < arrLen; x++){ //Loop over every item in the array
+        schemaDefinition[x] = await recursiveSetFilteredEnums(schemaDefinition[x], entries);
+      }
+    } else { //It's an object
+      keys = Object.keys(schemaDefinition);
+      for(let y = 0, keyLen = keys.length; y < keyLen; y++){ //Loop over every key in the entry
+        key = keys[y];
+        value = schemaDefinition[key];
+        if(key == "filteredEnum"){
+           //Create enum property
+           schemaDefinition.enum = await getFilteredListFromCollection(schemaDefinition[key].filter, entries, true, schemaDefinition[key].display_key)
+        }
+        if(typeof value === 'object' && value !== null){
+          schemaDefinition[key] = await recursiveSetFilteredEnums(schemaDefinition[key], entries);
+        }
+      }
+    }
+  }
+  return schemaDefinition;
 }

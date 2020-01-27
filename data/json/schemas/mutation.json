@@ -4,10 +4,12 @@
     "title": "Mutation",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
-    "get_ids_of_type": [ { "type": "mutation_category", "display_key": "id" }, { "type": "mutation_type", "display_key": "id" } ],
+    "get_ids_of_type": [ { "type": "mutation_category", "display_key": "id" }, { "type": "mutation_type", "display_key": "id" }, { "type": "martial_art", "display_key": "id" } ],
     "get_enums_from_definition": [ 
         { "from": "body_parts_enum", "to": "encumbrance_always.items.items.0" },
-        { "from": "body_parts_enum", "to": "wet_protection.items.properties.part" }
+        { "from": "body_parts_enum", "to": "wet_protection.items.properties.part" },
+        { "from": "body_parts_enum", "to": "armor.items.properties.parts.oneOf.1.items" },
+        { "from": "body_parts_enum", "to": "armor.items.properties.parts.oneOf.0" }
     ],
     "options": {
         "disable_collapse": false,
@@ -57,7 +59,7 @@
             "id": "/properties/points",
             "title": "Points",
             "default": 3,
-            "description": "A description for 'points'  Type: 'integer'",
+            "description": "Point cost of the trait. Positive values cost points and negative values give points",
             "options": {
                 "hidden": false
             },
@@ -227,8 +229,8 @@
         "initial_ma_styles": {
             "type": "array",
             "id": "/properties/initial_ma_styles",
-            "title": "prerequisites",
-            "description": "initial_ma_styles",
+            "title": "Initial martial arts styles",
+            "description": "(optional) A list of ids of martial art styles of which the player can choose one when starting a game.",
             "stringifyOptions": {
               "maxLength": 116
             },
@@ -245,7 +247,8 @@
                 "multiple": true
             },
             "items": {
-                "type": "string"
+                "type": "string",
+                "$ref": "#/definitions/martial_art"
             },
             "propertyOrder": 60
         },
@@ -275,12 +278,43 @@
             },
             "propertyOrder": 60
         },
+        "types": {
+            "type": "array",
+            "id": "/properties/types",
+            "title": "types",
+            "description": "The ID of a JSON entry of type mutation_type",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "id": "/properties/types/items",
+                "title": "Type",
+                "default": "LEGS",
+                "format": "text",
+                "$ref": "#/definitions/mutation_type",
+                "options": {
+                    "hidden": false
+                }
+            },
+            "propertyOrder": 60
+        },
         "leads_to": {
             "type": "array",
             "id": "/properties/leads_to",
             "title": "Leads To",
             "description": "Mutations that add to this one",
             "format": "selectize",
+            "uniqueItems": true,
             "options": {
                 "disable_collapse": false,
                 "disable_array_add": false,
@@ -322,31 +356,25 @@
         "threshreq": {
             "type": "array",
             "id": "/properties/threshreq",
-            "title": "Threshreq",
+            "title": "threshreq",
+            "format": "selectize",
             "description": "Required threshold for this mutation to be possible",
-            "format": "tabs",
+            "uniqueItems": true,
             "options": {
                 "disable_collapse": false,
                 "disable_array_add": false,
                 "disable_array_delete": false,
-                "disable_array_reorder": false,
+                "disable_array_reorder": true,
                 "disable_properties": false,
                 "collapsed": false,
                 "hidden": false,
                 "multiple": true
             },
             "items": {
-                "headerTemplate": "Threshreq {{i1}}",
                 "type": "string",
-                "id": "/properties/threshreq/oneof0",
-                "title": "oneof 0 /properties/threshreq",
-                "default": "THRESH_BEAST",
-                "format": "text",
-                "options": {
-                    "hidden": false
-                }
+                "$ref": "#/definitions/mutation"
             },
-            "propertyOrder": 130
+            "propertyOrder": 60
         },
         "cancels": {
             "type": "array",
@@ -494,35 +522,17 @@
             },
             "propertyOrder": 70
         },
-        "types": {
-            "type": "array",
-            "id": "/properties/types",
-            "title": "types",
-            "description": "The ID of a JSON entry of type mutation_type",
-            "format": "selectize",
-            "uniqueItems": true,
+        "profession": {
+            "type": "boolean",
+            "id": "/properties/profession",
+            "title": "Profession",
+            "format": "checkbox",
+            "default": false,
+            "description": "Trait is a starting profession special trait. (default: false)",
             "options": {
-                "disable_collapse": false,
-                "disable_array_add": false,
-                "disable_array_delete": false,
-                "disable_array_reorder": true,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false,
-                "multiple": true
+                "hidden": false
             },
-            "items": {
-                "type": "string",
-                "id": "/properties/types/items",
-                "title": "Type",
-                "default": "LEGS",
-                "format": "text",
-                "$ref": "#/definitions/mutation_type",
-                "options": {
-                    "hidden": false
-                }
-            },
-            "propertyOrder": 60
+            "propertyOrder": 70
         },
         "wet_protection": {
             "type": "array",
@@ -641,25 +651,28 @@
             "type": "array",
             "id": "/properties/armor",
             "title": "Armor",
-            "format": "tabs",
+            "description": "Protects selected body parts this much.",
+            "format": "grid",
             "options": {
                 "disable_collapse": false,
                 "disable_array_add": false,
                 "disable_array_delete": false,
-                "disable_array_reorder": false,
+                "disable_array_reorder": true,
                 "disable_properties": false,
                 "collapsed": false,
                 "hidden": false
             },
             "items": {
                 "type": "object",
-                "id": "/properties/armor/items",
-                "title": "Title Root Armor ",
+                "id": "/properties/armor/oneof0",
+                "title": "Part",
+                "format": "grid",
                 "options": {
                     "disable_collapse": false,
-                    "disable_edit_json": false,
+                    "disable_edit_json": true,
                     "disable_properties": false,
                     "collapsed": false,
+                    "compact": true,
                     "hidden": false
                 },
                 "defaultProperties": [
@@ -668,62 +681,61 @@
                 ],
                 "properties": {
                     "parts": {
-                        "type": "array",
-                        "id": "/properties/armor/items/properties/parts",
-                        "title": "Parts",
-                        "format": "tabs",
-                        "options": {
-                            "disable_collapse": false,
-                            "disable_array_add": false,
-                            "disable_array_delete": false,
-                            "disable_array_reorder": false,
-                            "disable_properties": false,
-                            "collapsed": false,
-                            "hidden": false
-                        },
-                        "items": {
-                            "headerTemplate": "Parts {{i1}}",
-                            "oneOf": [
-                                {
+                        "oneOf": [
+                            {
+                                "type": "string",
+                                "default": "ALL",
+                                "format": "text",
+                                "title": "Single",
+                                "description": "Applies resistance to these body part",
+                                "enum": [ "ALL" ],
+                                "options": {
+                                    "hidden": false
+                                }
+                            },
+                            {
+                                "type": "array",
+                                "format": "selectize",
+                                "title": "Multiple",
+                                "uniqueItems": true,
+                                "default": [ "FOOT_L" ],
+                                "options": {
+                                    "disable_collapse": false,
+                                    "disable_array_add": false,
+                                    "disable_array_delete": false,
+                                    "disable_array_reorder": true,
+                                    "disable_properties": false,
+                                    "collapsed": false,
+                                    "hidden": false
+                                },
+                                "items": {
+                                    "headerTemplate": "Part {{i1}}",
                                     "type": "string",
-                                    "id": "/properties/armor/items/properties/parts/oneof0",
-                                    "title": "oneof 0 /properties/armor/items/properties/parts",
+                                    "id": "/properties/armor/oneof0/part/0",
+                                    "title": "Part",
                                     "default": "FOOT_L",
                                     "format": "text",
-                                    "description": "Description for 'items' Type: 'string' Path: '/properties/armor/items/properties/parts/items'",
-                                    "options": {
-                                        "hidden": false
-                                    }
-                                },
-                                {
-                                    "type": "string",
-                                    "id": "/properties/armor/items/properties/parts/oneof1",
-                                    "title": "oneof 1 /properties/armor/items/properties/parts",
-                                    "default": "FOOT_R",
-                                    "format": "text",
-                                    "description": "Description for 'items' Type: 'string' Path: '/properties/armor/items/properties/parts/items'",
+                                    "description": "Applies resistance to these body parts",
+                                    "enum": [ "FOOT_L" ],
                                     "options": {
                                         "hidden": false
                                     }
                                 }
-                            ]
-                        },
-                        "propertyOrder": 10
+                            }
+                        ],
+                        "propertyOrder": 1
                     },
                     "bash": {
-                        "type": "integer",
-                        "id": "/properties/armor/items/properties/bash",
-                        "title": "Bash",
-                        "default": 1,
-                        "description": "A description for 'bash'  Type: 'integer'",
-                        "options": {
-                            "hidden": false
-                        },
-                        "propertyOrder": 20
+                      "$ref": "#/definitions/bashing", 
+                      "propertyOrder": 2
+                    },
+                    "cut": {
+                      "$ref": "#/definitions/cutting", 
+                      "propertyOrder": 3
                     }
                 }
             },
-            "propertyOrder": 140
+            "propertyOrder": 90
         },
         "attacks": {
             "type": "object",
@@ -840,7 +852,18 @@
             "id": "/properties/cost",
             "title": "Cost",
             "default": 20,
-            "description": "A description for 'cost'  Type: 'integer'",
+            "description": "Cost to activate this mutation. Needs one of the hunger, thirst, or fatigue values set to true. (default: 0)",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 120
+        },
+        "bodytemp_sleep": {
+            "type": "integer",
+            "id": "/properties/bodytemp_sleep",
+            "title": "bodytemp_sleep",
+            "default": 20,
+            "description": "Additional units of bodytemp which are applied when sleeping",
             "options": {
                 "hidden": false
             },
@@ -851,7 +874,7 @@
             "id": "/properties/time",
             "title": "Time",
             "default": 10,
-            "description": "A description for 'time'  Type: 'integer'",
+            "description": "Sets the amount of (turns * current player speed ) time units that need to pass before the cost is to be paid again. Needs to be higher than one to have any effect. (default: 0)",
             "options": {
                 "hidden": false
             },
@@ -863,7 +886,7 @@
             "title": "Fatigue",
             "format": "checkbox",
             "default": true,
-            "description": "A description for 'fatigue'  Type: 'boolean'",
+            "description": "If true, activated mutation increases fatigue by cost. (default: false)",
             "options": {
                 "hidden": false
             },
@@ -875,7 +898,7 @@
             "title": "Hunger",
             "format": "checkbox",
             "default": true,
-            "description": "A description for 'hunger'  Type: 'boolean'",
+            "description": "If true, activated mutation increases hunger by cost. (default: false)",
             "options": {
                 "hidden": false
             },
@@ -887,7 +910,7 @@
             "title": "Thirst",
             "format": "checkbox",
             "default": true,
-            "description": "A description for 'thirst'  Type: 'boolean'",
+            "description": "If true, activated mutation increases thirst by cost. (default: false)",
             "options": {
                 "hidden": false
             },
@@ -1034,8 +1057,19 @@
             "type": "number",
             "id": "/properties/hearing_modifier",
             "title": "hearing modifier",
-            "default": -0.75,
-            "description": "A description for 'hearing_modifier'  Type: 'integer'",
+            "default": 0.5,
+            "description": "Multiplies your hearing by this much",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 150
+        },
+        "noise_modifier": {
+            "type": "number",
+            "id": "/properties/hearing_modifier",
+            "title": "hearing modifier",
+            "default": 0.5,
+            "description": "Multiplies your noise by this much",
             "options": {
                 "hidden": false
             },
@@ -1184,9 +1218,41 @@
             "items": {
                 "type": "string",
                 "enum": [ 
-                    "BG_SURVIVAL_STORY"
+                    "BG_SURVIVAL_STORY",
+                    "PRED4",
+                    "CANNIBAL",
+                    "NO_DISEASE",
+                    "PRED1"
                 ]
             },
+            "propertyOrder": 60
+        },
+        "bodytemp_modifiers": {
+            "type": "array",
+            "id": "/properties/bodytemp_modifiers",
+            "title": "bodytemp modifiers",
+            "description": "Range of additional bodytemp units (these units are described in 'weather.h'. First value is used if the person is already overheated, second one if it's not.",
+            "format": "selectize",
+            "options": {
+                "disable_collapse": true,
+                "disable_array_add": true,
+                "disable_array_delete": true,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": [
+                {
+                    "type": "integer",
+                    "options": { "compact": true }
+                },
+                {
+                    "type": "integer",
+                    "options": { "compact": true }
+                }
+            ],
             "propertyOrder": 60
         },
         "fatigue_modifier": {
@@ -1196,6 +1262,18 @@
             "format": "selectize",
             "default": 0.15,
             "description": "Extra fatigue rate multiplier. 1.0 doubles usage, -0.5 halves.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 160
+        },
+        "dodge_modifier": {
+            "type": "integer",
+            "id": "/properties/dodge_modifier",
+            "title": "Dodge Modifier",
+            "format": "selectize",
+            "default": 2,
+            "description": "Add this much to your dodge skill. A negative will subtract it.",
             "options": {
                 "hidden": false
             },
@@ -1312,6 +1390,11 @@
       "mutation_type": {
         "type": "string", 
         "description": "The id of an mutation_type entry", 
+        "enum": [ ]
+      },
+      "martial_art": {
+        "type": "string", 
+        "description": "The id of an martial_art entry", 
         "enum": [ ]
       }
     }

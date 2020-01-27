@@ -21,8 +21,20 @@
           "chems",
           "fuel",
           "armor",
-          "other"
+          "other",
+          "weapons"
       ]
+  },
+  "abstract": {
+      "type": "string",
+      "id": "/properties/abstract",
+      "title": "Abstract",
+      "default": "flamethrower_base",
+      "format": "text",
+      "description": "Creates an abstract item (an item that does not end up in the game and solely exists in the json to be copied-from. Use this instead of 'id'.",
+      "options": {
+          "hidden": false
+      }
   },
   "id": {
       "type": "string",
@@ -289,6 +301,26 @@
       "title": "Stack Size",
       "default": 80,
       "description": "The default stack size",
+      "options": {
+          "hidden": false
+      }
+  },
+  "loudness": {
+      "type": "number",
+      "id": "/properties/proportional/properties/loudness",
+      "title": "Loudness",
+      "default": 0.46,
+      "description": "The amount of noise",
+      "options": {
+          "hidden": false
+      }
+  },
+  "dispersion": {
+      "type": "integer",
+      "id": "/definitions/dispersion",
+      "title": "Dispersion",
+      "default": 40,
+      "description": "Inaccuracy, measured in quarter-degrees",
       "options": {
           "hidden": false
       }

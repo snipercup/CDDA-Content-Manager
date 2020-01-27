@@ -31,9 +31,9 @@
 }
 
 
-/* ############################################################################### */
+/* ########################################################################### */
 /* ########################## --- Gunmod schema --- ########################## */
-/* ############################################################################### */
+/* ########################################################################### */
 [data-schemapath='root.min_skills'] div.je-panel {
     display: inline-block;
 }
@@ -55,9 +55,80 @@
 }
 
 
-/* ############################################################################## */
+/* ########################################################################### */
+/* ########################## --- Gun schema --- ########################## */
+/* ########################################################################### */
+[data-schemapath='root.modes'] div.je-panel {
+    display: inline-block;
+}
+[data-schemapath='root.modes'] div.je-panel, td, p {
+  margin: 1px !important;
+  padding: 1px !important;
+}
+[data-schemapath='root.modes'] .form-group {
+  margin: 0;
+}
+[data-schemapath='root.modes'] table {
+    overflow: visible !important;
+}
+[data-schemapath='root.modes'] .btn-group:empty, .form-group + div:empty {
+  display: none;
+}
+[data-schemapath='root.modes'] tr h4, th {
+  display: none;
+}
+
+
+[data-schemapath='root.magazines'] div.je-panel {
+    display: inline-block;
+}
+[data-schemapath='root.magazines'] div.je-panel, td, p {
+  margin: 1px !important;
+  padding: 1px !important;
+}
+[data-schemapath='root.magazines'] .form-group {
+  margin: 0;
+}
+[data-schemapath='root.magazines'] table {
+    overflow: visible !important;
+}
+[data-schemapath='root.magazines'] .btn-group:empty, .form-group + div:empty {
+  display: none;
+}
+[data-schemapath='root.magazines'] tr h4, th {
+  display: none;
+}
+[data-schemapath='root.magazines'] div.je-panel > div > div {
+    display: inline-block;
+    vertical-align: middle;
+    min-width: 200px;
+}
+
+
+[data-schemapath='root.valid_mod_locations'] div.je-panel {
+    display: inline-block;
+}
+[data-schemapath='root.valid_mod_locations'] div.je-panel, td, p {
+  margin: 1px !important;
+  padding: 1px !important;
+}
+[data-schemapath='root.valid_mod_locations'] .form-group {
+  margin: 0;
+}
+[data-schemapath='root.valid_mod_locations'] table {
+    overflow: visible !important;
+}
+[data-schemapath='root.valid_mod_locations'] .btn-group:empty, .form-group + div:empty {
+  display: none;
+}
+[data-schemapath='root.valid_mod_locations'] tr h4, th {
+  display: none;
+}
+
+
+/* ############################################################################ */
 /* ########################## --- Monster schema --- ########################## */
-/* ############################################################################## */
+/* ############################################################################ */
 [data-schemapath='root.starting_ammo'] div.je-panel {
     display: inline-block;
 }
@@ -101,27 +172,25 @@
   display: none;
 }
 
-/*
-[data-schemapath='root.wet_protection'] div.je-panel {
+[data-schemapath='root.bodytemp_modifiers'] div.je-panel {
     display: inline-block;
 }
-[data-schemapath='root.wet_protection'] div.je-panel, td, p {
+[data-schemapath='root.bodytemp_modifiers'] div.je-panel, td, p {
   margin: 1px !important;
   padding: 1px !important;
 }
-[data-schemapath='root.wet_protection'] .form-group {
+[data-schemapath='root.bodytemp_modifiers'] .form-group {
   margin: 0;
 }
-[data-schemapath='root.wet_protection'] table {
+[data-schemapath='root.bodytemp_modifiers'] table {
     overflow: visible !important;
 }
-[data-schemapath='root.wet_protection'] .btn-group:empty, .form-group + div:empty {
+[data-schemapath='root.bodytemp_modifiers'] .btn-group:empty, .form-group + div:empty {
   display: none;
 }
-[data-schemapath='root.wet_protection'] tr h4, th {
+[data-schemapath='root.bodytemp_modifiers'] tr h4, th {
   display: none;
 }
-*/
 
 
 /* ################################################################################### */
@@ -148,5 +217,26 @@
   display: none;
 }
 [data-schemapath='root.damage_max_instance'] button.json-editor-btn-collapse {
+  display: none;
+}
+
+
+/* ######################################################################### */
+/* ########################## --- Tool schema --- ########################## */
+/* ######################################################################### */
+[data-schemapath='root.qualities'] div.je-panel {
+  display: inline-block;
+}
+[data-schemapath='root.qualities'] div.je-panel, td, p {
+  margin: 1px !important;
+  padding: 1px !important;
+}
+[data-schemapath='root.qualities'] .form-group {
+  margin: 0;
+}
+[data-schemapath='root.qualities'] .btn-group:empty, .form-group + div:empty {
+  display: none;
+}
+[data-schemapath='root.qualities'] tr h4, th {
   display: none;
 }

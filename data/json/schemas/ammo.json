@@ -643,16 +643,6 @@
             "format": "selectize",
             "enum": [ ]
         },
-        "loudness": {
-            "type": "number",
-            "id": "/properties/proportional/properties/loudness",
-            "title": "Loudness",
-            "default": 0.46,
-            "description": "The amount of noise",
-            "options": {
-                "hidden": false
-            }
-        },
         "casing": {
             "type": "string",
             "id": "/properties/casing",

@@ -145,22 +145,12 @@
 		"display_key": "name",
 		"filter": { "$and": [ 
         { "jsonObject.name": { "$type": "string" } },
-        { "jsonObject.type": { "$eq": "mutation" } },
+        { "jsonObject.type": { "$eq": "TOOL" } },
         { "jsonObject.looks_like": { "$exists": false } },
-        { "jsonObject.armor": { "$exists": true } },
+        { "jsonObject.flags": { "$exists": false } },
+        { "jsonObject.category": { "$exists": false } },
+        { "jsonObject.copy-from": { "$exists": false } },
         { "fileName": { "$containsNone": "obsolete" } }
-    ] }
-	},
-	{
-		"type": "filter",
-		"name": "wrong_plural",
-		"display_name": "Wrong plural name",
-		"display_key": "id",
-		"filter": { "$and": [ 
-        { "jsonObject.name": { "$type": "object" } },
-        { "jsonObject.type": { "$ne": "ammunition_type" } },
-        { "jsonObject.looks_like": { "$exists": false } },
-        { "jsonObject.name_plural": { "$exists": true } }
     ] }
 	}
 ]

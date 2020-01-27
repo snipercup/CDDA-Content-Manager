@@ -237,7 +237,7 @@
                     "id": "/properties/gun_data/properties/clip_size",
                     "title": "Clip Size",
                     "default": 1,
-                    "description": "A description for 'clip_size'  Type: 'integer'",
+                    "description": "Maximum amount of ammo that can be loaded",
                     "options": {
                         "hidden": false
                     },

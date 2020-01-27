@@ -18,26 +18,40 @@
         "name"
     ],
     "properties": {
+        "abstract": {
+          "$ref": "#/definitions/abstract", 
+          "propertyOrder": 1
+        },
         "id": {
           "$ref": "#/definitions/id", 
-          "propertyOrder": 10
+          "propertyOrder": 1
         },
         "type": {
           "$ref": "#/definitions/type", 
-          "propertyOrder": 11,
+          "propertyOrder": 2,
           "default": "GUN"
         },
         "name": {
           "$ref": "#/definitions/name", 
-          "propertyOrder": 12
-        },
-        "copy-from": {
-            "type": "string",
-            "enum": [ ]
+          "propertyOrder": 3
         },
         "description": {
           "$ref": "#/definitions/description", 
-          "propertyOrder": 13
+          "propertyOrder": 4
+        },
+        "copy-from": {
+            "type": "string",
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { 
+                    "$or": [
+                        { "jsonObject.type": { "$eq": "GUN" } },
+                        { "jsonObject.abstract": { "$eq": "fake_item" } }
+                    ]
+                }
+            },
+            "enum": [ ],
+            "propertyOrder": 5
         },
         "weight": {
           "$ref": "#/definitions/weight", 
@@ -55,10 +69,6 @@
           "$ref": "#/definitions/to_hit", 
           "propertyOrder": 13
         },
-        "bashing": {
-          "$ref": "#/definitions/bashing", 
-          "propertyOrder": 13
-        },
         "material": {
           "$ref": "#/definitions/material", 
           "propertyOrder": 13
@@ -72,6 +82,7 @@
             "type": "array",
             "id": "/properties/default_mods",
             "title": "default mods",
+            "description": "An array of mods that will be added to a weapon on spawn.", 
             "format": "selectize",
             "uniqueItems": true,
             "options": {
@@ -90,12 +101,28 @@
             },
             "propertyOrder": 60
         },
-        "ammo": {
-            "type": "string", 
-            "title": "Ammo",
-            "$ref": "#/definitions/AMMO", 
-            "description": "Ammo types accepted for reloading", 
-            "propertyOrder": 13
+        "built_in_mods": {
+            "type": "array",
+            "id": "/properties/built_in_mods",
+            "title": "Built in mods",
+            "description": "An array of mods that will be integrated in the weapon using the IRREMOVABLE tag.", 
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "$ref": "#/definitions/GUNMOD" 
+            },
+            "propertyOrder": 60
         },
         "durability": {
             "type": "integer",
@@ -126,38 +153,106 @@
                 "flags": {
                     "type": "array",
                     "id": "/properties/extend/properties/flags",
-                    "title": "Flags",
-                    "format": "selectize",
-                    "uniqueItems": true,
-                    "options": {
-                        "disable_collapse": false,
-                        "disable_array_add": false,
-                        "disable_array_delete": false,
-                        "disable_array_reorder": true,
-                        "disable_properties": false,
-                        "collapsed": false,
-                        "hidden": false,
-                        "multiple": true
+                    "stringifyOptions": {
+                      "maxLength": 95
                     },
-                    "items": {
-                        "type": "string",
-                        "enum": [ 
-                            "FIRE_TWOHAND",
-                            "NO_REPAIR"
-                        ]
-                    },
-                    "propertyOrder": 60
+                    "$ref": "#/definitions/flags_ref"
                 }
             }
         },
         "dispersion": {
           "$ref": "#/definitions/dispersion"
         },
+        "loudness": {"$ref": "#/definitions/loudness"},
+        "range": {
+            "type": "integer",
+            "id": "properties/range",
+            "title": "Range",
+            "default": 1,
+            "description": "The amount of range",
+            "options": {
+                "hidden": false
+            }
+        },
+        "reload": {
+            "type": "integer",
+            "id": "properties/reload",
+            "title": "reload",
+            "default": 1,
+            "description": "Amount of time to reload, 100 = 1 second = 1 'turn'",
+            "options": {
+                "hidden": false
+            }
+        },
+        "clip_size": {
+            "type": "integer",
+            "id": "properties/clip_size",
+            "title": "Clip Size",
+            "default": 1,
+            "description": "Maximum amount of ammo that can be loaded",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 50
+        },
+        "reload_noise_volume": {
+            "type": "integer",
+            "id": "properties/reload_noise_volume",
+            "title": "Reload noise volume",
+            "default": 1,
+            "description": "The amount of noise made when reloading",
+            "options": {
+                "hidden": false
+            }
+        },
+        "relative": {
+            "type": "object",
+            "id": "/properties/relative",
+            "title": "Relative",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "weight",
+                "durability"
+            ],
+            "properties": {
+                "durability": {
+                    "type": "integer",
+                    "id": "/properties/gun_data/properties/durability",
+                    "title": "Durability",
+                    "default": 10,
+                    "description": "Resistance to damage/rusting, also determines misfire chance",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 40
+                },
+                "weight": {
+                    "type": "integer",
+                    "id": "/properties/gun_data/properties/durability",
+                    "title": "Weight",
+                    "default": 400,
+                    "description": "Weight relative to the copy-from item",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 40
+                }
+            }
+        },
         "valid_mod_locations": {
             "type": "array",
             "id": "/properties/valid_mod_locations",
-            "title": "valid_mod_locations",
-            "description": "The valid_mod_locations this item provides",
+            "title": "Valid mod locations",
+            "description": "The valid gunmod locations for this gun",
+            "stringifyOptions": {
+              "maxLength": 114
+            },
             "format": "table",
             "options": {
                 "disable_collapse": false,
@@ -190,7 +285,27 @@
                         "id": "/properties/valid_mod_locations/items/oneof0",
                         "default": "grip",
                         "format": "text",
-                        "enum": [ "grip", "accessories", "mechanism", "sights", "rail mount", "underbarrel mount" ],
+                        "enum": [ 
+                            "grip", 
+                            "accessories", 
+                            "mechanism", 
+                            "sights", 
+                            "rail mount", 
+                            "underbarrel mount",
+                            "barrel",
+                            "bore",
+                            "sights mount",
+                            "sling",
+                            "dampening",
+                            "stock mount",
+                            "grip mount",
+                            "brass catcher",
+                            "muzzle",
+                            "underbarrel",
+                            "rail",
+                            "magazine",
+                            "stock"
+                        ],
                         "options": {
                           "hidden": false,
                           "compact": true
@@ -208,6 +323,355 @@
                 ]
             },
             "propertyOrder": 90
+        },
+        "modes": {
+            "type": "array",
+            "id": "/properties/modes",
+            "title": "modes",
+            "description": "The modes this item provides",
+            "format": "table",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "array",
+                "id": "/properties/modes/oneof0",
+                "default": [ "DEFAULT", "semi-auto", 1 ],
+                "title": "Firing modes",
+                "format": "tabs",
+                "options": {
+                    "disable_collapse": true,
+                    "disable_array_add": true,
+                    "disable_array_delete": true,
+                    "disable_array_reorder": true,
+                    "disable_properties": true,
+                    "collapsed": false,
+                    "compact": true,
+                    "hidden": false
+                },
+                "items": [
+                    {
+                        "type": "string",
+                        "id": "/properties/modes/items/oneof0",
+                        "default": "DEFAULT",
+                        "format": "text",
+                        "enum": [ 
+                            "DEFAULT",
+                            "BURST",
+                            "DOUBLE",
+                            "MULTI",
+                            "AUTO"
+                        ],
+                        "options": {
+                          "hidden": false,
+                          "compact": true
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "id": "/properties/modes/items/oneof0",
+                        "default": "semi-auto",
+                        "format": "text",
+                        "enum": [ 
+                            "semi-auto",
+                            "low auto",
+                            "high auto",
+                            "auto",
+                            "single",
+                            "double",
+                            "multi",
+                            "manual",
+                            "3 rd.",
+                            "4 rd."
+                        ],
+                        "options": {
+                          "hidden": false,
+                          "compact": true
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "id": "/properties/modes/items/oneof1",
+                        "default": 1,
+                        "options": {
+                          "hidden": false,
+                          "compact": true
+                        }
+                    }
+                ]
+            },
+            "propertyOrder": 90
+        },
+        "ammo": {
+            "title": "ammo",
+            "id": "/properties/ammo",
+            "oneOf": [
+                {
+                    "type": "string",
+                    "default": "460",
+                    "format": "text",
+                    "title": "Single",
+                    "description": "Ammo types accepted for reloading", 
+                    "filteredEnum": {
+                        "display_key": "id",
+                        "filter": { "jsonObject.type": { "$eq": "ammunition_type" } }
+                    },
+                    "options": {
+                        "hidden": false
+                    }
+                },
+                {
+                    "type": "array",
+                    "id": "properties/ammo",
+                    "title": "Multiple",
+                    "description": "Ammo types accepted for reloading", 
+                    "format": "selectize",
+                    "uniqueItems": true,
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_array_add": false,
+                        "disable_array_delete": false,
+                        "disable_array_reorder": true,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false,
+                        "multiple": true
+                    },
+                    "items": {
+                        "type": "string",
+                        "filteredEnum": {
+                            "display_key": "id",
+                            "filter": { "jsonObject.type": { "$eq": "ammunition_type" } }
+                        }
+                    }
+                }
+            ],
+            "propertyOrder": 150
+        },
+        "magazines": {
+            "type": "array",
+            "id": "/properties/magazines",
+            "title": "magazines",
+            "description": "The magazines this item can use. First column: the ammunition_type, second column: the magazine.",
+            "stringifyOptions": {
+              "maxLength": 110
+            },
+            "format": "table",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "array",
+                "id": "/properties/magazines/oneof0",
+                "default": [ "DEFAULT", "semi-auto", 1 ],
+                "title": "magazines",
+                "format": "tabs",
+                "options": {
+                    "disable_collapse": true,
+                    "disable_array_add": true,
+                    "disable_array_delete": true,
+                    "disable_array_reorder": true,
+                    "disable_properties": true,
+                    "collapsed": false,
+                    "compact": true,
+                    "hidden": false
+                },
+                "items": [
+                    {
+                        "type": "string",
+                        "id": "/properties/magazines/items/oneof0",
+                        "default": "DEFAULT",
+                        "format": "text",
+                        "filteredEnum": {
+                            "display_key": "id",
+                            "filter": { "jsonObject.type": { "$eq": "ammunition_type" } }
+                        },
+                        "options": {
+                          "hidden": false,
+                          "compact": true
+                        }
+                    },
+                    {
+                        "type": "array",
+                        "id": "/properties/magazines/items/oneof0",
+                        "title": "Magazines",
+                        "format": "selectize",
+                        "uniqueItems": true,
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": true,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false,
+                            "compact": true,
+                            "multiple": true
+                        },
+                        "items": {
+                            "type": "string",
+                            "filteredEnum": {
+                                "display_key": "id",
+                                "filter": { "jsonObject.type": { "$eq": "MAGAZINE" } }
+                            }
+                        },
+                        "propertyOrder": 60
+                    },
+                    {
+                        "type": "integer",
+                        "id": "/properties/magazines/items/oneof1",
+                        "default": 1,
+                        "options": {
+                          "hidden": false,
+                          "compact": true
+                        }
+                    }
+                ]
+            },
+            "propertyOrder": 150
+        },
+        "sight_dispersion": {
+            "type": "integer",
+            "id": "/properties/sight_dispersion",
+            "title": "Dispersion Modifier",
+            "default": 15,
+            "description": "Inaccuracy of gun derived from the sight mechanism in quarter-degrees",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 150
+        },
+        "min_cycle_recoil": {
+            "type": "integer",
+            "id": "/properties/min_cycle_recoil",
+            "title": "Min cycle recoil",
+            "default": 15,
+            "description": "Minimum ammo recoil for gun to be able to fire more than once per attack.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 150
+        },
+        "reload_noise": {
+            "type": "string",
+            "id": "/properties/reload_noise",
+            "title": "Reload noise",
+            "default": 15,
+            "description": "A string describing the noise when reloading.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 150
+        },
+        "bashing": {
+            "$ref": "#/definitions/bashing", 
+            "propertyOrder": 150
+        },
+        "skill": {
+            "type": "string",
+            "id": "/properties/skill",
+            "title": "Skill",
+            "default": "launcher",
+            "format": "text",
+            "description": "Skill used for firing",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 20
+        },
+        "ammo_effects": {
+            "type": "array",
+            "id": "/properties/extend/properties/ammo_effects",
+            "title": "Ammo effects",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "enum": [ 
+                    "EMP",
+                    "LIGHTNING",
+                    "NO_DAMAGE_SCALING",
+                    "DRAW_AS_LINE",
+                    "WIDE",
+                    "NEVER_MISFIRES",
+                    "SHOT",
+                    "FLARE",
+                    "BLINDS_EYES"
+                ]
+            },
+            "propertyOrder": 60
+        },
+        "flags": {
+            "type": "array",
+            "id": "properties/flags",
+            "$ref": "#/definitions/flags_ref",
+            "stringifyOptions": {
+              "maxLength": 95
+            },
+            "propertyOrder": 60
+        },
+        "ranged_damage": {
+            "title": "ranged_damage",
+            "id": "/properties/ranged_damage",
+            "oneOf": [
+                {
+                    "type": "array",
+                    "format": "selectize",
+                    "title": "Multiple",
+                    "uniqueItems": true,
+                    "default": [ { "damage_type": "stab", "amount": 8, "armor_multiplier": 0.8 } ],
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_array_add": false,
+                        "disable_array_delete": false,
+                        "disable_array_reorder": true,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false
+                    },
+                    "items": {
+                        "headerTemplate": "ranged_damage {{i1}}",
+                        "$ref": "#/definitions/damage_type_ref"
+                    }
+                },
+                {
+                    "type": "object",
+                    "title": "Object format",
+                    "$ref": "#/definitions/damage_type_ref"
+                },
+                {
+                    "type": "integer",
+                    "default": "1",
+                    "title": "Number format",
+                    "description": "Ranged damage when fired",
+                    "options": {
+                        "hidden": false
+                    }
+                }
+            ],
+            "propertyOrder": 150
         }
     },
     "definitions": {
@@ -218,6 +682,102 @@
         "ammunition_type": {
             "type": "string", 
             "enum": [ ]
+        },
+        "damage_type_ref": {
+            "type": "object",
+            "id": "properties/ranged_damage/oneof0",
+            "title": "Damage type",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "damage_type",
+                "amount",
+                "armor_multiplier"
+            ],
+            "properties": {
+                "damage_type": {
+                    "type": "string",
+                    "id": "properties/ranged_damage/oneof0/properties/damage_type",
+                    "default": "acid",
+                    "format": "text",
+                    "enum": [ 
+                        "acid",
+                        "stab"
+                    ],
+                    "options": {
+                      "hidden": false,
+                      "compact": true
+                    }
+                },
+                "amount": {
+                    "type": "integer",
+                    "id": "properties/ranged_damage/oneof0/properties/amount",
+                    "default": "1",
+                    "options": {
+                      "hidden": false,
+                      "compact": true
+                    }
+                },
+                "armor_multiplier": {
+                    "type": "number",
+                    "id": "properties/ranged_damage/oneof0/properties/armor_multiplier",
+                    "default": "0.5",
+                    "options": {
+                      "hidden": false,
+                      "compact": true
+                    }
+                }
+            }
+        },
+        "flags_ref": {
+            "type": "array",
+            "id": "definitions/flags_ref",
+            "title": "Flags",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "enum": [ 
+                    "FIRE_100",
+                    "FIRESTARTER",
+                    "RELOAD_ONE",
+                    "STR_RELOAD",
+                    "STR_DRAW",
+                    "PRIMITIVE_RANGED_WEAPON",
+                    "NO_UNLOAD",
+                    "NO_AMMO",
+                    "NONCONDUCTIVE",
+                    "BELTED",
+                    "NO_SALVAGE",
+                    "TRADER_AVOID",
+                    "BELT_CLIP",
+                    "FIRE_TWOHAND",
+                    "PUMP_ACTION",
+                    "REACH_ATTACK",
+                    "RELOAD_AND_SHOOT",
+                    "NO_REPAIR",
+                    "WATERPROOF_GUN",
+                    "WATER_FRIENDLY",
+                    "RELOAD_EJECT",
+                    "NEVER_JAMS"
+                ]
+            },
+            "propertyOrder": 60
         }
     }
 }

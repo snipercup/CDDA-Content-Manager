@@ -51,6 +51,10 @@
           "$ref": "#/definitions/description", 
           "propertyOrder": 13
         },
+        "copy-from": {
+            "type": "string",
+            "enum": [ ]
+        },
         "weight": {
           "$ref": "#/definitions/weight", 
           "propertyOrder": 13
@@ -91,6 +95,16 @@
                 "hidden": false
             },
             "propertyOrder": 140
+        },
+        "initial_charges": {
+            "type": "integer",
+            "id": "properties/initial_charges",
+            "title": "Initial charges",
+            "default": 25,
+            "description": "Charges when spawned",
+            "options": {
+                "hidden": false
+            }
         },
         "explosion": {
             "type": "object",
@@ -194,6 +208,22 @@
                     },
                     "propertyOrder": 20
                 },
+                "trap": {
+                    "type": "string",
+                    "id": "/properties/use_action/properties/trap",
+                    "title": "trap",
+                    "default": "tr_bubblewrap",
+                    "format": "text",
+                    "description": "The trap to place.",
+                    "filteredEnum": {
+                        "display_key": "id",
+                        "filter": { "jsonObject.type": { "$eq": "trap" } }
+                    },
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 20
+                },
                 "target_charges": {
                     "type": "integer",
                     "id": "/properties/use_action/properties/target_charges",
@@ -212,6 +242,18 @@
                     "format": "checkbox",
                     "default": true,
                     "description": "A description for 'active'  Type: 'boolean'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 40
+                },
+                "allow_underwater": {
+                    "type": "boolean",
+                    "id": "/properties/use_action/properties/allow_underwater",
+                    "title": "Allow underwater",
+                    "format": "checkbox",
+                    "default": true,
+                    "description": "(optional) allow placing this trap when the player character is underwater",
                     "options": {
                         "hidden": false
                     },
@@ -280,6 +322,65 @@
                 ]
             },
             "propertyOrder": 60
+        },
+        "qualities": {
+            "type": "array",
+            "id": "/properties/qualities",
+            "title": "qualities",
+            "description": "The qualities this item provides",
+            "format": "table",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "array",
+                "id": "/properties/qualities/oneof0",
+                "default": [ "VitA", 20 ],
+                "title": "Body part",
+                "format": "tabs",
+                "options": {
+                    "disable_collapse": true,
+                    "disable_array_add": true,
+                    "disable_array_delete": true,
+                    "disable_array_reorder": true,
+                    "disable_properties": true,
+                    "collapsed": false,
+                    "compact": true,
+                    "hidden": false
+                },
+                "items": [
+                    {
+                        "type": "string",
+                        "id": "/properties/qualities/items/oneof0",
+                        "default": "VISE",
+                        "format": "text",
+                        "filteredEnum": {
+                            "display_key": "id",
+                            "filter": { "jsonObject.type": { "$eq": "tool_quality" } }
+                        },
+                        "options": {
+                          "hidden": false,
+                          "compact": true
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "id": "/properties/qualities/items/oneof1",
+                        "default": 1,
+                        "options": {
+                          "hidden": false,
+                          "compact": true
+                        }
+                    }
+                ]
+            },
+            "propertyOrder": 90
         }
     },
     "definitions": {

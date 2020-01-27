@@ -92,7 +92,7 @@
                         "id": "/properties/priority_zones/items/properties/id",
                         "title": "id",
                         "default": "LOOT_FARMOR",
-                        "enum": [ "LOOT_FARMOR" ],
+                        "$ref": "#/definitions/LOOT_ZONE", 
                         "description": "The id of a LOOT_ZONE (see LOOT_ZONES.json)",
                         "options": {
                             "hidden": false

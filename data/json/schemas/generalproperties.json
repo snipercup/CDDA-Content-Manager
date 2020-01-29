@@ -1,0 +1,96 @@
+{
+  "generalProperties": true,
+  "magazines": {
+      "type": "array",
+      "id": "/properties/magazines",
+      "title": "magazines",
+      "description": "The magazines this item can use. First column: the ammunition_type, second column: the magazine.",
+      "stringifyOptions": {
+        "maxLength": 95
+      },
+      "format": "table",
+      "options": {
+          "disable_collapse": false,
+          "disable_array_add": false,
+          "disable_array_delete": false,
+          "disable_array_reorder": true,
+          "disable_properties": false,
+          "collapsed": false,
+          "hidden": false
+      },
+      "items": {
+          "type": "array",
+          "id": "/properties/magazines/oneof0",
+          "default": [ "DEFAULT", "semi-auto", 1 ],
+          "title": "magazines",
+          "stringifyOptions": {
+            "maxLength": 116
+          },
+          "format": "tabs",
+          "options": {
+              "disable_collapse": true,
+              "disable_array_add": true,
+              "disable_array_delete": true,
+              "disable_array_reorder": true,
+              "disable_properties": true,
+              "collapsed": false,
+              "compact": true,
+              "hidden": false
+          },
+          "items": [
+              {
+                  "type": "string",
+                  "id": "/properties/magazines/items/oneof0",
+                  "default": "DEFAULT",
+                  "format": "text",
+                  "filteredEnum": {
+                      "display_key": "id",
+                      "filter": { "jsonObject.type": { "$eq": "ammunition_type" } }
+                  },
+                  "options": {
+                    "hidden": false,
+                    "compact": true
+                  }
+              },
+              {
+                  "type": "array",
+                  "id": "/properties/magazines/items/oneof0",
+                  "title": "Magazines",
+                  "format": "selectize",
+                  "stringifyOptions": {
+                    "maxLength": 120
+                  },
+                  "uniqueItems": true,
+                  "options": {
+                      "disable_collapse": false,
+                      "disable_array_add": false,
+                      "disable_array_delete": false,
+                      "disable_array_reorder": true,
+                      "disable_properties": false,
+                      "collapsed": false,
+                      "hidden": false,
+                      "compact": true,
+                      "multiple": true
+                  },
+                  "items": {
+                      "type": "string",
+                      "filteredEnum": {
+                          "display_key": "id",
+                          "filter": { "jsonObject.type": { "$eq": "MAGAZINE" } }
+                      }
+                  },
+                  "propertyOrder": 60
+              },
+              {
+                  "type": "integer",
+                  "id": "/properties/magazines/items/oneof1",
+                  "default": 1,
+                  "options": {
+                    "hidden": false,
+                    "compact": true
+                  }
+              }
+          ]
+      }
+  }
+}

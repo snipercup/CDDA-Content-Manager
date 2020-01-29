@@ -4,8 +4,9 @@
 async function loadExtraDefinitions(schemas, entries){
   
   //Get all the schemas that have a default value for type. Only the generic defenitions schema does not have that.
-	let retreivedItems = schemas.find({ "jsonObject.properties.type.default": { $exists: true } })
-	let genericDefinitions = schemas.find({ "jsonObject.properties.type.default": { $exists: false } })[0];
+	let retreivedItems = schemas.find({ "jsonObject.properties.type.default": { $exists: true } });
+	let genericProperties = schemas.findOne({ "jsonObject.generalProperties": { $eq: true } });
+	let genericDefinitions = schemas.findOne({ "jsonObject.generalDefinitions": { $eq: true } });
   
   let schema, schemaJSONObj, type, IDListOfType;
   for (let i = 0, amountOfSchemas = retreivedItems.length; i < amountOfSchemas; i++) { //Loop over the actual schemas, not generaldefinition
@@ -101,6 +102,29 @@ async function loadExtraDefinitions(schemas, entries){
               traverseProperty.enum = c.concat(enumProperty.filter((item) => c.indexOf(item) < 0)); //Merge the two lists and put it back into the enumeration.
             } else {
               traverseProperty.enum = enumProperty;
+            }
+          }
+        }
+      }
+    }
+    
+    //The schema can include a request include properties from generalproperties.json.
+    //In contrast to generalDefinitions, these become properties of the schema itself.
+    if(schemaJSONObj.include_properties){
+      let includes = schemaJSONObj.include_properties;
+      let property, propertyOrder, genericProperty;
+      
+      //Loop over the properties and add them to the schema
+      for (let x = 0, gLen = includes.length; x < gLen; x++) {
+        property = includes[x].property;
+        propertyOrder = includes[x].propertyOrder;
+        
+        if(property){
+          genericProperty = genericProperties.jsonObject[property]; //Get the property from the generic property list
+          if(genericProperty){
+            schemaJSONObj.properties[property] = genericProperty; //Add it to the schema
+            if(propertyOrder){
+              schemaJSONObj.properties[property].propertyOrder = propertyOrder; //set the property order if it was noted.
             }
           }
         }

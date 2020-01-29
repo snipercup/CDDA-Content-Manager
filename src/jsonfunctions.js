@@ -103,6 +103,7 @@ const stringifyPrettyCompact = (json) => {
     //Keep the options of the previous unless the type has changed
     if(type){
       if(type != jsonEntry.type){
+        type = jsonEntry.type;
         getTypeOptions = true;
       }
     } else {
@@ -142,6 +143,166 @@ function recursiveStringify(jsonEntry, schemaDefinition, options, depth = 0){
   
   if(typeof jsonEntry === 'object' && jsonEntry !== null){
     if(Array.isArray(jsonEntry)){ //It's an array
+      // if(schemaDefinition.title == "magazines"){ 
+        // console.log("magazines")
+      // }
+      for(let x = 0, arrLen = jsonEntry.length; x < arrLen; x++){ //Loop over every item in the array
+        optionsCopy = getStringifyOptions(schemaDefinition, options, x);
+        arrItem = jsonEntry[x];
+        if(arrItem == "id" && value == "deluxe_beansnrice"){ 
+          console.log("magazines")
+        }
+        if(typeof arrItem === 'object' && arrItem !== null){
+          tempstring += recursiveStringify(arrItem, schemaDefinition, optionsCopy, depth+1);
+        } else {
+          tempstring += stringify(arrItem, optionsCopy);
+        }
+        if(x < arrLen-1){
+          tempstring += "||==|| ";
+        }
+      }
+      addSpace = ""
+      for(let x = 0; x < depth; x++){ addSpace = addSpace + "  " }
+      if(tempstring.length - (jsonEntry.length-1)*5  > options.maxLength){
+        tempstring = "[\n    " + addSpace + replaceAll(tempstring, "||==|| ", ",\n    " + addSpace) + "\n  " + addSpace + "]"
+      } else {
+        tempstring = "[ " + replaceAll(tempstring, "||==|| ", ", ") + " ]";
+      }
+      jsonString += tempstring;
+    } else { //It's an object
+      optionsCopy = options
+      keys = Object.keys(jsonEntry);
+      
+      //failsafe get the right schema
+      // if(depth == 0){
+        // if(jsonEntry.type != schemaDefinition.properties.type.default){
+          // schemaDefinition = schemas.findOne({ "jsonObject.properties.type.default": { "$eq": jsonEntry.type } }).jsonObject;
+        // }
+      // }
+      for(let y = 0, keyLen = keys.length; y < keyLen; y++){ //Loop over every key in the entry
+        key = keys[y];
+        value = jsonEntry[key];
+        // if(value == "candle_lit"){ 
+          // console.log("candle_lit")
+        // }
+        if(key == "name" && value == "currywurst"){ 
+          console.log("magazines")
+        }
+        if(key == "name" && value == "meat fried rice"){ 
+          console.log("magazines")
+        }
+        if(key.includes("comment")){key = "//"} //Comments are transformed from // to commentx where x is a number. Transform them back to // here.
+        if(depth == 0){ jsonString += "    " }
+        jsonString += "\"" +key+ "\": "
+        if(!schemaDefinition){
+          console.log("no schemaDefinition")
+        }
+        if(schemaDefinition.properties){
+          schemakey = schemaDefinition.properties[key];
+          if(schemakey){
+            isNumber = schemakey.type == "number";
+            optionsCopy = getStringifyOptions(schemakey, options);
+          } else {
+            schemakey = schemaDefinition;
+          }
+        } else {
+          schemakey = schemaDefinition;
+        }
+        if(typeof value === 'object' && value !== null){
+          if(key == "starting_ammo"){ //Here we convert key starting_ammo back to a object. This is required because it sometimes uses numeric keys that will always sort on top and we want to maintain order.
+            jsonString += "{ "
+            for(let x = 0, valLen = value.length; x < valLen; x++){
+              jsonString += "\"" + value[x][0] + "\": " + value[x][1];
+              if(x<valLen-1){jsonString+= ", "}
+            }
+            jsonString += " }"
+          } else {
+            jsonString += recursiveStringify(value, schemakey, optionsCopy, depth+1);
+          }
+        } else {
+          jsonString += stringify(value, optionsCopy); //forward the options to the stringify function
+          if(isNumber && Number.isInteger(value)){ 
+            jsonString.replace(/.$/,".0\"");
+            // jsonString = jsonString.slice(0, -1) + '.0\"'; 
+            jsonString += ".0"
+          } //If the value is a integer but the schema sais it's a number, put a .0 in the string to make it a number again.
+        }
+        
+        if(y < keyLen-1){
+          if(depth == 0){ 
+            jsonString += ",\n";
+          } else {
+            jsonString += "||==|| "; //||==|| represents a comma that will be replaced later
+          }
+        }
+      }
+      if(depth == 0){
+        jsonString = "  {\n" + jsonString + "\n  }";
+      } else {
+        if(jsonString.length - (keys.length-1)*5 > optionsCopy.maxLength){
+          addSpace = ""
+          for(let x = 0; x < depth; x++){ addSpace = addSpace + "  " }
+          jsonString = replaceAll(jsonString, "||==|| ", ",\n    " + addSpace);
+          jsonString = "{\n    " + addSpace + jsonString + "\n  " + addSpace + "}"
+        } else {
+          jsonString = replaceAll(jsonString, "||==|| ", ", ");
+          jsonString = "{ " + jsonString + " }";
+        }
+      }
+    }
+  } else {
+   if(typeof jsonEntry == 'number'){
+    console.log("it's a number");
+   }
+    return stringify(jsonEntry, options)
+  }
+  return jsonString;
+}
+
+function getStringifyOptions(schemaDefninition, options, x = 0){
+  let optionsKeys, type, stringifyOptions, items;
+  
+  if(schemaDefninition){
+    //Try to get the stringify options based off the type of property
+    type = schemaDefninition.type;
+    if(type){
+      if(type == "object"){
+        stringifyOptions = schemaDefninition.stringifyOptions;
+      } else {
+        if(type == "array"){
+          items = schemaDefninition.items
+          if(typeof items === 'object' && items !== null){
+            if(Array.isArray(items)){ //It's an array
+              stringifyOptions = schemaDefninition.items[x].stringifyOptions;
+            } else { //It's an object
+              stringifyOptions = schemaDefninition.items.stringifyOptions;
+            }
+          }
+        }
+      }
+    } else { //No type was specified. if there are still stringify options, use that.
+      if(schemaDefninition.stringifyOptions){
+        stringifyOptions = schemaDefninition.stringifyOptions;
+      }
+    }
+  }
+  if(stringifyOptions){
+    optionsKeys = Object.keys(stringifyOptions);
+    for(let n = 0, optkeyLen = optionsKeys.length; n < optkeyLen; n++){
+      options[optionsKeys[n]] = stringifyOptions[optionsKeys[n]];
+    }
+  }
+  return options;
+}
+
+
+
+/*
+function recursiveStringify(jsonEntry, schemaDefinition, options, depth = 0){
+  let jsonString = "", keys, key, value, tempstring = "", arrItem, addSpace, schemakey, optionsCopy, optionsKeys, isNumber;
+  
+  if(typeof jsonEntry === 'object' && jsonEntry !== null){
+    if(Array.isArray(jsonEntry)){ //It's an array
       for(let x = 0, arrLen = jsonEntry.length; x < arrLen; x++){ //Loop over every item in the array
         arrItem = jsonEntry[x];
         if(typeof arrItem === 'object' && arrItem !== null){
@@ -167,8 +328,8 @@ function recursiveStringify(jsonEntry, schemaDefinition, options, depth = 0){
       for(let y = 0, keyLen = keys.length; y < keyLen; y++){ //Loop over every key in the entry
         key = keys[y];
         value = jsonEntry[key];
-        if(key == "metabolism_modifier"){ 
-          console.log("metabolism_modifier")
+        if(key == "magazines"){ 
+          console.log("magazines")
         }
         if(key.includes("comment")){key = "//"} //Comments are transformed from // to commentx where x is a number. Transform them back to // here.
         if(depth == 0){ jsonString += "    " }
@@ -235,7 +396,7 @@ function recursiveStringify(jsonEntry, schemaDefinition, options, depth = 0){
     return stringify(jsonEntry, options)
   }
   return jsonString;
-}
+}*/
 
 
 		

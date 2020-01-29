@@ -105,76 +105,10 @@
           "propertyOrder": 13
         },
         "use_action": {
-            "title": "Use action",
-            "id": "/properties/use_action",
-            "oneOf": [
-                {
-                    "type": "object",
-                    "title": "object format",
-                    "options": {
-                        "disable_collapse": false,
-                        "disable_edit_json": false,
-                        "disable_properties": false,
-                        "collapsed": false,
-                        "hidden": false
-                    },
-                    "defaultProperties": [
-                        "type",
-                        "is_weak"
-                    ],
-                    "properties": {
-                        "type": {
-                            "type": "string",
-                            "id": "/properties/use_action/properties/type",
-                            "title": "type",
-                            "default": "mutagen",
-                            "format": "text",
-                            "description": "Description for 'type'",
-                            "options": {
-                                "hidden": false
-                            },
-                            "propertyOrder": 10
-                        },
-                        "is_weak": {
-                            "type": "boolean",
-                            "id": "/properties/use_action/properties/is_weak",
-                            "title": "is_weak",
-                            "default": false,
-                            "description": "A description for 'neutral'  Type: 'integer'",
-                            "options": {
-                                "hidden": false
-                            },
-                            "propertyOrder": 20
-                        },
-                        "belt": {
-                            "type": "string",
-                            "id": "/properties/belt",
-                            "title": "belt",
-                            "default": "belt223",
-                            "format": "text",
-                            "description": "The belt it fits in.",
-                            "options": {
-                                "hidden": false
-                            },
-                            "propertyOrder": 60
-                        }
-                    }
-                },
-                {
-                  "type": "string",
-                  "id": "/properties/use_action",
-                  "title": "string format",
-                  "default": "182 g",
-                  "format": "text",
-                  "description": "What effects it has when used, see special definitions in doc/JSON_INFO.md",
-                  "options": {
-                      "hidden": false
-                  },
-                  "stringifyOptions": {
-                    "maxLength": 100
-                  }
-                }
-            ]
+          "$ref": "#/definitions/use_action",
+          "stringifyOptions": {
+            "maxLength": 117
+          }
         },
         "color": {
           "$ref": "#/definitions/color", 
@@ -286,18 +220,11 @@
         },
         "volume": {
           "$ref": "#/definitions/volume", 
-          "propertyOrder": 13
+          "propertyOrder": 140
         },
         "fun": {
-            "type": "integer",
-            "id": "/properties/fun",
-            "title": "Fun",
-            "default": 3,
-            "description": "A description for 'fun'  Type: 'integer'",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 160
+          "$ref": "#/definitions/fun", 
+          "propertyOrder": 140
         },
         "smoking_result": {
             "type": "string",
@@ -312,148 +239,8 @@
             "propertyOrder": 180
         },
         "vitamins": {
-            "type": "array",
-            "id": "/properties/vitamins",
-            "title": "Vitamins",
-            "format": "tabs",
-            "options": {
-                "disable_collapse": false,
-                "disable_array_add": false,
-                "disable_array_delete": false,
-                "disable_array_reorder": false,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false
-            },
-            "items": {
-                "headerTemplate": "Vitamins {{i1}}",
-                "oneOf": [
-                    {
-                        "type": "array",
-                        "id": "/properties/vitamins/oneof0",
-                        "title": "oneof 0 /properties/vitamins",
-                        "format": "tabs",
-                        "options": {
-                            "disable_collapse": false,
-                            "disable_array_add": false,
-                            "disable_array_delete": false,
-                            "disable_array_reorder": false,
-                            "disable_properties": false,
-                            "collapsed": false,
-                            "hidden": false
-                        },
-                        "items": {
-                            "headerTemplate": "Title Root Vitamins  {{i1}}",
-                            "oneOf": [
-                                {
-                                    "type": "string",
-                                    "id": "/properties/vitamins/items/oneof0",
-                                    "title": "oneof 0 /properties/vitamins/items",
-                                    "default": "vitA",
-                                    "format": "text",
-                                    "description": "Description for 'items' Type: 'string' Path: '/properties/vitamins/items/items'",
-                                    "options": {
-                                        "hidden": false
-                                    }
-                                },
-                                {
-                                    "type": "integer",
-                                    "id": "/properties/vitamins/items/oneof1",
-                                    "title": "oneof 1 /properties/vitamins/items",
-                                    "default": 2,
-                                    "description": "A description for 'items'  Type: 'integer'",
-                                    "options": {
-                                        "hidden": false
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        "type": "array",
-                        "id": "/properties/vitamins/oneof1",
-                        "title": "oneof 1 /properties/vitamins",
-                        "format": "tabs",
-                        "options": {
-                            "disable_collapse": false,
-                            "disable_array_add": false,
-                            "disable_array_delete": false,
-                            "disable_array_reorder": false,
-                            "disable_properties": false,
-                            "collapsed": false,
-                            "hidden": false
-                        },
-                        "items": {
-                            "headerTemplate": "Title Root Vitamins  {{i1}}",
-                            "oneOf": [
-                                {
-                                    "type": "string",
-                                    "id": "/properties/vitamins/items/oneof0",
-                                    "title": "oneof 0 /properties/vitamins/items",
-                                    "default": "vitC",
-                                    "format": "text",
-                                    "description": "Description for 'items' Type: 'string' Path: '/properties/vitamins/items/items'",
-                                    "options": {
-                                        "hidden": false
-                                    }
-                                },
-                                {
-                                    "type": "integer",
-                                    "id": "/properties/vitamins/items/oneof1",
-                                    "title": "oneof 1 /properties/vitamins/items",
-                                    "default": 14,
-                                    "description": "A description for 'items'  Type: 'integer'",
-                                    "options": {
-                                        "hidden": false
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        "type": "array",
-                        "id": "/properties/vitamins/oneof2",
-                        "title": "oneof 2 /properties/vitamins",
-                        "format": "tabs",
-                        "options": {
-                            "disable_collapse": false,
-                            "disable_array_add": false,
-                            "disable_array_delete": false,
-                            "disable_array_reorder": false,
-                            "disable_properties": false,
-                            "collapsed": false,
-                            "hidden": false
-                        },
-                        "items": {
-                            "headerTemplate": "Title Root Vitamins  {{i1}}",
-                            "oneOf": [
-                                {
-                                    "type": "string",
-                                    "id": "/properties/vitamins/items/oneof0",
-                                    "title": "oneof 0 /properties/vitamins/items",
-                                    "default": "iron",
-                                    "format": "text",
-                                    "description": "Description for 'items' Type: 'string' Path: '/properties/vitamins/items/items'",
-                                    "options": {
-                                        "hidden": false
-                                    }
-                                },
-                                {
-                                    "type": "integer",
-                                    "id": "/properties/vitamins/items/oneof1",
-                                    "title": "oneof 1 /properties/vitamins/items",
-                                    "default": 1,
-                                    "description": "A description for 'items'  Type: 'integer'",
-                                    "options": {
-                                        "hidden": false
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                ]
-            },
-            "propertyOrder": 190
+          "$ref": "#/definitions/vitamins", 
+          "propertyOrder": 190
         }
     },
     "definitions": {

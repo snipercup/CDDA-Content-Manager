@@ -65,12 +65,114 @@
         "stack_size": {"$ref": "#/definitions/stack_size"},
         "copy-from": {
             "type": "string",
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { 
+                    "$or": [
+                        { "jsonObject.type": { "$eq": "COMESTIBLE" } },
+                        { "jsonObject.id": { "$eq": "water" } }
+                    ]
+                }
+            },
             "enum": [ ]
         },
         "looks_like": {
             "type": "string",
             "format": "selectize",
             "enum": [ ]
+        },
+        "relative": {
+            "type": "object",
+            "id": "/properties/relative",
+            "title": "Relative",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "fun"
+            ],
+            "properties": {
+                "vitamins": {
+                  "$ref": "#/definitions/vitamins", 
+                  "propertyOrder": 190
+                },
+                "fun": {
+                  "$ref": "#/definitions/fun", 
+                  "propertyOrder": 140
+                }
+            }
+        },
+        "conditional_names": {
+            "type": "array",
+            "id": "properties/conditional_names",
+            "description": "Optional list of names that will be applied in specified conditions",
+            "title": "Conditional names",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "object",
+                "id": "properties/conditional_names/items",
+                "title": "Conditional name",
+                "stringifyOptions": {
+                  "maxLength": 115
+                },
+                "options": {
+                    "disable_collapse": false,
+                    "disable_edit_json": true,
+                    "disable_properties": true,
+                    "collapsed": false,
+                    "hidden": false
+                },
+                "defaultProperties": [
+                    "type",
+                    "condition",
+                    "name"
+                ],
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "id": "properties/conditional_names/items/properties/type",
+                        "title": "Type",
+                        "default": "cut",
+                        "format": "text",
+                        "description": "COMPONENT_ID searches all the components of the item (and all of their components, and so on) for an item with the condition string in their ID. The ID only needs to contain the condition, not match it perfectly (though it is case sensitive). For example, supplying a condition mutant would match mutant_meat. FLAG which checks if an item has the specified flag (exact match).",
+                        "enum": [ "COMPONENT_ID", "FLAG" ],
+                        "options": {
+                            "hidden": false
+                        },
+                        "propertyOrder": 1
+                    },
+                    "condition": {
+                        "type": "string",
+                        "id": "properties/conditional_names/items/properties/condition",
+                        "title": "condition",
+                        "default": "CANNIBALISM",
+                        "format": "text",
+                        "description": "The condition to check for.",
+                        "options": {
+                            "hidden": false
+                        },
+                        "propertyOrder": 2
+                    },
+                    "name": {
+                        "$ref": "#/definitions/name", 
+                        "description": "The name to use if a match is found. You may use %s here, which will be replaced by the name of the item. Conditional names defined prior to this one are taken into account.",
+                        "propertyOrder": 3
+                    }
+                }
+            }
         },
         "flags": {
             "type": "array",
@@ -94,9 +196,11 @@
                     "NO_INGEST",
                     "EDIBLE_FROZEN",
                     "EATEN_COLD",
+                    "EATEN_HOT",
                     "NPC_SAFE",
                     "FREEZERBURN",
                     "SMOKABLE",
+                    "USE_EAT_VERB",
                     "TRADER_AVOID",
                     "NUTRIENT_OVERRIDE"
                 ]
@@ -372,60 +476,8 @@
             "propertyOrder": 180
         },
         "vitamins": {
-            "type": "array",
-            "id": "/properties/vitamins",
-            "title": "Vitamins",
-            "description": "The vitamins this item provides",
-            "format": "table",
-            "options": {
-                "disable_collapse": false,
-                "disable_array_add": false,
-                "disable_array_delete": false,
-                "disable_array_reorder": true,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false
-            },
-            "items": {
-                "type": "array",
-                "id": "/properties/vitamins/oneof0",
-                "default": [ "VitA", 20 ],
-                "title": "Body part",
-                "format": "tabs",
-                "options": {
-                    "disable_collapse": true,
-                    "disable_array_add": true,
-                    "disable_array_delete": true,
-                    "disable_array_reorder": true,
-                    "disable_properties": true,
-                    "collapsed": false,
-                    "compact": true,
-                    "hidden": false
-                },
-                "items": [
-                    {
-                        "type": "string",
-                        "id": "/properties/vitamins/items/oneof0",
-                        "default": "VitA",
-                        "format": "text",
-                        "enum": [ "vitA", "vitB", "vitC", "calcium", "iron" ],
-                        "options": {
-                          "hidden": false,
-                          "compact": true
-                        }
-                    },
-                    {
-                        "type": "integer",
-                        "id": "/properties/vitamins/items/oneof1",
-                        "default": 20,
-                        "options": {
-                          "hidden": false,
-                          "compact": true
-                        }
-                    }
-                ]
-            },
-            "propertyOrder": 90
+          "$ref": "#/definitions/vitamins", 
+          "propertyOrder": 90
         },
         "brewable": {
             "type": "object",

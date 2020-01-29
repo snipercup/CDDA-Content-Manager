@@ -117,6 +117,13 @@
 	},
 	{
 		"type": "filter",
+		"name": "conditional_names_exists",
+		"display_name": "Exists: conditional_names",
+		"display_key": "id",
+		"filter": { "jsonObject.conditional_names": { "$exists": true } }
+	},
+	{
+		"type": "filter",
 		"name": "old_name",
 		"display_name": "Old name string",
 		"display_key": "name",
@@ -145,11 +152,12 @@
 		"display_key": "name",
 		"filter": { "$and": [ 
         { "jsonObject.name": { "$type": "string" } },
-        { "jsonObject.type": { "$eq": "TOOL" } },
+        { "jsonObject.type": { "$eq": "COMESTIBLE" } },
         { "jsonObject.looks_like": { "$exists": false } },
         { "jsonObject.flags": { "$exists": false } },
         { "jsonObject.category": { "$exists": false } },
         { "jsonObject.copy-from": { "$exists": false } },
+        { "jsonObject.name_plural": { "$exists": true } },
         { "fileName": { "$containsNone": "obsolete" } }
     ] }
 	}

@@ -4,6 +4,9 @@
     "title": "Tool",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
+    "include_properties": [
+        { "property": "magazines", "propertyOrder": 150 }
+    ],
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -63,9 +66,17 @@
           "$ref": "#/definitions/volume", 
           "propertyOrder": 13
         },
+        "material": {
+          "$ref": "#/definitions/material",
+          "propertyOrder": 13
+        },
+        "symbol": {
+          "$ref": "#/definitions/symbol", 
+          "propertyOrder": 13
+        },
         "price": {
           "$ref": "#/definitions/price", 
-          "propertyOrder": 12
+          "propertyOrder": 13
         },
         "to_hit": {
           "$ref": "#/definitions/to_hit", 
@@ -73,11 +84,6 @@
         },
         "bashing": {
           "$ref": "#/definitions/bashing", 
-          "propertyOrder": 13
-        },
-        "material": {"$ref": "#/definitions/material"},
-        "symbol": {
-          "$ref": "#/definitions/symbol", 
           "propertyOrder": 13
         },
         "color": {
@@ -105,6 +111,10 @@
             "options": {
                 "hidden": false
             }
+        },
+        "cutting": {
+          "$ref": "#/definitions/cutting", 
+          "propertyOrder": 13
         },
         "explosion": {
             "type": "object",
@@ -163,10 +173,14 @@
             },
             "propertyOrder": 150
         },
-        "use_action": {
+        "artifact_data": {
             "type": "object",
-            "id": "/properties/use_action",
-            "title": "Use Action",
+            "id": "/properties/artifact_data",
+            "description": "Every item type can have optional artifact properties (which makes it an artifact)",
+            "title": "Actifact data",
+            "stringifyOptions": {
+              "maxLength": 106
+            },
             "options": {
                 "disable_collapse": false,
                 "disable_edit_json": false,
@@ -175,127 +189,212 @@
                 "hidden": false
             },
             "defaultProperties": [
-                "target",
-                "msg",
-                "target_charges",
-                "active",
-                "need_fire",
-                "menu_text",
-                "type"
+                "charge_type",
+                "effects_carried"
             ],
             "properties": {
-                "target": {
+                "charge_type": {
                     "type": "string",
-                    "id": "/properties/use_action/properties/target",
-                    "title": "Target",
-                    "default": "tool_anfo_charge_act",
+                    "id": "/properties/artifact_data/properties/charge_type",
+                    "title": "Charge type",
+                    "default": "ARTC_PAIN",
                     "format": "text",
-                    "description": "Description for 'target' Type: 'string' Path: '/properties/use_action/properties/target'",
+                    "description": "(optional, default: ARTC_NULL) How the item is recharged. For this to work, the item needs to be a tool that consumes charges upon invocation and has non-zero max_charges. ",
                     "options": {
                         "hidden": false
                     },
-                    "propertyOrder": 10
-                },
-                "msg": {
-                    "type": "string",
-                    "id": "/properties/use_action/properties/msg",
-                    "title": "Msg",
-                    "default": "You light the fuse on the ANFO charge.  Run survivor, run!",
-                    "format": "text",
-                    "description": "Description for 'msg' Type: 'string' Path: '/properties/use_action/properties/msg'",
-                    "options": {
-                        "hidden": false
-                    },
+                    "enum": [ 
+                      "ARTC_NULL",
+                      "ARTC_TIME",
+                      "ARTC_PAIN",
+                      "ARTC_HP",
+                      "ARTC_FATIGUE",
+                      "ARTC_PORTAL",
+                      "ARTC_SOLAR"
+                    ],
                     "propertyOrder": 20
                 },
-                "trap": {
-                    "type": "string",
-                    "id": "/properties/use_action/properties/trap",
-                    "title": "trap",
-                    "default": "tr_bubblewrap",
-                    "format": "text",
-                    "description": "The trap to place.",
-                    "filteredEnum": {
-                        "display_key": "id",
-                        "filter": { "jsonObject.type": { "$eq": "trap" } }
-                    },
+                "effects_carried": {
+                    "type": "array",
+                    "id": "/properties/artifact_data/properties/effects_carried",
+                    "title": "effects carried",
+                    "description": "(optional, default: empty list) Effects of the artifact when it's in the inventory (main inventory, wielded, or worn) of the player.",
+                    "format": "selectize",
+                    "uniqueItems": true,
                     "options": {
-                        "hidden": false
+                        "disable_collapse": false,
+                        "disable_array_add": false,
+                        "disable_array_delete": false,
+                        "disable_array_reorder": true,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false,
+                        "multiple": true
                     },
-                    "propertyOrder": 20
-                },
-                "target_charges": {
-                    "type": "integer",
-                    "id": "/properties/use_action/properties/target_charges",
-                    "title": "Target Charges",
-                    "default": 100,
-                    "description": "A description for 'target_charges'  Type: 'integer'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 30
-                },
-                "active": {
-                    "type": "boolean",
-                    "id": "/properties/use_action/properties/active",
-                    "title": "Active",
-                    "format": "checkbox",
-                    "default": true,
-                    "description": "A description for 'active'  Type: 'boolean'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 40
-                },
-                "allow_underwater": {
-                    "type": "boolean",
-                    "id": "/properties/use_action/properties/allow_underwater",
-                    "title": "Allow underwater",
-                    "format": "checkbox",
-                    "default": true,
-                    "description": "(optional) allow placing this trap when the player character is underwater",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 40
-                },
-                "need_fire": {
-                    "type": "integer",
-                    "id": "/properties/use_action/properties/need_fire",
-                    "title": "Need Fire",
-                    "default": 1,
-                    "description": "A description for 'need_fire'  Type: 'integer'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 50
-                },
-                "menu_text": {
-                    "type": "string",
-                    "id": "/properties/use_action/properties/menu_text",
-                    "title": "Menu Text",
-                    "default": "Light fuse",
-                    "format": "text",
-                    "description": "Description for 'menu_text' Type: 'string' Path: '/properties/use_action/properties/menu_text'",
-                    "options": {
-                        "hidden": false
+                    "items": {
+                        "type": "string",
+                        "$ref": "#/definitions/artifact_effects"
                     },
                     "propertyOrder": 60
                 },
-                "type": {
-                    "type": "string",
-                    "id": "/properties/use_action/properties/type",
-                    "title": "Type",
-                    "default": "transform",
-                    "format": "text",
-                    "description": "Description for 'type' Type: 'string' Path: '/properties/use_action/properties/type'",
+                "effects_worn": {
+                    "type": "array",
+                    "id": "/properties/artifact_data/properties/effects_worn",
+                    "title": "effects carried",
+                    "description": "(optional, default: empty list) Effects of the artifact when it's worn (it must be an armor item to be worn).",
+                    "format": "selectize",
+                    "uniqueItems": true,
                     "options": {
-                        "hidden": false
+                        "disable_collapse": false,
+                        "disable_array_add": false,
+                        "disable_array_delete": false,
+                        "disable_array_reorder": true,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false,
+                        "multiple": true
                     },
-                    "propertyOrder": 70
+                    "items": {
+                        "type": "string",
+                        "$ref": "#/definitions/artifact_effects"
+                    },
+                    "propertyOrder": 60
+                },
+                "effects_wielded": {
+                    "type": "array",
+                    "id": "/properties/artifact_data/properties/effects_wielded",
+                    "title": "effects carried",
+                    "description": "(optional, default: empty list) Effects of the artifact when it's wielded.",
+                    "format": "selectize",
+                    "uniqueItems": true,
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_array_add": false,
+                        "disable_array_delete": false,
+                        "disable_array_reorder": true,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false,
+                        "multiple": true
+                    },
+                    "items": {
+                        "type": "string",
+                        "enum": [ 
+                          "AEA_STORM",
+                          "AEA_FIREBALL",
+                          "AEA_ADRENALINE",
+                          "AEA_MAP",
+                          "AEA_BLOOD",
+                          "AEA_FATIGUE",
+                          "AEA_ACIDBALL",
+                          "AEA_PULSE",
+                          "AEA_HEAL",
+                          "AEA_CONFUSED",
+                          "AEA_ENTRANCE",
+                          "AEA_BUGS",
+                          "AEA_TELEPORT",
+                          "AEA_LIGHT",
+                          "AEA_GROWTH",
+                          "AEA_HURTALL",
+                          "AEA_FUN",
+                          "AEA_SPLIT",
+                          "AEA_RADIATION",
+                          "AEA_PAIN",
+                          "AEA_MUTATE",
+                          "AEA_PARALYZE",
+                          "AEA_FIRESTORM",
+                          "AEA_ATTENTION",
+                          "AEA_TELEGLOW",
+                          "AEA_NOISE",
+                          "AEA_SCREAM",
+                          "AEA_DIM",
+                          "AEA_FLASH",
+                          "AEA_VOMIT",
+                          "AEA_SHADOWS",
+                          "AEA_STAMINA_EMPTY"
+                        ]
+                    },
+                    "propertyOrder": 60
+                },
+                "effects_activated": {
+                    "type": "array",
+                    "id": "/properties/artifact_data/properties/effects_activated",
+                    "title": "effects carried",
+                    "description": "(optional, default: empty list) Effects of the artifact when it's activated (which require it to have a \"use_action\": \"ARTIFACT\" and it must have a non-zero max_charges value).",
+                    "format": "selectize",
+                    "uniqueItems": true,
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_array_add": false,
+                        "disable_array_delete": false,
+                        "disable_array_reorder": true,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false,
+                        "multiple": true
+                    },
+                    "items": {
+                        "type": "string",
+                        "$ref": "#/definitions/artifact_effects"
+                    },
+                    "propertyOrder": 60
                 }
             },
-            "propertyOrder": 160
+            "propertyOrder": 150
+        },
+        "use_action": {
+          "$ref": "#/definitions/use_action",
+          "stringifyOptions": {
+            "maxLength": 117
+          }
+        },
+        "ammo": {
+            "title": "Ammo",
+            "id": "/properties/ammo",
+            "type": "string",
+            "default": "460",
+            "format": "text",
+            "description": "Ammo types accepted for reloading", 
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { "jsonObject.type": { "$eq": "ammunition_type" } }
+            },
+            "options": {
+                "hidden": false
+            }
+        },
+        "max_charges": {
+            "type": "integer",
+            "id": "/properties/max_charges",
+            "title": "Max charges",
+            "default": 100,
+            "description": "Maximum charges tool can hold",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 30
+        },
+        "charges_per_use": {
+            "type": "integer",
+            "id": "/properties/charges_per_use",
+            "title": "Charges per use",
+            "default": 1,
+            "description": "Charges consumed per tool use",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 30
+        },
+        "magazine_well": {
+            "type": "integer",
+            "id": "/properties/magazine_well",
+            "title": "Magazine well",
+            "default": 1,
+            "description": "Volume above which the magazine starts to protrude from the item and add extra volume",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 30
         },
         "flags": {
             "type": "array",
@@ -323,10 +422,47 @@
             },
             "propertyOrder": 60
         },
+        "techniques": {
+            "type": "array",
+            "id": "/properties/techniques",
+            "title": "Techniques",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "filteredEnum": {
+                    "display_key": "id",
+                    "filter": { "jsonObject.type": { "$eq": "technique" } }
+                }
+            },
+            "propertyOrder": 60
+        },
+        "sub": {
+            "type": "string",
+            "id": "/properties/sub",
+            "title": "Sub",
+            "default": "hotplate",
+            "format": "text",
+            "description": "optional; this tool has the same functions as another tool",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 20
+        },
         "qualities": {
             "type": "array",
             "id": "/properties/qualities",
-            "title": "qualities",
+            "title": "Qualities",
             "description": "The qualities this item provides",
             "format": "table",
             "options": {
@@ -341,8 +477,8 @@
             "items": {
                 "type": "array",
                 "id": "/properties/qualities/oneof0",
-                "default": [ "VitA", 20 ],
-                "title": "Body part",
+                "default": [ "CUT", 1 ],
+                "title": "Quality",
                 "format": "tabs",
                 "options": {
                     "disable_collapse": true,
@@ -384,11 +520,46 @@
         }
     },
     "definitions": {
-        "comment": {
-            "title": "Comment:",
-            "type": "string",
-            "format": "textarea",
-            "default": ""
+        "artifact_effects": {
+            "enum": [ 
+                "AEP_STR_UP",
+                "AEP_DEX_UP",
+                "AEP_PER_UP",
+                "AEP_INT_UP",
+                "AEP_ALL_UP",
+                "AEP_SPEED_UP",
+                "AEP_IODINE",
+                "AEP_SNAKES",
+                "AEP_INVISIBLE",
+                "AEP_CLAIRVOYANCE",
+                "AEP_CLAIRVOYANCE_PLUS",
+                "AEP_SUPER_CLAIRVOYANCE",
+                "AEP_STEALTH",
+                "AEP_EXTINGUISH",
+                "AEP_GLOW",
+                "AEP_PSYSHIELD",
+                "AEP_RESIST_ELECTRICITY",
+                "AEP_CARRY_MORE",
+                "AEP_SAP_LIFE",
+                "AEP_HUNGER",
+                "AEP_THIRST",
+                "AEP_SMOKE",
+                "AEP_EVIL",
+                "AEP_SCHIZO",
+                "AEP_RADIOACTIVE",
+                "AEP_MUTAGENIC",
+                "AEP_ATTENTION",
+                "AEP_STR_DOWN",
+                "AEP_DEX_DOWN",
+                "AEP_PER_DOWN",
+                "AEP_INT_DOWN",
+                "AEP_ALL_DOWN",
+                "AEP_SPEED_DOWN",
+                "AEP_FORCE_TELEPORT",
+                "AEP_MOVEMENT_NOISE",
+                "AEP_BAD_WEATHER",
+                "AEP_SICK"
+             ]
         },
         "yesno": {
             "default": "yes",

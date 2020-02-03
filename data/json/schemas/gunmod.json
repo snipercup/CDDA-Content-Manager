@@ -63,7 +63,7 @@
             "id": "/properties/integral_volume",
             "title": "Integral Volume",
             "default": 0,
-            "description": "A description for 'integral_volume'  Type: 'integer'",
+            "description": "Volume added to base item when item is integrated into another (eg. a gunmod integrated to a gun). Volume in ml and L can be used - \"50 ml\" or \"2 L\".",
             "options": {
                 "hidden": false
             },
@@ -86,45 +86,12 @@
           "propertyOrder": 13
         },
         "location": {
-            "type": "string",
-            "id": "/properties/location",
-            "title": "Location",
-            "default": "bore",
-            "format": "text",
-            "description": "Description for 'location' Type: 'string' Path: '/properties/location'",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 120
+          "$ref": "#/definitions/location", 
+          "propertyOrder": 13
         },
         "mod_targets": {
-            "type": "array",
-            "id": "/properties/mod_targets",
-            "title": "mod_targets",
-            "format": "selectize",
-            "uniqueItems": true,
-            "options": {
-                "disable_collapse": false,
-                "disable_array_add": false,
-                "disable_array_delete": false,
-                "disable_array_reorder": true,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false,
-                "multiple": true
-            },
-            "items": {
-                "type": "string",
-                "enum": [ 
-                    "pistol",
-                    "smg",
-                    "rifle",
-                    "shotgun",
-                    "launcher", 
-                    "crossbow"
-                ]
-            },
-            "propertyOrder": 60
+          "$ref": "#/definitions/mod_targets", 
+          "propertyOrder": 13
         },
         "acceptable_ammo": {
             "type": "array",
@@ -195,24 +162,27 @@
             ],
             "properties": {
                 "ammo": {
-                    "type": "string",
-                    "id": "/properties/gun_data/properties/ammo",
                     "title": "Ammo",
-                    "default": "40x46mm",
+                    "id": "/properties/ammo",
+                    "type": "string",
+                    "default": "460",
                     "format": "text",
-                    "description": "Description for 'ammo' Type: 'string' Path: '/properties/gun_data/properties/ammo'",
+                    "description": "Ammo types accepted for reloading", 
+                    "filteredEnum": {
+                        "display_key": "id",
+                        "filter": { "jsonObject.type": { "$eq": "ammunition_type" } }
+                    },
                     "options": {
                         "hidden": false
-                    },
-                    "propertyOrder": 10
+                    }
                 },
                 "skill": {
                     "type": "string",
-                    "id": "/properties/gun_data/properties/skill",
+                    "id": "/properties/skill",
                     "title": "Skill",
                     "default": "launcher",
                     "format": "text",
-                    "description": "Description for 'skill' Type: 'string' Path: '/properties/gun_data/properties/skill'",
+                    "description": "Skill used for firing",
                     "options": {
                         "hidden": false
                     },

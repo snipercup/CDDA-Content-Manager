@@ -1,0 +1,191 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "additionalProperties": true,
+    "title": "Tool armor",
+    "type": "object",
+    "id": "https://niebert.github.io/json-editor",
+    "options": {
+        "disable_collapse": false,
+        "disable_edit_json": false,
+        "disable_properties": false,
+        "collapsed": false,
+        "hidden": false
+    },
+    "defaultProperties": [
+        "type",
+        "id",
+        "name"
+    ],
+    "properties": {
+        "id": {
+          "$ref": "#/definitions/id", 
+          "propertyOrder": 10
+        },
+        "type": {
+          "$ref": "#/definitions/type", 
+          "propertyOrder": 11,
+          "default": "TOOL_ARMOR"
+        },
+        "name": {
+          "$ref": "#/definitions/name", 
+          "propertyOrder": 12
+        },
+        "repairs_like": {
+            "type": "string",
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { "jsonObject.type": { "$eq": "TOOL_ARMOR" } }
+            },
+            "enum": [ ]
+        },
+        "environmental_protection": {
+          "$ref": "#/definitions/environmental_protection", 
+          "propertyOrder": 13
+        },
+        "encumbrance": {
+          "$ref": "#/definitions/encumbrance", 
+          "propertyOrder": 13
+        },
+        "material_thickness": {
+          "$ref": "#/definitions/material_thickness", 
+          "propertyOrder": 13
+        },
+        "coverage": {
+          "$ref": "#/definitions/coverage", 
+          "propertyOrder": 13
+        },
+        "revert_to": {
+            "type": "string",
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { "jsonObject.type": { "$eq": "TOOL_ARMOR" } }
+            },
+            "enum": [ ]
+        },
+        "category": {
+          "$ref": "#/definitions/category"
+        },
+        "symbol": {
+          "$ref": "#/definitions/symbol", 
+          "propertyOrder": 13
+        },
+        "color": {"$ref": "#/definitions/color"},
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 13
+        },
+        "price": {
+          "$ref": "#/definitions/price", 
+          "propertyOrder": 13
+        },
+        "material": {
+          "$ref": "#/definitions/material", 
+          "propertyOrder": 13
+        },
+        "weight": {
+          "$ref": "#/definitions/weight", 
+          "propertyOrder": 13
+        },
+        "volume": {
+          "$ref": "#/definitions/volume", 
+          "propertyOrder": 13
+        },
+        "to_hit": {
+          "$ref": "#/definitions/to_hit", 
+          "propertyOrder": 13
+        },
+        "covers": {
+          "$ref": "#/definitions/covers", 
+          "propertyOrder": 13
+        },
+        "warmth": {
+          "$ref": "#/definitions/warmth", 
+          "propertyOrder": 13
+        },
+        "copy-from": {
+            "type": "string",
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { "jsonObject.type": { "$eq": "TOOL_ARMOR" }
+                }
+            },
+            "enum": [ ]
+        },
+        "techniques": {
+          "$ref": "#/definitions/techniques"
+        },
+        "turns_per_charge": {
+            "type": "integer",
+            "id": "properties/turns_per_charge",
+            "title": "Turns per charge",
+            "default": 25,
+            "description": "Charges consumed over time, deprecated in favor of power_draw",
+            "options": {
+                "hidden": false
+            }
+        },
+        "magazine_well": {
+          "$ref": "#/definitions/magazine_well"
+        },
+        "power_draw": {
+            "type": "integer",
+            "id": "properties/power_draw",
+            "title": "Power draw",
+            "default": 25,
+            "description": "Energy consumption rate in mW",
+            "options": {
+                "hidden": false
+            }
+        },
+        "flags": {
+          "$ref": "#/definitions/flags", 
+          "items": {
+              "enum": [ 
+                  "OVERSIZE",
+                  "ALLOWS_NATURAL_ATTACKS",
+                  "BELTED",
+                  "FIRESTARTER",
+                  "SKINTIGHT",
+                  "STURDY",
+                  "WATCH",
+                  "TRADER_AVOID",
+                  "RAINPROOF",
+                  "ALARMCLOCK",
+                  "SWIM_GOGGLES",
+                  "RAD_PROOF",
+                  "ELECTRIC_IMMUNE",
+                  "THERMOMETER",
+                  "CLIMATE_CONTROL",
+                  "REBREATHER",
+                  "CHARGEDIM",
+                  "WATER_FRIENDLY",
+                  "WATERPROOF",
+                  "DEAFEN",
+                  "PARTIAL_DEAF",
+                  "SUN_GLASSES",
+                  "GNV_EFFECT",
+                  "IR_EFFECT",
+                  "NO_TAKEOFF",
+                  "LIGHT_10",
+                  "LIGHT_300",
+                  "LIGHT_350",
+                  "LIGHT_450",
+                  "NO_UNLOAD",
+                  "ONLY_ONE",
+                  "VARSIZE",
+                  "FRAGILE",
+                  "ZOOM",
+                  "POCKETS",
+                  "OUTER"
+              ]
+          },
+          "propertyOrder": 13
+        },
+        "use_action": {
+          "$ref": "#/definitions/use_action",
+          "stringifyOptions": {
+            "maxLength": 116
+          }
+        }
+    }
+}

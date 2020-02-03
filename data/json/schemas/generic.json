@@ -74,6 +74,10 @@
             "format": "selectize",
             "enum": [ ]
         },
+        "spoils_in": {
+          "$ref": "#/definitions/spoils_in", 
+          "propertyOrder": 13
+        },
         "flags": {
             "type": "array",
             "id": "/properties/flags",
@@ -114,25 +118,13 @@
           "$ref": "#/definitions/color", 
           "propertyOrder": 13
         },
-        "spoils_in": {
-            "type": "string",
-            "id": "/properties/spoils_in",
-            "title": "Spoils In",
-            "default": "6 days 16 hours",
-            "format": "text",
-            "description": "Description for 'spoils_in' Type: 'string' Path: '/properties/spoils_in'",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 60
-        },
         "comestible_type": {
             "type": "string",
             "id": "/properties/comestible_type",
             "title": "Comestible Type",
             "default": "FOOD",
             "format": "text",
-            "description": "Description for 'comestible_type' Type: 'string' Path: '/properties/comestible_type'",
+            "description": "Comestible type, used for inventory sorting",
             "options": {
                 "hidden": false
             },
@@ -151,27 +143,12 @@
             }
         },
         "symbol": {
-            "type": "string",
-            "id": "/properties/symbol",
-            "title": "Symbol",
-            "default": "%",
-            "format": "text",
-            "description": "Description for 'symbol' Type: 'string' Path: '/properties/symbol'",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 80
+          "$ref": "#/definitions/symbol", 
+          "propertyOrder": 13
         },
         "quench": {
-            "type": "integer",
-            "id": "/properties/quench",
-            "title": "Quench",
-            "default": 3,
-            "description": "A description for 'quench'  Type: 'integer'",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 90
+          "$ref": "#/definitions/quench", 
+          "propertyOrder": 13
         },
         "healthy": {
             "type": "integer",

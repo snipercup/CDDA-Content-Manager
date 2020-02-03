@@ -725,7 +725,7 @@
                                 "title": "Require Targeting Npc",
                                 "format": "checkbox",
                                 "default": true,
-                                "description": "A description for 'require_targeting_npc'  Type: 'boolean'",
+                                "description": "If true, the monster will need to \"target\" the npc, wasting targeting_cost moves, putting the attack on cooldown and making warning sounds, unless it attacked something that needs to be targeted recently.",
                                 "options": {
                                     "hidden": false
                                 },
@@ -737,7 +737,7 @@
                                 "title": "Require Targeting Monster",
                                 "format": "checkbox",
                                 "default": true,
-                                "description": "A description for 'require_targeting_monster'  Type: 'boolean'",
+                                "description": "If true, the monster will need to \"target\" the monster, wasting targeting_cost moves, putting the attack on cooldown and making warning sounds, unless it attacked something that needs to be targeted recently.",
                                 "options": {
                                     "hidden": false
                                 },
@@ -749,7 +749,7 @@
                                 "title": "Laser Lock",
                                 "format": "checkbox",
                                 "default": false,
-                                "description": "A description for 'laser_lock'  Type: 'boolean'",
+                                "description": "If true and attacking a creature that isn't laser-locked but needs to be targeted, the monster will act as if it had no targeting status (and waste time targeting), the target will become laser-locked, and if the target is the player, it will cause a warning. Laser-locking affects the target, but isn't tied to specific attacker.",
                                 "options": {
                                     "hidden": false
                                 },
@@ -760,7 +760,7 @@
                                 "id": "/properties/special_attacks/items/properties/targeting_cost",
                                 "title": "Targeting Cost",
                                 "default": 400,
-                                "description": "A description for 'targeting_cost'  Type: 'integer'",
+                                "description": "Move cost of targeting the player. Only applied if attacking the player and didn't target player within last 5 turns.",
                                 "options": {
                                     "hidden": false
                                 },
@@ -771,7 +771,7 @@
                                 "id": "/properties/special_attacks/items/properties/targeting_timeout_extend",
                                 "title": "Targeting Timeout Extend",
                                 "default": -10,
-                                "description": "A description for 'targeting_timeout_extend'  Type: 'integer'",
+                                "description": "Successfully attacking will extend the targeting for this many turns. Can be negative.",
                                 "options": {
                                     "hidden": false
                                 },
@@ -783,7 +783,7 @@
                                 "title": "Targeting Sound",
                                 "default": "\"Hostile detected.\"",
                                 "format": "text",
-                                "description": "Description for 'targeting_sound' Type: 'string' Path: '/properties/special_attacks/items/properties/targeting_sound'",
+                                "description": "Description of the sound made when targeting.",
                                 "options": {
                                     "hidden": false
                                 },
@@ -794,7 +794,7 @@
                                 "id": "/properties/special_attacks/items/properties/targeting_volume",
                                 "title": "Targeting Volume",
                                 "default": 20,
-                                "description": "A description for 'targeting_volume'  Type: 'integer'",
+                                "description": "Volume of the sound made when targeting.",
                                 "options": {
                                     "hidden": false
                                 },
@@ -806,7 +806,7 @@
                                 "title": "No Ammo Sound",
                                 "default": "a chk!",
                                 "format": "text",
-                                "description": "Description for 'no_ammo_sound' Type: 'string' Path: '/properties/special_attacks/items/properties/no_ammo_sound'",
+                                "description": "Description of the sound made when out of ammo.",
                                 "options": {
                                     "hidden": false
                                 },
@@ -817,7 +817,7 @@
                                 "id": "/properties/special_attacks/items/properties/move_cost",
                                 "title": "Move Cost",
                                 "default": 150,
-                                "description": "A description for 'move_cost'  Type: 'integer'",
+                                "description": "Turns needed to complete special attack. 100 move_cost with 100 speed is equal to 1 second/turn.",
                                 "options": {
                                     "hidden": false
                                 },
@@ -829,7 +829,7 @@
                                 "title": "Gun Type",
                                 "default": "hk_mp5",
                                 "format": "text",
-                                "description": "Description for 'gun_type' Type: 'string' Path: '/properties/special_attacks/items/properties/gun_type'",
+                                "description": "(Required) Valid item id of a gun that will be used to perform the attack.",
                                 "options": {
                                     "hidden": false
                                 },
@@ -841,7 +841,7 @@
                                 "title": "Ammo Type",
                                 "default": "9mm",
                                 "format": "text",
-                                "description": "Description for 'ammo_type' Type: 'string' Path: '/properties/special_attacks/items/properties/ammo_type'",
+                                "description": "(Required) Valid item id of the ammo the gun will be loaded with. Monster should also have a \"starting_ammo\" field with this ammo. For example",
                                 "options": {
                                     "hidden": false
                                 },
@@ -864,7 +864,7 @@
                                 "id": "/properties/special_attacks/items/properties/fake_dex",
                                 "title": "Fake Dex",
                                 "default": 12,
-                                "description": "A description for 'fake_dex'  Type: 'integer'",
+                                "description": "Dexterity stat of the fake NPC that will execute the attack. 8 if not specified.",
                                 "options": {
                                     "hidden": false
                                 },
@@ -887,7 +887,7 @@
                                 "items": {
                                     "type": "object",
                                     "id": "/properties/special_attacks/items/properties/damage_max_instance/items",
-                                    "title": "Damage Max Instance ",
+                                    "title": "Damage Max Instance",
                                     "options": {
                                         "disable_collapse": false,
                                         "disable_edit_json": false,

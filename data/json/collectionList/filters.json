@@ -36,6 +36,13 @@
 	},
 	{
 		"type": "filter",
+		"name": "all_comestible",
+		"display_name": "Type: comestible",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "COMESTIBLE" } }
+	},
+	{
+		"type": "filter",
 		"name": "all_GUNMOD",
 		"display_name": "Type: GUNMOD",
 		"display_key": "id",
@@ -50,13 +57,6 @@
 	},
 	{
 		"type": "filter",
-		"name": "all_comestible",
-		"display_name": "Type: comestible",
-		"display_key": "id",
-		"filter": { "jsonObject.type": { "$eq": "COMESTIBLE" } }
-	},
-	{
-		"type": "filter",
 		"name": "all_morale_type",
 		"display_name": "Type: morale_type",
 		"display_key": "id",
@@ -68,6 +68,20 @@
 		"display_name": "Type: MONSTER",
 		"display_key": "id",
 		"filter": { "jsonObject.type": { "$eq": "MONSTER" } }
+	},
+	{
+		"type": "filter",
+		"name": "all_tools",
+		"display_name": "Type: TOOL",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "TOOL" } }
+	},
+	{
+		"type": "filter",
+		"name": "all_tool_armor",
+		"display_name": "Type: TOOL_ARMOR",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "TOOL_ARMOR" } }
 	},
 	{
 		"type": "filter",
@@ -138,10 +152,15 @@
         { "jsonObject.type": { "$ne": "vehicle_part" } },
         { "jsonObject.type": { "$ne": "vehicle" } },
         { "jsonObject.type": { "$ne": "GUNMOD" } },
+        { "jsonObject.type": { "$ne": "TOOL" } },
+        { "jsonObject.type": { "$ne": "COMESTIBLE" } },
         { "jsonObject.type": { "$ne": "GENERIC" } },
+        { "jsonObject.type": { "$ne": "TOOL_ARMOR" } },
+        { "jsonObject.type": { "$ne": "ARMOR" } },
         { "jsonObject.type": { "$ne": "faction" } },
         { "jsonObject.type": { "$ne": "mission_definition" } },
         { "jsonObject.looks_like": { "$exists": false } },
+        { "jsonObject.name_plural": { "$exists": true } },
         { "fileName": { "$containsNone": "obsolete" } }
     ] }
 	},
@@ -152,12 +171,11 @@
 		"display_key": "name",
 		"filter": { "$and": [ 
         { "jsonObject.name": { "$type": "string" } },
-        { "jsonObject.type": { "$eq": "COMESTIBLE" } },
+        { "jsonObject.type": { "$eq": "ARMOR" } },
         { "jsonObject.looks_like": { "$exists": false } },
-        { "jsonObject.flags": { "$exists": false } },
-        { "jsonObject.category": { "$exists": false } },
-        { "jsonObject.copy-from": { "$exists": false } },
+        { "jsonObject.conditional_names": { "$exists": false } },
         { "jsonObject.name_plural": { "$exists": true } },
+        { "fileName": { "$containsNone": "tool_armor" } },
         { "fileName": { "$containsNone": "obsolete" } }
     ] }
 	}

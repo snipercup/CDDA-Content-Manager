@@ -139,6 +139,7 @@
             "type": "object",
             "id": "/properties/extend",
             "title": "Extend",
+            "description": "Modders can add an \"extends\" field to their definition to append entries to a list instead of overriding the entire list.",
             "options": {
                 "disable_collapse": false,
                 "disable_edit_json": false,

@@ -49,10 +49,6 @@
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
         },
-        "name_plural": {
-          "$ref": "#/definitions/name_plural", 
-          "propertyOrder": 13
-        },
         "description": {
           "$ref": "#/definitions/description", 
           "propertyOrder": 13
@@ -101,239 +97,47 @@
             "format": "selectize",
             "enum": [ ]
         },
-        "storage": {
-            "type": "string",
-            "id": "/properties/storage",
-            "title": "storage",
-            "default": "sheath",
-            "format": "text",
-            "description": "The amount of storage",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 110
-        },
         "covers": {
-            "type": "array",
-            "id": "/properties/covers",
-            "title": "Covers",
-            "format": "selectize",
-            "uniqueItems": true,
-            "options": {
-                "disable_collapse": false,
-                "disable_array_add": false,
-                "disable_array_delete": false,
-                "disable_array_reorder": true,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false,
-                "multiple": true
-            },
-            "items": {
-                "type": "string",
-                "enum": [ 
-                  "TORSO", 
-                  "ARMS", 
-                  "HANDS", 
-                  "LEGS", 
-                  "FEET", 
-                  "HEAD", 
-                  "EYES", 
-                  "MOUTH",
-                  "LEG_EITHER"
-                ]
-            },
-            "propertyOrder": 60
+          "$ref": "#/definitions/covers", 
+          "propertyOrder": 13
+        },
+        "storage": {
+          "$ref": "#/definitions/storage", 
+          "propertyOrder": 13
+        },
+        "warmth": {
+          "$ref": "#/definitions/warmth", 
+          "propertyOrder": 13
+        },
+        "environmental_protection": {
+          "$ref": "#/definitions/environmental_protection", 
+          "propertyOrder": 13
+        },
+        "encumbrance": {
+          "$ref": "#/definitions/encumbrance", 
+          "propertyOrder": 13
+        },
+        "coverage": {
+          "$ref": "#/definitions/coverage", 
+          "propertyOrder": 13
+        },
+        "material_thickness": {
+          "$ref": "#/definitions/material_thickness", 
+          "propertyOrder": 13
+        },
+        "armor_data": {
+          "$ref": "#/definitions/material_thickness", 
+          "propertyOrder": 13
         },
         "copy-from": {
             "type": "string",
             "enum": [ ]
         },
-        "coverage": {
-            "type": "integer",
-            "id": "/properties/coverage",
-            "title": "Coverage",
-            "default": 10,
-            "description": "The amount of coverage",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 140
-        },
-        "encumbrance": {
-            "type": "integer",
-            "id": "/properties/encumbrance",
-            "title": "Encumbrance",
-            "default": 3,
-            "description": "The amount of encumbrance",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 150
-        },
-        "material_thickness": {
-            "type": "integer",
-            "id": "/properties/material_thickness",
-            "title": "Material Thickness",
-            "default": 1,
-            "description": "The thickness of the material",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 160
-        },
         "use_action": {
-            "type": "object",
-            "id": "/properties/use_action",
-            "title": "Use Action",
-            "options": {
-                "disable_collapse": false,
-                "disable_edit_json": false,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false
-            },
-            "defaultProperties": [
-                "type"
-            ],
-            "properties": {
-              "type": {
-                  "type": "string",
-                  "id": "/properties/use_action/properties/type",
-                  "title": "Type",
-                  "default": "holster",
-                  "format": "text",
-                  "description": "The type of method. The contents of use_action fields can either be a string indicating a built-in function to call when the item is activated (defined in iuse.cpp), or one of several special definitions that invoke a more structured function.",
-                  "options": {
-                      "hidden": false
-                  },
-                  "enum": [
-                    "holster"
-                  ],
-                  "propertyOrder": 10
-              },
-              "holster_prompt": {
-                  "type": "string",
-                  "id": "/properties/use_action/properties/holster_prompt",
-                  "title": "Holster Prompt",
-                  "default": "Sheath sword",
-                  "format": "text",
-                  "description": "Prompt to use when selecting an item",
-                  "options": {
-                      "hidden": false
-                  },
-                  "propertyOrder": 20
-              },
-              "holster_msg": {
-                  "type": "string",
-                  "id": "/properties/use_action/properties/holster_msg",
-                  "title": "Holster Msg",
-                  "default": "You sheath your %s",
-                  "format": "text",
-                  "description": "Message to show when holstering an item",
-                  "options": {
-                      "hidden": false
-                  },
-                  "propertyOrder": 30
-              },
-              "max_volume": {
-                  "type": "string",
-                  "id": "/properties/use_action/properties/max_volume",
-                  "title": "Max Volume",
-                  "default": "3 L",
-                  "format": "text",
-                  "description": "Maximal volume that can be used to store items here. Volume in ml and L can be used - \"50 ml\" or \"2 L\"",
-                  "options": {
-                      "hidden": false
-                  },
-                  "propertyOrder": 40
-              },
-              "draw_cost": {
-                  "type": "integer",
-                  "id": "/properties/use_action/properties/draw_cost",
-                  "title": "Draw Cost",
-                  "default": 10,
-                  "description": "Base move cost per unit volume when wielding the contained item",
-                  "options": {
-                      "hidden": false
-                  },
-                  "propertyOrder": 50
-              },
-              "flags": {
-                  "type": "array",
-                  "id": "/properties/use_action/properties/flags",
-                  "title": "Flags",
-                  "format": "tabs",
-                  "options": {
-                      "disable_collapse": false,
-                      "disable_array_add": false,
-                      "disable_array_delete": false,
-                      "disable_array_reorder": false,
-                      "disable_properties": false,
-                      "collapsed": false,
-                      "hidden": false
-                  },
-                  "items": {
-                      "type": "string",
-                      "id": "/properties/use_action/properties/flags/items",
-                      "title": "Title Root Use Action Flags ",
-                      "default": "SHEATH_SWORD",
-                      "format": "text",
-                      "description": "Description for 'items' Type: 'string' Path: '/properties/use_action/properties/flags/items'",
-                      "options": {
-                          "hidden": false
-                      }
-                  },
-                  "propertyOrder": 60
-              },
-              "target": {
-                  "type": "string",
-                  "id": "/properties/use_action/properties/max_volume",
-                  "title": "Max Volume",
-                  "default": "3 L",
-                  "format": "text",
-                  "$ref": "#/properties/copy-from", 
-                  "description": "The item to transform to.",
-                  "options": {
-                      "hidden": false
-                  },
-                  "propertyOrder": 40
-              },
-              "need_charges": {
-                  "type": "integer",
-                  "id": "/properties/use_action/properties/need_charges",
-                  "title": "Need charges",
-                  "default": 10,
-                  "description": "Number of charges the item needs to transform.",
-                  "options": {
-                      "hidden": false
-                  },
-                  "propertyOrder": 50
-              }
-            },
-            "propertyOrder": 170
-        },
-        "warmth": {
-            "type": "integer",
-            "id": "/properties/warmth",
-            "title": "Warmth",
-            "default": 25,
-            "description": "The warmth",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 180
-        },
-        "environmental_protection": {
-            "type": "integer",
-            "id": "/properties/environmental_protection",
-            "title": "Environmental Protection",
-            "default": 1,
-            "description": "The environmental protection",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 100
+          "$ref": "#/definitions/use_action",
+          "stringifyOptions": {
+            "maxLength": 117
+          }
         },
         "valid_mods": {
             "type": "array",
@@ -390,6 +194,8 @@
                   "SKINTIGHT", 
                   "OVERSIZE", 
                   "WATERPROOF", 
+                  "POWERARMOR_COMPATIBLE", 
+                  "ALARMCLOCK", 
                   "HOOD", 
                   "RAINPROOF", 
                   "RAD_RESIST", 
@@ -398,6 +204,7 @@
                   "SUPER_FANCY", 
                   "COLLAR", 
                   "BELTED", 
+                  "WATCH", 
                   "SUN_GLASSES", 
                   "ALLOWS_NATURAL_ATTACKS", 
                   "BLOCK_WHILE_WORN", 

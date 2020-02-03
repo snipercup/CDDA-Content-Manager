@@ -146,7 +146,7 @@
             "title": "player_display",
             "format": "checkbox",
             "default": false,
-            "description": "A description for 'player_display'  Type: 'boolean'",
+            "description": "Trait is displayed in the `@` player display menu",
             "options": {
                 "hidden": false
             },
@@ -158,7 +158,7 @@
             "title": "starting_trait",
             "format": "checkbox",
             "default": false,
-            "description": "If it's a starting trait",
+            "description": "Can be selected at character creation (default: false)",
             "options": {
                 "hidden": false
             },
@@ -170,7 +170,7 @@
             "title": "starts_active",
             "format": "checkbox",
             "default": false,
-            "description": "Whether it starts active",
+            "description": "When true, this 'active' mutation starts active (default: false, requires 'active')",
             "options": {
                 "hidden": false
             },
@@ -182,7 +182,7 @@
             "title": "allow_soft_gear",
             "format": "checkbox",
             "default": false,
-            "description": "Whether it allows soft gear",
+            "description": "If there is a list of 'restricts_gear' this sets if the location still allows items made out of soft materials (Only one of the types need to be soft for it to be considered soft). (default: false)",
             "options": {
                 "hidden": false
             },

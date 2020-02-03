@@ -56,6 +56,15 @@
         },
         "copy-from": {
             "type": "string",
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { 
+                    "$or": [
+                        { "jsonObject.type": { "$eq": "TOOL" } },
+                        { "jsonObject.abstract": { "$eq": "fake_item" } }
+                    ]
+                }
+            },
             "enum": [ ]
         },
         "weight": {
@@ -172,6 +181,167 @@
                 }
             },
             "propertyOrder": 150
+        },
+        "gunmod_data": {
+            "type": "object",
+            "id": "/properties/gunmod_data",
+            "title": "Gunmod data",
+            "default": [ [ "DEFAULT", "auto", 14 ] ],
+            "stringifyOptions": {
+              "maxLength": 106
+            },
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "location",
+                "mod_targets"
+            ],
+            "properties": {
+                "location": {
+                    "id": "/properties/gunmod_data/location",
+                    "$ref": "#/definitions/location", 
+                    "propertyOrder": 13
+                },
+                "mod_targets": {
+                    "id": "/properties/gunmod_data/mod_targets",
+                    "$ref": "#/definitions/mod_targets", 
+                    "propertyOrder": 13
+                },
+                "mode_modifier": {
+                    "type": "array",
+                    "id": "/properties/gunmod_data/mode_modifier",
+                    "title": "Mode modifier",
+                    "description": "The mode modifier this item provides",
+                    "format": "table",
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_array_add": false,
+                        "disable_array_delete": false,
+                        "disable_array_reorder": true,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false
+                    },
+                    "items": {
+                        "type": "array",
+                        "id": "/properties/gunmod_data/mode_modifier/oneof0",
+                        "default": [ "DEFAULT", "auto", 14 ],
+                        "title": "Quality",
+                        "format": "tabs",
+                        "options": {
+                            "disable_collapse": true,
+                            "disable_array_add": true,
+                            "disable_array_delete": true,
+                            "disable_array_reorder": true,
+                            "disable_properties": true,
+                            "collapsed": false,
+                            "compact": true,
+                            "hidden": false
+                        },
+                        "items": [
+                            {
+                                "type": "string",
+                                "id": "/properties/gunmod_data/mode_modifier/oneof0",
+                                "default": "DEFAULT",
+                                "format": "text",
+                                "enum": [ "DEFAULT", "REACH", "AUTO" ],
+                                "options": {
+                                  "hidden": false,
+                                  "compact": true
+                                }
+                            },
+                            {
+                                "type": "string",
+                                "id": "/properties/gunmod_data/mode_modifier/oneof1",
+                                "default": "auto",
+                                "format": "text",
+                                "enum": [ "auto", "bayonet" ],
+                                "options": {
+                                  "hidden": false,
+                                  "compact": true
+                                }
+                            },
+                            {
+                                "type": "integer",
+                                "id": "/properties/gunmod_data/mode_modifier/oneof2",
+                                "default": 1,
+                                "options": {
+                                  "hidden": false,
+                                  "compact": true
+                                }
+                            },
+                            {
+                                "type": "array",
+                                "id": "/properties/artifact_data/properties/effects_carried",
+                                "format": "selectize",
+                                "uniqueItems": true,
+                                "options": {
+                                    "disable_collapse": false,
+                                    "disable_array_add": false,
+                                    "disable_array_delete": false,
+                                    "disable_array_reorder": true,
+                                    "disable_properties": false,
+                                    "collapsed": false,
+                                    "hidden": false,
+                                    "multiple": true,
+                                    "compact": true
+                                },
+                                "items": {
+                                    "type": "string",
+                                    "enum": [ "MELEE", "REACH_ATTACK" ]
+                                }
+                            }
+                        ]
+                    },
+                    "propertyOrder": 90
+                }
+            },
+            "propertyOrder": 150
+        },
+        "extend": {
+            "type": "object",
+            "id": "/properties/extend",
+            "description": "Modders can add an \"extends\" field to their definition to append entries to a list instead of overriding the entire list.",
+            "title": "Extend",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "flags"
+            ],
+            "properties": {
+                "flags": {
+                    "type": "array",
+                    "id": "/properties/extend/properties/flags",
+                    "title": "Flags",
+                    "format": "selectize",
+                    "uniqueItems": true,
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_array_add": false,
+                        "disable_array_delete": false,
+                        "disable_array_reorder": true,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false,
+                        "multiple": true
+                    },
+                    "items": {
+                        "type": "string",
+                        "enum": [ "PUMP_RAIL_COMPATIBLE" ]
+                    },
+                    "propertyOrder": 60
+                }
+            }
         },
         "artifact_data": {
             "type": "object",
@@ -342,6 +512,12 @@
             },
             "propertyOrder": 150
         },
+        "magazine_well": {
+          "$ref": "#/definitions/magazine_well"
+        },
+        "techniques": {
+          "$ref": "#/definitions/techniques"
+        },
         "use_action": {
           "$ref": "#/definitions/use_action",
           "stringifyOptions": {
@@ -385,17 +561,6 @@
             },
             "propertyOrder": 30
         },
-        "magazine_well": {
-            "type": "integer",
-            "id": "/properties/magazine_well",
-            "title": "Magazine well",
-            "default": 1,
-            "description": "Volume above which the magazine starts to protrude from the item and add extra volume",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 30
-        },
         "flags": {
             "type": "array",
             "id": "/properties/flags",
@@ -419,31 +584,6 @@
                   "RADIO_INVOKE_PROC",
                   "BOMB"
                 ]
-            },
-            "propertyOrder": 60
-        },
-        "techniques": {
-            "type": "array",
-            "id": "/properties/techniques",
-            "title": "Techniques",
-            "format": "selectize",
-            "uniqueItems": true,
-            "options": {
-                "disable_collapse": false,
-                "disable_array_add": false,
-                "disable_array_delete": false,
-                "disable_array_reorder": true,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false,
-                "multiple": true
-            },
-            "items": {
-                "type": "string",
-                "filteredEnum": {
-                    "display_key": "id",
-                    "filter": { "jsonObject.type": { "$eq": "technique" } }
-                }
             },
             "propertyOrder": 60
         },

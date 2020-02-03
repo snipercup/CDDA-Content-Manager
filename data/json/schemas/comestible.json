@@ -5,6 +5,9 @@
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
     "get_ids_of_type": [ { "type": "CONTAINER", "display_key": "id" } ],
+    "stringifyOptions": {
+      "maxLength": 120
+    },
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -61,6 +64,13 @@
         "price": {
           "$ref": "#/definitions/price", 
           "propertyOrder": 12
+        },
+        "armor_data": {
+          "$ref": "#/definitions/material_thickness", 
+          "stringifyOptions": {
+            "maxLength": 100
+          },
+          "propertyOrder": 13
         },
         "stack_size": {"$ref": "#/definitions/stack_size"},
         "copy-from": {
@@ -212,64 +222,10 @@
             "propertyOrder": 13
         },
         "use_action": {
-            "title": "Use action",
-            "id": "/properties/use_action",
-            "oneOf": [
-                {
-                    "type": "object",
-                    "title": "object format",
-                    "options": {
-                        "disable_collapse": false,
-                        "disable_edit_json": false,
-                        "disable_properties": false,
-                        "collapsed": false,
-                        "hidden": false
-                    },
-                    "defaultProperties": [
-                        "type",
-                        "is_weak"
-                    ],
-                    "properties": {
-                        "type": {
-                            "type": "string",
-                            "id": "/properties/use_action/properties/type",
-                            "title": "type",
-                            "default": "mutagen",
-                            "format": "text",
-                            "description": "Description for 'type'",
-                            "options": {
-                                "hidden": false
-                            },
-                            "propertyOrder": 10
-                        },
-                        "is_weak": {
-                            "type": "boolean",
-                            "id": "/properties/use_action/properties/is_weak",
-                            "title": "is_weak",
-                            "default": false,
-                            "description": "A description for 'neutral'  Type: 'integer'",
-                            "options": {
-                                "hidden": false
-                            },
-                            "propertyOrder": 20
-                        }
-                    }
-                },
-                {
-                  "type": "string",
-                  "id": "/properties/use_action",
-                  "title": "string format",
-                  "default": "182 g",
-                  "format": "text",
-                  "description": "What effects a comestible has when used, see special definitions in doc/JSON_INFO.md",
-                  "options": {
-                      "hidden": false
-                  },
-                  "stringifyOptions": {
-                    "maxLength": 100
-                  }
-                }
-            ]
+          "$ref": "#/definitions/use_action",
+          "stringifyOptions": {
+            "maxLength": 117
+          }
         },
         "addiction_type": {
             "type": "string",
@@ -287,17 +243,13 @@
           "$ref": "#/definitions/color", 
           "propertyOrder": 13
         },
+        "quench": {
+          "$ref": "#/definitions/quench", 
+          "propertyOrder": 13
+        },
         "spoils_in": {
-            "type": "string",
-            "id": "/properties/spoils_in",
-            "title": "Spoils In",
-            "default": "6 days 16 hours",
-            "format": "text",
-            "description": "Description for 'spoils_in' Type: 'string' Path: '/properties/spoils_in'",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 60
+          "$ref": "#/definitions/spoils_in", 
+          "propertyOrder": 13
         },
         "comestible_type": {
             "type": "string",
@@ -322,17 +274,6 @@
             "options": {
                 "hidden": false
             }
-        },
-        "quench": {
-            "type": "integer",
-            "id": "/properties/quench",
-            "title": "Quench",
-            "default": 3,
-            "description": "A description for 'quench'  Type: 'integer'",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 90
         },
         "freezing_point": {
             "type": "integer",
@@ -364,13 +305,72 @@
                     "type": "number",
                     "id": "/properties/proportional/properties/weight",
                     "title": "Weight",
-                    "default": 12,
+                    "default": 0.5,
                     "description": "Proportional weight",
                     "options": {
                         "hidden": false
                     }
                 },
-                "calories": {"$ref": "#/definitions/calories"}
+                "calories": {
+                    "type": "number",
+                    "id": "/properties/proportional/properties/calories",
+                    "title": "Calories",
+                    "default": 0.5,
+                    "description": "Hunger satisfied (in kcal)",
+                    "options": {
+                        "hidden": false
+                    }
+                },
+                "quench": {
+                    "type": "number",
+                    "id": "/properties/proportional/properties/quench",
+                    "title": "quench",
+                    "default": 0.5,
+                    "description": "Thirst quenched",
+                    "options": {
+                        "hidden": false
+                    }
+                },
+                "parasites": {
+                    "type": "number",
+                    "id": "/properties/proportional/properties/parasites",
+                    "title": "Parasites",
+                    "default": 0.5,
+                    "description": "(Optional) Probability of becoming parasitised when eating",
+                    "options": {
+                        "hidden": false
+                    }
+                },
+                "price": {
+                    "type": "number",
+                    "id": "/properties/proportional/properties/price",
+                    "title": "price",
+                    "default": 0.5,
+                    "description": "Used when bartering with NPCs.",
+                    "options": {
+                        "hidden": false
+                    }
+                },
+                "fun": {
+                    "type": "number",
+                    "id": "/properties/proportional/properties/fun",
+                    "title": "fun",
+                    "default": 0.5,
+                    "description": "Morale effects when used",
+                    "options": {
+                        "hidden": false
+                    }
+                },
+                "healthy": {
+                    "type": "number",
+                    "id": "/properties/proportional/properties/healthy",
+                    "title": "fun",
+                    "default": 0.5,
+                    "description": "How much it will affect your health.",
+                    "options": {
+                        "hidden": false
+                    }
+                }
             }
         },
         "rot_spawn": {

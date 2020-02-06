@@ -29,6 +29,13 @@
 	},
 	{
 		"type": "filter",
+		"name": "all_body_parts",
+		"display_name": "Type: body_part",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "body_part" } }
+	},
+	{
+		"type": "filter",
 		"name": "all_ITEM_CATEGORY",
 		"display_name": "Type: ITEM_CATEGORY",
 		"display_key": "id",
@@ -138,6 +145,13 @@
 	},
 	{
 		"type": "filter",
+		"name": "is_battery",
+		"display_name": "is battery",
+		"display_key": "id",
+		"filter": { "jsonObject.id": { "$eq": "battery" } }
+	},
+	{
+		"type": "filter",
 		"name": "old_name",
 		"display_name": "Old name string",
 		"display_key": "name",
@@ -145,21 +159,18 @@
         { "jsonObject.name": { "$type": "string" } },
         { "jsonObject.type": { "$ne": "ammunition_type" } },
         { "jsonObject.type": { "$ne": "AMMO" } },
-        { "jsonObject.type": { "$ne": "trap" } },
-        { "jsonObject.type": { "$ne": "MAGAZINE" } },
         { "jsonObject.type": { "$ne": "CONTAINER" } },
         { "jsonObject.type": { "$ne": "overmap_terrain" } },
         { "jsonObject.type": { "$ne": "vehicle_part" } },
         { "jsonObject.type": { "$ne": "vehicle" } },
         { "jsonObject.type": { "$ne": "GUNMOD" } },
-        { "jsonObject.type": { "$ne": "TOOL" } },
-        { "jsonObject.type": { "$ne": "COMESTIBLE" } },
         { "jsonObject.type": { "$ne": "GENERIC" } },
-        { "jsonObject.type": { "$ne": "TOOL_ARMOR" } },
-        { "jsonObject.type": { "$ne": "ARMOR" } },
+        { "jsonObject.type": { "$ne": "MAGAZINE" } },
+        { "jsonObject.type": { "$ne": "TOOL" } },
+        { "jsonObject.type": { "$ne": "body_part" } },
+        { "jsonObject.type": { "$ne": "COMESTIBLE" } },
         { "jsonObject.type": { "$ne": "faction" } },
         { "jsonObject.type": { "$ne": "mission_definition" } },
-        { "jsonObject.looks_like": { "$exists": false } },
         { "jsonObject.name_plural": { "$exists": true } },
         { "fileName": { "$containsNone": "obsolete" } }
     ] }
@@ -172,10 +183,11 @@
 		"filter": { "$and": [ 
         { "jsonObject.name": { "$type": "string" } },
         { "jsonObject.type": { "$eq": "ARMOR" } },
-        { "jsonObject.looks_like": { "$exists": false } },
-        { "jsonObject.conditional_names": { "$exists": false } },
+        { "jsonObject.symbol": { "$eq": "[" } },
         { "jsonObject.name_plural": { "$exists": true } },
-        { "fileName": { "$containsNone": "tool_armor" } },
+        { "jsonObject.use_action": { "$exists": false } },
+        { "jsonObject.material": { "$contains": "cotton" } },
+        { "jsonObject.covers": { "$contains": "TORSO" } },
         { "fileName": { "$containsNone": "obsolete" } }
     ] }
 	}

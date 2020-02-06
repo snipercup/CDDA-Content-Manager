@@ -7,6 +7,9 @@
     "include_properties": [
         { "property": "magazines", "propertyOrder": 150 }
     ],
+    "stringifyOptions": {
+      "maxLength": 117
+    },
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -29,7 +32,6 @@
         "symbol",
         "color",
         "explode_in_fire",
-        "explosion",
         "use_action",
         "flags"
     ],
@@ -75,6 +77,44 @@
           "$ref": "#/definitions/volume", 
           "propertyOrder": 13
         },
+        "power_draw": {
+          "$ref": "#/definitions/power_draw"
+        },
+        "revert_to": {
+            "type": "string",
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { 
+                    "$or": [
+                        { "jsonObject.type": { "$eq": "TOOL" } },
+                        { "jsonObject.type": { "$eq": "GENERIC" } }
+                    ]
+                }
+            }
+        },
+        "looks_like": {
+            "type": "string",
+            "format": "selectize",
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { 
+                    "$and": [
+                        { 
+                            "$or": [
+                                { "jsonObject.symbol": { "$exists": true } },
+                                { "jsonObject.copy-from": { "$exists": true } }
+                            ] 
+                        },
+                        { 
+                            "$or": [
+                                { "jsonObject.type": { "$eq": "TOOL" } },
+                                { "jsonObject.type": { "$eq": "COMESTIBLE" } }
+                            ] 
+                        }
+                    ]
+                }
+            }
+        },
         "material": {
           "$ref": "#/definitions/material",
           "propertyOrder": 13
@@ -111,6 +151,12 @@
             },
             "propertyOrder": 140
         },
+        "turns_per_charge": {
+          "$ref": "#/definitions/turns_per_charge"
+        },
+        "explosion": {
+          "$ref": "#/definitions/explosion"
+        },
         "initial_charges": {
             "type": "integer",
             "id": "properties/initial_charges",
@@ -124,63 +170,6 @@
         "cutting": {
           "$ref": "#/definitions/cutting", 
           "propertyOrder": 13
-        },
-        "explosion": {
-            "type": "object",
-            "id": "/properties/explosion",
-            "title": "Explosion",
-            "stringifyOptions": {
-              "maxLength": 106
-            },
-            "options": {
-                "disable_collapse": false,
-                "disable_edit_json": false,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false
-            },
-            "defaultProperties": [
-                "power",
-                "//",
-                "shrapnel"
-            ],
-            "properties": {
-                "power": {
-                    "type": "integer",
-                    "id": "/properties/explosion/properties/power",
-                    "title": "Power",
-                    "default": 25000,
-                    "description": "A description for 'power'  Type: 'integer'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 10
-                },
-                "//": {
-                    "type": "string",
-                    "id": "/properties/explosion/properties///",
-                    "title": "Title Root Explosion ",
-                    "default": "Fire would burn away/degrade some of the ANFO before the detonator would trigger.",
-                    "format": "text",
-                    "description": "Description for '' Type: 'string' Path: '/properties/explosion/properties///'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 20
-                },
-                "shrapnel": {
-                    "type": "integer",
-                    "id": "/properties/explosion/properties/shrapnel",
-                    "title": "Shrapnel",
-                    "default": 12600,
-                    "description": "A description for 'shrapnel'  Type: 'integer'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 30
-                }
-            },
-            "propertyOrder": 150
         },
         "gunmod_data": {
             "type": "object",
@@ -518,6 +507,9 @@
         "techniques": {
           "$ref": "#/definitions/techniques"
         },
+        "qualities": {
+          "$ref": "#/definitions/qualities"
+        },
         "use_action": {
           "$ref": "#/definitions/use_action",
           "stringifyOptions": {
@@ -581,7 +573,45 @@
                 "type": "string",
                 "enum": [ 
                   "RADIO_MODABLE",
+                  "RADIO_CONTAINER",
                   "RADIO_INVOKE_PROC",
+                  "LIGHT_6",
+                  "LIGHT_8",
+                  "LIGHT_10",
+                  "LIGHT_15",
+                  "LIGHT_30",
+                  "LIGHT_240",
+                  "LIGHT_300",
+                  "LIGHT_310",
+                  "UNARMED_WEAPON",
+                  "ALWAYS_TWOHAND",
+                  "DURABLE_MELEE",
+                  "HURT_WHEN_PULLED",
+                  "WATER_EXTINGUISH",
+                  "WIND_EXTINGUISH",
+                  "TRADER_AVOID",
+                  "SHEATH_KNIFE",
+                  "SHEATH_SPEAR",
+                  "NO_REPAIR",
+                  "NPC_THROWN",
+                  "NPC_THROW_NOW",
+                  "NONCONDUCTIVE",
+                  "BAROMETER",
+                  "IS_UPS",
+                  "NO_CVD",
+                  "POWERED",
+                  "CHARGEDIM",
+                  "ALARMCLOCK",
+                  "WATCH",
+                  "FIRESTARTER",
+                  "ALLOWS_REMOTE_USE",
+                  "RADIOACTIVE",
+                  "LEAK_DAM",
+                  "FLAMING",
+                  "MESSY",
+                  "SPEAR",
+                  "FIRE",
+                  "STAB",
                   "BOMB"
                 ]
             },
@@ -598,65 +628,6 @@
                 "hidden": false
             },
             "propertyOrder": 20
-        },
-        "qualities": {
-            "type": "array",
-            "id": "/properties/qualities",
-            "title": "Qualities",
-            "description": "The qualities this item provides",
-            "format": "table",
-            "options": {
-                "disable_collapse": false,
-                "disable_array_add": false,
-                "disable_array_delete": false,
-                "disable_array_reorder": true,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false
-            },
-            "items": {
-                "type": "array",
-                "id": "/properties/qualities/oneof0",
-                "default": [ "CUT", 1 ],
-                "title": "Quality",
-                "format": "tabs",
-                "options": {
-                    "disable_collapse": true,
-                    "disable_array_add": true,
-                    "disable_array_delete": true,
-                    "disable_array_reorder": true,
-                    "disable_properties": true,
-                    "collapsed": false,
-                    "compact": true,
-                    "hidden": false
-                },
-                "items": [
-                    {
-                        "type": "string",
-                        "id": "/properties/qualities/items/oneof0",
-                        "default": "VISE",
-                        "format": "text",
-                        "filteredEnum": {
-                            "display_key": "id",
-                            "filter": { "jsonObject.type": { "$eq": "tool_quality" } }
-                        },
-                        "options": {
-                          "hidden": false,
-                          "compact": true
-                        }
-                    },
-                    {
-                        "type": "integer",
-                        "id": "/properties/qualities/items/oneof1",
-                        "default": 1,
-                        "options": {
-                          "hidden": false,
-                          "compact": true
-                        }
-                    }
-                ]
-            },
-            "propertyOrder": 90
         }
     },
     "definitions": {

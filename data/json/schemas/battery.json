@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "additionalProperties": true,
-    "title": "Book",
+    "title": "Battery",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
     "options": {
@@ -24,19 +24,11 @@
         "type": {
           "$ref": "#/definitions/type", 
           "propertyOrder": 11,
-          "default": "BOOK"
+          "default": "BATTERY"
         },
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
-        },
-        "copy-from": {
-            "type": "string",
-            "enum": [ ]
-        },
-        "description": {
-          "$ref": "#/definitions/description", 
-          "propertyOrder": 13
         }
     }
 }

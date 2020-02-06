@@ -5,6 +5,9 @@
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
     "get_ids_of_type": [ { "type": "GUNMOD", "display_key": "id" }, { "type": "ammunition_type", "display_key": "id" } ],
+    "stringifyOptions": {
+      "maxLength": 115
+    },
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -52,6 +55,14 @@
             },
             "enum": [ ],
             "propertyOrder": 5
+        },
+        "looks_like": {
+            "type": "string",
+            "format": "selectize",
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { "jsonObject.type": { "$eq": "GUN" } }
+            }
         },
         "weight": {
           "$ref": "#/definitions/weight", 
@@ -123,6 +134,17 @@
                 "$ref": "#/definitions/GUNMOD" 
             },
             "propertyOrder": 60
+        },
+        "blackpowder_tolerance": {
+            "type": "integer",
+            "id": "properties/blackpowder_tolerance",
+            "title": "Blackpowder intolerance",
+            "default": 8,
+            "description": "One in X chance to get clogged up (per shot) when firing blackpowder ammunition (higher is better). Optional, default is 8.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 40
         },
         "durability": {
             "type": "integer",
@@ -384,6 +406,7 @@
                             "low auto",
                             "high auto",
                             "auto",
+                            "burst",
                             "single",
                             "double",
                             "multi",
@@ -569,8 +592,19 @@
             "type": "string",
             "id": "/properties/reload_noise",
             "title": "Reload noise",
-            "default": 15,
+            "default": "Click",
             "description": "A string describing the noise when reloading.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 150
+        },
+        "barrel_length": {
+            "type": "string",
+            "id": "/properties/barrel_length",
+            "title": "Barrel length",
+            "default": "15 ml",
+            "description": "Amount of volume lost when the barrel is sawn. Approximately 9mL per inch is a decent approximation.",
             "options": {
                 "hidden": false
             },
@@ -594,7 +628,7 @@
         },
         "ammo_effects": {
             "type": "array",
-            "id": "/properties/extend/properties/ammo_effects",
+            "id": "properties/ammo_effects",
             "title": "Ammo effects",
             "format": "selectize",
             "uniqueItems": true,
@@ -624,6 +658,35 @@
             },
             "propertyOrder": 60
         },
+        "faults": {
+            "type": "array",
+            "id": "properties/faults",
+            "title": "Faults",
+            "description": "The faults this gun can have",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "filteredEnum": {
+                    "display_key": "id",
+                    "filter": { "jsonObject.type": { "$eq": "fault" } } 
+                }
+            },
+            "propertyOrder": 60
+        },
+        "magazine_well": {
+          "$ref": "#/definitions/magazine_well"
+        },
         "flags": {
             "type": "array",
             "id": "properties/flags",
@@ -634,7 +697,7 @@
             "propertyOrder": 60
         },
         "ranged_damage": {
-            "title": "ranged_damage",
+            "title": "Ranged damage",
             "id": "/properties/ranged_damage",
             "oneOf": [
                 {

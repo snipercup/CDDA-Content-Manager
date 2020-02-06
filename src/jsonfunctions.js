@@ -138,7 +138,15 @@ const stringifyPrettyCompact = (json) => {
   return jsonString;
 }
 
-function recursiveStringify(jsonEntry, schemaDefinition, options, depth = 0){
+/*
+This receives 1 json entry from a file and lints it
+jsonEntry: one entry form a json file when depth=0, otherwise it's a object, string, array or whatever that is currently being processed
+schemaDefinition: The definition of the json entry. this includes some properties required for linting
+options: the stringifyOptions, this contains the maximum length for a line for example
+depth: the recursion depth
+extraspace: a hack to allow the first object in an array of object to have more space
+*/
+function recursiveStringify(jsonEntry, schemaDefinition, options, depth = 0, extraspace = 0){
   let jsonString = "", keys, key, value, tempstring = "", arrItem, addSpace, schemakey, optionsCopy, optionsKeys, isNumber;
   
   if(typeof jsonEntry === 'object' && jsonEntry !== null){
@@ -153,7 +161,11 @@ function recursiveStringify(jsonEntry, schemaDefinition, options, depth = 0){
           console.log("magazines")
         }
         if(typeof arrItem === 'object' && arrItem !== null){
-          tempstring += recursiveStringify(arrItem, schemaDefinition, optionsCopy, depth+1);
+          if(x == 0){ //the first entry in an object list gets 3 space extra in a line length because that's what the official linter does.
+             tempstring += recursiveStringify(arrItem, schemaDefinition, optionsCopy, depth+1, 3);
+          } else {
+             tempstring += recursiveStringify(arrItem, schemaDefinition, optionsCopy, depth+1);
+          }
         } else {
           tempstring += stringify(arrItem, optionsCopy);
         }
@@ -239,7 +251,7 @@ function recursiveStringify(jsonEntry, schemaDefinition, options, depth = 0){
       if(depth == 0){
         jsonString = "  {\n" + jsonString + "\n  }";
       } else {
-        if(jsonString.length - (keys.length-1)*5 > optionsCopy.maxLength){
+        if(jsonString.length - (keys.length-1)*5 > optionsCopy.maxLength + extraspace){
           addSpace = ""
           for(let x = 0; x < depth; x++){ addSpace = addSpace + "  " }
           jsonString = replaceAll(jsonString, "||==|| ", ",\n    " + addSpace);

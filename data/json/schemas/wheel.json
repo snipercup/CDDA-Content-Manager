@@ -29,6 +29,67 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "category": {
+          "$ref": "#/definitions/category"
+        },
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 13
+        },
+        "weight": {
+          "$ref": "#/definitions/weight", 
+          "propertyOrder": 13
+        },
+        "volume": {
+          "$ref": "#/definitions/volume", 
+          "propertyOrder": 13
+        },
+        "material": {
+          "$ref": "#/definitions/material",
+          "propertyOrder": 13
+        },
+        "symbol": {
+          "$ref": "#/definitions/symbol", 
+          "propertyOrder": 13
+        },
+        "price": {
+          "$ref": "#/definitions/price", 
+          "propertyOrder": 13
+        },
+        "to_hit": {
+          "$ref": "#/definitions/to_hit", 
+          "propertyOrder": 13
+        },
+        "bashing": {
+          "$ref": "#/definitions/bashing", 
+          "propertyOrder": 13
+        },
+        "color": {
+          "$ref": "#/definitions/color", 
+          "propertyOrder": 13
+        },
+        "diameter": {
+            "type": "integer",
+            "id": "/properties/diameter",
+            "title": "Diameter",
+            "default": 20,
+            "description": "The diameter of the wheel in inches",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 70
+        },
+        "width": {
+            "type": "integer",
+            "id": "/properties/width",
+            "title": "Width",
+            "default": 2,
+            "description": "The width of the wheel (inches)",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 70
         }
     }
 }

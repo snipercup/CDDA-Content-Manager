@@ -29,6 +29,162 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "symbol": {"$ref": "#/definitions/symbol"},
+        "looks_like": {
+            "type": "string",
+            "format": "selectize",
+            "enum": [ ]
+        },
+        "color": {"$ref": "#/definitions/color"},
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 13
+        },
+        "price": {
+          "$ref": "#/definitions/price", 
+          "propertyOrder": 13
+        },
+        "price_postapoc": {
+          "$ref": "#/definitions/price_postapoc", 
+          "propertyOrder": 13
+        },
+        "material": {
+          "$ref": "#/definitions/material", 
+          "propertyOrder": 13
+        },
+        "weight": {
+          "$ref": "#/definitions/weight", 
+          "propertyOrder": 13
+        },
+        "volume": {
+          "$ref": "#/definitions/volume", 
+          "propertyOrder": 13
+        },
+        "bashing": {
+            "$ref": "#/definitions/bashing", 
+            "propertyOrder": 150
+        },
+        "to_hit": {
+          "$ref": "#/definitions/to_hit", 
+          "propertyOrder": 13
+        },
+        "flags": {
+            "type": "array",
+            "id": "/properties/flags",
+            "title": "Flags",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "enum": [ 
+                    "IS_PET_ARMOR", 
+                    "NO_SALVAGE"
+                ]
+            },
+            "propertyOrder": 60
+        },
+        "material_thickness": {
+          "$ref": "#/definitions/material_thickness", 
+          "propertyOrder": 13
+        },
+        "storage": {
+          "$ref": "#/definitions/storage", 
+          "propertyOrder": 13
+        },
+        "max_pet_vol": {
+            "type": "string",
+            "id": "/properties/max_pet_vol",
+            "title": "Max pet vol",
+            "default": "35000 ml",
+            "format": "text",
+            "description": "the maximum volume of the pet that will fit into this armor. Volume in ml and L can be used - \"50 ml\" or \"2 L\".",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 40
+        },
+        "min_pet_vol": {
+            "type": "string",
+            "id": "/properties/min_pet_vol",
+            "title": "Min pet vol",
+            "default": "25000 ml",
+            "format": "text",
+            "description": "the minimum volume of the pet that will fit into this armor. Volume in ml and L can be used - \"50 ml\" or \"2 L\".",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 40
+        },
+        "pet_bodytype": {
+            "type": "string",
+            "id": "/properties/pet_bodytype",
+            "title": "Pet bodytype",
+            "default": "dog",
+            "format": "text",
+            "description": "the body type of the pet that this monster will fit.  See MONSTERS.md",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 40
+        },
+        "copy-from": {
+            "type": "string",
+            "enum": [ ]
+        },
+        "environmental_protection": {
+          "$ref": "#/definitions/environmental_protection", 
+          "propertyOrder": 13
+        },
+        "extend": {
+            "type": "object",
+            "id": "/properties/extend",
+            "description": "Modders can add an \"extends\" field to their definition to append entries to a list instead of overriding the entire list.",
+            "title": "Extend",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "flags"
+            ],
+            "properties": {
+                "flags": {
+                    "type": "array",
+                    "id": "/properties/extend/properties/flags",
+                    "title": "Flags",
+                    "format": "selectize",
+                    "uniqueItems": true,
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_array_add": false,
+                        "disable_array_delete": false,
+                        "disable_array_reorder": true,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false,
+                        "multiple": true
+                    },
+                    "items": {
+                        "type": "string",
+                        "enum": [ "NO_SALVAGE" ]
+                    },
+                    "propertyOrder": 60
+                }
+            }
         }
     }
 }

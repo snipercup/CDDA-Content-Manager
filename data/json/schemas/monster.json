@@ -841,7 +841,7 @@
                                 "title": "Ammo Type",
                                 "default": "9mm",
                                 "format": "text",
-                                "description": "(Required) Valid item id of the ammo the gun will be loaded with. Monster should also have a \"starting_ammo\" field with this ammo. For example",
+                                "description": "(Required) Valid item id of the ammo the gun will be loaded with. Monster should also have a \"starting_ammo\" field with this ammo.",
                                 "options": {
                                     "hidden": false
                                 },

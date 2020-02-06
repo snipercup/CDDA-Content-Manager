@@ -161,39 +161,14 @@
             },
             "propertyOrder": 100
         },
-        "calories": {
-            "type": "integer",
-            "id": "/properties/calories",
-            "title": "Calories",
-            "default": 95,
-            "description": "Hunger satisfied (in kcal)",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 110
-        },
+        "calories": {"$ref": "#/definitions/calories"},
         "price": {
-            "type": "integer",
-            "id": "/properties/price",
-            "title": "Price",
-            "default": 900,
-            "description": "A description for 'price'  Type: 'integer'",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 130
+          "$ref": "#/definitions/price", 
+          "propertyOrder": 13
         },
         "material": {
-            "type": "string",
-            "id": "/properties/material",
-            "title": "Material",
-            "default": "fruit",
-            "format": "text",
-            "description": "Description for 'material' Type: 'string' Path: '/properties/material'",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 140
+          "$ref": "#/definitions/material", 
+          "propertyOrder": 13
         },
         "volume": {
           "$ref": "#/definitions/volume", 

@@ -20,6 +20,7 @@ async function loadExtraDefinitions(schemas, entries){
     if(schemaJSONObj.properties["copy-from"]){
       schemaJSONObj.properties["copy-from"].enum = IDListOfType; //If there's a copy-from then the id list of this type goes here.
     }
+    /*
     // Get a list of looks like entries. This is a list of anything that has a symbol
     if(schemaJSONObj.properties["looks_like"]){
       let retreivedItems = entries.find({ "jsonObject.symbol": { $exists: true } })
@@ -32,6 +33,7 @@ async function loadExtraDefinitions(schemas, entries){
       }
       schemaJSONObj.properties["looks_like"].enum = collectedItems;
     }
+    */
     
     //The schema can include a request to add the list of id's of a certain type.
     if(schemaJSONObj.get_ids_of_type){
@@ -131,19 +133,19 @@ async function loadExtraDefinitions(schemas, entries){
       }
     }
     
-    schemaJSONObj = await recursiveSetFilteredEnums(schemaJSONObj, entries);
+    schemaJSONObj = await recursiveSetProperties(schemaJSONObj, entries);
   }
 }
 
 
 
-async function recursiveSetFilteredEnums(schemaDefinition, entries){
-  let jsonString = "", keys, key, value, tempstring = "", arrItem, addSpace, schemakey, optionsCopy, optionsKeys, isNumber;
+async function recursiveSetProperties(schemaDefinition, entries){
+  let jsonString = "", keys, key, value, tempstring = "", arrItem, addSpace, schemakey, schemakeys, optionsCopy, objectKey, isNumber, genericDefinitions;
   
   if(typeof schemaDefinition === 'object' && schemaDefinition !== null){
     if(Array.isArray(schemaDefinition)){ //It's an array
       for(let x = 0, arrLen = schemaDefinition.length; x < arrLen; x++){ //Loop over every item in the array
-        schemaDefinition[x] = await recursiveSetFilteredEnums(schemaDefinition[x], entries);
+        schemaDefinition[x] = await recursiveSetProperties(schemaDefinition[x], entries);
       }
     } else { //It's an object
       keys = Object.keys(schemaDefinition);
@@ -152,10 +154,24 @@ async function recursiveSetFilteredEnums(schemaDefinition, entries){
         value = schemaDefinition[key];
         if(key == "filteredEnum"){
            //Create enum property
-           schemaDefinition.enum = await getFilteredListFromCollection(schemaDefinition[key].filter, entries, true, schemaDefinition[key].display_key)
+           schemaDefinition.enum = await getFilteredListFromCollection(value.filter, entries, true, value.display_key)
+        }
+        if(key == "includeDefinition"){
+          //Copy the contents of the definition into this object. This is a workaround since the jsonEditor forgets its schema when you reference another property from a property that is also referenced elsewhere.
+          genericDefinitions = schemas.findOne({ "jsonObject.generalDefinitions": { $eq: true } });
+          schemakey = genericDefinitions.jsonObject[value];
+          if(schemakey) {
+            schemakeys = Object.keys(schemakey); //take all of the keys in the requested object
+            for(let n = 0, schemakeysLen = schemakeys.length; n < schemakeysLen; n++){ //Loop over every key in the entry
+                objectKey = schemakeys[n];
+                if(!schemaDefinition[objectKey]){ //If the key does not already exist, add it
+                  schemaDefinition[objectKey] = schemakey[objectKey];
+                }
+            }
+          }
         }
         if(typeof value === 'object' && value !== null){
-          schemaDefinition[key] = await recursiveSetFilteredEnums(schemaDefinition[key], entries);
+          schemaDefinition[key] = await recursiveSetProperties(schemaDefinition[key], entries);
         }
       }
     }

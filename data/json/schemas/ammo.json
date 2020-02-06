@@ -5,6 +5,9 @@
     "type": "object",
     "id": "ammo",
     "get_ids_of_type": [ { "type": "CONTAINER", "display_key": "id" } ],
+    "stringifyOptions": {
+        "maxLength": 117
+    },
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -37,28 +40,25 @@
     ],
     "properties": {
         "id": {
-          "$ref": "#/definitions/id"
+          "$ref": "#/definitions/id",
+          "propertyOrder": 1
         },
-        "copyfrom": {
-          "type": "string",
-          "$ref": "#/definitions/copyfrom"
+        "type": {
+          "$ref": "#/definitions/type",
+          "default": "AMMO",
+          "propertyOrder": 2
+        },
+        "name": {
+          "$ref": "#/definitions/name",
+          "propertyOrder": 3
+        },
+        "description": {
+          "$ref": "#/definitions/description",
+          "propertyOrder": 4
         },
         "copy-from": {
             "type": "string",
             "enum": [ ]
-        },
-        "type": {
-          "$ref": "#/definitions/type",
-          "default": "AMMO"
-        },
-        "name": {
-          "$ref": "#/definitions/name"
-        },
-        "name_plural": {
-          "$ref": "#/definitions/name_plural"
-        },
-        "description": {
-          "$ref": "#/definitions/description"
         },
         "weight": {"$ref": "#/definitions/weight"},
         "volume": {"$ref": "#/definitions/volume"},
@@ -69,23 +69,13 @@
         "color": {"$ref": "#/definitions/color"},
         "count": {"$ref": "#/definitions/count"},
         "stack_size": {"$ref": "#/definitions/stack_size"},
+        "ammo_type": {"$ref": "#/definitions/ammo_type"},
         "//": {
             "type": "string",
             "title": "Description",
             "default": "This is a comment",
             "format": "text",
             "description": "This is a comment that will only appear here but not in-game",
-            "options": {
-                "hidden": false
-            }
-        },
-        "ammo_type": {
-            "type": "string",
-            "id": "/properties/ammo_type",
-            "title": "Ammo Type",
-            "default": "46",
-            "format": "text",
-            "description": "The type of ammo",
             "options": {
                 "hidden": false
             }
@@ -273,6 +263,7 @@
                   "NOGIB", 
                   "TANGLE", 
                   "PRIMITIVE_RANGED_WEAPON",
+                  "TRADER_AVOID",
                   "NO_SALVAGE"
                 ]
             },
@@ -305,7 +296,10 @@
         "looks_like": {
             "type": "string",
             "format": "selectize",
-            "enum": [ ]
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { "jsonObject.type": { "$eq": "AMMO" } }
+            }
         },
         "fuel": {
             "type": "object",
@@ -457,7 +451,7 @@
         },
         "bashing": {
           "$ref": "#/definitions/bashing", 
-          "propertyOrder": 13
+          "propertyOrder": 150
         },
         "explode_in_fire": {
             "type": "boolean",
@@ -593,6 +587,7 @@
                     "ACIDBOMB", 
                     "BEANBAG", 
                     "BLACKPOWDER", 
+                    "NON-FOULING", 
                     "BLINDS_EYES", 
                     "BOUNCE", 
                     "COOKOFF", 

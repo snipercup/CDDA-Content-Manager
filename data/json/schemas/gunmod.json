@@ -58,6 +58,37 @@
           "$ref": "#/definitions/volume", 
           "propertyOrder": 13
         },
+        "copy-from": {
+            "type": "string",
+            "enum": [ ]
+        },
+        "proportional": {
+            "type": "object",
+            "id": "/properties/proportional",
+            "title": "Proportional",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "sight_dispersion"
+            ],
+            "properties": {
+                "sight_dispersion": {
+                    "type": "number",
+                    "id": "/properties/proportional/properties/sight_dispersion",
+                    "title": "Sight dispersion",
+                    "default": 0.46,
+                    "description": "Inaccuracy of gun derived from the sight mechanism",
+                    "options": {
+                        "hidden": false
+                    }
+                }
+            }
+        },
         "integral_volume": {
             "type": "integer",
             "id": "/properties/integral_volume",
@@ -275,7 +306,7 @@
                         "id": "/properties/min_skills/items/oneof0",
                         "default": "weapon",
                         "format": "text",
-                        "enum": [ "weapon", "mechanics", "launcher" ],
+                        "enum": [ "weapon", "mechanics", "launcher", "gun" ],
                         "options": {
                           "hidden": false,
                           "compact": true
@@ -294,7 +325,40 @@
             },
             "propertyOrder": 90
         },
+        "delete": {
+            "type": "object",
+            "id": "/properties/delete",
+            "title": "Delete",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "flags"
+            ],
+            "properties": {
+                "flags": { 
+                    "type": "array",
+                    "id": "/properties/delete/properties/flags",
+                    "$ref": "#/definitions/flags_ref" 
+                }
+            }
+        },
         "flags": {
+            "type": "array",
+            "id": "/properties/flags",
+            "$ref": "#/definitions/flags_ref" 
+        }
+    },
+    "definitions": {
+        "AMMO": {
+          "type": "string", 
+          "enum": [ ]
+        },
+        "flags_ref": {
             "type": "array",
             "id": "/properties/flags",
             "title": "Flags",
@@ -313,16 +377,14 @@
             "items": {
                 "type": "string",
                 "enum": [ 
-                    "INSTALL_DIFFICULT"
+                    "INSTALL_DIFFICULT",
+                    "NEVER_JAMS",
+                    "RELOAD_EJECT",
+                    "IRREMOVABLE",
+                    "DISABLE_SIGHTS"
                 ]
             },
             "propertyOrder": 60
-        }
-    },
-    "definitions": {
-        "AMMO": {
-          "type": "string", 
-          "enum": [ ]
         }
     }
 }

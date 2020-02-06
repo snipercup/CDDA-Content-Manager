@@ -33,9 +33,9 @@
         },
         "zone": {
             "type": "string",
-            "id": "/properties/sort_rank",
+            "id": "/properties/zone",
             "title": "Zone",
-            "default": 3,
+            "default": "TOOLS",
             "description": "The corresponding loot_zone (see loot_zones.json)",
             "$ref": "#/definitions/LOOT_ZONE", 
             "options": {

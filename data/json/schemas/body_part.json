@@ -29,6 +29,167 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "heading_singular": {
+            "type": "string",
+            "id": "/properties/heading_singular",
+            "title": "Heading singular",
+            "default": "R. Leg",
+            "description": "The singular heading",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 90
+        },
+        "heading_plural": {
+            "type": "string",
+            "id": "/properties/heading_plural",
+            "title": "Heading plural",
+            "default": "Legs",
+            "description": "The plural heading",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 90
+        },
+        "hp_bar_ui_text": {
+            "type": "string",
+            "id": "/properties/hp_bar_ui_text",
+            "title": "HP bar ui text",
+            "default": "R LEG",
+            "description": "The text displayed in the HP bar ui",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 90
+        },
+        "encumbrance_text": {
+            "type": "string",
+            "id": "/properties/encumbrance_text",
+            "title": "Encumbrance text",
+            "default": "Running and swimming are slowed.",
+            "description": "The text displayed when this body part is heavely encumbered",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 90
+        },
+        "main_part": {
+            "type": "string",
+            "id": "/properties/main_part",
+            "title": "Main part",
+            "default": "leg_r",
+            "description": "\"Parent\" of this part - main parts are their own \"parents\"",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 90
+        },
+        "opposite_part": {
+            "type": "string",
+            "id": "/properties/opposite_part",
+            "title": "Opposite part",
+            "default": "leg_l",
+            "description": "The part opposite to this. Used when the 'switch side' is activated on an item to switch from left to right for example.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 90
+        },
+        "side": {
+            "type": "string",
+            "id": "/properties/side",
+            "title": "Side",
+            "default": "right",
+            "description": "What side it is on",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 90
+        },
+        "legacy_id": {
+            "type": "string",
+            "id": "/properties/legacy_id",
+            "title": "LEG_R",
+            "default": "right",
+            "description": "The legacy id",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 90
+        },
+        "hit_size": {
+            "type": "integer",
+            "id": "/properties/hit_size",
+            "title": "Hit size",
+            "default": 3,
+            "description": "Size of the body part when doing an unweighted selection.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 90
+        },
+        "bionic_slots": {
+            "type": "integer",
+            "id": "/properties/bionic_slots",
+            "title": "Bionic slots",
+            "default": 30,
+            "description": "The amount of bionic slots",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 90
+        },
+        "hit_size_relative": {
+            "type": "array",
+            "id": "/properties/hit_size_relative",
+            "title": "Hit size relative",
+            "description": "Hit sizes for attackers who are smaller, equal in size, and bigger.",
+            "format": "grid",
+            "options": {
+                "disable_collapse": true,
+                "disable_array_add": true,
+                "disable_array_delete": true,
+                "disable_array_reorder": true,
+                "disable_properties": true,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": [
+                {
+                    "type": "number",
+                    "options": {
+                        "compact": true
+                    },
+                    "default": 0
+                },
+                {
+                    "type": "number",
+                    "options": {
+                        "compact": true
+                    },
+                    "default": 0
+                },
+                {
+                    "type": "number",
+                    "options": {
+                        "compact": true
+                    },
+                    "default": 0
+                }
+            ],
+            "propertyOrder": 90
+        },
+        "hit_difficulty": {
+            "type": "number",
+            "id": "/properties/hit_difficulty",
+            "title": "Hit difficulty",
+            "default": 0.975,
+            "description": "How hard is it to hit a given body part, assuming \"owner\" is hit. Higher number means good hits will veer towards this part, lower means this part is unlikely to be hit by inaccurate attacks. Formula is `chance *= pow(hit_roll, hit_difficulty)`",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 130
         }
     }
 }

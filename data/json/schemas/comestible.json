@@ -136,7 +136,7 @@
                 "id": "properties/conditional_names/items",
                 "title": "Conditional name",
                 "stringifyOptions": {
-                  "maxLength": 115
+                  "maxLength": 113
                 },
                 "options": {
                     "disable_collapse": false,
@@ -357,6 +357,16 @@
                     "title": "fun",
                     "default": 0.5,
                     "description": "Morale effects when used",
+                    "options": {
+                        "hidden": false
+                    }
+                },
+                "volume": {
+                    "type": "number",
+                    "id": "/properties/proportional/properties/volume",
+                    "title": "volume",
+                    "default": 0.5,
+                    "description": "The proportional volume of the item. For stackable items (ammo, comestibles) this is the volume of stack_size charges.",
                     "options": {
                         "hidden": false
                     }

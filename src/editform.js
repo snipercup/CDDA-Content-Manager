@@ -50,7 +50,6 @@ class EditForm {
 		//Transform the json object to html
 		this.htmlParent.appendChild(this.createButtonsRow());
 		this.htmlParent.appendChild(createElement("div")); //container for the editor
-    
     // Initialize the editor with a JSON schema
     this.editor = new JSONEditor(this.htmlParent.childNodes[1],{
       schema: this.schemaInst,
@@ -59,6 +58,7 @@ class EditForm {
       selectize: true,
       remove_empty_properties: false
     });
+    this.editor.theme.options.object_indent = true;
     this.editor.setValue(this.jsonObject);
 	}
   
@@ -73,11 +73,12 @@ class EditForm {
 	//Create row of buttons
 	createButtonsRow(){
 		let y = document.createElement("DIV"), _this = this;
+    this.fileNameHTMLElement = createElement("SPAN", undefined, undefined, undefined, this.fileName);
+		y.appendChild(this.fileNameHTMLElement);
+		y.appendChild(createElement("BR", undefined, undefined, undefined, ""));
 		y.appendChild(createElement("BUTTON", undefined, {"title": "Save", "class": "btn btn-sm btn-primary mr-2 my-1"}, {"click": function() {_this.editFormSubmit_click(this);}}, "<i class='icon icon-check'></i> Save"));
 		y.appendChild(createElement("BUTTON", undefined, {"title": "Duplicate", "class": "btn btn-sm btn-primary mr-2 my-1"}, {"click": function() {_this.editFormSubmit_click(this);}}, "<i class='icon icon-copy'></i> Duplicate"));
 		y.appendChild(createElement("BUTTON", undefined, {"title": "Delete", "class": "btn btn-sm btn-primary mr-2 my-1 json-editor-btn-delete json-editor-btntype-deleteall"}, {"click": function() {_this.editFormSubmit_click(this);}}, "<i class='icon icon-delete'></i> Delete"));
-    this.fileNameHTMLElement = createElement("SPAN", undefined, undefined, undefined, this.fileName);
-		y.appendChild(this.fileNameHTMLElement);
 		return y;
 	}
   

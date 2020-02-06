@@ -7,6 +7,30 @@
 
 
 
+/* ############################################################################## */
+/* ########################## --- Body part schema --- ########################## */
+/* ############################################################################## */
+[data-schemapath='root.hit_size_relative'] div.je-panel {
+    display: inline-block;
+}
+[data-schemapath='root.hit_size_relative'] div.je-panel, td, p {
+  margin: 1px !important;
+  padding: 1px !important;
+}
+[data-schemapath='root.hit_size_relative'] .form-group {
+  margin: 0;
+}
+[data-schemapath='root.hit_size_relative'] table {
+    overflow: visible !important;
+}
+[data-schemapath='root.hit_size_relative'] .btn-group:empty, .form-group + div:empty {
+  display: none;
+}
+[data-schemapath='root.hit_size_relative'] tr h4, th {
+  display: none;
+}
+
+
 /* ############################################################################### */
 /* ########################## --- Comestible schema --- ########################## */
 /* ############################################################################### */

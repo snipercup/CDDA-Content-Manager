@@ -13,6 +13,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/js/standalone/selectize.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/css/selectize.bootstrap3.css">
+    <script src="https://cdn.jsdelivr.net/npm/ace-builds@latest/src-noconflict/ace.min.js"></script>
     <script src="lib/lokijs.min.js"></script>
     <script src="filesystemfunctions.js"></script>
     <script src="commonfunctions.js"></script> 
@@ -53,6 +54,8 @@
 		
 		//Initialize function, it is asynchonous to allow await-ing for the functions called in init.
 		async function init(){
+      // Set ACE Editor basePath to same path as CDN Library.
+      window.ace.config.set("basePath", "https://cdn.jsdelivr.net/npm/ace-builds@latest/src-noconflict/");
       await addItemsToCollectionFromFolderList(await getContentFolderList(), entries); //Get all entries from all json file and put them in one big collection. at the time of writing this is about 25600 entries.
       await addItemsToCollectionFromFolderList([await getWorkingDirectory() + SCHEMAS_PATH], schemas); //Put all the schemas in one collection
       await loadExtraDefinitions(schemas, entries); //Add the dynamic content to the schemas.

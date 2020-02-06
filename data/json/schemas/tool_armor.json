@@ -114,28 +114,14 @@
         "techniques": {
           "$ref": "#/definitions/techniques"
         },
-        "turns_per_charge": {
-            "type": "integer",
-            "id": "properties/turns_per_charge",
-            "title": "Turns per charge",
-            "default": 25,
-            "description": "Charges consumed over time, deprecated in favor of power_draw",
-            "options": {
-                "hidden": false
-            }
-        },
         "magazine_well": {
           "$ref": "#/definitions/magazine_well"
         },
         "power_draw": {
-            "type": "integer",
-            "id": "properties/power_draw",
-            "title": "Power draw",
-            "default": 25,
-            "description": "Energy consumption rate in mW",
-            "options": {
-                "hidden": false
-            }
+          "$ref": "#/definitions/power_draw"
+        },
+        "turns_per_charge": {
+          "$ref": "#/definitions/turns_per_charge"
         },
         "flags": {
           "$ref": "#/definitions/flags", 

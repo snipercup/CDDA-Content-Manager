@@ -29,6 +29,108 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "copy-from": {
+            "type": "string",
+            "enum": [ ]
+        },
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 13
+        },
+        "weight": {
+          "$ref": "#/definitions/weight", 
+          "propertyOrder": 13
+        },
+        "volume": {
+          "$ref": "#/definitions/volume", 
+          "propertyOrder": 13
+        },
+        "price": {
+          "$ref": "#/definitions/price", 
+          "propertyOrder": 13
+        },
+        "bashing": {
+          "$ref": "#/definitions/bashing", 
+          "propertyOrder": 13
+        },
+        "category": {
+          "$ref": "#/definitions/category"
+        },
+        "price_postapoc": {
+          "$ref": "#/definitions/price_postapoc", 
+          "propertyOrder": 13
+        },
+        "to_hit": {
+          "$ref": "#/definitions/to_hit", 
+          "propertyOrder": 13
+        },
+        "material": {
+          "$ref": "#/definitions/material", 
+          "propertyOrder": 13
+        },
+        "symbol": {
+          "$ref": "#/definitions/symbol", 
+          "propertyOrder": 13
+        },
+        "color": {
+          "$ref": "#/definitions/color", 
+          "propertyOrder": 13
+        },
+        "ammo_type": {"$ref": "#/definitions/ammo_type"},
+        "count": {"$ref": "#/definitions/count"},
+        "looks_like": {
+            "type": "string",
+            "format": "selectize",
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { "$or": [
+                    { "jsonObject.type": { "$eq": "AMMO" } },
+                    { "jsonObject.type": { "$eq": "MAGAZINE" } },
+                    { "jsonObject.type": { "$eq": "BATTERY" } }
+                ] }
+            }
+        },
+        "capacity": {
+            "type": "integer",
+            "id": "/properties/capacity",
+            "title": "Capacity",
+            "default": 3,
+            "description": "Capacity of magazine (in equivalent units to ammo charges)",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 40
+        },
+        "flags": {
+            "type": "array",
+            "id": "/properties/flags",
+            "title": "Flags",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "enum": [ 
+                    "NO_UNLOAD", 
+                    "NO_RELOAD", 
+                    "RECHARGE", 
+                    "RADIOACTIVE", 
+                    "LEAK_DAM", 
+                    "NO_REPAIR", 
+                    "NO_SALVAGE"
+                ]
+            },
+            "propertyOrder": 60
         }
     }
 }

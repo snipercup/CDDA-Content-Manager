@@ -95,7 +95,10 @@
         "looks_like": {
             "type": "string",
             "format": "selectize",
-            "enum": [ ]
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { "jsonObject.type": { "$eq": "ARMOR" } }
+            }
         },
         "covers": {
           "$ref": "#/definitions/covers", 

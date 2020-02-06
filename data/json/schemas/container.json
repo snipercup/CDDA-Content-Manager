@@ -1,0 +1,121 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "additionalProperties": true,
+    "title": "Container",
+    "type": "object",
+    "id": "https://niebert.github.io/json-editor",
+    "options": {
+        "disable_collapse": false,
+        "disable_edit_json": false,
+        "disable_properties": false,
+        "collapsed": false,
+        "hidden": false
+    },
+    "defaultProperties": [
+        "type",
+        "id",
+        "name"
+    ],
+    "properties": {
+        "id": {
+          "$ref": "#/definitions/id", 
+          "propertyOrder": 10
+        },
+        "type": {
+          "$ref": "#/definitions/type", 
+          "propertyOrder": 11,
+          "default": "CONTAINER"
+        },
+        "name": {
+          "$ref": "#/definitions/name", 
+          "propertyOrder": 12
+        },
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 13
+        },
+        "weight": {
+          "$ref": "#/definitions/weight", 
+          "propertyOrder": 13
+        },
+        "volume": {
+          "$ref": "#/definitions/volume", 
+          "propertyOrder": 13
+        },
+        "price": {
+          "$ref": "#/definitions/price", 
+          "propertyOrder": 13
+        },
+        "bashing": {
+            "$ref": "#/definitions/bashing", 
+            "propertyOrder": 150
+        },
+        "to_hit": {
+          "$ref": "#/definitions/to_hit", 
+          "propertyOrder": 13
+        },
+        "category": {
+          "$ref": "#/definitions/category"
+        },
+        "material": {
+          "$ref": "#/definitions/material", 
+          "propertyOrder": 13
+        },
+        "symbol": {
+          "$ref": "#/definitions/symbol", 
+          "propertyOrder": 13
+        },
+        "color": {
+          "$ref": "#/definitions/color", 
+          "propertyOrder": 13
+        },
+        "contains": {
+            "type": "string",
+            "id": "/properties/contains",
+            "title": "Contains",
+            "default": "2 L",
+            "description": "How much volume this container can hold",
+            "options": {
+                "hidden": false
+            }
+        },
+        "qualities": {
+          "$ref": "#/definitions/qualities"
+        },
+        "insulation": {
+            "type": "integer",
+            "id": "/properties/insulation",
+            "title": "Insulation",
+            "default": 1,
+            "description": "(Optional, default = 1) how much insulation should it provide to the contents",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 100
+        },
+        "watertight": {
+            "type": "boolean",
+            "id": "/properties/watertight",
+            "title": "Watertight",
+            "format": "checkbox",
+            "default": false,
+            "description": "Can hold liquids, this is a required for it to be used for liquids. (optional, default: false)",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 70
+        },
+        "seals": {
+            "type": "boolean",
+            "id": "/properties/seals",
+            "title": "Seals",
+            "format": "checkbox",
+            "default": false,
+            "description": " Can be resealed, this is a required for it to be used for liquids. (optional, default: false)",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 70
+        }
+    }
+}

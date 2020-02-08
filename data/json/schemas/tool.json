@@ -4,6 +4,8 @@
     "title": "Tool",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
+    "format": "categories",
+    "basicCategoryTitle": "Main",
     "include_properties": [
         { "property": "magazines", "propertyOrder": 150 }
     ],
@@ -46,6 +48,11 @@
           "default": "TOOL"
         },
         "name": {
+          "$ref": "#/definitions/name", 
+          "propertyOrder": 12
+        },
+        "name_plural": {
+          "title": "name plural", 
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
         },
@@ -108,6 +115,8 @@
                         { 
                             "$or": [
                                 { "jsonObject.type": { "$eq": "TOOL" } },
+                                { "jsonObject.type": { "$eq": "CONTAINER" } },
+                                { "jsonObject.type": { "$eq": "GENERIC" } },
                                 { "jsonObject.type": { "$eq": "COMESTIBLE" } }
                             ] 
                         }
@@ -171,6 +180,61 @@
           "$ref": "#/definitions/cutting", 
           "propertyOrder": 13
         },
+        "thrown_damage": {
+            "title": "Thrown damage",
+            "id": "/properties/thrown_damage",
+            "type": "array",
+            "format": "selectize",
+            "uniqueItems": true,
+            "default": [ { "damage_type": "stab", "amount": 8 } ],
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "object",
+                "id": "properties/thrown_damage",
+                "title": "Thrown damage",
+                "options": {
+                    "disable_collapse": false,
+                    "disable_edit_json": false,
+                    "disable_properties": false,
+                    "collapsed": false,
+                    "hidden": false
+                },
+                "defaultProperties": [
+                    "damage_type",
+                    "amount"
+                ],
+                "properties": {
+                    "damage_type": {
+                        "type": "string",
+                        "id": "properties/ranged_damage/oneof0/properties/damage_type",
+                        "$ref": "#/definitions/damage_type",
+                        "options": {
+                          "hidden": false,
+                          "compact": true
+                        }
+                    },
+                    "amount": {
+                        "type": "integer",
+                        "id": "properties/ranged_damage/oneof0/properties/amount",
+                        "default": 1,
+                        "description": "The amount",
+                        "options": {
+                          "hidden": false,
+                          "compact": true
+                        }
+                    }
+                }
+            },
+            "propertyOrder": 150
+        },
         "gunmod_data": {
             "type": "object",
             "id": "/properties/gunmod_data",
@@ -212,6 +276,8 @@
                         "disable_array_add": false,
                         "disable_array_delete": false,
                         "disable_array_reorder": true,
+                        "disable_array_delete_all_rows": true,
+                        "disable_array_delete_last_row": true,
                         "disable_properties": false,
                         "collapsed": false,
                         "hidden": false
@@ -220,16 +286,17 @@
                         "type": "array",
                         "id": "/properties/gunmod_data/mode_modifier/oneof0",
                         "default": [ "DEFAULT", "auto", 14 ],
-                        "title": "Quality",
-                        "format": "tabs",
+                        "title": "Mode",
+                        "format": "grid",
                         "options": {
-                            "disable_collapse": true,
-                            "disable_array_add": true,
-                            "disable_array_delete": true,
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
                             "disable_array_reorder": true,
-                            "disable_properties": true,
+                            "disable_array_delete_all_rows": true,
+                            "disable_array_delete_last_row": true,
                             "collapsed": false,
-                            "compact": true,
+                            "compact": false,
                             "hidden": false
                         },
                         "items": [
@@ -261,6 +328,9 @@
                                 "default": 1,
                                 "options": {
                                   "hidden": false,
+                                  "inputAttributes": {
+                                    "style": "width: 60px"
+                                  },
                                   "compact": true
                                 }
                             },
@@ -291,6 +361,10 @@
                 }
             },
             "propertyOrder": 150
+        },
+        "min_skills": {
+          "$ref": "#/definitions/min_skills", 
+          "propertyOrder": 13
         },
         "extend": {
             "type": "object",
@@ -575,28 +649,43 @@
                   "RADIO_MODABLE",
                   "RADIO_CONTAINER",
                   "RADIO_INVOKE_PROC",
+                  "LIGHT_2",
+                  "LIGHT_4",
                   "LIGHT_6",
                   "LIGHT_8",
                   "LIGHT_10",
                   "LIGHT_15",
+                  "LIGHT_20",
                   "LIGHT_30",
                   "LIGHT_240",
                   "LIGHT_300",
                   "LIGHT_310",
+                  "LIGHT_450",
+                  "LIGHT_500",
+                  "BELT_CLIP",
+                  "REFILLABLE_LIGHTER",
                   "UNARMED_WEAPON",
                   "ALWAYS_TWOHAND",
                   "DURABLE_MELEE",
                   "HURT_WHEN_PULLED",
+                  "REQUIRES_TINDER",
                   "WATER_EXTINGUISH",
                   "WIND_EXTINGUISH",
                   "TRADER_AVOID",
                   "SHEATH_KNIFE",
+                  "SHEATH_SWORD",
                   "SHEATH_SPEAR",
+                  "NO_UNLOAD",
+                  "NO_SALVAGE",
+                  "NO_RELOAD",
                   "NO_REPAIR",
                   "NPC_THROWN",
                   "NPC_THROW_NOW",
                   "NONCONDUCTIVE",
+                  "THERMOMETER",
+                  "HYGROMETER",
                   "BAROMETER",
+                  "USE_UPS",
                   "IS_UPS",
                   "NO_CVD",
                   "POWERED",
@@ -604,14 +693,18 @@
                   "ALARMCLOCK",
                   "WATCH",
                   "FIRESTARTER",
+                  "RADIOSIGNAL_2",
+                  "RADIO_ACTIVATION",
                   "ALLOWS_REMOTE_USE",
                   "RADIOACTIVE",
                   "LEAK_DAM",
                   "FLAMING",
+                  "FANCY",
                   "MESSY",
                   "SPEAR",
                   "FIRE",
                   "STAB",
+                  "ZOOM",
                   "BOMB"
                 ]
             },

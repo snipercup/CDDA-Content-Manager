@@ -239,6 +239,33 @@
   display: none;
 }
 
+/*root.gunmod_data.mode_modifier.0.2*/
+/*
+[data-schemapath='root.gunmod_data.mode_modifier'] div.form-group {
+  width: 110px;
+}
+[data-schemapath='root.gunmod_data.mode_modifier'] div.selectize-control {
+  width: 200px;
+}*/
+[data-schemapath='root.gunmod_data.mode_modifier'] div.je-panel, div.compact {
+  display: inline-block;
+  /*width: fit-content;*/
+}
+[data-schemapath='root.gunmod_data.mode_modifier'] div.je-panel, td, p {
+  margin: 1px !important;
+  padding: 1px !important;
+}
+[data-schemapath='root.gunmod_data.mode_modifier'] .form-group {
+  margin: 0;
+}
+[data-schemapath='root.gunmod_data.mode_modifier'] .btn-group:empty, .form-group + div:empty {
+  display: none;
+}
+/*
+[data-schemapath='root.gunmod_data.mode_modifier'] tr h4, th {
+  display: none;
+}*/
+
 
     
     

@@ -38,6 +38,11 @@
           "$ref": "#/definitions/name", 
           "propertyOrder": 3
         },
+        "name_plural": {
+          "title": "name plural", 
+          "$ref": "#/definitions/name", 
+          "propertyOrder": 3
+        },
         "description": {
           "$ref": "#/definitions/description", 
           "propertyOrder": 4
@@ -134,6 +139,33 @@
                 "$ref": "#/definitions/GUNMOD" 
             },
             "propertyOrder": 60
+        },
+        "proportional": {
+            "type": "object",
+            "id": "/properties/proportional",
+            "title": "Proportional",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "reload"
+            ],
+            "properties": {
+                "reload": {
+                    "type": "number",
+                    "id": "/properties/proportional/properties/reload",
+                    "title": "Reload",
+                    "default": 0.5,
+                    "description": "Reload time factor",
+                    "options": {
+                        "hidden": false
+                    }
+                }
+            }
         },
         "blackpowder_tolerance": {
             "type": "integer",
@@ -821,6 +853,7 @@
                     "FIRESTARTER",
                     "RELOAD_ONE",
                     "STR_RELOAD",
+                    "MOUNTED_GUN",
                     "STR_DRAW",
                     "PRIMITIVE_RANGED_WEAPON",
                     "NO_UNLOAD",

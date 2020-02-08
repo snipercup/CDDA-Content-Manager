@@ -50,20 +50,26 @@
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
         },
+        "name_plural": {
+          "title": "Name plural",
+          "$ref": "#/definitions/name", 
+          "propertyOrder": 12
+        },
         "description": {
           "$ref": "#/definitions/description", 
-          "propertyOrder": 12
+          "propertyOrder": 13
         },
         "symbol": {
           "$ref": "#/definitions/symbol", 
-          "propertyOrder": 12
+          "propertyOrder": 14
         },
         "category": {
-          "$ref": "#/definitions/category"
+          "$ref": "#/definitions/category",
+          "propertyOrder": 15
         },
         "price": {
           "$ref": "#/definitions/price", 
-          "propertyOrder": 12
+          "propertyOrder": 16
         },
         "armor_data": {
           "$ref": "#/definitions/material_thickness", 
@@ -89,7 +95,15 @@
         "looks_like": {
             "type": "string",
             "format": "selectize",
-            "enum": [ ]
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { 
+                    "$or": [
+                        { "jsonObject.type": { "$eq": "GENERIC" } },
+                        { "jsonObject.type": { "$eq": "COMESTIBLE" } }
+                    ]
+                }
+            }
         },
         "relative": {
             "type": "object",
@@ -208,6 +222,10 @@
                     "EATEN_COLD",
                     "EATEN_HOT",
                     "NPC_SAFE",
+                    "RAW",
+                    "ACID",
+                    "MYCUS_OK",
+                    "HIDDEN_POISON",
                     "FREEZERBURN",
                     "SMOKABLE",
                     "USE_EAT_VERB",
@@ -428,7 +446,7 @@
         "addiction_potential": {
             "type": "integer",
             "id": "/properties/addiction_potential",
-            "title": "addiction_potential",
+            "title": "Addiction potential",
             "default": 3,
             "description": "Ability to cause addictions",
             "options": {

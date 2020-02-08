@@ -68,6 +68,62 @@
       },
       "propertyOrder": 30
   },
+  "min_skills": {
+      "type": "array",
+      "id": "/properties/min_skills",
+      "title": "Min skills",
+      "description": "Minimum skills",
+      "format": "table",
+      "options": {
+          "disable_collapse": false,
+          "disable_array_add": false,
+          "disable_array_delete": false,
+          "disable_array_reorder": true,
+          "disable_properties": false,
+          "collapsed": false,
+          "hidden": false
+      },
+      "items": {
+          "type": "array",
+          "id": "/properties/min_skills/oneof0",
+          "default": [ "weapon", 4 ],
+          "title": "Skill",
+          "format": "tabs",
+          "options": {
+              "disable_collapse": true,
+              "disable_array_add": true,
+              "disable_array_delete": true,
+              "disable_array_reorder": true,
+              "disable_properties": true,
+              "collapsed": false,
+              "compact": true,
+              "hidden": false
+          },
+          "items": [
+              {
+                  "type": "string",
+                  "id": "/properties/min_skills/items/oneof0",
+                  "default": "weapon",
+                  "format": "text",
+                  "enum": [ "weapon", "mechanics", "launcher", "gun", "melee" ],
+                  "options": {
+                    "hidden": false,
+                    "compact": true
+                  }
+              },
+              {
+                  "type": "integer",
+                  "id": "/properties/min_skills/items/oneof1",
+                  "default": 4,
+                  "options": {
+                    "hidden": false,
+                    "compact": true
+                  }
+              }
+          ]
+      },
+      "propertyOrder": 90
+  },
   "spoils_in": {
       "type": "string",
       "id": "/properties/spoils_in",
@@ -172,6 +228,7 @@
           "container",
           "veh_parts",
           "chems",
+          "food",
           "fuel",
           "armor",
           "clothing",
@@ -790,6 +847,7 @@
   "use_action_object": {
       "type": "object",
       "id": "/definitions/use_action",
+      "title": "Use action",
       "options": {
           "disable_collapse": false,
           "disable_edit_json": false,
@@ -816,6 +874,9 @@
               "description": "The type of method",
               "enum": [
                 "transform",
+                "delayed_transform",
+                "bandolier",
+                "deploy_furn",
                 "explosion",
                 "holster",
                 "firestarter",
@@ -851,6 +912,17 @@
                   "hidden": false
               },
               "propertyOrder": 20
+          },
+          "need_worn": {
+              "type": "boolean",
+              "id": "properties/need_worn",
+              "title": "Need worn",
+              "format": "checkbox",
+              "default": false,
+              "description": "Whether the item needs to be worn to be transformed, is false by default.",
+              "options": {
+                  "hidden": false
+              }
           },
           "sound_msg": {
               "type": "string",
@@ -1149,8 +1221,9 @@
       }
   },
   "use_action": {
+      "title": "Use action",
       "description": "Action performed when used",
-      "oneOf": [
+      "anyOf": [
           {
             "type": "object",
             "title": "Object format",
@@ -1175,17 +1248,19 @@
               "items": {
                   "oneOf": [
                       {
-                          "type": "string",
-                          "title": "String format",
-                          "enum": [ 
-                            "HAMMER",
-                            "CROWBAR"
-                          ]
-                      },
-                      {
                           "type": "object",
                           "title": "Object format",
                           "includeDefinition": "use_action_object"
+                      },
+                      {
+                          "type": "string",
+                          "title": "String format",
+                          "enum": [ 
+                            "CAMERA",
+                            "MP3",
+                            "HAMMER",
+                            "CROWBAR"
+                          ]
                       }
                   ]
               },
@@ -1355,6 +1430,7 @@
             "EYES", 
             "MOUTH",
             "LEG_EITHER",
+            "FOOT_EITHER",
             "HAND_EITHER"
           ]
       },

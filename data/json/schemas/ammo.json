@@ -52,6 +52,11 @@
           "$ref": "#/definitions/name",
           "propertyOrder": 3
         },
+        "name_plural": {
+          "title": "name plural",
+          "$ref": "#/definitions/name",
+          "propertyOrder": 3
+        },
         "description": {
           "$ref": "#/definitions/description",
           "propertyOrder": 4

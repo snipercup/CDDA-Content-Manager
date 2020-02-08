@@ -4,7 +4,7 @@
     "title": "Mutation",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
-    "get_ids_of_type": [ { "type": "mutation_category", "display_key": "id" }, { "type": "mutation_type", "display_key": "id" }, { "type": "martial_art", "display_key": "id" } ],
+    "get_ids_of_type": [ { "type": "mutation_category", "display_key": "id" }, { "type": "mutation_type", "display_key": "id" } ],
     "get_enums_from_definition": [ 
         { "from": "body_parts_enum", "to": "encumbrance_always.items.items.0" },
         { "from": "body_parts_enum", "to": "wet_protection.items.properties.part" },
@@ -248,7 +248,10 @@
             },
             "items": {
                 "type": "string",
-                "$ref": "#/definitions/martial_art"
+                "filteredEnum": {
+                    "display_key": "id",
+                    "filter": { "jsonObject.type": { "$eq": "martial_art" } }
+                }
             },
             "propertyOrder": 60
         },
@@ -1390,11 +1393,6 @@
       "mutation_type": {
         "type": "string", 
         "description": "The id of an mutation_type entry", 
-        "enum": [ ]
-      },
-      "martial_art": {
-        "type": "string", 
-        "description": "The id of an martial_art entry", 
         "enum": [ ]
       }
     }

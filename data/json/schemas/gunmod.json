@@ -124,6 +124,10 @@
           "$ref": "#/definitions/mod_targets", 
           "propertyOrder": 13
         },
+        "min_skills": {
+          "$ref": "#/definitions/min_skills", 
+          "propertyOrder": 13
+        },
         "acceptable_ammo": {
             "type": "array",
             "id": "/properties/acceptable_ammo",
@@ -268,62 +272,6 @@
                 "hidden": false
             },
             "propertyOrder": 150
-        },
-        "min_skills": {
-            "type": "array",
-            "id": "/properties/min_skills",
-            "title": "min_skills",
-            "description": "Minimum skills",
-            "format": "table",
-            "options": {
-                "disable_collapse": false,
-                "disable_array_add": false,
-                "disable_array_delete": false,
-                "disable_array_reorder": true,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false
-            },
-            "items": {
-                "type": "array",
-                "id": "/properties/min_skills/oneof0",
-                "default": [ "weapon", 4 ],
-                "title": "Skill",
-                "format": "tabs",
-                "options": {
-                    "disable_collapse": true,
-                    "disable_array_add": true,
-                    "disable_array_delete": true,
-                    "disable_array_reorder": true,
-                    "disable_properties": true,
-                    "collapsed": false,
-                    "compact": true,
-                    "hidden": false
-                },
-                "items": [
-                    {
-                        "type": "string",
-                        "id": "/properties/min_skills/items/oneof0",
-                        "default": "weapon",
-                        "format": "text",
-                        "enum": [ "weapon", "mechanics", "launcher", "gun" ],
-                        "options": {
-                          "hidden": false,
-                          "compact": true
-                        }
-                    },
-                    {
-                        "type": "integer",
-                        "id": "/properties/min_skills/items/oneof1",
-                        "default": 4,
-                        "options": {
-                          "hidden": false,
-                          "compact": true
-                        }
-                    }
-                ]
-            },
-            "propertyOrder": 90
         },
         "delete": {
             "type": "object",

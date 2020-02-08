@@ -49,6 +49,11 @@
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
         },
+        "name_plural": {
+          "title": "name_plural", 
+          "$ref": "#/definitions/name", 
+          "propertyOrder": 12
+        },
         "description": {
           "$ref": "#/definitions/description", 
           "propertyOrder": 13
@@ -94,6 +99,7 @@
         },
         "looks_like": {
             "type": "string",
+            "title": "Looks like",
             "format": "selectize",
             "filteredEnum": {
                 "display_key": "id",
@@ -169,9 +175,47 @@
             },
             "propertyOrder": 200
         },
+        "repairs_like": {
+            "type": "string",
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { "jsonObject.type": { "$eq": "ARMOR" } }
+            },
+            "enum": [ ]
+        },
+        "delete": {
+            "type": "object",
+            "id": "/properties/delete",
+            "title": "Delete",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "flags"
+            ],
+            "properties": {
+                "flags": { 
+                    "type": "array",
+                    "id": "/properties/delete/properties/flags",
+                    "$ref": "#/definitions/flags_ref" 
+                }
+            }
+        },
         "flags": {
             "type": "array",
             "id": "/properties/flags",
+            "$ref": "#/definitions/flags_ref" 
+            
+        }
+    },
+    "definitions": {
+        "flags_ref": {
+            "type": "array",
+            "id": "/definitions/flags",
             "title": "Flags",
             "format": "selectize",
             "uniqueItems": true,
@@ -192,6 +236,7 @@
                   "STURDY", 
                   "HELMET_COMPAT", 
                   "ELECTRIC_IMMUNE", 
+                  "BLIND", 
                   "OUTER", 
                   "MAG_COMPACT", 
                   "SKINTIGHT", 

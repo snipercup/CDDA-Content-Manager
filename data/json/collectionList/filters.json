@@ -50,6 +50,13 @@
 	},
 	{
 		"type": "filter",
+		"name": "all_GENERIC",
+		"display_name": "Type: GENERIC",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "GENERIC" } }
+	},
+	{
+		"type": "filter",
 		"name": "all_GUNMOD",
 		"display_name": "Type: GUNMOD",
 		"display_key": "id",
@@ -89,6 +96,13 @@
 		"display_name": "Type: TOOL_ARMOR",
 		"display_key": "id",
 		"filter": { "jsonObject.type": { "$eq": "TOOL_ARMOR" } }
+	},
+	{
+		"type": "filter",
+		"name": "all_vehicle_part",
+		"display_name": "Type: vehicle_part",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "vehicle_part" } }
 	},
 	{
 		"type": "filter",
@@ -145,10 +159,13 @@
 	},
 	{
 		"type": "filter",
-		"name": "is_battery",
-		"display_name": "is battery",
+		"name": "is_id",
+		"display_name": "is equal to id",
 		"display_key": "id",
-		"filter": { "jsonObject.id": { "$eq": "battery" } }
+		"filter": { "$or": [
+            { "jsonObject.id": { "$eq": "bio" } },
+            { "jsonObject.abstract": { "$eq": "bio" } }
+        ] }
 	},
 	{
 		"type": "filter",
@@ -159,13 +176,11 @@
         { "jsonObject.name": { "$type": "string" } },
         { "jsonObject.type": { "$ne": "ammunition_type" } },
         { "jsonObject.type": { "$ne": "AMMO" } },
-        { "jsonObject.type": { "$ne": "CONTAINER" } },
         { "jsonObject.type": { "$ne": "overmap_terrain" } },
         { "jsonObject.type": { "$ne": "vehicle_part" } },
         { "jsonObject.type": { "$ne": "vehicle" } },
-        { "jsonObject.type": { "$ne": "GUNMOD" } },
-        { "jsonObject.type": { "$ne": "GENERIC" } },
-        { "jsonObject.type": { "$ne": "MAGAZINE" } },
+        { "jsonObject.type": { "$ne": "GUN" } },
+        { "jsonObject.type": { "$ne": "ARMOR" } },
         { "jsonObject.type": { "$ne": "TOOL" } },
         { "jsonObject.type": { "$ne": "body_part" } },
         { "jsonObject.type": { "$ne": "COMESTIBLE" } },
@@ -181,13 +196,15 @@
 		"display_name": "Old name string in type",
 		"display_key": "name",
 		"filter": { "$and": [ 
-        { "jsonObject.name": { "$type": "string" } },
-        { "jsonObject.type": { "$eq": "ARMOR" } },
-        { "jsonObject.symbol": { "$eq": "[" } },
+        { "$or": [
+            { "jsonObject.type": { "$eq": "GUNMOD" } },
+            { "jsonObject.type": { "$eq": "CONTAINER" } },
+            { "jsonObject.type": { "$eq": "GENERIC" } },
+            { "jsonObject.type": { "$eq": "BOOK" } },
+            { "jsonObject.type": { "$eq": "ammunition_type" } },
+            { "jsonObject.type": { "$eq": "vehicle_part" } }
+        ] },
         { "jsonObject.name_plural": { "$exists": true } },
-        { "jsonObject.use_action": { "$exists": false } },
-        { "jsonObject.material": { "$contains": "cotton" } },
-        { "jsonObject.covers": { "$contains": "TORSO" } },
         { "fileName": { "$containsNone": "obsolete" } }
     ] }
 	}

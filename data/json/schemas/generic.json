@@ -46,6 +46,11 @@
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
         },
+        "name_plural": {
+          "title": "name_plural", 
+          "$ref": "#/definitions/name", 
+          "propertyOrder": 12
+        },
         "description": {
           "$ref": "#/definitions/description", 
           "propertyOrder": 13
@@ -72,31 +77,29 @@
         "looks_like": {
             "type": "string",
             "format": "selectize",
-            "enum": [ ]
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { "jsonObject.type": { "$eq": "GENERIC" } }
+            }
         },
         "spoils_in": {
           "$ref": "#/definitions/spoils_in", 
           "propertyOrder": 13
         },
         "flags": {
-            "type": "array",
-            "id": "/properties/flags",
-            "title": "Flags",
-            "format": "selectize",
-            "uniqueItems": true,
-            "options": {
-                "disable_collapse": false,
-                "disable_array_add": false,
-                "disable_array_delete": false,
-                "disable_array_reorder": true,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false,
-                "multiple": true
-            },
+            "$ref": "#/definitions/flags", 
             "items": {
-                "type": "string",
                 "enum": [ 
+                    "MC_MOBILE",
+                    "MC_USED",
+                    "MC_TURN_USED",
+                    "MC_SCIENCE_STUFF",
+                    "MC_ENCRYPTED",
+                    "STAB",
+                    "BELT_CLIP",
+                    "DURABLE_MELEE",
+                    "NONCONDUCTIVE",
+                    "NO_SALVAGE",
                     "NO_INGEST",
                     "EDIBLE_FROZEN",
                     "EATEN_COLD"
@@ -177,6 +180,42 @@
         "fun": {
           "$ref": "#/definitions/fun", 
           "propertyOrder": 140
+        },
+        "book_data": {
+            "type": "object",
+            "id": "/definitions/armor_data",
+            "title": "Book data",
+            "description": "Every item (tool, gun, even food) can be used as book if it has book_data. Uses the same entries as for the book type",
+            "default": { "martial_art": "style_wingchun" },
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "martial_art"
+            ],
+            "properties": {
+                "martial_art": {
+                    "type": "string",
+                    "id": "/properties/smoking_result",
+                    "title": "Martial art",
+                    "default": "style_wingchun",
+                    "format": "text",
+                    "description": "The martial art style you learn from this book",
+                    "filteredEnum": {
+                        "display_key": "id",
+                        "filter": { "jsonObject.type": { "$eq": "martial_art" } }
+                    },
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 180
+                }
+            },
+            "propertyOrder": 150
         },
         "smoking_result": {
             "type": "string",

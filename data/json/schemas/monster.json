@@ -5,7 +5,7 @@
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
     "stringifyOptions": {
-      "maxLength": 120
+      "maxLength": 116
     },
     "get_ids_of_type": [ { "type": "SPECIES", "display_key": "id" } ],
     "options": {
@@ -106,7 +106,10 @@
         "looks_like": {
             "type": "string",
             "format": "selectize",
-            "enum": [ ]
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { "jsonObject.type": { "$eq": "MONSTER" } }
+            }
         },
         "hp": {
             "type": "integer",

@@ -85,6 +85,17 @@
 	},
 	{
 		"type": "filter",
+		"name": "all_recipe",
+		"display_name": "Type: recipe",
+		"display_key": "result",
+		"filter": { "$and": [ 
+        { "jsonObject.type": { "$eq": "recipe" } }, 
+        { "jsonObject.blueprint_name": { "$exists": false } },
+        { "fileName": { "$containsNone": "obsolete" } }
+    ] }
+	},
+	{
+		"type": "filter",
 		"name": "all_tools",
 		"display_name": "Type: TOOL",
 		"display_key": "id",
@@ -163,8 +174,8 @@
 		"display_name": "is equal to id",
 		"display_key": "id",
 		"filter": { "$or": [
-            { "jsonObject.id": { "$eq": "bio" } },
-            { "jsonObject.abstract": { "$eq": "bio" } }
+            { "jsonObject.id": { "$eq": "seed" } },
+            { "jsonObject.abstract": { "$eq": "seed" } }
         ] }
 	},
 	{
@@ -179,11 +190,11 @@
         { "jsonObject.type": { "$ne": "overmap_terrain" } },
         { "jsonObject.type": { "$ne": "vehicle_part" } },
         { "jsonObject.type": { "$ne": "vehicle" } },
+        { "jsonObject.type": { "$ne": "GENERIC" } },
         { "jsonObject.type": { "$ne": "GUN" } },
         { "jsonObject.type": { "$ne": "ARMOR" } },
-        { "jsonObject.type": { "$ne": "TOOL" } },
-        { "jsonObject.type": { "$ne": "body_part" } },
         { "jsonObject.type": { "$ne": "COMESTIBLE" } },
+        { "jsonObject.type": { "$ne": "body_part" } },
         { "jsonObject.type": { "$ne": "faction" } },
         { "jsonObject.type": { "$ne": "mission_definition" } },
         { "jsonObject.name_plural": { "$exists": true } },
@@ -199,7 +210,10 @@
         { "$or": [
             { "jsonObject.type": { "$eq": "GUNMOD" } },
             { "jsonObject.type": { "$eq": "CONTAINER" } },
-            { "jsonObject.type": { "$eq": "GENERIC" } },
+            { "jsonObject.type": { "$eq": "MONSTER" } },
+            { "jsonObject.type": { "$eq": "TOOL_ARMOR" } },
+            { "jsonObject.type": { "$eq": "TOOL" } },
+            { "jsonObject.type": { "$eq": "AMMO" } },
             { "jsonObject.type": { "$eq": "BOOK" } },
             { "jsonObject.type": { "$eq": "ammunition_type" } },
             { "jsonObject.type": { "$eq": "vehicle_part" } }

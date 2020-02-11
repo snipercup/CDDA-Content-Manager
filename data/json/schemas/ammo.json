@@ -63,7 +63,16 @@
         },
         "copy-from": {
             "type": "string",
-            "enum": [ ]
+            "format": "selectize",
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { 
+                    "$or": [
+                        { "jsonObject.type": { "$eq": "AMMO" } },
+                        { "jsonObject.type": { "$eq": "COMESTIBLE" } }
+                    ]
+                }
+            }
         },
         "weight": {"$ref": "#/definitions/weight"},
         "volume": {"$ref": "#/definitions/volume"},
@@ -84,6 +93,10 @@
             "options": {
                 "hidden": false
             }
+        },
+        "seed_data": {
+          "$ref": "#/definitions/seed_data", 
+          "propertyOrder": 13
         },
         "range": {
             "type": "integer",
@@ -247,26 +260,13 @@
           "propertyOrder": 13
         },
         "flags": {
-            "type": "array",
-            "id": "/properties/flags",
-            "title": "Flags",
-            "format": "selectize",
-            "uniqueItems": true,
-            "options": {
-                "disable_collapse": false,
-                "disable_array_add": false,
-                "disable_array_delete": false,
-                "disable_array_reorder": true,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false,
-                "multiple": true
-            },
+            "$ref": "#/definitions/flags",
             "items": {
                 "type": "string",
                 "enum": [ 
                   "NOGIB", 
                   "TANGLE", 
+                  "DROP_ACTION_ONLY_IF_LIQUID",
                   "PRIMITIVE_RANGED_WEAPON",
                   "TRADER_AVOID",
                   "NO_SALVAGE"
@@ -298,112 +298,13 @@
         },
         "effects": { "$ref": "#/definitions/effects" },
         "container": { "$ref": "#/definitions/CONTAINER" },
+        "fuel": { "$ref": "#/definitions/fuel" },
         "looks_like": {
             "type": "string",
             "format": "selectize",
             "filteredEnum": {
                 "display_key": "id",
                 "filter": { "jsonObject.type": { "$eq": "AMMO" } }
-            }
-        },
-        "fuel": {
-            "type": "object",
-            "id": "/properties/fuel",
-            "title": "Fuel",
-            "options": {
-                "disable_collapse": false,
-                "disable_edit_json": false,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false
-            },
-            "defaultProperties": [
-                "energy",
-                "explosion_data"
-            ],
-            "properties": {
-                "energy": {
-                    "type": "number",
-                    "id": "/properties/fuel/properties/energy",
-                    "title": "Energy",
-                    "default": 15.6,
-                    "description": "A description for 'energy'  Type: 'number'",
-                    "options": {
-                        "hidden": false
-                    }
-                },
-                "explosion_data": {
-                    "type": "object",
-                    "id": "/properties/fuel/properties/explosion_data",
-                    "title": "Explosion Data",
-                    "options": {
-                        "disable_collapse": false,
-                        "disable_edit_json": false,
-                        "disable_properties": false,
-                        "collapsed": false,
-                        "hidden": false
-                    },
-                    "defaultProperties": [
-                        "chance_hot",
-                        "chance_cold",
-                        "factor",
-                        "fiery",
-                        "size_factor"
-                    ],
-                    "properties": {
-                        "chance_hot": {
-                            "type": "integer",
-                            "id": "/properties/fuel/properties/explosion_data/properties/chance_hot",
-                            "title": "Chance Hot",
-                            "default": 5,
-                            "description": "A description for 'chance_hot'  Type: 'integer'",
-                            "options": {
-                                "hidden": false
-                            }
-                        },
-                        "chance_cold": {
-                            "type": "integer",
-                            "id": "/properties/fuel/properties/explosion_data/properties/chance_cold",
-                            "title": "Chance Cold",
-                            "default": 10,
-                            "description": "A description for 'chance_cold'  Type: 'integer'",
-                            "options": {
-                                "hidden": false
-                            }
-                        },
-                        "factor": {
-                            "type": "number",
-                            "id": "/properties/fuel/properties/explosion_data/properties/factor",
-                            "title": "Factor",
-                            "default": 0.2,
-                            "description": "A description for 'factor'  Type: 'number'",
-                            "options": {
-                                "hidden": false
-                            }
-                        },
-                        "fiery": {
-                            "type": "boolean",
-                            "id": "/properties/fuel/properties/explosion_data/properties/fiery",
-                            "title": "Fiery",
-                            "format": "checkbox",
-                            "default": true,
-                            "description": "A description for 'fiery'  Type: 'boolean'",
-                            "options": {
-                                "hidden": false
-                            }
-                        },
-                        "size_factor": {
-                            "type": "number",
-                            "id": "/properties/fuel/properties/explosion_data/properties/size_factor",
-                            "title": "Size Factor",
-                            "default": 0.1,
-                            "description": "A description for 'size_factor'  Type: 'number'",
-                            "options": {
-                                "hidden": false
-                            }
-                        }
-                    }
-                }
             }
         },
         "relative": {

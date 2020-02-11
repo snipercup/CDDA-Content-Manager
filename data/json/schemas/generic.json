@@ -95,10 +95,23 @@
                     "MC_TURN_USED",
                     "MC_SCIENCE_STUFF",
                     "MC_ENCRYPTED",
+                    "SPEAR",
                     "STAB",
+                    "ALLOWS_REMOTE_USE",
+                    "PERPETUAL",
+                    "RADIOACTIVE",
+                    "LEAK_DAM",
+                    "PSEUDO",
                     "BELT_CLIP",
+                    "REACH_ATTACK",
+                    "SHEATH_SWORD",
+                    "SHEATH_KNIFE",
+                    "UNARMED_WEAPON",
+                    "UNBREAKABLE_MELEE",
+                    "TRADER_AVOID",
                     "DURABLE_MELEE",
                     "NONCONDUCTIVE",
+                    "NO_UNWIELD",
                     "NO_SALVAGE",
                     "NO_INGEST",
                     "EDIBLE_FROZEN",
@@ -120,6 +133,19 @@
         "color": {
           "$ref": "#/definitions/color", 
           "propertyOrder": 13
+        },
+        "fuel": { "$ref": "#/definitions/fuel" },
+        "stackable": {
+            "type": "boolean",
+            "id": "properties/stackable",
+            "title": "Stackable",
+            "format": "checkbox",
+            "default": false,
+            "description": "If true, this item is stackable",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 100
         },
         "comestible_type": {
             "type": "string",

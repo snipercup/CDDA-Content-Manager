@@ -81,6 +81,7 @@
         "stack_size": {"$ref": "#/definitions/stack_size"},
         "copy-from": {
             "type": "string",
+            "format": "selectize",
             "filteredEnum": {
                 "display_key": "id",
                 "filter": { 
@@ -199,21 +200,7 @@
             }
         },
         "flags": {
-            "type": "array",
-            "id": "/properties/flags",
-            "title": "Flags",
-            "format": "selectize",
-            "uniqueItems": true,
-            "options": {
-                "disable_collapse": false,
-                "disable_array_add": false,
-                "disable_array_delete": false,
-                "disable_array_reorder": true,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false,
-                "multiple": true
-            },
+            "$ref": "#/definitions/flags", 
             "items": {
                 "type": "string",
                 "enum": [ 
@@ -222,11 +209,16 @@
                     "EATEN_COLD",
                     "EATEN_HOT",
                     "NPC_SAFE",
+                    "FELINE",
+                    "BIRD",
                     "RAW",
                     "ACID",
+                    "INEDIBLE",
+                    "CATTLE",
                     "MYCUS_OK",
                     "HIDDEN_POISON",
                     "FREEZERBURN",
+                    "MILLABLE",
                     "SMOKABLE",
                     "USE_EAT_VERB",
                     "TRADER_AVOID",
@@ -267,6 +259,10 @@
         },
         "spoils_in": {
           "$ref": "#/definitions/spoils_in", 
+          "propertyOrder": 13
+        },
+        "seed_data": {
+          "$ref": "#/definitions/seed_data", 
           "propertyOrder": 13
         },
         "comestible_type": {

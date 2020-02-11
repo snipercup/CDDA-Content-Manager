@@ -227,6 +227,7 @@
           "spare_parts",
           "container",
           "veh_parts",
+          "drugs",
           "chems",
           "food",
           "fuel",
@@ -449,6 +450,114 @@
       "description": "The price after the cataclysm",
       "options": {
           "hidden": false
+      }
+  },
+  "fuel": {
+      "type": "object",
+      "id": "/definitions/fuel",
+      "title": "Fuel",
+      "options": {
+          "disable_collapse": false,
+          "disable_edit_json": false,
+          "disable_properties": false,
+          "collapsed": false,
+          "hidden": false
+      },
+      "defaultProperties": [
+          "energy",
+          "explosion_data"
+      ],
+      "properties": {
+          "energy": {
+              "type": "number",
+              "id": "/definitions/fuel/properties/energy",
+              "title": "Energy",
+              "default": 15.6,
+              "description": "battery charges per mL of fuel. batteries have energy 1. is also MJ/L from https://en.wikipedia.org/wiki/Energy_density. assumes stacksize 250 per volume 1 (250mL). Multiply by 250 / stacksize * volume for other stack sizes and volumes.",
+              "options": {
+                  "hidden": false
+              }
+          },
+          "pump_terrain": {
+              "type": "string",
+              "id": "/properties/pump_terrain",
+              "title": "Pump terrain",
+              "default": "t_gas_pump",
+              "format": "text",
+              "description": "optional. terrain id for the fuel's pump, if any."
+          },
+          "explosion_data": {
+              "type": "object",
+              "id": "/definitions/fuel/properties/explosion_data",
+              "title": "Explosion Data",
+              "options": {
+                  "disable_collapse": false,
+                  "disable_edit_json": false,
+                  "disable_properties": false,
+                  "collapsed": false,
+                  "hidden": false
+              },
+              "defaultProperties": [
+                  "chance_hot",
+                  "chance_cold",
+                  "factor",
+                  "fiery",
+                  "size_factor"
+              ],
+              "properties": {
+                  "chance_hot": {
+                      "type": "integer",
+                      "id": "/definitions/fuel/properties/explosion_data/properties/chance_hot",
+                      "title": "Chance Hot",
+                      "default": 5,
+                      "description": "1 in chance_hot of explosion when attacked by HEAT weapons",
+                      "options": {
+                          "hidden": false
+                      }
+                  },
+                  "chance_cold": {
+                      "type": "integer",
+                      "id": "/definitions/fuel/properties/explosion_data/properties/chance_cold",
+                      "title": "Chance Cold",
+                      "default": 10,
+                      "description": "1 in chance_cold of explosion when attacked by other weapons",
+                      "options": {
+                          "hidden": false
+                      }
+                  },
+                  "factor": {
+                      "type": "number",
+                      "id": "/definitions/fuel/properties/explosion_data/properties/factor",
+                      "title": "Factor",
+                      "default": 0.2,
+                      "description": "explosion factor - larger numbers create more powerful explosions",
+                      "options": {
+                          "hidden": false
+                      }
+                  },
+                  "fiery": {
+                      "type": "boolean",
+                      "id": "/definitions/fuel/properties/explosion_data/properties/fiery",
+                      "title": "Fiery",
+                      "format": "checkbox",
+                      "default": true,
+                      "description": "true for fiery explosions",
+                      "options": {
+                          "hidden": false
+                      }
+                  },
+                  "size_factor": {
+                      "type": "number",
+                      "id": "/definitions/fuel/properties/explosion_data/properties/size_factor",
+                      "title": "Size Factor",
+                      "default": 0.1,
+                      "description": "size factor - larger numbers make the remaining fuel increase explosion power more",
+                      "options": {
+                          "hidden": false
+                      }
+                  }
+              }
+          }
       }
   },
   "material": {
@@ -753,7 +862,7 @@
   },
   "explosion": {
       "type": "object",
-      "id": "/properties/explosion",
+      "id": "/definitions/explosion",
       "title": "Explosion",
       "description": "Physical explosion data",
       "options": {
@@ -770,7 +879,7 @@
       "properties": {
           "power": {
               "type": "integer",
-              "id": "/properties/explosion/properties/power",
+              "id": "/definitions/explosion/properties/power",
               "title": "Power",
               "default": 25000,
               "description": "Measure of explosion power in grams of TNT equivalent explosive, affects damage and range.",
@@ -781,7 +890,7 @@
           },
           "distance_factor": {
               "type": "number",
-              "id": "/properties/distance_factor",
+              "id": "/definitions/distance_factor",
               "title": "Distance factor",
               "default": 0.9,
               "description": "How much power is retained per traveled tile of explosion. Must be lower than 1 and higher than 0.",
@@ -794,7 +903,7 @@
               "oneOf": [
                   {
                       "type": "integer",
-                      "id": "/properties/explosion/properties/shrapnel",
+                      "id": "/definitions/explosion/properties/shrapnel",
                       "title": "String format",
                       "default": 12600,
                       "description": "Total mass of casing, rest of fragmentation variables set to reasonable defaults.",
@@ -804,7 +913,7 @@
                   },
                   {
                       "type": "object",
-                      "id": "/properties/explosion/properties/shrapnel",
+                      "id": "/definitions/explosion/properties/shrapnel",
                       "title": "Object format",
                       "format": "grid",
                       "options": {
@@ -820,7 +929,7 @@
                       "properties": {
                           "casing_mass": {
                               "type": "integer",
-                              "id": "/properties/explosion/properties/shrapnel/properties/casing_mass",
+                              "id": "/definitions/explosion/properties/shrapnel/properties/casing_mass",
                               "title": "Casing mass",
                               "default": 1597,
                               "description": "Total mass of casing, casing/power ratio determines fragment velocity.",
@@ -830,7 +939,7 @@
                           },
                           "fragment_mass": {
                               "type": "integer",
-                              "id": "/properties/explosion/properties/shrapnel/properties/fragment_mass",
+                              "id": "/definitions/explosion/properties/shrapnel/properties/fragment_mass",
                               "title": "fragment mass",
                               "default": 1,
                               "description": "Mass of each fragment in grams. Large fragments hit harder, small fragments hit more often.",
@@ -878,6 +987,7 @@
                 "bandolier",
                 "deploy_furn",
                 "explosion",
+                "heal",
                 "holster",
                 "firestarter",
                 "place_trap",
@@ -1098,9 +1208,30 @@
               "title": "Volume",
               "default": 1,
               "description": "Volume of the sound of the item.",
-              "options": {
-                  "hidden": false
-              },
+              "propertyOrder": 50
+          },
+          "move_cost": {
+              "type": "integer",
+              "id": "/definitions/use_action/properties/move_cost",
+              "title": "Move cost",
+              "default": 250,
+              "description": "Cost in moves to use the item.",
+              "propertyOrder": 50
+          },
+          "disinfectant_power": {
+              "type": "number",
+              "id": "/definitions/use_action/properties/disinfectant_power",
+              "title": "Disinfectant power",
+              "default": 2.7,
+              "description": "quality of disinfectant",
+              "propertyOrder": 50
+          },
+          "bite": {
+              "type": "number",
+              "id": "/definitions/use_action/properties/bite",
+              "title": "Bite",
+              "default": 0.75,
+              "description": "Chance to remove bite effect.",
               "propertyOrder": 50
           },
           "menu_text": {
@@ -1167,6 +1298,7 @@
                           "format": "text",
                           "description": "ID of the effect",
                           "enum": [
+                            "pkill1",
                             "pkill2",
                             "cough_suppress"
                           ],
@@ -1297,6 +1429,97 @@
       "description": "Charges consumed over time, deprecated in favor of power_draw",
       "options": {
           "hidden": false
+      }
+  },
+  "seed_data": {
+      "type": "object",
+      "id": "/properties/seed_data",
+      "title": "Seed data",
+      "description": "Every item type can have optional seed data, if the item has seed data, it's considered a seed and can be planted",
+      "options": {
+          "disable_collapse": false,
+          "disable_edit_json": false,
+          "disable_properties": false,
+          "collapsed": false,
+          "hidden": false
+      },
+      "defaultProperties": [
+          "fruits",
+          "seeds"
+      ],
+      "properties": {
+          "fruit_div": {
+              "type": "integer",
+              "id": "/properties/seed_data/properties/fruit_div",
+              "title": "Fruit div",
+              "default": 2,
+              "description": "(optional, default is 1). Final amount of fruit charges produced is divided by this number. Works only if fruit item is counted by charges.",
+              "propertyOrder": 10
+          },
+          "seeds": {
+              "type": "boolean",
+              "id": "/properties/seed_data/properties/seeds",
+              "title": "Seeds",
+              "format": "checkbox",
+              "default": true,
+              "description": "(optional, default is true). If true, harvesting the plant will spawn seeds (the same type as the item used to plant). If false only the fruits are spawned, no seeds.",
+              "options": {
+                  "hidden": false
+              }
+          },
+          "grow": {
+              "type": "string",
+              "id": "/properties/seed_data/properties/grow",
+              "title": "Grow",
+              "default": "91 days",
+              "format": "text",
+              "description": "A time duration: how long it takes for a plant to fully mature. Based around a 91 day season length (roughly a real world season) to give better accuracy for longer season lengths. Note that growing time is later converted based upon the season_length option, basing it around 91 is just for accuracy purposes. A value 91 means 3 full seasons, a value of 30 would mean 1 season.",
+              "propertyOrder": 70
+          },
+          "byproducts": {
+              "type": "array",
+              "id": "/properties/seed_data/properties/byproducts",
+              "title": "Byproducts",
+              "description": "A list of further items that should spawn upon harvest.",
+              "default": [ "withered", "straw_pile" ],
+              "options": {
+                  "disable_collapse": false,
+                  "disable_array_add": false,
+                  "disable_array_delete": false,
+                  "disable_array_reorder": true,
+                  "disable_properties": false,
+                  "collapsed": false,
+                  "hidden": false
+              },
+              "items": {
+                  "type": "string",
+                  "default": "withered",
+                  "format": "text",
+                  "options": {
+                      "hidden": false,
+                      "compact": true
+                  }
+              },
+              "propertyOrder": 60
+          },
+          "fruit": {
+              "type": "string",
+              "id": "/properties/seed_data/properties/fruit",
+              "title": "Fruit",
+              "default": "weed",
+              "format": "text",
+              "description": "The item id of the fruits that this seed will produce.",
+              "propertyOrder": 70
+          },
+          "plant_name": {
+              "type": "string",
+              "id": "/properties/seed_data/properties/plant_name",
+              "title": "Plant name",
+              "default": "cattail",
+              "format": "text",
+              "description": "The name of the plant that grows from this seed. This is only used as information displayed to the user.",
+              "propertyOrder": 70
+          }
       }
   },
   "coverage": {

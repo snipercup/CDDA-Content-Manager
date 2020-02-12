@@ -103,7 +103,10 @@
             "format": "selectize",
             "filteredEnum": {
                 "display_key": "id",
-                "filter": { "jsonObject.type": { "$eq": "ARMOR" } }
+                "filter": { "$or": [
+                    { "jsonObject.type": { "$eq": "ARMOR" } },
+                    { "jsonObject.type": { "$eq": "TOOL_ARMOR" } }
+                ] }
             }
         },
         "covers": {
@@ -177,11 +180,13 @@
         },
         "repairs_like": {
             "type": "string",
+            "format": "selectize",
+            "title": "Repairs like",
+            "description": "If this item does not have recipe, what item to look for a recipe for when repairing it.",
             "filteredEnum": {
                 "display_key": "id",
                 "filter": { "jsonObject.type": { "$eq": "ARMOR" } }
-            },
-            "enum": [ ]
+            }
         },
         "delete": {
             "type": "object",
@@ -205,6 +210,10 @@
                 }
             }
         },
+        "techniques": {
+          "$ref": "#/definitions/techniques"
+        },
+        "snippet_category": {"$ref": "#/definitions/snippet_category"},
         "flags": {
             "type": "array",
             "id": "/properties/flags",
@@ -241,6 +250,7 @@
                   "MAG_COMPACT", 
                   "SKINTIGHT", 
                   "OVERSIZE", 
+                  "THERMOMETER", 
                   "WATERPROOF", 
                   "POWERARMOR_COMPATIBLE", 
                   "ALARMCLOCK", 

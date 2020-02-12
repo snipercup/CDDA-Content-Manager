@@ -74,6 +74,14 @@
             "type": "string",
             "enum": [ ]
         },
+        "container": {
+            "type": "string",
+            "format": "selectize",
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { "jsonObject.type": { "$eq": "CONTAINER" } }
+            }
+        },
         "looks_like": {
             "type": "string",
             "format": "selectize",
@@ -85,6 +93,12 @@
         "spoils_in": {
           "$ref": "#/definitions/spoils_in", 
           "propertyOrder": 13
+        },
+        "techniques": {
+          "$ref": "#/definitions/techniques"
+        },
+        "qualities": {
+          "$ref": "#/definitions/qualities"
         },
         "flags": {
             "$ref": "#/definitions/flags", 
@@ -159,7 +173,6 @@
             },
             "propertyOrder": 70
         },
-        "container": { "$ref": "#/definitions/CONTAINER" },
         "phase": {
             "type": "string",
             "id": "/properties/phase",
@@ -207,6 +220,8 @@
           "$ref": "#/definitions/fun", 
           "propertyOrder": 140
         },
+        "snippet_category": {"$ref": "#/definitions/snippet_category"},
+        "price_postapoc": {"$ref": "#/definitions/price_postapoc"},
         "book_data": {
             "type": "object",
             "id": "/definitions/armor_data",
@@ -258,13 +273,6 @@
         "vitamins": {
           "$ref": "#/definitions/vitamins", 
           "propertyOrder": 190
-        }
-    },
-    "definitions": {
-        "CONTAINER": {
-            "type": "string",
-            "format": "selectize",
-            "enum": [ ]
         }
     }
 }

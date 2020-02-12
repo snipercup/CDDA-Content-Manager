@@ -4,7 +4,6 @@
     "title": "Comestible",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
-    "get_ids_of_type": [ { "type": "CONTAINER", "display_key": "id" } ],
     "stringifyOptions": {
       "maxLength": 120
     },
@@ -277,7 +276,14 @@
             },
             "propertyOrder": 70
         },
-        "container": { "$ref": "#/definitions/CONTAINER" },
+        "container": {
+            "type": "string",
+            "format": "selectize",
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { "jsonObject.type": { "$eq": "CONTAINER" } }
+            }
+        },
         "phase": {
             "type": "string",
             "id": "/properties/phase",
@@ -579,11 +585,6 @@
         }
     },
     "definitions": {
-        "CONTAINER": {
-            "type": "string",
-            "format": "selectize",
-            "enum": [ ]
-        },
         "calories": {
             "type": "integer",
             "id": "/properties/calories",

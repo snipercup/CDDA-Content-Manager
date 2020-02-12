@@ -33,6 +33,7 @@ Please see the [quick start guide](https://github.com/snipercup/CDDA-Content-Man
 
 - See https://github.com/KorGgenT/cdda-item-creator for an alternative item creator.
 - See https://github.com/I-am-Erk/CDDA-Tilesets for a tileset for Cataclysm you can contribute to.
+- See https://github.com/TheGoatGod/Goats-Mod-Compilation for an index of mods.
 
 ## Demo:
 

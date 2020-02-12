@@ -227,6 +227,9 @@ These are the properties for a filter:
 ```
 
 The "jsonObject" is the entity that holds the properties of each json entrie like 'id', 'name', 'valid', 'type', 'threshold' etc. 
+
 The "fileName" is the absolute path to the file from which the json entry is loaded. In the above example all entries loaded from files that have 'obsolete' in the filename or the path to the file are excluded.
+
 The third and last alternative to 'jsonObject' and 'filename' is 'indexInParentObject'. this could allow you to load only the entries that are in the third place in the json file for example (like this - "indexInParentObject": { "$eq": 3 }) but that may not be very useful.
 
+If the reference and examples provided are not clear enough, please submit an issue and explain what your filter should do.

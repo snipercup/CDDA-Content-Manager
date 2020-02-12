@@ -220,6 +220,25 @@
       },
       "propertyOrder": 60
   },
+  "string_array": {
+      "type": "array",
+      "id": "/definitions/flags",
+      "format": "selectize",
+      "uniqueItems": true,
+      "options": {
+          "disable_collapse": false,
+          "disable_array_add": false,
+          "disable_array_delete": false,
+          "disable_array_reorder": true,
+          "disable_properties": false,
+          "collapsed": false,
+          "hidden": false,
+          "multiple": true
+      },
+      "items": {
+          "type": "string"
+      }
+  },
   "category": {
       "default": "yes",
       "type": "string",

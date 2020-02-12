@@ -60,7 +60,7 @@
       await addItemsToCollectionFromFolderList([await getWorkingDirectory() + SCHEMAS_PATH], schemas); //Put all the schemas in one collection
       await loadExtraDefinitions(schemas, entries); //Add the dynamic content to the schemas.
       //Populate the filters list
-      let filters = await getJsonFromFile("data\\json\\collectionList\\filters.json");
+      let filters = await getJsonFromFile(await getWorkingDirectory() + "\\data\\json\\collectionList\\filters.json");
       let filter;
       for (let i = 0, amountOfFilters = filters.length; i < amountOfFilters; i++) {
         filter = filters[i];

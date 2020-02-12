@@ -188,3 +188,45 @@ Here, it should display a flag, but the flag is missing from the definition so y
 What to do: Submit a bug report. Alternatively, this could mean that the entry has a value that is not valid. Please check that the value that is supposed to go there is a valid entry. By hovering over the item in the list you can peak at the json data as it was loaded from the disk:
 
 ![Imgur](https://i.imgur.com/Oyj4bqy.png?1)
+
+
+# Advanced - managing filters
+Filters are important to help you get the right entities to the surface. Filters are defined in a filters file in "\resources\app\data\json\collectionList\filters.json" so if you are running from the compiled version it could be located at "C:\Users\User\Downloads\cdda-content-manager-win32-x64-0.5.8\resources\app\data\json\collectionList\filters.json"
+
+The contents of filters.json is not much different then the json of the game:
+
+![Imgur](https://i.imgur.com/xkNj4Q5.png)
+
+These are the properties for a filter:
+```
+		"type": "filter",                                               //should be filter. there are no other types right now but there may be in the future
+		"name": "all_ammunition_type",                                  //an arbitrary name, serves no purpose currently
+		"display_name": "Type: ammunition_type",                        //What it will be displayed as in the filter drop-down
+		"display_key": "id",                                            //The property of the entry that will be displayed when the filter is applied. For example 'id', 'abstract', 'name' and 'result' may be interesting properties to note here
+		"filter": { "jsonObject.type": { "$eq": "ammunition_type" } }   //The filter applied to the contents of the cataclysm data folder.
+```
+
+ The formatting for the query is defined here: https://github.com/techfort/LokiJS/wiki/Query-Examples. a more advanced example from the filters.json:
+ 
+```
+	{
+		"type": "filter",
+		"name": "all_mutation",
+		"display_name": "Mutations",
+		"display_key": "id",
+		"filter": { "$and": [ 
+        { "jsonObject.type": { "$eq": "mutation" } }, 
+        { "fileName": { "$containsNone": "obsolete" } },
+        { "$or": [
+            { "jsonObject.valid": { "$eq": true } },
+            { "jsonObject.valid": { "$exists": false } },
+            { "jsonObject.threshold": { "$exists": true } }
+        ] }
+    ] }
+	},
+```
+
+The "jsonObject" is the entity that holds the properties of each json entrie like 'id', 'name', 'valid', 'type', 'threshold' etc. 
+The "fileName" is the absolute path to the file from which the json entry is loaded. In the above example all entries loaded from files that have 'obsolete' in the filename or the path to the file are excluded.
+The third and last alternative to 'jsonObject' and 'filename' is 'indexInParentObject'. this could allow you to load only the entries that are in the third place in the json file for example (like this - "indexInParentObject": { "$eq": 3 }) but that may not be very useful.
+

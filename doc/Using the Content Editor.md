@@ -67,7 +67,7 @@ Do this at your own risk.
 ### Changing properties
 Changing properties allow you to bring changes to your cataclysm experience and can be very exciting. This chapter will go trough the types of changes you can make. Be sure to click 'save' when you are done with your changes. Not that some forms (but not all) display the properties in tabs like this:
 
-![Imgur](https://i.imgur.com/2ipDkKD.png)
+![Imgur](https://i.imgur.com/2ipDkKD.png?1)
 
 Look in these tabs (if any) if you are having trouble finding a particular property.
 
@@ -96,7 +96,12 @@ This will accept numbers with a decimal, like 0.5:
 If you put in a whole number without decimal and click save, it will add .0 to your number automatically and this will show up the next time you load this entry.
 
 
-#### Basic single entry dropdown (string)
+#### True/false (boolean)
+Allows you to set it to true or false. If it is checked it is true. if it is unchecked it is false.
+
+![Imgur](https://i.imgur.com/YVrwvEB.png?1)
+
+#### Single entry dropdown (string)
 Some properties require a string just as described earlier. To help you pick valid values, these properties allow you to only select the values from the provided list:
 
 ![Imgur](https://i.imgur.com/XchE58O.png?1)
@@ -106,9 +111,56 @@ Some of these dropdown lists allow you to search for a value (but not all dropdo
 
 ![Imgur](https://i.imgur.com/WdObN9f.png)
 
-To do this, click the value to make the list drop down. Then click backspace to delete the current entry. Then start typing the value you want. If you come across a dropdown list that should support this feature but doesn't, please submit an issue.
+To do this, click the value to make the list drop down. Then click backspace to delete the current entry. Then start typing the value you want (sometimes you have to hit backspace once more before you can start typing). If you come across a dropdown list that should support this feature but doesn't, please submit an issue.
 
 Note that the dropdown is different from the 'change type' dropdown (which will be explained later)
 
 ![Imgur](https://i.imgur.com/dilaf9z.png?1)
 
+
+#### Multi entry dropdown (array)
+This is used to edit a list of words (strings).
+
+![Imgur](https://i.imgur.com/Lha70Ac.png?1)
+
+Click next to an existing entry to make the list drop-down. You can then add as many from the list as you want by clicking them one-by-one. Like with the single entry dropdown, you can type to search for the entry you want:
+
+![Imgur](https://i.imgur.com/QynFw5O.png?1)
+
+To delete from this list, click the little x next to an entry.
+
+
+#### Multi value list (map, nested array)
+This may come in different forms, depending on the property. This example shows a nicely formatted list but it may not always be as neat:
+
+![Imgur](https://i.imgur.com/dnsdmV4.png?1)
+
+This is a list where each entry consists of a 'single entry dropdown' and a 'basic number'. You can change them as described earlier. To delete an entry, click the trashcan (you will be prompted). To add one, click '+vitamin'.
+
+Here is an example that works under the same principle but has a different format:
+
+![Imgur](https://i.imgur.com/dqWuycM.png?1)
+
+
+#### Change format dropdown
+This control allows you to change the format of the property. This means you can change it from a single text to a list, or from a list to an object with properties:
+
+![Imgur](https://i.imgur.com/czjYmGI.png?1)
+
+Currently this property called use_action is in the 'string format'. These names are only to convey the format of the property and mayt be different from property to property. For example the basic property called 'name' has eighter 'old format' or 'new format'
+
+![Imgur](https://i.imgur.com/j1Dzh0t.png?1)
+
+Now to change the format, simply select the format you want. In this example, I change from 'string format' to 'list format' and now I have  al list:
+
+![Imgur](https://i.imgur.com/ge8DL3p.png)
+
+Note that the items in the list can also be a different format:
+
+![Imgur](https://i.imgur.com/mTAhFdx.png)
+
+Now I changed the format of that entry to 'object format' so now use_action is a list with one 'object format' and one 'string format':
+
+![Imgur](https://i.imgur.com/sGg4vVP.png?1)
+
+What you put in depends on what you need. Different properties may have different formats. This tool attempts to help you correctly edit the json but be sure to read up on the documentation in the main repository for CDDA to get a sense of the properties you can use. 

@@ -65,7 +65,7 @@ Alternatively, you can edit the json directly by clicking 'json'
 Do this at your own risk.
 
 ### Changing properties
-Changing properties allow you to bring changes to your cataclysm experience and can be very exciting. This chapter will go trough the types of changes you can make. Be sure to click 'save' when you are done with your changes. Not that some forms (but not all) display the properties in tabs like this:
+Changing properties allow you to bring changes to your cataclysm experience and can be very exciting. This chapter will go trough the types of changes you can make. Be sure to click 'save' when you are done with your changes. Note that some forms (but not all) display the properties in tabs like this:
 
 ![Imgur](https://i.imgur.com/2ipDkKD.png?1)
 
@@ -151,7 +151,7 @@ Currently this property called use_action is in the 'string format'. These names
 
 ![Imgur](https://i.imgur.com/j1Dzh0t.png?1)
 
-Now to change the format, simply select the format you want. In this example, I change from 'string format' to 'list format' and now I have  al list:
+Now to change the format, simply select the format you want. In this example, I change from 'string format' to 'list format' and now I have  a list:
 
 ![Imgur](https://i.imgur.com/ge8DL3p.png)
 
@@ -164,3 +164,27 @@ Now I changed the format of that entry to 'object format' so now use_action is a
 ![Imgur](https://i.imgur.com/sGg4vVP.png?1)
 
 What you put in depends on what you need. Different properties may have different formats. This tool attempts to help you correctly edit the json but be sure to read up on the documentation in the main repository for CDDA to get a sense of the properties you can use. 
+
+
+# Troubleshooting
+This is especially important in the early days of development where bugs come up and information is missing. This section explains some bugs and what to do with them
+
+### Missing definition
+This is where an entry has a property that is not defined by the content editor. It looks like this:
+
+![Imgur](https://i.imgur.com/zRFj0Co.png?1)
+
+Here is a property called 'relative' that has 2 properties called 'volume' and 'weight'. The content editor does not know these properties so it tries its best to fill in the blanks. It has determined that 'relative' should be an object and 'volume' and 'weight' should be a string. 
+
+What to do: submit a bug report. Alternatively you can try to use the controls to edit the property the best you can but it is far from optimal. 
+
+### Property is empty but should have a value
+This may happen when the value is supposed to come from a list, but the value is not in the list. It looks like this:
+
+![Imgur](https://i.imgur.com/rS8MKl2.png?1)
+
+Here, it should display a flag, but the flag is missing from the definition so you can't select or display it.
+
+What to do: Submit a bug report. Alternatively, this could mean that the entry has a value that is not valid. Please check that the value that is supposed to go there is a valid entry. By hovering over the item in the list you can peak at the json data as it was loaded from the disk:
+
+![Imgur](https://i.imgur.com/Oyj4bqy.png?1)

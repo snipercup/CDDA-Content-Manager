@@ -250,6 +250,7 @@
           "chems",
           "food",
           "fuel",
+          "books",
           "armor",
           "clothing",
           "tools",
@@ -1093,6 +1094,18 @@
               },
               "propertyOrder": 20
           },
+          "furn_type": {
+              "type": "string",
+              "title": "Furniture type",
+              "default": "f_down_mattress",
+              "format": "text",
+              "description": "furniture type id the item should create",
+              "filteredEnum": {
+                  "display_key": "id",
+                  "filter": { "jsonObject.type": { "$eq": "furniture" } }
+              },
+              "propertyOrder": 20
+          },
           "target_charges": {
               "type": "integer",
               "id": "/definitions/use_action/properties/target_charges",
@@ -1428,6 +1441,75 @@
               }
           }
       ]
+  },
+  "snippet_category": {
+      "id": "/definitions/snippet_category",
+      "title": "Snippet_category",
+      "description": "Any item with a \"snippet_category\" entry will have random descriptions, based on that snippet category",
+      "anyOf": [
+          {
+              "type": "array",
+              "format": "selectize",
+              "title": "List format",
+              "uniqueItems": true,
+              "options": {
+                  "disable_collapse": false,
+                  "disable_array_add": false,
+                  "disable_array_delete": false,
+                  "disable_array_reorder": true,
+                  "disable_properties": false,
+                  "collapsed": false,
+                  "hidden": false
+              },
+              "items": {
+                  "type": "object",
+                  "title": "Snippet",
+                  "options": {
+                      "disable_collapse": false,
+                      "disable_edit_json": false,
+                      "disable_properties": false,
+                      "collapsed": false,
+                      "hidden": false,
+                      "compact": true
+                  },
+                  "defaultProperties": [
+                      "id",
+                      "text"
+                  ],
+                  "properties": {
+                      "id": {
+                          "type": "string",
+                          "id": "/properties/use_action/properties/id",
+                          "title": "ID",
+                          "default": "unique_entry_here",
+                          "format": "text",
+                          "description": "An id to reference this specific snippet."
+                      },
+                      "text": {
+                          "type": "string",
+                          "id": "/properties/use_action/properties/id",
+                          "title": "Text",
+                          "default": "A soft, cushioned hairbrush.  The shiny chrome design appears modern.",
+                          "format": "text",
+                          "description": "Flavored text"
+                      }
+                  }
+              }
+          },
+          {
+              "type": "string",
+              "id": "/properties/use_action/properties/id",
+              "title": "Single entry",
+              "default": "unique_entry_here",
+              "format": "text",
+              "filteredEnum": {
+                  "display_key": "category",
+                  "filter": { "jsonObject.type": { "$eq": "snippet" } }
+              },
+              "description": "The value of category must match the snippet_category in the item definition"
+          }
+      ],
+      "propertyOrder": 60
   },
   "material_thickness": {
       "type": "integer",

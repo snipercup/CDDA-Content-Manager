@@ -163,6 +163,13 @@
 	},
 	{
 		"type": "filter",
+		"name": "snippet_category_exists",
+		"display_name": "Exists: snippet_category",
+		"display_key": "id",
+		"filter": { "jsonObject.snippet_category": { "$exists": true } }
+	},
+	{
+		"type": "filter",
 		"name": "conditional_names_exists",
 		"display_name": "Exists: conditional_names",
 		"display_key": "id",
@@ -174,8 +181,8 @@
 		"display_name": "is equal to id",
 		"display_key": "id",
 		"filter": { "$or": [
-            { "jsonObject.id": { "$eq": "seed" } },
-            { "jsonObject.abstract": { "$eq": "seed" } }
+            { "jsonObject.id": { "$eq": "scarf" } },
+            { "jsonObject.abstract": { "$eq": "scarf" } }
         ] }
 	},
 	{
@@ -192,6 +199,7 @@
         { "jsonObject.type": { "$ne": "vehicle" } },
         { "jsonObject.type": { "$ne": "GENERIC" } },
         { "jsonObject.type": { "$ne": "AMMO" } },
+        { "jsonObject.type": { "$ne": "GUN" } },
         { "jsonObject.type": { "$ne": "ARMOR" } },
         { "jsonObject.type": { "$ne": "COMESTIBLE" } },
         { "jsonObject.type": { "$ne": "body_part" } },
@@ -212,8 +220,10 @@
             { "jsonObject.type": { "$eq": "CONTAINER" } },
             { "jsonObject.type": { "$eq": "MONSTER" } },
             { "jsonObject.type": { "$eq": "TOOL_ARMOR" } },
+            { "jsonObject.type": { "$eq": "BATTERY" } },
+            { "jsonObject.type": { "$eq": "GENERIC" } },
+            { "jsonObject.type": { "$eq": "BIONIC_ITEM" } },
             { "jsonObject.type": { "$eq": "TOOL" } },
-            { "jsonObject.type": { "$eq": "GUN" } },
             { "jsonObject.type": { "$eq": "BOOK" } },
             { "jsonObject.type": { "$eq": "ammunition_type" } },
             { "jsonObject.type": { "$eq": "vehicle_part" } }

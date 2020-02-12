@@ -38,6 +38,18 @@
           "$ref": "#/definitions/weight", 
           "propertyOrder": 13
         },
+        "looks_like": {
+            "type": "string",
+            "format": "selectize",
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { "jsonObject.type": { "$eq": "BIONIC_ITEM" } }
+            }
+        },
+        "price": {
+          "$ref": "#/definitions/price", 
+          "propertyOrder": 13
+        },
         "difficulty": {
             "type": "integer",
             "id": "/properties/difficulty",

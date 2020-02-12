@@ -37,6 +37,7 @@
         "description": {
           "$ref": "#/definitions/description", 
           "propertyOrder": 13
-        }
+        },
+        "snippet_category": {"$ref": "#/definitions/snippet_category"}
     }
 }

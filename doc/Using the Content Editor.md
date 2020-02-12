@@ -65,4 +65,50 @@ Alternatively, you can edit the json directly by clicking 'json'
 Do this at your own risk.
 
 ### Changing properties
+Changing properties allow you to bring changes to your cataclysm experience and can be very exciting. This chapter will go trough the types of changes you can make. Be sure to click 'save' when you are done with your changes. Not that some forms (but not all) display the properties in tabs like this:
+
+![Imgur](https://i.imgur.com/2ipDkKD.png)
+
+Look in these tabs (if any) if you are having trouble finding a particular property.
+
+#### Basic text (string)
+Changing basic text works much in the same way as any text editor.
+
+![Imgur](https://i.imgur.com/uLo4jec.png?1)
+
+Type the text you want to put into this property. Note that some properties like weight and volume may look like a number but is actually a string and is edited in the same way:
+
+![Imgur](https://i.imgur.com/yUp7enE.png?1)
+
+The description of the property should help you put in the right value.
+
+#### Basic number (integer)
+Works much like text, but will only accept a whole number
+
+![Imgur](https://i.imgur.com/Ju0RF6d.png?1)
+
+
+#### Decimal number (double or float)
+This will accept numbers with a decimal, like 0.5:
+
+![Imgur](https://i.imgur.com/gLQJQQh.png?1)
+
+If you put in a whole number without decimal and click save, it will add .0 to your number automatically and this will show up the next time you load this entry.
+
+
+#### Basic single entry dropdown (string)
+Some properties require a string just as described earlier. To help you pick valid values, these properties allow you to only select the values from the provided list:
+
+![Imgur](https://i.imgur.com/XchE58O.png?1)
+
+Just click on the list to make it drop down and select the entry you want. 
+Some of these dropdown lists allow you to search for a value (but not all dropdown lists)
+
+![Imgur](https://i.imgur.com/WdObN9f.png)
+
+To do this, click the value to make the list drop down. Then click backspace to delete the current entry. Then start typing the value you want. If you come across a dropdown list that should support this feature but doesn't, please submit an issue.
+
+Note that the dropdown is different from the 'change type' dropdown (which will be explained later)
+
+![Imgur](https://i.imgur.com/dilaf9z.png?1)
 

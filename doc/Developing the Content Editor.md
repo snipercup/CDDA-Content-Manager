@@ -11,7 +11,7 @@ There are two special schemas that are not used directly by the form manager:
 - generaldefinitions - these are definitions shared by all schemas but may not apply to every schema
 - generalproperties - These properties are loaded into specific schemas and become one with the schema.
 
-Other then the schemas there isn't really much to develop regarding the content Editor. Some minor changes may be applied in (schema-styles.css)[https://github.com/snipercup/CDDA-Content-Manager/blob/master/src/style/schema-styles.css] and (schemas.js){https://github.com/snipercup/CDDA-Content-Manager/blob/master/src/schemas.js]. 
+Other then the schemas there isn't really much to develop regarding the content Editor. Some minor changes may be applied in [schema-styles.css](https://github.com/snipercup/CDDA-Content-Manager/blob/master/src/style/schema-styles.css) and [schemas.js](https://github.com/snipercup/CDDA-Content-Manager/blob/master/src/schemas.js). 
 
 Some key concepts that will be explained here are: 
 - Enumerated values

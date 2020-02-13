@@ -1,6 +1,6 @@
 # Content Editor
 
-This guide describes how to use the content editor.
+This guide describes how to use the content editor. For maintaining the content editor, please see [Developing the Content Editor](https://github.com/snipercup/CDDA-Content-Manager/blob/master/doc/Developing%20the%20Content%20Editor.md)
 
 # Opening the content editor
 If you just opened the content manager, you have to navigate to the content editor.

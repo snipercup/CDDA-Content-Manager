@@ -136,6 +136,9 @@
             "description": "Optional list of names that will be applied in specified conditions",
             "title": "Conditional names",
             "format": "grid",
+            "stringifyOptions": {
+              "maxLength": 120
+            },
             "options": {
                 "disable_collapse": false,
                 "disable_array_add": false,
@@ -207,13 +210,18 @@
                     "EDIBLE_FROZEN",
                     "EATEN_COLD",
                     "EATEN_HOT",
+                    "SMOKED",
+                    "LUPINE",
                     "NPC_SAFE",
                     "FELINE",
                     "BIRD",
                     "RAW",
                     "ACID",
                     "INEDIBLE",
+                    "DROP_ACTION_ONLY_IF_LIQUID",
+                    "FERTILIZER",
                     "CATTLE",
+                    "BAD_TASTE",
                     "MYCUS_OK",
                     "HIDDEN_POISON",
                     "FREEZERBURN",

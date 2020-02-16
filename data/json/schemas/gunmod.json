@@ -128,6 +128,12 @@
           "$ref": "#/definitions/min_skills", 
           "propertyOrder": 13
         },
+        "integral_weight": {
+          "title": "Integral weight",
+          "$ref": "#/definitions/weight", 
+          "description": "Weight added to base item when item is integrated into another (eg. a gunmod integrated to a gun)",
+          "propertyOrder": 13
+        },
         "acceptable_ammo": {
             "type": "array",
             "id": "/properties/acceptable_ammo",
@@ -262,15 +268,95 @@
             },
             "propertyOrder": 150
         },
+        "magazine_adaptor": {
+            "type": "array",
+            "title": "Magazine adaptor",
+            "description": "Optional field which changes the types of magazines the parent gun accepts",
+            "format": "table",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "array",
+                "default": [ "300blk", [ "stanag30" ] ],
+                "title": "magazines",
+                "format": "tabs",
+                "options": {
+                    "disable_collapse": true,
+                    "disable_array_add": true,
+                    "disable_array_delete": true,
+                    "disable_array_reorder": true,
+                    "disable_properties": true,
+                    "collapsed": false,
+                    "compact": true,
+                    "hidden": false
+                },
+                "items": [
+                    {
+                        "type": "string",
+                        "default": "DEFAULT",
+                        "format": "text",
+                        "filteredEnum": {
+                            "display_key": "id",
+                            "filter": { "jsonObject.type": { "$eq": "ammunition_type" } }
+                        },
+                        "options": { "compact": true }
+                    },
+                    {
+                        "type": "array",
+                        "title": "Magazine",
+                        "format": "selectize",
+                        "uniqueItems": true,
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": true,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false,
+                            "compact": true,
+                            "multiple": true
+                        },
+                        "items": {
+                            "type": "string",
+                            "filteredEnum": {
+                                "display_key": "id",
+                                "filter": { "jsonObject.type": { "$eq": "MAGAZINE" } }
+                            }
+                        },
+                        "propertyOrder": 60
+                    }
+                ]
+            }
+        },
+        "install_time": {
+            "type": "string",
+            "id": "/properties/install_time",
+            "title": "Install time",
+            "default": "1 m",
+            "format": "text",
+            "description": "Optional time installation takes. Installation is instantaneous if unspecified. An integer will be read as moves or a time string can be used.",
+            "propertyOrder": 120
+        },
+        "aim_speed": {
+            "type": "integer",
+            "title": "Aim speed",
+            "default": 1,
+            "description": "A measure of how quickly the player can aim, in moves per point of dispersion.",
+            "propertyOrder": 30
+        },
         "sight_dispersion": {
             "type": "integer",
-            "id": "/properties/sight_dispersion",
             "title": "Dispersion Modifier",
             "default": 15,
             "description": "Inaccuracy of gun derived from the sight mechanism in quarter-degrees",
-            "options": {
-                "hidden": false
-            },
             "propertyOrder": 150
         },
         "delete": {
@@ -326,6 +412,9 @@
                 "type": "string",
                 "enum": [ 
                     "INSTALL_DIFFICULT",
+                    "CONSUMABLE",
+                    "RELOAD_ONE",
+                    "ZOOM",
                     "NEVER_JAMS",
                     "RELOAD_EJECT",
                     "IRREMOVABLE",

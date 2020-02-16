@@ -265,6 +265,8 @@
                 "type": "string",
                 "enum": [ 
                   "NOGIB", 
+                  "TINDER", 
+                  "DETERGENT", 
                   "TANGLE", 
                   "DROP_ACTION_ONLY_IF_LIQUID",
                   "PRIMITIVE_RANGED_WEAPON",
@@ -304,7 +306,10 @@
             "format": "selectize",
             "filteredEnum": {
                 "display_key": "id",
-                "filter": { "jsonObject.type": { "$eq": "AMMO" } }
+                "filter": { "$or": [
+                    { "jsonObject.type": { "$eq": "AMMO" } },
+                    { "jsonObject.type": { "$eq": "furniture" } }
+                ] }
             }
         },
         "relative": {

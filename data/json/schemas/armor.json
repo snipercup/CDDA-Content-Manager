@@ -151,6 +151,14 @@
             "maxLength": 117
           }
         },
+        "rigid": {
+            "type": "boolean",
+            "title": "Rigid",
+            "format": "checkbox",
+            "default": false,
+            "description": "For non-rigid items volume (and for worn items encumbrance) increases proportional to contents",
+            "propertyOrder": 40
+        },
         "valid_mods": {
             "type": "array",
             "id": "/properties/valid_mods",
@@ -244,6 +252,7 @@
                   "VARSIZE", 
                   "STURDY", 
                   "HELMET_COMPAT", 
+                  "MAG_COMPACT", 
                   "ELECTRIC_IMMUNE", 
                   "BLIND", 
                   "OUTER", 
@@ -255,6 +264,8 @@
                   "POWERARMOR_COMPATIBLE", 
                   "ALARMCLOCK", 
                   "HOOD", 
+                  "ROLLER_ONE", 
+                  "REQUIRES_BALANCE", 
                   "RAINPROOF", 
                   "RAD_RESIST", 
                   "FANCY", 

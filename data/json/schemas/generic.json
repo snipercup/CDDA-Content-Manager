@@ -4,6 +4,9 @@
     "title": "Generic",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
+    "stringifyOptions": {
+      "maxLength": 116
+    },
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -79,7 +82,10 @@
             "format": "selectize",
             "filteredEnum": {
                 "display_key": "id",
-                "filter": { "jsonObject.type": { "$eq": "CONTAINER" } }
+                "filter": { "$or": [
+                    { "jsonObject.type": { "$eq": "CONTAINER" } },
+                    { "jsonObject.type": { "$eq": "GENERIC" } }
+                ] }
             }
         },
         "looks_like": {
@@ -87,7 +93,10 @@
             "format": "selectize",
             "filteredEnum": {
                 "display_key": "id",
-                "filter": { "jsonObject.type": { "$eq": "GENERIC" } }
+                "filter": { "$or": [
+                    { "jsonObject.type": { "$eq": "AMMO" } },
+                    { "jsonObject.type": { "$eq": "GENERIC" } }
+                ] }
             }
         },
         "spoils_in": {
@@ -111,12 +120,18 @@
                     "MC_ENCRYPTED",
                     "SPEAR",
                     "STAB",
+                    "CONDUCTIVE",
+                    "FAKE_SMOKE",
+                    "FAKE_MILL",
                     "ALLOWS_REMOTE_USE",
                     "PERPETUAL",
                     "RADIOACTIVE",
                     "LEAK_DAM",
                     "PSEUDO",
                     "BELT_CLIP",
+                    "FIRESTARTER",
+                    "ALWAYS_TWOHAND",
+                    "SHEATH_SPEAR",
                     "REACH_ATTACK",
                     "SHEATH_SWORD",
                     "SHEATH_KNIFE",
@@ -127,6 +142,7 @@
                     "NONCONDUCTIVE",
                     "NO_UNWIELD",
                     "NO_SALVAGE",
+                    "NO_DROP",
                     "NO_INGEST",
                     "EDIBLE_FROZEN",
                     "EATEN_COLD"
@@ -220,7 +236,12 @@
           "$ref": "#/definitions/fun", 
           "propertyOrder": 140
         },
-        "snippet_category": {"$ref": "#/definitions/snippet_category"},
+        "snippet_category": {
+            "$ref": "#/definitions/snippet_category",
+            "stringifyOptions": {
+              "maxLength": 110
+            }
+        },
         "price_postapoc": {"$ref": "#/definitions/price_postapoc"},
         "book_data": {
             "type": "object",

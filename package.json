@@ -1,7 +1,7 @@
 {
   "name": "cdda-content-manager",
   "productName": "cdda-content-manager",
-  "version": "0.5.8",
+  "version": "0.5.9",
   "description": "Content manager for Cataclysm: Dark Days Ahead",
   "main": "src/index.js",
   "scripts": {

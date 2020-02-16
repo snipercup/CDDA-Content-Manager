@@ -165,6 +165,10 @@
       },
       "items": {
           "type": "string",
+          "filteredEnum": {
+              "display_key": "id",
+              "filter": { "jsonObject.type": { "$eq": "GUN" } }
+          },
           "enum": [ 
               "pistol",
               "smg",
@@ -201,7 +205,7 @@
   },
   "flags": {
       "type": "array",
-      "id": "/properties/flags",
+      "id": "/definitions/flags",
       "title": "Flags",
       "format": "selectize",
       "uniqueItems": true,
@@ -222,7 +226,7 @@
   },
   "string_array": {
       "type": "array",
-      "id": "/definitions/flags",
+      "id": "/definitions/string_array",
       "format": "selectize",
       "uniqueItems": true,
       "options": {
@@ -308,7 +312,7 @@
                   "id": "/properties/vitamins/items/oneof0",
                   "default": "VitA",
                   "format": "text",
-                  "enum": [ "vitA", "vitB", "vitC", "calcium", "iron" ],
+                  "enum": [ "vitA", "vitB", "vitC", "calcium", "iron", "mutant_toxin" ],
                   "options": {
                     "hidden": false,
                     "compact": true
@@ -744,90 +748,6 @@
           "hidden": false
       }
   },
-  "magazines": {
-      "type": "array",
-      "id": "/definitions/magazines",
-      "title": "magazines",
-      "description": "The magazines this item can use. First column: the ammunition_type, second column: the magazine.",
-      "format": "table",
-      "options": {
-          "disable_collapse": false,
-          "disable_array_add": false,
-          "disable_array_delete": false,
-          "disable_array_reorder": true,
-          "disable_properties": false,
-          "collapsed": false,
-          "hidden": false
-      },
-      "items": {
-          "type": "array",
-          "id": "/properties/magazines/oneof0",
-          "default": [ "DEFAULT", "semi-auto", 1 ],
-          "title": "magazines",
-          "format": "tabs",
-          "options": {
-              "disable_collapse": true,
-              "disable_array_add": true,
-              "disable_array_delete": true,
-              "disable_array_reorder": true,
-              "disable_properties": true,
-              "collapsed": false,
-              "compact": true,
-              "hidden": false
-          },
-          "items": [
-              {
-                  "type": "string",
-                  "id": "/properties/magazines/items/oneof0",
-                  "default": "DEFAULT",
-                  "format": "text",
-                  "filteredEnum": {
-                      "display_key": "id",
-                      "filter": { "jsonObject.type": { "$eq": "ammunition_type" } }
-                  },
-                  "options": {
-                    "hidden": false,
-                    "compact": true
-                  }
-              },
-              {
-                  "type": "array",
-                  "id": "/properties/magazines/items/oneof0",
-                  "title": "Magazines",
-                  "format": "selectize",
-                  "uniqueItems": true,
-                  "options": {
-                      "disable_collapse": false,
-                      "disable_array_add": false,
-                      "disable_array_delete": false,
-                      "disable_array_reorder": true,
-                      "disable_properties": false,
-                      "collapsed": false,
-                      "hidden": false,
-                      "compact": true,
-                      "multiple": true
-                  },
-                  "items": {
-                      "type": "string",
-                      "filteredEnum": {
-                          "display_key": "id",
-                          "filter": { "jsonObject.type": { "$eq": "MAGAZINE" } }
-                      }
-                  },
-                  "propertyOrder": 60
-              },
-              {
-                  "type": "integer",
-                  "id": "/properties/magazines/items/oneof1",
-                  "default": 1,
-                  "options": {
-                    "hidden": false,
-                    "compact": true
-                  }
-              }
-          ]
-      }
-  },
   "storage": {
       "type": "string",
       "id": "/properties/storage",
@@ -1033,14 +953,26 @@
           },
           "msg": {
               "type": "string",
-              "id": "/definitions/use_action/properties/msg",
               "title": "Message",
               "default": "You light the fuse on the ANFO charge.  Run survivor, run!",
               "format": "text",
               "description": "Message to display when activated.",
-              "options": {
-                  "hidden": false
-              },
+              "propertyOrder": 20
+          },
+          "holster_prompt": {
+              "type": "string",
+              "title": "Holster prompt",
+              "default": "Stash grenades",
+              "format": "text",
+              "description": "Prompt to use when selecting an item",
+              "propertyOrder": 20
+          },
+          "holster_msg": {
+              "type": "string",
+              "title": "Holster message",
+              "default": "You stash your %s.",
+              "format": "text",
+              "description": "Message to show when holstering an item",
               "propertyOrder": 20
           },
           "need_worn": {
@@ -1089,9 +1021,6 @@
                   "display_key": "id",
                   "filter": { "jsonObject.type": { "$eq": "trap" } }
               },
-              "options": {
-                  "hidden": false
-              },
               "propertyOrder": 20
           },
           "furn_type": {
@@ -1106,6 +1035,14 @@
               },
               "propertyOrder": 20
           },
+          "max_volume": {
+              "type": "string",
+              "title": "Max volume",
+              "default": "750 ml",
+              "format": "text",
+              "description": "Maximum volume of each item that can be holstered. Volume in ml and L can be used - \"50 ml\" or \"2 L\".",
+              "propertyOrder": 20
+          },
           "target_charges": {
               "type": "integer",
               "id": "/definitions/use_action/properties/target_charges",
@@ -1115,6 +1052,46 @@
               "options": {
                   "hidden": false
               },
+              "propertyOrder": 30
+          },
+          "draw_cost": {
+              "type": "integer",
+              "title": "Draw cost",
+              "default": 1,
+              "description": "Base move cost per unit volume when wielding the contained item",
+              "propertyOrder": 30
+          },
+          "flags": {
+              "type": "array",
+              "id": "/definitions/flags",
+              "title": "Flags",
+              "format": "selectize",
+              "uniqueItems": true,
+              "options": {
+                  "disable_collapse": false,
+                  "disable_array_add": false,
+                  "disable_array_delete": false,
+                  "disable_array_reorder": true,
+                  "disable_properties": false,
+                  "collapsed": false,
+                  "hidden": false,
+                  "multiple": true
+              },
+              "items": {
+                  "type": "string",
+                  "enum": [ 
+                      "GRENADE",
+                      "SHEATH_KNIFE",
+                      "SHEATH_SWORD"
+                  ]
+              },
+              "propertyOrder": 60
+          },
+          "multi": {
+              "type": "integer",
+              "title": "Multi",
+              "default": 1,
+              "description": "Total number of items that holster can contain",
               "propertyOrder": 30
           },
           "sound_volume": {
@@ -1332,6 +1309,7 @@
                           "enum": [
                             "pkill1",
                             "pkill2",
+                            "high",
                             "cough_suppress"
                           ],
                           "options": {

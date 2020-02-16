@@ -21,7 +21,7 @@
       "items": {
           "type": "array",
           "id": "/properties/magazines/oneof0",
-          "default": [ "DEFAULT", "semi-auto", 1 ],
+          "default": [ "45", [ "m1911mag", "m1911bigmag" ] ],
           "title": "magazines",
           "stringifyOptions": {
             "maxLength": 116

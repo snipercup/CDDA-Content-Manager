@@ -181,8 +181,8 @@
 		"display_name": "is equal to id",
 		"display_key": "id",
 		"filter": { "$or": [
-            { "jsonObject.id": { "$eq": "scarf" } },
-            { "jsonObject.abstract": { "$eq": "scarf" } }
+            { "jsonObject.id": { "$eq": "launcher" } },
+            { "jsonObject.abstract": { "$eq": "launcher" } }
         ] }
 	},
 	{
@@ -192,20 +192,59 @@
 		"display_key": "name",
 		"filter": { "$and": [ 
         { "jsonObject.name": { "$type": "string" } },
-        { "jsonObject.type": { "$ne": "ammunition_type" } },
-        { "jsonObject.type": { "$ne": "AMMO" } },
-        { "jsonObject.type": { "$ne": "overmap_terrain" } },
-        { "jsonObject.type": { "$ne": "vehicle_part" } },
-        { "jsonObject.type": { "$ne": "vehicle" } },
-        { "jsonObject.type": { "$ne": "GENERIC" } },
-        { "jsonObject.type": { "$ne": "AMMO" } },
-        { "jsonObject.type": { "$ne": "GUN" } },
+        { "jsonObject.name_plural": { "$exists": false } },
         { "jsonObject.type": { "$ne": "ARMOR" } },
         { "jsonObject.type": { "$ne": "COMESTIBLE" } },
+        { "jsonObject.type": { "$ne": "item_action" } },
+        { "jsonObject.type": { "$ne": "technique" } },
+        { "jsonObject.type": { "$ne": "EXTERNAL_OPTION" } },
+        { "jsonObject.type": { "$ne": "furniture" } },
+        { "jsonObject.type": { "$ne": "LOOT_ZONE" } },
+        { "jsonObject.type": { "$ne": "vitamin" } },
+        { "jsonObject.type": { "$ne": "WHEEL" } },
+        { "jsonObject.type": { "$ne": "skill" } },
+        { "jsonObject.type": { "$ne": "MONSTER_FACTION" } },
+        { "jsonObject.type": { "$ne": "PET_ARMOR" } },
+        { "jsonObject.type": { "$ne": "recipe_group" } },
+        { "jsonObject.type": { "$ne": "tool_quality" } },
         { "jsonObject.type": { "$ne": "body_part" } },
+        { "jsonObject.type": { "$ne": "TOOL_ARMOR" } },
+        { "jsonObject.type": { "$ne": "ENGINE" } },
+        { "jsonObject.type": { "$ne": "MONSTER" } },
+        { "jsonObject.type": { "$ne": "vehicle_part" } },
+        { "jsonObject.type": { "$ne": "overmap_land_use_code" } },
+        { "jsonObject.type": { "$ne": "BOOK" } },
+        { "jsonObject.type": { "$ne": "SPELL" } },
+        { "jsonObject.type": { "$ne": "scenario" } },
+        { "jsonObject.type": { "$ne": "npc_class" } },
+        { "jsonObject.type": { "$ne": "map_extra" } },
+        { "jsonObject.type": { "$ne": "mutation_category" } },
+        { "jsonObject.type": { "$ne": "construction_category" } },
+        { "jsonObject.type": { "$ne": "profession" } },
         { "jsonObject.type": { "$ne": "faction" } },
+        { "jsonObject.type": { "$ne": "martial_art" } },
+        { "jsonObject.type": { "$ne": "mutation" } },
+        { "jsonObject.type": { "$ne": "TOOL" } },
+        { "jsonObject.type": { "$ne": "fault" } },
+        { "jsonObject.type": { "$ne": "material" } },
+        { "jsonObject.type": { "$ne": "GUNMOD" } },
+        { "jsonObject.type": { "$ne": "BIONIC_ITEM" } },
+        { "jsonObject.type": { "$ne": "CONTAINER" } },
+        { "jsonObject.type": { "$ne": "trap" } },
+        { "jsonObject.type": { "$ne": "GUN" } },
+        { "jsonObject.type": { "$ne": "overmap_terrain" } },
+        { "jsonObject.type": { "$ne": "terrain" } },
+        { "jsonObject.type": { "$ne": "GENERIC" } },
         { "jsonObject.type": { "$ne": "mission_definition" } },
-        { "jsonObject.name_plural": { "$exists": true } },
+        { "jsonObject.type": { "$ne": "ammunition_type" } },
+        { "jsonObject.type": { "$ne": "vehicle" } },
+        { "jsonObject.type": { "$ne": "monstergroup" } },
+        { "jsonObject.type": { "$ne": "start_location" } },
+        { "jsonObject.type": { "$ne": "MAGAZINE" } },
+        { "jsonObject.type": { "$ne": "bionic" } },
+        { "jsonObject.type": { "$ne": "AMMO" } },
+        { "fileName": { "$containsNone": "dining_kitchen.json" } },
+        { "fileName": { "$containsNone": "soup.json" } },
         { "fileName": { "$containsNone": "obsolete" } }
     ] }
 	},
@@ -217,18 +256,28 @@
 		"filter": { "$and": [ 
         { "$or": [
             { "jsonObject.type": { "$eq": "GUNMOD" } },
-            { "jsonObject.type": { "$eq": "CONTAINER" } },
-            { "jsonObject.type": { "$eq": "MONSTER" } },
-            { "jsonObject.type": { "$eq": "TOOL_ARMOR" } },
-            { "jsonObject.type": { "$eq": "BATTERY" } },
-            { "jsonObject.type": { "$eq": "GENERIC" } },
-            { "jsonObject.type": { "$eq": "BIONIC_ITEM" } },
-            { "jsonObject.type": { "$eq": "TOOL" } },
-            { "jsonObject.type": { "$eq": "BOOK" } },
-            { "jsonObject.type": { "$eq": "ammunition_type" } },
-            { "jsonObject.type": { "$eq": "vehicle_part" } }
+            { "jsonObject.type": { "$eq": "TOOLMOD" } }
+        ] },
+        { "jsonObject.name": { "$type": "string" } },
+        { "jsonObject.name_plural": { "$exists": false } },
+        { "fileName": { "$containsNone": "dining_kitchen.json" } },
+        { "fileName": { "$containsNone": "soup.json" } },
+        { "fileName": { "$containsNone": "obsolete" } }
+    ] }
+	},
+	{
+		"type": "filter",
+		"name": "old_name",
+		"display_name": "Old name_plural string",
+		"display_key": "name",
+		"filter": { "$and": [ 
+        { "$or": [
+            { "jsonObject.type": { "$eq": "AMMO" } },
+            { "jsonObject.type": { "$eq": "COMESTIBLE" } }
         ] },
         { "jsonObject.name_plural": { "$exists": true } },
+        { "fileName": { "$containsNone": "dining_kitchen.json" } },
+        { "fileName": { "$containsNone": "soup.json" } },
         { "fileName": { "$containsNone": "obsolete" } }
     ] }
 	}

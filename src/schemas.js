@@ -140,7 +140,7 @@ async function loadExtraDefinitions(schemas, entries){
 
 
 async function recursiveSetProperties(schemaDefinition, entries){
-  let jsonString = "", keys, key, value, tempstring = "", arrItem, addSpace, schemakey, schemakeys, optionsCopy, objectKey, isNumber, genericDefinitions;
+  let jsonString = "", keys, key, value, c, schemakey, schemakeys, objectKey, genericDefinitions, filteredEnum;
   
   if(typeof schemaDefinition === 'object' && schemaDefinition !== null){
     if(Array.isArray(schemaDefinition)){ //It's an array
@@ -153,8 +153,13 @@ async function recursiveSetProperties(schemaDefinition, entries){
         key = keys[y];
         value = schemaDefinition[key];
         if(key == "filteredEnum"){
-           //Create enum property
-           schemaDefinition.enum = await getFilteredListFromCollection(value.filter, entries, true, value.display_key)
+            filteredEnum = await getFilteredListFromCollection(value.filter, entries, true, value.display_key)
+            if(schemaDefinition.enum){ //If the enum property is there, append to it. otherwise, set it.
+              c = schemaDefinition.enum; //Save the list that's already defined in the schema.
+              schemaDefinition.enum = c.concat(filteredEnum.filter((item) => c.indexOf(item) < 0)); //Merge the two lists and put it back into the enumeration.
+            } else {
+              schemaDefinition.enum = filteredEnum;
+            }
         }
         if(key == "includeDefinition"){
           //Copy the contents of the definition into this object. This is a workaround since the jsonEditor forgets its schema when you reference another property from a property that is also referenced elsewhere.

@@ -90,10 +90,10 @@
             }
         },
         "integral_volume": {
-            "type": "integer",
+            "type": "string",
             "id": "/properties/integral_volume",
             "title": "Integral Volume",
-            "default": 0,
+            "default": "0 ml",
             "description": "Volume added to base item when item is integrated into another (eg. a gunmod integrated to a gun). Volume in ml and L can be used - \"50 ml\" or \"2 L\".",
             "options": {
                 "hidden": false
@@ -137,7 +137,7 @@
         "acceptable_ammo": {
             "type": "array",
             "id": "/properties/acceptable_ammo",
-            "title": "acceptable_ammo",
+            "title": "Acceptable ammo",
             "format": "selectize",
             "uniqueItems": true,
             "options": {
@@ -152,7 +152,10 @@
             },
             "items": {
                 "type": "string",
-                "$ref": "#/definitions/AMMO"
+                "filteredEnum": {
+                    "display_key": "id",
+                    "filter": { "jsonObject.type": { "$eq": "ammunition_type" } }
+                }
             },
             "propertyOrder": 60
         },
@@ -232,6 +235,10 @@
                 "dispersion": {
                   "$ref": "#/definitions/dispersion"
                 },
+                "range": {
+                  "$ref": "#/definitions/range", 
+                  "propertyOrder": 13
+                },
                 "durability": {
                     "type": "integer",
                     "id": "/properties/gun_data/properties/durability",
@@ -268,6 +275,77 @@
             },
             "propertyOrder": 150
         },
+        "to_hit": {
+          "$ref": "#/definitions/to_hit", 
+          "propertyOrder": 13
+        },
+        "bashing": {
+          "$ref": "#/definitions/bashing", 
+          "propertyOrder": 150
+        },
+        "cutting": {
+          "$ref": "#/definitions/cutting", 
+          "propertyOrder": 13
+        },
+        "mode_modifier": {
+            "$ref": "#/definitions/mode_modifier", 
+            "propertyOrder": 13
+        },
+        "qualities": {
+          "$ref": "#/definitions/qualities"
+        },
+        "weight_multiplier": {
+            "type": "number",
+            "title": "Weight multiplier",
+            "default": 0.9,
+            "description": "Increases weight by this many times"
+        },
+        "ups_charges_multiplier": {
+            "type": "number",
+            "title": "UPS charges multiplier",
+            "default": 0.9,
+            "description": "Increases base gun UPS consumption by this many times per shot"
+        },
+        "consume_chance": {
+            "type": "integer",
+            "title": "Consume chance",
+            "default": 1000,
+            "description": "Percentage value change to the gun's loading time. Higher is less likely"
+        },
+        "consume_divisor": {
+            "type": "integer",
+            "title": "Consume divisor",
+            "default": 1000,
+            "description": "Divsor to scale back gunmod consumption damage. lower is more damaging. Affected by ammo loudness and recoil, see ranged.cpp for how much."
+        },
+        "loudness_modifier": {
+            "type": "integer",
+            "title": "Loudness modifier",
+            "default": 4,
+            "description": "Optional field increasing or decreasing base guns loudness"
+        },
+        "range_modifier": {
+            "type": "integer",
+            "title": "Range modifier",
+            "default": 18,
+            "description": "Optional field increasing or decreasing base gun range"
+        },
+        "damage_modifier": {
+            "type": "integer",
+            "title": "Damage modifier",
+            "default": 18,
+            "description": "Optional field increasing or decreasing base gun damage"
+        },
+        "handling_modifier": {
+            "type": "integer",
+            "title": "Handling modifier",
+            "default": 18,
+            "description": "Optional field increasing or decreasing base gun handling"
+        },
+        "ammo_effects": {
+          "$ref": "#/definitions/ammo_effects", 
+          "propertyOrder": 13
+        },
         "magazine_adaptor": {
             "type": "array",
             "title": "Magazine adaptor",
@@ -301,12 +379,17 @@
                     {
                         "type": "string",
                         "default": "DEFAULT",
-                        "format": "text",
+                        "format": "selectize",
                         "filteredEnum": {
                             "display_key": "id",
                             "filter": { "jsonObject.type": { "$eq": "ammunition_type" } }
                         },
-                        "options": { "compact": true }
+                        "options": { 
+                            "compact": true,
+                            "inputAttributes": {
+                              "style": "width: 100px"
+                            }
+                        }
                     },
                     {
                         "type": "array",
@@ -413,8 +496,22 @@
                 "enum": [ 
                     "INSTALL_DIFFICULT",
                     "CONSUMABLE",
+                    "NEEDS_UNFOLD",
+                    "WATER_FRIENDLY",
+                    "WATERPROOF_GUN",
+                    "REDUCED_BASHING",
+                    "STAB",
+                    "COLLAPSIBLE_STOCK",
+                    "NO_UNLOAD",
                     "RELOAD_ONE",
                     "ZOOM",
+                    "PUMP_RAIL_COMPATIBLE",
+                    "SKINTIGHT",
+                    "IS_ARMOR",
+                    "SLOW_WIELD",
+                    "BIPOD",
+                    "NON-FOULING",
+                    "FIRE_100",
                     "NEVER_JAMS",
                     "RELOAD_EJECT",
                     "IRREMOVABLE",

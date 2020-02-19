@@ -207,9 +207,12 @@
                 "type": "string",
                 "enum": [ 
                     "NO_INGEST",
+                    "PLANTABLE_SEED",
+                    "FORAGE_POISON",
                     "EDIBLE_FROZEN",
                     "EATEN_COLD",
                     "EATEN_HOT",
+                    "MELTS",
                     "SMOKED",
                     "LUPINE",
                     "NPC_SAFE",

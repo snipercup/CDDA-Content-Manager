@@ -220,14 +220,8 @@
         },
         "loudness": {"$ref": "#/definitions/loudness"},
         "range": {
-            "type": "integer",
-            "id": "properties/range",
-            "title": "Range",
-            "default": 1,
-            "description": "The amount of range",
-            "options": {
-                "hidden": false
-            }
+          "$ref": "#/definitions/range", 
+          "propertyOrder": 13
         },
         "reload": {
             "type": "integer",
@@ -665,36 +659,8 @@
             "propertyOrder": 20
         },
         "ammo_effects": {
-            "type": "array",
-            "id": "properties/ammo_effects",
-            "title": "Ammo effects",
-            "format": "selectize",
-            "uniqueItems": true,
-            "options": {
-                "disable_collapse": false,
-                "disable_array_add": false,
-                "disable_array_delete": false,
-                "disable_array_reorder": true,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false,
-                "multiple": true
-            },
-            "items": {
-                "type": "string",
-                "enum": [ 
-                    "EMP",
-                    "LIGHTNING",
-                    "NO_DAMAGE_SCALING",
-                    "DRAW_AS_LINE",
-                    "WIDE",
-                    "NEVER_MISFIRES",
-                    "SHOT",
-                    "FLARE",
-                    "BLINDS_EYES"
-                ]
-            },
-            "propertyOrder": 60
+          "$ref": "#/definitions/ammo_effects", 
+          "propertyOrder": 13
         },
         "faults": {
             "type": "array",

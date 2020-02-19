@@ -261,103 +261,12 @@
                     "propertyOrder": 13
                 },
                 "mod_targets": {
-                    "id": "/properties/gunmod_data/mod_targets",
                     "$ref": "#/definitions/mod_targets", 
                     "propertyOrder": 13
                 },
                 "mode_modifier": {
-                    "type": "array",
-                    "id": "/properties/gunmod_data/mode_modifier",
-                    "title": "Mode modifier",
-                    "description": "The mode modifier this item provides",
-                    "format": "table",
-                    "options": {
-                        "disable_collapse": false,
-                        "disable_array_add": false,
-                        "disable_array_delete": false,
-                        "disable_array_reorder": true,
-                        "disable_array_delete_all_rows": true,
-                        "disable_array_delete_last_row": true,
-                        "disable_properties": false,
-                        "collapsed": false,
-                        "hidden": false
-                    },
-                    "items": {
-                        "type": "array",
-                        "id": "/properties/gunmod_data/mode_modifier/oneof0",
-                        "default": [ "DEFAULT", "auto", 14 ],
-                        "title": "Mode",
-                        "format": "grid",
-                        "options": {
-                            "disable_collapse": false,
-                            "disable_array_add": false,
-                            "disable_array_delete": false,
-                            "disable_array_reorder": true,
-                            "disable_array_delete_all_rows": true,
-                            "disable_array_delete_last_row": true,
-                            "collapsed": false,
-                            "compact": false,
-                            "hidden": false
-                        },
-                        "items": [
-                            {
-                                "type": "string",
-                                "id": "/properties/gunmod_data/mode_modifier/oneof0",
-                                "default": "DEFAULT",
-                                "format": "text",
-                                "enum": [ "DEFAULT", "REACH", "AUTO" ],
-                                "options": {
-                                  "hidden": false,
-                                  "compact": true
-                                }
-                            },
-                            {
-                                "type": "string",
-                                "id": "/properties/gunmod_data/mode_modifier/oneof1",
-                                "default": "auto",
-                                "format": "text",
-                                "enum": [ "auto", "bayonet" ],
-                                "options": {
-                                  "hidden": false,
-                                  "compact": true
-                                }
-                            },
-                            {
-                                "type": "integer",
-                                "id": "/properties/gunmod_data/mode_modifier/oneof2",
-                                "default": 1,
-                                "options": {
-                                  "hidden": false,
-                                  "inputAttributes": {
-                                    "style": "width: 60px"
-                                  },
-                                  "compact": true
-                                }
-                            },
-                            {
-                                "type": "array",
-                                "id": "/properties/artifact_data/properties/effects_carried",
-                                "format": "selectize",
-                                "uniqueItems": true,
-                                "options": {
-                                    "disable_collapse": false,
-                                    "disable_array_add": false,
-                                    "disable_array_delete": false,
-                                    "disable_array_reorder": true,
-                                    "disable_properties": false,
-                                    "collapsed": false,
-                                    "hidden": false,
-                                    "multiple": true,
-                                    "compact": true
-                                },
-                                "items": {
-                                    "type": "string",
-                                    "enum": [ "MELEE", "REACH_ATTACK" ]
-                                }
-                            }
-                        ]
-                    },
-                    "propertyOrder": 90
+                    "$ref": "#/definitions/mode_modifier", 
+                    "propertyOrder": 13
                 }
             },
             "propertyOrder": 150
@@ -650,6 +559,7 @@
                   "RADIO_CONTAINER",
                   "RADIO_INVOKE_PROC",
                   "LIGHT_2",
+                  "LIGHT_3",
                   "LIGHT_4",
                   "LIGHT_6",
                   "LIGHT_8",

@@ -105,7 +105,10 @@
                   "id": "/properties/min_skills/items/oneof0",
                   "default": "weapon",
                   "format": "text",
-                  "enum": [ "weapon", "mechanics", "launcher", "gun", "melee" ],
+                  "filteredEnum": {
+                      "display_key": "ident",
+                      "filter": { "jsonObject.type": { "$eq": "skill" } }
+                  },
                   "options": {
                     "hidden": false,
                     "compact": true
@@ -172,6 +175,7 @@
           "enum": [ 
               "pistol",
               "smg",
+              "bow",
               "rifle",
               "shotgun",
               "launcher", 
@@ -266,7 +270,7 @@
   },
   "fun": {
       "type": "integer",
-      "id": "/properties/fun",
+      "id": "/definitions/fun",
       "title": "Fun",
       "default": 3,
       "description": "Morale effects when used",
@@ -277,7 +281,7 @@
   },
   "vitamins": {
       "type": "array",
-      "id": "/properties/vitamins",
+      "id": "/definitions/vitamins",
       "title": "Vitamins",
       "description": "The vitamins this item provides",
       "format": "table",
@@ -292,7 +296,7 @@
       },
       "items": {
           "type": "array",
-          "id": "/properties/vitamins/oneof0",
+          "id": "/definitions/vitamins/oneof0",
           "default": [ "VitA", 20 ],
           "title": "Vitamin",
           "format": "tabs",
@@ -309,7 +313,7 @@
           "items": [
               {
                   "type": "string",
-                  "id": "/properties/vitamins/items/oneof0",
+                  "id": "/definitions/vitamins/items/oneof0",
                   "default": "VitA",
                   "format": "text",
                   "enum": [ "vitA", "vitB", "vitC", "calcium", "iron", "mutant_toxin" ],
@@ -320,7 +324,7 @@
               },
               {
                   "type": "integer",
-                  "id": "/properties/vitamins/items/oneof1",
+                  "id": "/definitions/vitamins/items/oneof1",
                   "default": 20,
                   "options": {
                     "hidden": false,
@@ -333,7 +337,7 @@
   },
   "abstract": {
       "type": "string",
-      "id": "/properties/abstract",
+      "id": "/definitions/abstract",
       "title": "Abstract",
       "default": "flamethrower_base",
       "format": "text",
@@ -344,7 +348,7 @@
   },
   "id": {
       "type": "string",
-      "id": "/properties/id",
+      "id": "/definitions/id",
       "title": "Id",
       "default": "46mm",
       "format": "text",
@@ -355,7 +359,7 @@
   },
   "type": {
       "type": "string",
-      "id": "/properties/type",
+      "id": "/definitions/type",
       "title": "Type",
       "format": "text",
       "readonly": true,
@@ -369,7 +373,7 @@
     "oneOf": [
         {
             "type": "string",
-            "id": "/properties/name",
+            "id": "/definitions/name",
             "title": "Old format",
             "default": "Name of entry",
             "format": "text",
@@ -380,7 +384,7 @@
         }, 
         {
             "type": "object",
-            "id": "/properties/name",
+            "id": "/definitions/name",
             "title": "New format",
             "format": "grid",
             "options": {
@@ -396,7 +400,7 @@
             "properties": {
                 "str": {
                     "type": "string",
-                    "id": "/properties/name/properties/str",
+                    "id": "/definitions/name/properties/str",
                     "title": "Name",
                     "default": "Name of entry",
                     "description": "The name as it will appear in game",
@@ -406,7 +410,7 @@
                 },
                 "str_pl": {
                     "type": "string",
-                    "id": "/properties/name/properties/str_pl",
+                    "id": "/definitions/name/properties/str_pl",
                     "title": "Plural name",
                     "default": "Plural name of entry",
                     "description": "The name as it will appear in game",
@@ -420,7 +424,7 @@
   },
   "description": {
       "type": "string",
-      "id": "/properties/description",
+      "id": "/definitions/description",
       "format": "xhtml",
       "options": {
         "ace": {
@@ -436,7 +440,7 @@
   },
   "weight": {
       "type": "string",
-      "id": "/properties/weight",
+      "id": "/definitions/weight",
       "title": "Weight",
       "default": "5 g",
       "format": "text",
@@ -447,7 +451,7 @@
   },
   "volume": {
       "type": "string",
-      "id": "/properties/volume",
+      "id": "/definitions/volume",
       "title": "Volume",
       "default": "250 ml",
       "format": "text",
@@ -456,9 +460,98 @@
           "hidden": false
       }
   },
+  "mode_modifier": {
+      "type": "array",
+      "id": "/definitions/mode_modifier",
+      "title": "Mode modifier",
+      "description": "The mode modifier this item provides",
+      "format": "table",
+      "options": {
+          "disable_collapse": false,
+          "disable_array_add": false,
+          "disable_array_delete": false,
+          "disable_array_reorder": true,
+          "disable_array_delete_all_rows": true,
+          "disable_array_delete_last_row": true,
+          "disable_properties": false,
+          "collapsed": false,
+          "hidden": false
+      },
+      "items": {
+          "type": "array",
+          "default": [ "DEFAULT", "auto", 14 ],
+          "title": "Mode",
+          "format": "grid",
+          "options": {
+              "disable_collapse": false,
+              "disable_array_add": false,
+              "disable_array_delete": false,
+              "disable_array_reorder": true,
+              "disable_array_delete_all_rows": true,
+              "disable_array_delete_last_row": true,
+              "collapsed": false,
+              "compact": false,
+              "hidden": false
+          },
+          "items": [
+              {
+                  "type": "string",
+                  "default": "DEFAULT",
+                  "format": "text",
+                  "enum": [ "DEFAULT", "REACH", "AUTO" ],
+                  "options": {
+                    "hidden": false,
+                    "compact": true
+                  }
+              },
+              {
+                  "type": "string",
+                  "default": "auto",
+                  "format": "text",
+                  "enum": [ "auto", "bayonet" ],
+                  "options": {
+                    "hidden": false,
+                    "compact": true
+                  }
+              },
+              {
+                  "type": "integer",
+                  "default": 1,
+                  "options": {
+                    "hidden": false,
+                    "inputAttributes": {
+                      "style": "width: 60px"
+                    },
+                    "compact": true
+                  }
+              },
+              {
+                  "type": "array",
+                  "format": "selectize",
+                  "uniqueItems": true,
+                  "options": {
+                      "disable_collapse": false,
+                      "disable_array_add": false,
+                      "disable_array_delete": false,
+                      "disable_array_reorder": true,
+                      "disable_properties": false,
+                      "collapsed": false,
+                      "hidden": false,
+                      "multiple": true,
+                      "compact": true
+                  },
+                  "items": {
+                      "type": "string",
+                      "enum": [ "MELEE", "REACH_ATTACK" ]
+                  }
+              }
+          ]
+      },
+      "propertyOrder": 90
+  },
   "price": {
       "type": "number",
-      "id": "/properties/price",
+      "id": "/definitions/price",
       "title": "Price",
       "default": 300,
       "description": "The price from before the cataclysm",
@@ -466,9 +559,42 @@
           "hidden": false
       }
   },
+  "ammo_effects": {
+      "type": "array",
+      "id": "/definitions/ammo_effects",
+      "title": "Ammo effects",
+      "format": "selectize",
+      "uniqueItems": true,
+      "options": {
+          "disable_collapse": false,
+          "disable_array_add": false,
+          "disable_array_delete": false,
+          "disable_array_reorder": true,
+          "disable_properties": false,
+          "collapsed": false,
+          "hidden": false,
+          "multiple": true
+      },
+      "items": {
+          "type": "string",
+          "enum": [ 
+              "EMP",
+              "LIGHTNING",
+              "NO_DAMAGE_SCALING",
+              "DRAW_AS_LINE",
+              "BEANBAG",
+              "WIDE",
+              "NEVER_MISFIRES",
+              "SHOT",
+              "FLARE",
+              "BLINDS_EYES"
+          ]
+      },
+      "propertyOrder": 60
+  },
   "price_postapoc": {
       "type": "number",
-      "id": "/properties/price_postapoc",
+      "id": "/definitions/price_postapoc",
       "title": "Price Postapoc",
       "default": 5200,
       "description": "The price after the cataclysm",
@@ -921,19 +1047,10 @@
               "default": "transform",
               "format": "text",
               "description": "The type of method",
-              "enum": [
-                "transform",
-                "delayed_transform",
-                "bandolier",
-                "deploy_furn",
-                "explosion",
-                "heal",
-                "holster",
-                "firestarter",
-                "place_trap",
-                "musical_instrument",
-                "consume_drug"
-              ],
+              "filteredEnum": {
+                  "display_key": "id",
+                  "filter": { "jsonObject.type": { "$eq": "item_action" } }
+              },
               "options": {
                   "hidden": false
               },
@@ -1309,7 +1426,9 @@
                           "enum": [
                             "pkill1",
                             "pkill2",
+                            "pkill3",
                             "high",
+                            "weed_high",
                             "cough_suppress"
                           ],
                           "options": {
@@ -1397,12 +1516,10 @@
                       {
                           "type": "string",
                           "title": "String format",
-                          "enum": [ 
-                            "CAMERA",
-                            "MP3",
-                            "HAMMER",
-                            "CROWBAR"
-                          ]
+                          "filteredEnum": {
+                              "display_key": "id",
+                              "filter": { "jsonObject.type": { "$eq": "item_action" } }
+                          }
                       }
                   ]
               },
@@ -1623,6 +1740,16 @@
       },
       "propertyOrder": 150
   },
+  "range": {
+      "type": "integer",
+      "id": "/properties/range",
+      "title": "Range",
+      "default": 14,
+      "description": "The range when fired",
+      "options": {
+          "hidden": false
+      }
+  },
   "environmental_protection": {
       "type": "integer",
       "id": "/properties/environmental_protection",
@@ -1726,6 +1853,7 @@
             "TORSO", 
             "ARMS", 
             "HANDS", 
+            "HAND_R", 
             "LEGS", 
             "FEET", 
             "HEAD", 

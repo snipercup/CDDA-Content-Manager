@@ -247,7 +247,11 @@
 [data-schemapath='root.gunmod_data.mode_modifier'] div.selectize-control {
   width: 200px;
 }*/
-[data-schemapath='root.gunmod_data.mode_modifier'] div.je-panel, div.compact {
+[data-schemapath='root.gunmod_data.mode_modifier'] div.je-panel {
+  display: inline-block;
+  /*width: fit-content;*/
+}
+[data-schemapath='root.gunmod_data.mode_modifier'] div.compact {
   display: inline-block;
   /*width: fit-content;*/
 }

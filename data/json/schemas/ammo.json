@@ -99,14 +99,8 @@
           "propertyOrder": 13
         },
         "range": {
-            "type": "integer",
-            "id": "/properties/range",
-            "title": "Range",
-            "default": 14,
-            "description": "The range of the ammo",
-            "options": {
-                "hidden": false
-            }
+          "$ref": "#/definitions/range", 
+          "propertyOrder": 13
         },
         "damage": {
             "type": "integer",

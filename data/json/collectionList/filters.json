@@ -36,17 +36,24 @@
 	},
 	{
 		"type": "filter",
-		"name": "all_ITEM_CATEGORY",
-		"display_name": "Type: ITEM_CATEGORY",
-		"display_key": "id",
-		"filter": { "jsonObject.type": { "$eq": "ITEM_CATEGORY" } }
-	},
-	{
-		"type": "filter",
 		"name": "all_comestible",
 		"display_name": "Type: comestible",
 		"display_key": "id",
 		"filter": { "jsonObject.type": { "$eq": "COMESTIBLE" } }
+	},
+	{
+		"type": "filter",
+		"name": "all_effect_type",
+		"display_name": "Type: effect_type",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "effect_type" } }
+	},
+	{
+		"type": "filter",
+		"name": "all_ITEM_CATEGORY",
+		"display_name": "Type: ITEM_CATEGORY",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "ITEM_CATEGORY" } }
 	},
 	{
 		"type": "filter",
@@ -61,6 +68,20 @@
 		"display_name": "Type: GUNMOD",
 		"display_key": "id",
 		"filter": { "jsonObject.type": { "$eq": "GUNMOD" } }
+	},
+	{
+		"type": "filter",
+		"name": "all_material",
+		"display_name": "Type: material",
+		"display_key": "ident",
+		"filter": { "jsonObject.type": { "$eq": "material" } }
+	},
+	{
+		"type": "filter",
+		"name": "all_mission_definition",
+		"display_name": "Type: mission_definition",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "mission_definition" } }
 	},
 	{
 		"type": "filter",
@@ -93,6 +114,13 @@
         { "jsonObject.blueprint_name": { "$exists": false } },
         { "fileName": { "$containsNone": "obsolete" } }
     ] }
+	},
+	{
+		"type": "filter",
+		"name": "all_skills",
+		"display_name": "Type: skill",
+		"display_key": "ident",
+		"filter": { "jsonObject.type": { "$eq": "skill" } }
 	},
 	{
 		"type": "filter",
@@ -163,10 +191,10 @@
 	},
 	{
 		"type": "filter",
-		"name": "snippet_category_exists",
-		"display_name": "Exists: snippet_category",
+		"name": "revert_to_exists",
+		"display_name": "Exists: revert_to",
 		"display_key": "id",
-		"filter": { "jsonObject.snippet_category": { "$exists": true } }
+		"filter": { "jsonObject.revert_to": { "$exists": true } }
 	},
 	{
 		"type": "filter",
@@ -181,8 +209,8 @@
 		"display_name": "is equal to id",
 		"display_key": "id",
 		"filter": { "$or": [
-            { "jsonObject.id": { "$eq": "launcher" } },
-            { "jsonObject.abstract": { "$eq": "launcher" } }
+            { "jsonObject.id": { "$eq": "ammolink50" } },
+            { "jsonObject.abstract": { "$eq": "ammolink50" } }
         ] }
 	},
 	{
@@ -254,12 +282,13 @@
 		"display_name": "Old name string in type",
 		"display_key": "name",
 		"filter": { "$and": [ 
-        { "$or": [
-            { "jsonObject.type": { "$eq": "GUNMOD" } },
-            { "jsonObject.type": { "$eq": "TOOLMOD" } }
-        ] },
+        { "jsonObject.type": { "$eq": "terrain" } },
         { "jsonObject.name": { "$type": "string" } },
         { "jsonObject.name_plural": { "$exists": false } },
+        { "jsonObject.deconstruct": { "$exists": false } },
+        { "jsonObject.burn_data": { "$exists": false } },
+        { "jsonObject.burn_products": { "$exists": false } },
+        { "jsonObject.install_time": { "$exists": false } },
         { "fileName": { "$containsNone": "dining_kitchen.json" } },
         { "fileName": { "$containsNone": "soup.json" } },
         { "fileName": { "$containsNone": "obsolete" } }
@@ -271,14 +300,9 @@
 		"display_name": "Old name_plural string",
 		"display_key": "name",
 		"filter": { "$and": [ 
-        { "$or": [
-            { "jsonObject.type": { "$eq": "AMMO" } },
-            { "jsonObject.type": { "$eq": "COMESTIBLE" } }
-        ] },
         { "jsonObject.name_plural": { "$exists": true } },
         { "fileName": { "$containsNone": "dining_kitchen.json" } },
-        { "fileName": { "$containsNone": "soup.json" } },
-        { "fileName": { "$containsNone": "obsolete" } }
+        { "fileName": { "$containsNone": "soup.json" } }
     ] }
 	}
 ]

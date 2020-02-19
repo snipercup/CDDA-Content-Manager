@@ -70,17 +70,37 @@
           "propertyOrder": 13
         },
         "symbol": {
-          "$ref": "#/definitions/symbol", 
-          "propertyOrder": 13
+            "$ref": "#/definitions/symbol", 
+            "propertyOrder": 13
         },
         "color": {
-          "$ref": "#/definitions/color", 
-          "propertyOrder": 13
+            "$ref": "#/definitions/color", 
+            "propertyOrder": 13
         },
-        "ammo_type": {"$ref": "#/definitions/ammo_type"},
+        "ammo_type": {
+            "title": "Ammo type",
+            "oneOf": [
+                {
+                    "title": "Single",
+                    "$ref": "#/definitions/ammo_type"
+                },
+                {
+                    "$ref": "#/definitions/string_array",
+                    "title": "Multiple",
+                    "items": {
+                        "type": "string",
+                        "filteredEnum": {
+                            "display_key": "id",
+                            "filter": { "jsonObject.type": { "$eq": "ammunition_type" } }
+                        }
+                    }
+                }
+            ]
+        },
         "count": {"$ref": "#/definitions/count"},
         "looks_like": {
             "type": "string",
+            "title": "Looks like",
             "format": "selectize",
             "filteredEnum": {
                 "display_key": "id",
@@ -91,38 +111,32 @@
                 ] }
             }
         },
+        "linkage": {
+            "type": "string",
+            "title": "Linkage",
+            "format": "selectize",
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { "jsonObject.use_action.type": { "$eq": "ammobelt" } }
+            }
+        },
         "capacity": {
             "type": "integer",
-            "id": "/properties/capacity",
             "title": "Capacity",
             "default": 3,
             "description": "Capacity of magazine (in equivalent units to ammo charges)",
-            "options": {
-                "hidden": false
-            },
             "propertyOrder": 40
         },
         "flags": {
-            "type": "array",
-            "id": "/properties/flags",
-            "title": "Flags",
-            "format": "selectize",
-            "uniqueItems": true,
-            "options": {
-                "disable_collapse": false,
-                "disable_array_add": false,
-                "disable_array_delete": false,
-                "disable_array_reorder": true,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false,
-                "multiple": true
-            },
+            "$ref": "#/definitions/flags", 
             "items": {
                 "type": "string",
                 "enum": [ 
                     "NO_UNLOAD", 
                     "NO_RELOAD", 
+                    "MAG_COMPACT", 
+                    "MAG_BULKY", 
+                    "SPEEDLOADER", 
                     "RECHARGE", 
                     "RADIOACTIVE", 
                     "LEAK_DAM", 

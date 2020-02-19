@@ -4,6 +4,9 @@
     "title": "Terrain",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
+    "stringifyOptions": {
+      "maxLength": 116
+    },
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -29,6 +32,614 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "looks_like": {
+            "type": "string",
+            "format": "selectize",
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { "jsonObject.type": { "$eq": "terrain" } }
+            }
+        },
+        "transforms_into": {
+            "type": "string",
+            "title": "Transforms Into",
+            "default": "t_tree_apple_harvested",
+            "format": "text",
+            "description": "Description for 'transforms_into' Type: 'string' Path: '/properties/transforms_into'",
+            "propertyOrder": 120
+        },
+        "examine_action": {
+            "type": "string",
+            "title": "Examine Action",
+            "default": "harvest_ter_nectar",
+            "format": "text",
+            "description": "Description for 'examine_action' Type: 'string' Path: '/properties/examine_action'",
+            "propertyOrder": 130
+        },
+        "description": {
+            "type": "string",
+            "id": "/properties/description",
+            "title": "Description",
+            "default": "This is a standalone computer terminal.  It doesn't seem to be working.  It's the broken screen and shattered circuit boards that's telling you that.",
+            "format": "text",
+            "description": "Description for 'description' Type: 'string' Path: '/properties/description'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 40
+        },
+        "harvest_by_season": {
+            "type": "array",
+            "id": "/properties/harvest_by_season",
+            "title": "Harvest By Season",
+            "format": "tabs",
+            "stringifyOptions": {
+              "maxLength": 140
+            },
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "object",
+                "id": "/properties/harvest_by_season/items",
+                "title": "Title Root Harvest By Season ",
+                "options": {
+                    "disable_collapse": false,
+                    "disable_edit_json": false,
+                    "disable_properties": false,
+                    "collapsed": false,
+                    "hidden": false
+                },
+                "defaultProperties": [
+                    "seasons",
+                    "entries"
+                ],
+                "properties": {
+                    "seasons": {
+                        "type": "array",
+                        "id": "/properties/harvest_by_season/items/properties/seasons",
+                        "title": "Seasons",
+                        "format": "tabs",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "items": {
+                            "type": "string",
+                            "id": "/properties/harvest_by_season/items/properties/seasons/items",
+                            "title": "Title Root Harvest By Season Seasons ",
+                            "default": "autumn",
+                            "format": "text",
+                            "description": "Description for 'items' Type: 'string' Path: '/properties/harvest_by_season/items/properties/seasons/items'",
+                            "options": {
+                                "hidden": false
+                            }
+                        },
+                        "propertyOrder": 10
+                    },
+                    "entries": {
+                        "type": "array",
+                        "id": "/properties/harvest_by_season/items/properties/entries",
+                        "title": "Entries",
+                        "format": "tabs",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "items": {
+                            "type": "object",
+                            "id": "/properties/harvest_by_season/items/properties/entries/items",
+                            "title": "Title Root Harvest By Season Entries ",
+                            "options": {
+                                "disable_collapse": false,
+                                "disable_edit_json": false,
+                                "disable_properties": false,
+                                "collapsed": false,
+                                "hidden": false
+                            },
+                            "defaultProperties": [
+                                "drop",
+                                "base_num",
+                                "scale_num"
+                            ],
+                            "properties": {
+                                "drop": {
+                                    "type": "string",
+                                    "id": "/properties/harvest_by_season/items/properties/entries/items/properties/drop",
+                                    "title": "Drop",
+                                    "default": "apple",
+                                    "format": "text",
+                                    "description": "Description for 'drop' Type: 'string' Path: '/properties/harvest_by_season/items/properties/entries/items/properties/drop'",
+                                    "options": {
+                                        "hidden": false
+                                    },
+                                    "propertyOrder": 10
+                                },
+                                "base_num": {
+                                    "type": "array",
+                                    "id": "/properties/harvest_by_season/items/properties/entries/items/properties/base_num",
+                                    "title": "Base Num",
+                                    "format": "tabs",
+                                    "options": {
+                                        "disable_collapse": false,
+                                        "disable_array_add": false,
+                                        "disable_array_delete": false,
+                                        "disable_array_reorder": false,
+                                        "disable_properties": false,
+                                        "collapsed": false,
+                                        "hidden": false
+                                    },
+                                    "items": {
+                                        "headerTemplate": "Base Num {{i1}}",
+                                        "oneOf": [
+                                            {
+                                                "type": "integer",
+                                                "id": "/properties/harvest_by_season/items/properties/entries/items/properties/base_num/oneof0",
+                                                "title": "oneof 0 /properties/harvest_by_season/items/properties/entries/items/properties/base_num",
+                                                "default": 2,
+                                                "description": "A description for 'items'  Type: 'integer'",
+                                                "options": {
+                                                    "hidden": false
+                                                }
+                                            },
+                                            {
+                                                "type": "integer",
+                                                "id": "/properties/harvest_by_season/items/properties/entries/items/properties/base_num/oneof1",
+                                                "title": "oneof 1 /properties/harvest_by_season/items/properties/entries/items/properties/base_num",
+                                                "default": 5,
+                                                "description": "A description for 'items'  Type: 'integer'",
+                                                "options": {
+                                                    "hidden": false
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "propertyOrder": 20
+                                },
+                                "scale_num": {
+                                    "type": "array",
+                                    "id": "/properties/harvest_by_season/items/properties/entries/items/properties/scale_num",
+                                    "title": "Scale Num",
+                                    "format": "tabs",
+                                    "options": {
+                                        "disable_collapse": false,
+                                        "disable_array_add": false,
+                                        "disable_array_delete": false,
+                                        "disable_array_reorder": false,
+                                        "disable_properties": false,
+                                        "collapsed": false,
+                                        "hidden": false
+                                    },
+                                    "items": [
+                                        {
+                                            "type": "number",
+                                            "default": 0,
+                                            "description": "A description for 'items'  Type: 'integer'"
+                                        },
+                                        {
+                                            "type": "number",
+                                            "default": 0.5,
+                                            "description": "A description for 'items'  Type: 'number'"
+                                        }
+                                    ],
+                                    "propertyOrder": 30
+                                }
+                            }
+                        },
+                        "propertyOrder": 20
+                    }
+                }
+            },
+            "propertyOrder": 140
+        },
+        "symbol": {
+            "type": "string",
+            "id": "/properties/symbol",
+            "title": "Symbol",
+            "default": "6",
+            "format": "text",
+            "description": "Description for 'symbol' Type: 'string' Path: '/properties/symbol'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 50
+        },
+        "color": {
+            "title": "Color",
+            "description": "The color of the symbol if no sprite is present in the tileset",
+            "oneOf": [
+                {
+                    "type": "string",
+                    "default": "light_green",
+                    "format": "text",
+                    "title": "Single"
+                },
+                {
+                    "type": "array",
+                    "title": "Multiple",
+                    "format": "grid",
+                    "uniqueItems": false,
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_array_add": false,
+                        "disable_array_delete": false,
+                        "disable_array_reorder": true,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false,
+                        "multiple": true
+                    },
+                    "items": {
+                        "type": "string",
+                        "default": "steel",
+                        "format": "text"
+                    }
+                }
+            ]
+        },
+        "move_cost": {
+            "type": "integer",
+            "id": "/properties/move_cost",
+            "title": "Move Cost",
+            "default": 0,
+            "description": "A description for 'move_cost'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 70
+        },
+        "coverage": {
+            "type": "integer",
+            "id": "/properties/coverage",
+            "title": "Coverage",
+            "default": 50,
+            "description": "A description for 'coverage'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 80
+        },
+        "roof": {
+            "type": "string",
+            "id": "/properties/roof",
+            "title": "Roof",
+            "default": "t_flat_roof",
+            "format": "text",
+            "description": "Description for 'roof' Type: 'string' Path: '/properties/roof'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 90
+        },
+        "flags": {
+            "$ref": "#/definitions/flags", 
+            "items": {
+                "enum": [ 
+                    "FLAMMABLE_ASH",
+                    "WALL",
+                    "SHRUB",
+                    "SHORT",
+                    "SHARP",
+                    "THIN_OBSTACLE",
+                    "CONTAINER",
+                    "CONNECT_TO_WALL",
+                    "AUTO_WALL_SYMBOL",
+                    "BLOCK_WIND",
+                    "MINEABLE",
+                    "PERMEABLE",
+                    "ALARMED",
+                    "TRANSPARENT",
+                    "SUPPORTS_ROOF",
+                    "TREE",
+                    "REDUCE_SCENT",
+                    "HARVESTED",
+                    "NOITEM"
+                ]
+            },
+            "propertyOrder": 60
+        },
+        "deconstruct": {
+            "type": "object",
+            "title": "Deconstruct",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "ter_set",
+                "items"
+            ],
+            "properties": {
+                "ter_set": {
+                    "type": "string",
+                    "title": "Ter Set",
+                    "default": "t_floor",
+                    "format": "text",
+                    "description": "Description for 'ter_set' Type: 'string' Path: '/properties/deconstruct/properties/ter_set'",
+                    "propertyOrder": 10
+                },
+                "items": {
+                    "type": "array",
+                    "title": "Items",
+                    "format": "tabs",
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_array_add": false,
+                        "disable_array_delete": false,
+                        "disable_array_reorder": false,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false
+                    },
+                    "items": {
+                        "type": "object",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_edit_json": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "defaultProperties": [
+                            "item",
+                            "count"
+                        ],
+                        "properties": {
+                            "item": {
+                                "type": "string",
+                                "title": "Item",
+                                "default": "processor",
+                                "format": "text",
+                                "description": "Description for 'item' Type: 'string' Path: '/properties/deconstruct/properties/items/items/properties/item'",
+                                "propertyOrder": 10
+                            },
+                            "count": {
+                                "type": "array",
+                                "title": "Count",
+                                "format": "tabs",
+                                "options": {
+                                    "disable_collapse": false,
+                                    "disable_array_add": false,
+                                    "disable_array_delete": false,
+                                    "disable_array_reorder": false,
+                                    "disable_properties": false,
+                                    "collapsed": false,
+                                    "hidden": false
+                                },
+                                "items": [
+                                    {
+                                        "type": "integer",
+                                        "default": 0
+                                    },
+                                    {
+                                        "type": "integer",
+                                        "default": 2
+                                    }
+                                ],
+                                "propertyOrder": 20
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "aliases": {
+            "type": "array",
+            "id": "/properties/aliases",
+            "title": "Aliases",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "string",
+                "title": "oneof 0 /properties/aliases",
+                "default": "t_ballistic_glass_h",
+                "format": "text",
+                "description": "Description for 'items' Type: 'string' Path: '/properties/aliases/items'"
+            },
+            "propertyOrder": 30
+        },
+        "bash": {
+            "type": "object",
+            "id": "/properties/bash",
+            "title": "Bash",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "str_min",
+                "str_max",
+                "sound",
+                "sound_fail",
+                "ter_set",
+                "items"
+            ],
+            "properties": {
+                "str_min": {
+                    "type": "integer",
+                    "id": "/properties/bash/properties/str_min",
+                    "title": "Str Min",
+                    "default": 16,
+                    "description": "A description for 'str_min'  Type: 'integer'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 10
+                },
+                "str_max": {
+                    "type": "integer",
+                    "id": "/properties/bash/properties/str_max",
+                    "title": "Str Max",
+                    "default": 150,
+                    "description": "A description for 'str_max'  Type: 'integer'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 20
+                },
+                "sound": {
+                    "type": "string",
+                    "id": "/properties/bash/properties/sound",
+                    "title": "Sound",
+                    "default": "crunch!",
+                    "format": "text",
+                    "description": "Description for 'sound' Type: 'string' Path: '/properties/bash/properties/sound'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 30
+                },
+                "sound_fail": {
+                    "type": "string",
+                    "id": "/properties/bash/properties/sound_fail",
+                    "title": "Sound Fail",
+                    "default": "whack!",
+                    "format": "text",
+                    "description": "Description for 'sound_fail' Type: 'string' Path: '/properties/bash/properties/sound_fail'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 40
+                },
+                "ter_set": {
+                    "type": "string",
+                    "id": "/properties/bash/properties/ter_set",
+                    "title": "Ter Set",
+                    "default": "t_floor",
+                    "format": "text",
+                    "description": "Description for 'ter_set' Type: 'string' Path: '/properties/bash/properties/ter_set'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 50
+                },
+                "sound_vol": {
+                    "type": "integer",
+                    "id": "/properties/bash/properties/sound_vol",
+                    "title": "Sound Vol",
+                    "default": 20,
+                    "description": "A description for 'sound_vol'  Type: 'integer'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 50
+                },
+                "sound_fail_vol": {
+                    "type": "integer",
+                    "id": "/properties/bash/properties/sound_fail_vol",
+                    "title": "Sound Fail Vol",
+                    "default": 14,
+                    "description": "A description for 'sound_fail_vol'  Type: 'integer'",
+                    "options": {
+                        "hidden": false
+                    },
+                    "propertyOrder": 60
+                },
+                "items": {
+                    "type": "array",
+                    "title": "Items",
+                    "format": "tabs",
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_array_add": false,
+                        "disable_array_delete": false,
+                        "disable_array_reorder": true,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false
+                    },
+                    "items": {
+                        "type": "object",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_edit_json": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "defaultProperties": [
+                            "item",
+                            "count"
+                        ],
+                        "properties": {
+                            "item": {
+                                "type": "string",
+                                "title": "Item",
+                                "default": "processor",
+                                "format": "text",
+                                "description": "Description for 'item' Type: 'string' Path: '/properties/deconstruct/properties/items/items/properties/item'",
+                                "propertyOrder": 10
+                            },
+                            "count": {
+                                "type": "array",
+                                "title": "Count",
+                                "format": "grid",
+                                "options": {
+                                    "disable_collapse": true,
+                                    "disable_array_add": true,
+                                    "disable_array_delete": true,
+                                    "disable_array_reorder": true,
+                                    "disable_properties": false,
+                                    "collapsed": false,
+                                    "hidden": false
+                                },
+                                "items": [
+                                    {
+                                        "type": "integer",
+                                        "default": 0,
+                                        "options": { "compact": true }
+                                    },
+                                    {
+                                        "type": "integer",
+                                        "default": 2,
+                                        "options": { "compact": true }
+                                    }
+                                ],
+                                "propertyOrder": 20
+                            },
+                            "prob": {
+                                "type": "integer",
+                                "title": "Prob",
+                                "default": 50,
+                                "description": "A description for 'str_max'  Type: 'integer'",
+                                "propertyOrder": 20
+                            }
+                        }
+                    }
+                }
+            },
+            "propertyOrder": 120
         }
     }
 }

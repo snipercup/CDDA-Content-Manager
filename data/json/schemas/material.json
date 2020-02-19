@@ -4,6 +4,9 @@
     "title": "Material",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
+    "stringifyOptions": {
+      "maxLength": 116
+    },
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -29,6 +32,652 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        
+        "ident": {
+            "type": "string",
+            "id": "/properties/ident",
+            "title": "Ident",
+            "default": "bean",
+            "format": "text",
+            "description": "Description for 'ident' Type: 'string' Path: '/properties/ident'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 20
+        },
+        "density": {
+            "type": "integer",
+            "id": "/properties/density",
+            "title": "Density",
+            "default": 4,
+            "description": "A description for 'density'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 40
+        },
+        "specific_heat_liquid": {
+            "type": "number",
+            "id": "/properties/specific_heat_liquid",
+            "title": "Specific Heat Liquid",
+            "default": 3.9,
+            "description": "Specific heat of a material when not frozen (J/(g K)). Default 4.186.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 50
+        },
+        "specific_heat_solid": {
+            "type": "number",
+            "id": "/properties/specific_heat_solid",
+            "title": "Specific Heat Solid",
+            "default": 1.9,
+            "description": "Specific heat of a material when frozen (J/(g K)). Default 2.108.",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 60
+        },
+        "latent_heat": {
+            "type": "integer",
+            "id": "/properties/latent_heat",
+            "title": "Latent Heat",
+            "default": 290,
+            "description": "A description for 'latent_heat'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 70
+        },
+        "edible": {
+            "type": "boolean",
+            "id": "/properties/edible",
+            "title": "Edible",
+            "format": "checkbox",
+            "default": true,
+            "description": "A description for 'edible'  Type: 'boolean'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 80
+        },
+        "rotting": {
+            "type": "boolean",
+            "id": "/properties/rotting",
+            "title": "Rotting",
+            "format": "checkbox",
+            "default": true,
+            "description": "A description for 'rotting'  Type: 'boolean'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 90
+        },
+        "bash_resist": {
+            "type": "integer",
+            "id": "/properties/bash_resist",
+            "title": "Bash Resist",
+            "default": 1,
+            "description": "A description for 'bash_resist'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 100
+        },
+        "cut_resist": {
+            "type": "integer",
+            "id": "/properties/cut_resist",
+            "title": "Cut Resist",
+            "default": 1,
+            "description": "A description for 'cut_resist'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 110
+        },
+        "acid_resist": {
+            "type": "integer",
+            "id": "/properties/acid_resist",
+            "title": "Acid Resist",
+            "default": 2,
+            "description": "A description for 'acid_resist'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 120
+        },
+        "fire_resist": {
+            "type": "integer",
+            "id": "/properties/fire_resist",
+            "title": "Fire Resist",
+            "default": 1,
+            "description": "A description for 'fire_resist'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 130
+        },
+        "elec_resist": {
+            "type": "integer",
+            "id": "/properties/elec_resist",
+            "title": "Elec Resist",
+            "default": 1,
+            "description": "A description for 'elec_resist'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 140
+        },
+        "chip_resist": {
+            "type": "integer",
+            "id": "/properties/chip_resist",
+            "title": "Chip Resist",
+            "default": 2,
+            "description": "A description for 'chip_resist'  Type: 'integer'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 150
+        },
+        "burn_products": {
+            "type": "array",
+            "id": "/properties/burn_products",
+            "title": "Burn Products",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "array",
+                "id": "/properties/burn_products/items",
+                "title": "Title Root Burn Products ",
+                "format": "tabs",
+                "options": {
+                    "disable_collapse": false,
+                    "disable_array_add": false,
+                    "disable_array_delete": false,
+                    "disable_array_reorder": false,
+                    "disable_properties": false,
+                    "collapsed": false,
+                    "hidden": false
+                },
+                "items": {
+                    "headerTemplate": "Title Root Burn Products  {{i1}}",
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "id": "/properties/burn_products/items/oneof0",
+                            "title": "oneof 0 /properties/burn_products/items",
+                            "default": "scrap_bronze",
+                            "format": "text",
+                            "description": "Description for 'items' Type: 'string' Path: '/properties/burn_products/items/items'",
+                            "options": {
+                                "hidden": false
+                            }
+                        },
+                        {
+                            "type": "integer",
+                            "id": "/properties/burn_products/items/oneof1",
+                            "title": "oneof 1 /properties/burn_products/items",
+                            "default": 1,
+                            "description": "A description for 'items'  Type: 'integer'",
+                            "options": {
+                                "hidden": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "propertyOrder": 150
+        },
+        "repaired_with": {
+            "type": "string",
+            "id": "/properties/repaired_with",
+            "title": "Repaired With",
+            "default": "scrap_bronze",
+            "format": "text",
+            "description": "Description for 'repaired_with' Type: 'string' Path: '/properties/repaired_with'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 110
+        },
+        "salvaged_into": {
+            "type": "string",
+            "title": "Salvaged into",
+            "default": "kevlar_plate",
+            "format": "text",
+            "description": "This material turns into this item when salvaged",
+            "propertyOrder": 110
+        },
+        "compacts_into": {
+            "type": "array",
+            "title": "Compacts Into",
+            "description": "What the result will be when put into a compacter",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "string",
+                "default": "scrap_bronze",
+                "format": "text",
+                "options": { "compact": true }
+            },
+            "propertyOrder": 160
+        },
+        "soft": {
+            "type": "boolean",
+            "title": "Soft",
+            "format": "checkbox",
+            "default": false,
+            "description": "Is the material soft."
+        },
+        "dmg_adj": {
+            "type": "array",
+            "title": "Damage adjective",
+            "description": "Description added to damaged item in ascending severity.",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "string",
+                "default": "lightly damaged",
+                "format": "text",
+                "options": { "compact": true }
+            },
+            "propertyOrder": 160
+        },
+        "bash_dmg_verb": {
+            "type": "string",
+            "id": "/properties/bash_dmg_verb",
+            "title": "Bash Dmg Verb",
+            "default": "squished",
+            "format": "text",
+            "description": "Description for 'bash_dmg_verb' Type: 'string' Path: '/properties/bash_dmg_verb'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 170
+        },
+        "cut_dmg_verb": {
+            "type": "string",
+            "id": "/properties/cut_dmg_verb",
+            "title": "Cut Dmg Verb",
+            "default": "cut",
+            "format": "text",
+            "description": "Description for 'cut_dmg_verb' Type: 'string' Path: '/properties/cut_dmg_verb'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 180
+        },
+        "vitamins": {
+            "type": "array",
+            "id": "/properties/vitamins",
+            "title": "Vitamins",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "headerTemplate": "Vitamins {{i1}}",
+                "oneOf": [
+                    {
+                        "type": "array",
+                        "id": "/properties/vitamins/oneof0",
+                        "title": "oneof 0 /properties/vitamins",
+                        "format": "tabs",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "items": {
+                            "headerTemplate": "Title Root Vitamins  {{i1}}",
+                            "oneOf": [
+                                {
+                                    "type": "string",
+                                    "id": "/properties/vitamins/items/oneof0",
+                                    "title": "oneof 0 /properties/vitamins/items",
+                                    "default": "calcium",
+                                    "format": "text",
+                                    "description": "Description for 'items' Type: 'string' Path: '/properties/vitamins/items/items'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                },
+                                {
+                                    "type": "number",
+                                    "id": "/properties/vitamins/items/oneof1",
+                                    "title": "oneof 1 /properties/vitamins/items",
+                                    "default": 0.3,
+                                    "description": "A description for 'items'  Type: 'number'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "type": "array",
+                        "id": "/properties/vitamins/oneof1",
+                        "title": "oneof 1 /properties/vitamins",
+                        "format": "tabs",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "items": {
+                            "headerTemplate": "Title Root Vitamins  {{i1}}",
+                            "oneOf": [
+                                {
+                                    "type": "string",
+                                    "id": "/properties/vitamins/items/oneof0",
+                                    "title": "oneof 0 /properties/vitamins/items",
+                                    "default": "vitC",
+                                    "format": "text",
+                                    "description": "Description for 'items' Type: 'string' Path: '/properties/vitamins/items/items'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                },
+                                {
+                                    "type": "number",
+                                    "id": "/properties/vitamins/items/oneof1",
+                                    "title": "oneof 1 /properties/vitamins/items",
+                                    "default": 0.6,
+                                    "description": "A description for 'items'  Type: 'number'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "type": "array",
+                        "id": "/properties/vitamins/oneof2",
+                        "title": "oneof 2 /properties/vitamins",
+                        "format": "tabs",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "items": {
+                            "headerTemplate": "Title Root Vitamins  {{i1}}",
+                            "oneOf": [
+                                {
+                                    "type": "string",
+                                    "id": "/properties/vitamins/items/oneof0",
+                                    "title": "oneof 0 /properties/vitamins/items",
+                                    "default": "iron",
+                                    "format": "text",
+                                    "description": "Description for 'items' Type: 'string' Path: '/properties/vitamins/items/items'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                },
+                                {
+                                    "type": "number",
+                                    "id": "/properties/vitamins/items/oneof1",
+                                    "title": "oneof 1 /properties/vitamins/items",
+                                    "default": 0.8,
+                                    "description": "A description for 'items'  Type: 'number'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "propertyOrder": 190
+        },
+        "burn_data": {
+            "type": "array",
+            "id": "/properties/burn_data",
+            "title": "Burn Data",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "headerTemplate": "Burn Data {{i1}}",
+                "oneOf": [
+                    {
+                        "type": "object",
+                        "id": "/properties/burn_data/oneof0",
+                        "title": "oneof 0 /properties/burn_data",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_edit_json": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "defaultProperties": [
+                            "fuel",
+                            "smoke",
+                            "burn",
+                            "volume_per_turn"
+                        ],
+                        "properties": {
+                            "fuel": {
+                                "type": "integer",
+                                "id": "/properties/burn_data/items/properties/fuel",
+                                "title": "Fuel",
+                                "default": 1,
+                                "description": "A description for 'fuel'  Type: 'integer'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 10
+                            },
+                            "smoke": {
+                                "type": "integer",
+                                "id": "/properties/burn_data/items/properties/smoke",
+                                "title": "Smoke",
+                                "default": 1,
+                                "description": "A description for 'smoke'  Type: 'integer'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 20
+                            },
+                            "burn": {
+                                "type": "integer",
+                                "id": "/properties/burn_data/items/properties/burn",
+                                "title": "Burn",
+                                "default": 1,
+                                "description": "A description for 'burn'  Type: 'integer'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 30
+                            },
+                            "volume_per_turn": {
+                                "type": "string",
+                                "id": "/properties/burn_data/items/properties/volume_per_turn",
+                                "title": "Volume Per Turn",
+                                "default": "1250 ml",
+                                "format": "text",
+                                "description": "Description for 'volume_per_turn' Type: 'string' Path: '/properties/burn_data/items/properties/volume_per_turn'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 40
+                            }
+                        }
+                    },
+                    {
+                        "type": "object",
+                        "id": "/properties/burn_data/oneof1",
+                        "title": "oneof 1 /properties/burn_data",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_edit_json": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "defaultProperties": [
+                            "fuel",
+                            "smoke",
+                            "burn",
+                            "volume_per_turn"
+                        ],
+                        "properties": {
+                            "fuel": {
+                                "type": "integer",
+                                "id": "/properties/burn_data/items/properties/fuel",
+                                "title": "Fuel",
+                                "default": 2,
+                                "description": "A description for 'fuel'  Type: 'integer'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 10
+                            },
+                            "smoke": {
+                                "type": "integer",
+                                "id": "/properties/burn_data/items/properties/smoke",
+                                "title": "Smoke",
+                                "default": 1,
+                                "description": "A description for 'smoke'  Type: 'integer'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 20
+                            },
+                            "burn": {
+                                "type": "integer",
+                                "id": "/properties/burn_data/items/properties/burn",
+                                "title": "Burn",
+                                "default": 2,
+                                "description": "A description for 'burn'  Type: 'integer'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 30
+                            },
+                            "volume_per_turn": {
+                                "type": "string",
+                                "id": "/properties/burn_data/items/properties/volume_per_turn",
+                                "title": "Volume Per Turn",
+                                "default": "2500 ml",
+                                "format": "text",
+                                "description": "Description for 'volume_per_turn' Type: 'string' Path: '/properties/burn_data/items/properties/volume_per_turn'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 40
+                            }
+                        }
+                    },
+                    {
+                        "type": "object",
+                        "id": "/properties/burn_data/oneof2",
+                        "title": "oneof 2 /properties/burn_data",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_edit_json": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "defaultProperties": [
+                            "fuel",
+                            "smoke",
+                            "burn"
+                        ],
+                        "properties": {
+                            "fuel": {
+                                "type": "integer",
+                                "id": "/properties/burn_data/items/properties/fuel",
+                                "title": "Fuel",
+                                "default": 2,
+                                "description": "A description for 'fuel'  Type: 'integer'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 10
+                            },
+                            "smoke": {
+                                "type": "integer",
+                                "id": "/properties/burn_data/items/properties/smoke",
+                                "title": "Smoke",
+                                "default": 1,
+                                "description": "A description for 'smoke'  Type: 'integer'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 20
+                            },
+                            "burn": {
+                                "type": "integer",
+                                "id": "/properties/burn_data/items/properties/burn",
+                                "title": "Burn",
+                                "default": 3,
+                                "description": "A description for 'burn'  Type: 'integer'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 30
+                            }
+                        }
+                    }
+                ]
+            },
+            "propertyOrder": 200
         }
     }
 }

@@ -226,7 +226,6 @@
             "type": "array",
             "id": "/properties/flags",
             "$ref": "#/definitions/flags_ref" 
-            
         }
     },
     "definitions": {
@@ -251,9 +250,15 @@
                 "enum": [ 
                   "VARSIZE", 
                   "STURDY", 
+                  "ROLLER_QUAD", 
+                  "ROLLER_INLINE", 
                   "HELMET_COMPAT", 
                   "MAG_COMPACT", 
                   "ELECTRIC_IMMUNE", 
+                  "STAB", 
+                  "FLASH_PROTECTION", 
+                  "SWIM_GOGGLES", 
+                  "FIN", 
                   "BLIND", 
                   "OUTER", 
                   "MAG_COMPACT", 

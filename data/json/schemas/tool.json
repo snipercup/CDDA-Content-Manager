@@ -70,6 +70,7 @@
                 "filter": { 
                     "$or": [
                         { "jsonObject.type": { "$eq": "TOOL" } },
+                        { "jsonObject.type": { "$eq": "GENERIC" } },
                         { "jsonObject.abstract": { "$eq": "fake_item" } }
                     ]
                 }
@@ -134,6 +135,10 @@
         },
         "price": {
           "$ref": "#/definitions/price", 
+          "propertyOrder": 13
+        },
+        "price_postapoc": {
+          "$ref": "#/definitions/price_postapoc", 
           "propertyOrder": 13
         },
         "to_hit": {
@@ -578,6 +583,9 @@
                   "ALWAYS_TWOHAND",
                   "DURABLE_MELEE",
                   "HURT_WHEN_PULLED",
+                  "DANGEROUS",
+                  "ACT_IN_FIRE",
+                  "ACT_ON_RANGED_HIT",
                   "REQUIRES_TINDER",
                   "WATER_EXTINGUISH",
                   "WIND_EXTINGUISH",
@@ -591,6 +599,7 @@
                   "NO_REPAIR",
                   "NPC_THROWN",
                   "NPC_THROW_NOW",
+                  "NPC_ACTIVATE",
                   "NONCONDUCTIVE",
                   "THERMOMETER",
                   "HYGROMETER",
@@ -607,7 +616,9 @@
                   "RADIO_ACTIVATION",
                   "ALLOWS_REMOTE_USE",
                   "RADIOACTIVE",
+                  "FISH_POOR",
                   "LEAK_DAM",
+                  "GRENADE",
                   "FLAMING",
                   "FANCY",
                   "MESSY",

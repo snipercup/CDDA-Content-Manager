@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "additionalProperties": true,
-    "title": "GUN",
+    "title": "Ammo effect",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
     "stringifyOptions": {
@@ -27,7 +27,7 @@
         "type": {
           "$ref": "#/definitions/type", 
           "propertyOrder": 11,
-          "default": "GUN"
+          "default": "ammo_effect"
         },
         "name": {
           "$ref": "#/definitions/name", 

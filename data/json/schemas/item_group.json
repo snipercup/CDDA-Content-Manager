@@ -4,6 +4,9 @@
     "title": "Item group",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
+    "stringifyOptions": {
+      "maxLength": 115
+    },
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,

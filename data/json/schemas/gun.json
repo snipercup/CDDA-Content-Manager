@@ -4,7 +4,6 @@
     "title": "GUN",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
-    "get_ids_of_type": [ { "type": "GUNMOD", "display_key": "id" }, { "type": "ammunition_type", "display_key": "id" } ],
     "stringifyOptions": {
       "maxLength": 115
     },
@@ -66,7 +65,10 @@
             "format": "selectize",
             "filteredEnum": {
                 "display_key": "id",
-                "filter": { "jsonObject.type": { "$eq": "GUN" } }
+                "filter": { "$or": [
+                    { "jsonObject.type": { "$eq": "GUN" } },
+                    { "jsonObject.type": { "$eq": "GUNMOD" } }
+                ] }
             }
         },
         "weight": {
@@ -113,7 +115,13 @@
             },
             "items": {
                 "type": "string",
-                "$ref": "#/definitions/GUNMOD" 
+                "filteredEnum": {
+                    "display_key": "id",
+                    "filter": { "$or": [
+                        { "jsonObject.type": { "$eq": "GUNMOD" } },
+                        { "jsonObject.gunmod_data": { "$exists": true } }
+                    ] }
+                }
             },
             "propertyOrder": 60
         },
@@ -136,7 +144,10 @@
             },
             "items": {
                 "type": "string",
-                "$ref": "#/definitions/GUNMOD" 
+                "filteredEnum": {
+                    "display_key": "id",
+                    "filter": { "jsonObject.type": { "$eq": "GUNMOD" } }
+                }
             },
             "propertyOrder": 60
         },
@@ -208,6 +219,31 @@
                 "flags": {
                     "type": "array",
                     "id": "/properties/extend/properties/flags",
+                    "stringifyOptions": {
+                      "maxLength": 95
+                    },
+                    "$ref": "#/definitions/flags_ref"
+                }
+            }
+        },
+        "delete": {
+            "type": "object",
+            "id": "/properties/extend",
+            "title": "Extend",
+            "description": "Modders can add an \"delete\" field to their definition to delete entries in a list instead of overriding the entire list.",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "flags"
+            ],
+            "properties": {
+                "flags": {
+                    "type": "array",
                     "stringifyOptions": {
                       "maxLength": 95
                     },
@@ -342,6 +378,8 @@
                             "rail mount", 
                             "conversion", 
                             "underbarrel mount",
+                            "lens",
+                            "emitter",
                             "barrel",
                             "bore",
                             "sights mount",
@@ -473,7 +511,7 @@
                     "default": "460",
                     "format": "text",
                     "title": "Single",
-                    "description": "Ammo types accepted for reloading", 
+                    "description": "Ammo types accepted for reloading",
                     "filteredEnum": {
                         "display_key": "id",
                         "filter": { "jsonObject.type": { "$eq": "ammunition_type" } }
@@ -696,7 +734,7 @@
             "id": "properties/flags",
             "$ref": "#/definitions/flags_ref",
             "stringifyOptions": {
-              "maxLength": 95
+              "maxLength": 115
             },
             "propertyOrder": 60
         },
@@ -743,14 +781,6 @@
         }
     },
     "definitions": {
-        "GUNMOD": {
-          "type": "string", 
-          "enum": [ ]
-        },
-        "ammunition_type": {
-            "type": "string", 
-            "enum": [ ]
-        },
         "damage_type_ref": {
             "type": "object",
             "id": "properties/ranged_damage/oneof0",
@@ -821,18 +851,27 @@
             "items": {
                 "type": "string",
                 "enum": [ 
+                    "FIRE_20",
                     "FIRE_100",
                     "FIRESTARTER",
                     "RELOAD_ONE",
                     "STR_RELOAD",
                     "NEEDS_UNFOLD",
                     "BACKBLAST",
+                    "NON-FOULING",
+                    "NEEDS_NO_LUBE",
+                    "DURABLE_MELEE",
+                    "DISABLE_SIGHTS",
                     "MOUNTED_GUN",
                     "STR_DRAW",
                     "PRIMITIVE_RANGED_WEAPON",
                     "NO_RELOAD",
                     "NO_UNLOAD",
+                    "MODE_BURST",
                     "NO_AMMO",
+                    "MECH_WEAPON",
+                    "NO_UNWIELD",
+                    "UNBREAKABLE_MELEE",
                     "NONCONDUCTIVE",
                     "BELTED",
                     "NO_SALVAGE",

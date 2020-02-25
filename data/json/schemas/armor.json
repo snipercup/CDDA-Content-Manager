@@ -138,7 +138,7 @@
           "propertyOrder": 13
         },
         "armor_data": {
-          "$ref": "#/definitions/material_thickness", 
+          "$ref": "#/definitions/armor_data", 
           "propertyOrder": 13
         },
         "copy-from": {

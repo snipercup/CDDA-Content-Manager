@@ -39,6 +39,10 @@
         "effects"
     ],
     "properties": {
+        "abstract": {
+          "$ref": "#/definitions/abstract", 
+          "propertyOrder": 1
+        },
         "id": {
           "$ref": "#/definitions/id",
           "propertyOrder": 1
@@ -300,10 +304,15 @@
             "format": "selectize",
             "filteredEnum": {
                 "display_key": "id",
-                "filter": { "$or": [
-                    { "jsonObject.type": { "$eq": "AMMO" } },
-                    { "jsonObject.type": { "$eq": "furniture" } }
+                "filter": { "$and": [
+                    { "jsonObject.symbol": { "$exists": true } },
+                    { "$or": [
+                        { "jsonObject.type": { "$eq": "AMMO" } },
+                        { "jsonObject.type": { "$eq": "COMESTIBLE" } },
+                        { "jsonObject.type": { "$eq": "furniture" } }
+                    ] }
                 ] }
+                
             }
         },
         "relative": {
@@ -488,6 +497,10 @@
             },
             "items": {
                 "type": "string",
+                "filteredEnum": {
+                    "display_key": "id",
+                    "filter": { "jsonObject.type": { "$eq": "ammo_effect" } }
+                },
                 "enum": [ 
                     "ACIDBOMB", 
                     "BEANBAG", 
@@ -500,6 +513,7 @@
                     "DRAW_AS_LINE", 
                     "EXPLOSIVE_BIG", 
                     "EXPLOSIVE_HUGE", 
+                    "EXPLOSIVE_RAUFOSS", 
                     "EXPLOSIVE ", 
                     "FLAME", 
                     "FLARE", 
@@ -517,9 +531,8 @@
                     "TANGLE", 
                     "NO_EMBED", 
                     "NO_ITEM_DAMAGE", 
-                    "PLASMA", 
-                    "TANGLE", 
-                    "RECOVER_[X]", 
+                    "PLASMA",
+                    "TANGLE",
                     "RECYCLED", 
                     "SHOT", 
                     "SMOKE_BIG", 
@@ -534,7 +547,9 @@
                     "RECOVER_5",
                     "RECOVER_6",
                     "RECOVER_15",
-                    "RECOVER_40"
+                    "RECOVER_35",
+                    "RECOVER_40",
+                    "RECOVER_45"
                 ]
             }
         },

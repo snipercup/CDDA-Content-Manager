@@ -294,6 +294,13 @@
                 }
             ]
         },
+        "explosive": {
+            "type": "integer",
+            "title": "Explosive",
+            "default": 0,
+            "description": "(Optional) If greater than 0, destroying the object causes an explosion with this strength (see game::explosion).",
+            "propertyOrder": 70
+        },
         "move_cost": {
             "type": "integer",
             "id": "/properties/move_cost",
@@ -604,6 +611,33 @@
                             "count": {
                                 "type": "array",
                                 "title": "Count",
+                                "format": "grid",
+                                "options": {
+                                    "disable_collapse": true,
+                                    "disable_array_add": true,
+                                    "disable_array_delete": true,
+                                    "disable_array_reorder": true,
+                                    "disable_properties": false,
+                                    "collapsed": false,
+                                    "hidden": false
+                                },
+                                "items": [
+                                    {
+                                        "type": "integer",
+                                        "default": 0,
+                                        "options": { "compact": true }
+                                    },
+                                    {
+                                        "type": "integer",
+                                        "default": 2,
+                                        "options": { "compact": true }
+                                    }
+                                ],
+                                "propertyOrder": 20
+                            },
+                            "charges": {
+                                "type": "array",
+                                "title": "Charges",
                                 "format": "grid",
                                 "options": {
                                     "disable_collapse": true,

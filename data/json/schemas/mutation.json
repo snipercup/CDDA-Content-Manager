@@ -5,12 +5,6 @@
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
     "get_ids_of_type": [ { "type": "mutation_category", "display_key": "id" }, { "type": "mutation_type", "display_key": "id" } ],
-    "get_enums_from_definition": [ 
-        { "from": "body_parts_enum", "to": "encumbrance_always.items.items.0" },
-        { "from": "body_parts_enum", "to": "wet_protection.items.properties.part" },
-        { "from": "body_parts_enum", "to": "armor.items.properties.parts.oneOf.1.items" },
-        { "from": "body_parts_enum", "to": "armor.items.properties.parts.oneOf.0" }
-    ],
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -575,11 +569,9 @@
                         "id": "/properties/wet_protection/items/properties/part",
                         "title": "part",
                         "default": "HAND_L",
-                        "enum": [],
+                        "includeDefinition": "body_parts_enum",
                         "description": "The body part",
-                        "options": {
-                            "hidden": false
-                        }
+                        "options": { "hidden": false }
                     },
                     "good": {
                         "type": "integer",
@@ -691,10 +683,7 @@
                                 "format": "text",
                                 "title": "Single",
                                 "description": "Applies resistance to these body part",
-                                "enum": [ "ALL" ],
-                                "options": {
-                                    "hidden": false
-                                }
+                                "includeDefinition": "body_parts_enum"
                             },
                             {
                                 "type": "array",
@@ -708,21 +697,16 @@
                                     "disable_array_delete": false,
                                     "disable_array_reorder": true,
                                     "disable_properties": false,
-                                    "collapsed": false,
-                                    "hidden": false
+                                    "collapsed": false
                                 },
                                 "items": {
                                     "headerTemplate": "Part {{i1}}",
                                     "type": "string",
-                                    "id": "/properties/armor/oneof0/part/0",
                                     "title": "Part",
                                     "default": "FOOT_L",
                                     "format": "text",
                                     "description": "Applies resistance to these body parts",
-                                    "enum": [ "FOOT_L" ],
-                                    "options": {
-                                        "hidden": false
-                                    }
+                                    "includeDefinition": "body_parts_enum"
                                 }
                             }
                         ],
@@ -1126,11 +1110,8 @@
                         "id": "/properties/encumbrance_always/items/oneof0",
                         "default": "HAND_L",
                         "format": "text",
-                        "enum": [],
-                        "options": {
-                            "hidden": false,
-                          "compact": true
-                        }
+                        "includeDefinition": "body_parts_enum",
+                        "options": { "compact": true }
                     },
                     {
                         "type": "integer",

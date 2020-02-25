@@ -1,11 +1,11 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "additionalProperties": true,
-    "title": "GUN",
+    "title": "Mapgen",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
     "stringifyOptions": {
-      "maxLength": 117
+      "maxLength": 115
     },
     "options": {
         "disable_collapse": false,
@@ -27,7 +27,7 @@
         "type": {
           "$ref": "#/definitions/type", 
           "propertyOrder": 11,
-          "default": "GUN"
+          "default": "mapgen"
         },
         "name": {
           "$ref": "#/definitions/name", 

@@ -29,6 +29,133 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "vit_type": {
+            "type": "string",
+            "title": "Vit Type",
+            "default": "counter",
+            "format": "text",
+            "description": "The type of the vitamin.",
+            "enum": [ "vitamin", "toxin", "drug", "counter" ],
+            "propertyOrder": 30
+        },
+        "excess": {
+            "type": "string",
+            "title": "Excess",
+            "default": "bad_food_ennui",
+            "format": "text",
+            "description": "The id of an effect that is triggered by a excess of this vitamin.",
+            "propertyOrder": 50
+        },
+        "deficiency": {
+            "type": "string",
+            "title": "Deficiency",
+            "default": "anemia",
+            "format": "text",
+            "description": "The id of an effect that is triggered by a deficiency of this vitamin.",
+            "propertyOrder": 50
+        },
+        "min": {
+            "type": "integer",
+            "title": "Min",
+            "default": 0,
+            "description": "The smallest amount of this vitamin that the player can have.",
+            "propertyOrder": 60
+        },
+        "max": {
+            "type": "integer",
+            "title": "Max",
+            "default": 40,
+            "description": "The highest amount of this vitamin that the avatar can have.",
+            "propertyOrder": 70
+        },
+        "rate": {
+            "type": "string",
+            "title": "Rate",
+            "default": "4 h",
+            "format": "text",
+            "description": "How long it takes to lose one unit of this vitamin.",
+            "propertyOrder": 80
+        },
+        "flags": {
+            "$ref": "#/definitions/flags", 
+            "items": {
+                "type": "string",
+                "enum": [ 
+                    "NO_DISPLAY"
+                ]
+            },
+            "propertyOrder": 60
+        },
+        "disease": {
+            "type": "array",
+            "title": "Disease",
+            "description": "What the thresholds of deficiency of this vitamin are. Each pair in the list determines the start and end points of that tier of deficiency. Each tier of deficiency corresponds to the intensity level of the effect defined in deficiency.",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "array",
+                "format": "grid",
+                "options": {
+                    "disable_collapse": false,
+                    "disable_array_add": false,
+                    "disable_array_delete": false,
+                    "disable_array_reorder": true,
+                    "disable_properties": true,
+                    "collapsed": false,
+                    "compact": true,
+                    "hidden": false
+                },
+                "items": {
+                    "type": "integer",
+                    "default": 10,
+                    "options": { "compact": true }
+                }
+            },
+            "propertyOrder": 100
+        },
+        "disease_excess": {
+            "type": "array",
+            "title": "Disease Excess",
+            "description": "What the thresholds of excess of this vitamin are. Each pair in the list determines the start and end points of that tier of excess. Each tier of excess corresponds to the intensity level of the effect defined in excess.",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "array",
+                "format": "grid",
+                "options": {
+                    "disable_collapse": false,
+                    "disable_array_add": false,
+                    "disable_array_delete": false,
+                    "disable_array_reorder": true,
+                    "disable_properties": true,
+                    "collapsed": false,
+                     "compact": true,
+                    "hidden": false
+                },
+                "items": {
+                    "type": "integer",
+                    "default": 10,
+                    "options": { "compact": true }
+                }
+            },
+            "propertyOrder": 100
         }
     }
 }

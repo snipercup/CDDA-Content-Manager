@@ -4,6 +4,9 @@
     "title": "Monstergroup",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
+    "stringifyOptions": {
+      "maxLength": 115
+    },
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -29,6 +32,84 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "default": {
+            "type": "string",
+            "id": "/properties/default",
+            "title": "Default",
+            "default": "mon_null",
+            "format": "text",
+            "description": "Description for 'default' Type: 'string' Path: '/properties/default'",
+            "options": {
+                "hidden": false
+            },
+            "propertyOrder": 30
+        },
+        "monsters": {
+            "type": "array",
+            "title": "Monsters",
+            "description": "To choose a monster for spawning, the game creates 1000 entries and picks one. \nEach monster will have a number of entries equal to it's \"freq\" and the default monster will fill in the remaining.",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "object",
+                "id": "/properties/monsters/items",
+                "headerTemplate": "{{ self.monster }}",
+                "format": "grid",
+                "title": "Monster",
+                "options": {
+                    "disable_collapse": false,
+                    "disable_edit_json": false,
+                    "disable_properties": false,
+                    "collapsed": false,
+                    "hidden": false
+                },
+                "defaultProperties": [
+                    "monster",
+                    "freq",
+                    "cost_multiplier"
+                ],
+                "properties": {
+                    "monster": {
+                        "type": "string",
+                        "id": "/properties/monsters/items/properties/monster",
+                        "title": "Monster",
+                        "default": "mon_cat",
+                        "filteredEnum": {
+                            "display_key": "id",
+                            "filter": { "jsonObject.type": { "$eq": "MONSTER" } }
+                        },
+                        "format": "text",
+                        "description": "The monster's unique ID",
+                        "propertyOrder": 10
+                    },
+                    "freq": {
+                        "type": "integer",
+                        "id": "/properties/monsters/items/properties/freq",
+                        "title": "Freq",
+                        "default": 250,
+                        "description": "Chance of occurrence, x/1000.",
+                        "propertyOrder": 20
+                    },
+                    "cost_multiplier": {
+                        "type": "integer",
+                        "id": "/properties/monsters/items/properties/cost_multiplier",
+                        "title": "Cost Multiplier",
+                        "default": 0,
+                        "description": "How many monsters each monster in this definition should count as, if spawning a limited number of monsters.",
+                        "propertyOrder": 30
+                    }
+                }
+            },
+            "propertyOrder": 40
         }
     }
 }

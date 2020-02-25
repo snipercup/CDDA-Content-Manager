@@ -15,6 +15,13 @@
 	},
 	{
 		"type": "filter",
+		"name": "all_ammo_effect",
+		"display_name": "Type: ammo_effect",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "ammo_effect" } }
+	},
+	{
+		"type": "filter",
 		"name": "all_ammunition_type",
 		"display_name": "Type: ammunition_type",
 		"display_key": "id",
@@ -47,6 +54,13 @@
 		"display_name": "Type: effect_type",
 		"display_key": "id",
 		"filter": { "jsonObject.type": { "$eq": "effect_type" } }
+	},
+	{
+		"type": "filter",
+		"name": "all_item_action",
+		"display_name": "Type: item_action",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "item_action" } }
 	},
 	{
 		"type": "filter",
@@ -103,6 +117,13 @@
 		"display_name": "Type: MONSTER",
 		"display_key": "id",
 		"filter": { "jsonObject.type": { "$eq": "MONSTER" } }
+	},
+	{
+		"type": "filter",
+		"name": "all_PET_ARMOR",
+		"display_name": "Type: PET_ARMOR",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "PET_ARMOR" } }
 	},
 	{
 		"type": "filter",
@@ -209,8 +230,8 @@
 		"display_name": "is equal to id",
 		"display_key": "id",
 		"filter": { "$or": [
-            { "jsonObject.id": { "$eq": "ammolink50" } },
-            { "jsonObject.abstract": { "$eq": "ammolink50" } }
+            { "jsonObject.id": { "$eq": "repair_item" } },
+            { "jsonObject.abstract": { "$eq": "repair_item" } }
         ] }
 	},
 	{
@@ -282,7 +303,10 @@
 		"display_name": "Old name string in type",
 		"display_key": "name",
 		"filter": { "$and": [ 
-        { "jsonObject.type": { "$eq": "terrain" } },
+        { "$or": [
+            { "jsonObject.type": { "$eq": "AMMO" } },
+            { "jsonObject.type": { "$eq": "bionic" } }
+        ] },
         { "jsonObject.name": { "$type": "string" } },
         { "jsonObject.name_plural": { "$exists": false } },
         { "jsonObject.deconstruct": { "$exists": false } },
@@ -291,6 +315,8 @@
         { "jsonObject.install_time": { "$exists": false } },
         { "fileName": { "$containsNone": "dining_kitchen.json" } },
         { "fileName": { "$containsNone": "soup.json" } },
+        { "fileName": { "$containsNone": "NPC_Dana_Nunez" } },
+        { "fileName": { "$containsNone": "mapgen" } },
         { "fileName": { "$containsNone": "obsolete" } }
     ] }
 	},
@@ -299,10 +325,6 @@
 		"name": "old_name",
 		"display_name": "Old name_plural string",
 		"display_key": "name",
-		"filter": { "$and": [ 
-        { "jsonObject.name_plural": { "$exists": true } },
-        { "fileName": { "$containsNone": "dining_kitchen.json" } },
-        { "fileName": { "$containsNone": "soup.json" } }
-    ] }
+		"filter": { "jsonObject.name_plural": { "$exists": true } }
 	}
 ]

@@ -4,6 +4,9 @@
     "title": "Bionic",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
+    "stringifyOptions": {
+      "maxLength": 115
+    },
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -29,6 +32,338 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 12
+        },
+        "capacity": {
+            "type": "string",
+            "title": "Description",
+            "default": "250 kJ",
+            "format": "text",
+            "description": "(optional) Amount of power storage added by this bionic. Strings can be used \"1 kJ\"/\"1000 J\"/\"1000000 mJ\" (default: 0)",
+            "propertyOrder": 40
+        },
+        "included": {
+            "type": "boolean",
+            "title": "Included",
+            "format": "checkbox",
+            "default": false,
+            "description": "(optional) Whether this bionic is included with another. If true this bionic does not require a CBM item to be defined. (default: false)"
+        },
+        "occupied_bodyparts": {
+            "type": "array",
+            "id": "/properties/occupied_bodyparts",
+            "title": "Occupied Bodyparts",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "array",
+                "id": "/properties/occupied_bodyparts/items",
+                "title": "Body part",
+                "format": "grid",
+                "options": {
+                    "disable_collapse": true,
+                    "disable_array_add": true,
+                    "disable_array_delete": true,
+                    "disable_array_reorder": true,
+                    "disable_properties": true,
+                    "collapsed": false,
+                    "hidden": false
+                },
+                "items": [
+                    {
+                        "type": "string",
+                        "default": "TORSO",
+                        "format": "text",
+                        "options": { "compact": true },
+                        "includeDefinition": "body_parts_enum"
+                    },
+                    {
+                        "type": "integer",
+                        "options": { "compact": true },
+                        "default": 6
+                    }
+                ]
+            },
+            "propertyOrder": 50
+        },
+        "flags": {
+            "$ref": "#/definitions/flags", 
+            "items": {
+                "enum": [ 
+                    "BIONIC_NPC_USABLE",
+                    "BIONIC_SHOCKPROOF",
+                    "BIONIC_WEAPON",
+                    "BIONIC_GUN",
+                    "BIONIC_POWER_SOURCE",
+                    "BIONIC_ARMOR_INTERFACE",
+                    "NO_UNWIELD",
+                    "BIONIC_SLEEP_FRIENDLY",
+                    "BIONIC_TOGGLED",
+                    "BIONIC_FAULTY"
+                ]
+            },
+            "propertyOrder": 60
+        },
+        "time": {
+            "type": "integer",
+            "title": "Magazine well",
+            "default": 0,
+            "description": "How long, when activated, between drawing cost. If 0, it draws power once. (default: 0)",
+            "propertyOrder": 30
+        },
+        "bash_protec": {
+            "type": "array",
+            "id": "/properties/bash_protec",
+            "title": "Bash Protec",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "headerTemplate": "Bash Protec {{i1}}",
+                "oneOf": [
+                    {
+                        "type": "array",
+                        "id": "/properties/bash_protec/oneof0",
+                        "title": "oneof 0 /properties/bash_protec",
+                        "format": "tabs",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "items": {
+                            "headerTemplate": "Title Root Bash Protec  {{i1}}",
+                            "oneOf": [
+                                {
+                                    "type": "string",
+                                    "id": "/properties/bash_protec/items/oneof0",
+                                    "title": "oneof 0 /properties/bash_protec/items",
+                                    "default": "ARM_L",
+                                    "format": "text",
+                                    "description": "Description for 'items' Type: 'string' Path: '/properties/bash_protec/items/items'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                },
+                                {
+                                    "type": "integer",
+                                    "id": "/properties/bash_protec/items/oneof1",
+                                    "title": "oneof 1 /properties/bash_protec/items",
+                                    "default": 3,
+                                    "description": "A description for 'items'  Type: 'integer'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "type": "array",
+                        "id": "/properties/bash_protec/oneof1",
+                        "title": "oneof 1 /properties/bash_protec",
+                        "format": "tabs",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "items": {
+                            "headerTemplate": "Title Root Bash Protec  {{i1}}",
+                            "oneOf": [
+                                {
+                                    "type": "string",
+                                    "id": "/properties/bash_protec/items/oneof0",
+                                    "title": "oneof 0 /properties/bash_protec/items",
+                                    "default": "ARM_R",
+                                    "format": "text",
+                                    "description": "Description for 'items' Type: 'string' Path: '/properties/bash_protec/items/items'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                },
+                                {
+                                    "type": "integer",
+                                    "id": "/properties/bash_protec/items/oneof1",
+                                    "title": "oneof 1 /properties/bash_protec/items",
+                                    "default": 3,
+                                    "description": "A description for 'items'  Type: 'integer'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "propertyOrder": 60
+        },
+        "cut_protec": {
+            "type": "array",
+            "id": "/properties/cut_protec",
+            "title": "Cut Protec",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "headerTemplate": "Cut Protec {{i1}}",
+                "oneOf": [
+                    {
+                        "type": "array",
+                        "id": "/properties/cut_protec/oneof0",
+                        "title": "oneof 0 /properties/cut_protec",
+                        "format": "tabs",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "items": {
+                            "headerTemplate": "Title Root Cut Protec  {{i1}}",
+                            "oneOf": [
+                                {
+                                    "type": "string",
+                                    "id": "/properties/cut_protec/items/oneof0",
+                                    "title": "oneof 0 /properties/cut_protec/items",
+                                    "default": "ARM_L",
+                                    "format": "text",
+                                    "description": "Description for 'items' Type: 'string' Path: '/properties/cut_protec/items/items'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                },
+                                {
+                                    "type": "integer",
+                                    "id": "/properties/cut_protec/items/oneof1",
+                                    "title": "oneof 1 /properties/cut_protec/items",
+                                    "default": 3,
+                                    "description": "A description for 'items'  Type: 'integer'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "type": "array",
+                        "id": "/properties/cut_protec/oneof1",
+                        "title": "oneof 1 /properties/cut_protec",
+                        "format": "tabs",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "items": {
+                            "headerTemplate": "Title Root Cut Protec  {{i1}}",
+                            "oneOf": [
+                                {
+                                    "type": "string",
+                                    "id": "/properties/cut_protec/items/oneof0",
+                                    "title": "oneof 0 /properties/cut_protec/items",
+                                    "default": "ARM_R",
+                                    "format": "text",
+                                    "description": "Description for 'items' Type: 'string' Path: '/properties/cut_protec/items/items'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                },
+                                {
+                                    "type": "integer",
+                                    "id": "/properties/cut_protec/items/oneof1",
+                                    "title": "oneof 1 /properties/cut_protec/items",
+                                    "default": 3,
+                                    "description": "A description for 'items'  Type: 'integer'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "propertyOrder": 70
+        },
+        "react_cost": {
+            "title": "React cost",
+            "description": "How many kJ it costs over time to keep this bionic active, does nothing without a non-zero \"time\". Strings can be used \"1 kJ\"/\"1000 J\"/\"1000000 mJ\" (default: 0)",
+            "oneOf": [
+                {
+                    "type": "string",
+                    "title": "String format",
+                    "default": "5 J",
+                    "format": "text"
+                },
+                {
+                    "type": "integer",
+                    "title": "Number format",
+                    "default": 0
+                }
+            ]
+        },
+        "act_cost": {
+            "title": "Act Cost",
+            "oneOf": [
+                {
+                    "type": "string",
+                    "title": "String format",
+                    "default": "5 J",
+                    "format": "text",
+                    "description": "How many kJ it costs to activate the bionic. Strings can be used \"1 kJ\"/\"1000 J\"/\"1000000 mJ\" (default: 0)",
+                    "propertyOrder": 60
+                },
+                {
+                    "type": "integer",
+                    "title": "Number format",
+                    "default": 0,
+                    "description": "How many kJ it costs to activate the bionic. Strings can be used \"1 kJ\"/\"1000 J\"/\"1000000 mJ\" (default: 0)",
+                    "propertyOrder": 30
+                }
+            ]
         }
     }
 }

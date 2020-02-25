@@ -61,6 +61,10 @@
           "$ref": "#/definitions/price_postapoc", 
           "propertyOrder": 13
         },
+        "armor_data": {
+          "$ref": "#/definitions/armor_data", 
+          "propertyOrder": 13
+        },
         "to_hit": {
           "$ref": "#/definitions/to_hit", 
           "propertyOrder": 13
@@ -76,6 +80,12 @@
         "color": {
             "$ref": "#/definitions/color", 
             "propertyOrder": 13
+        },
+        "reliability": {
+            "type": "integer",
+            "title": "Reliability",
+            "default": 1,
+            "description": "How reliable this this magazine on a range of 0 to 10? (see GAME_BALANCE.md)"
         },
         "ammo_type": {
             "title": "Ammo type",
@@ -120,6 +130,15 @@
                 "filter": { "jsonObject.use_action.type": { "$eq": "ammobelt" } }
             }
         },
+        "default_ammo": {
+            "type": "string",
+            "title": "Default ammo",
+            "format": "selectize",
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { "jsonObject.type": { "$eq": "AMMO" } }
+            }
+        },
         "capacity": {
             "type": "integer",
             "title": "Capacity",
@@ -136,6 +155,7 @@
                     "NO_RELOAD", 
                     "MAG_COMPACT", 
                     "MAG_BULKY", 
+                    "MAG_EJECT", 
                     "SPEEDLOADER", 
                     "RECHARGE", 
                     "RADIOACTIVE", 

@@ -168,18 +168,11 @@
         "turns_per_charge": {
           "$ref": "#/definitions/turns_per_charge"
         },
+        "initial_charges": {
+          "$ref": "#/definitions/initial_charges"
+        },
         "explosion": {
           "$ref": "#/definitions/explosion"
-        },
-        "initial_charges": {
-            "type": "integer",
-            "id": "properties/initial_charges",
-            "title": "Initial charges",
-            "default": 25,
-            "description": "Charges when spawned",
-            "options": {
-                "hidden": false
-            }
         },
         "cutting": {
           "$ref": "#/definitions/cutting", 
@@ -240,6 +233,16 @@
             },
             "propertyOrder": 150
         },
+        "rand_charges": {
+            "$ref": "#/definitions/integer_array",
+            "title": "Random charges",
+            "description": "Randomize the charges when spawned. This example ([10, 15, 25]) has a 50% chance of rng(10, 15) charges and a 50% chance of rng(15, 25) (The endpoints are included)",
+            "options": { "disable_array_reorder": false },
+            "items": {
+                "type": "integer",
+                "default": 0
+            }
+        },
         "gunmod_data": {
             "type": "object",
             "id": "/properties/gunmod_data",
@@ -296,28 +299,7 @@
                 "flags"
             ],
             "properties": {
-                "flags": {
-                    "type": "array",
-                    "id": "/properties/extend/properties/flags",
-                    "title": "Flags",
-                    "format": "selectize",
-                    "uniqueItems": true,
-                    "options": {
-                        "disable_collapse": false,
-                        "disable_array_add": false,
-                        "disable_array_delete": false,
-                        "disable_array_reorder": true,
-                        "disable_properties": false,
-                        "collapsed": false,
-                        "hidden": false,
-                        "multiple": true
-                    },
-                    "items": {
-                        "type": "string",
-                        "enum": [ "PUMP_RAIL_COMPATIBLE" ]
-                    },
-                    "propertyOrder": 60
-                }
+                "flags": { "$ref": "#/definitions/flags_ref" }
             }
         },
         "artifact_data": {
@@ -458,7 +440,8 @@
                           "AEA_FLASH",
                           "AEA_VOMIT",
                           "AEA_SHADOWS",
-                          "AEA_STAMINA_EMPTY"
+                          "AEA_STAMINA_EMPTY",
+                          "AEP_CLAIRVOYANCE_PLUS"
                         ]
                     },
                     "propertyOrder": 60
@@ -498,139 +481,22 @@
         "qualities": {
           "$ref": "#/definitions/qualities"
         },
+        "max_charges": {
+          "$ref": "#/definitions/max_charges"
+        },
+        "charges_per_use": {
+          "$ref": "#/definitions/charges_per_use"
+        },
+        "ammo": {
+          "$ref": "#/definitions/ammo"
+        },
         "use_action": {
           "$ref": "#/definitions/use_action",
           "stringifyOptions": {
             "maxLength": 117
           }
         },
-        "ammo": {
-            "title": "Ammo",
-            "id": "/properties/ammo",
-            "type": "string",
-            "default": "460",
-            "format": "text",
-            "description": "Ammo types accepted for reloading", 
-            "filteredEnum": {
-                "display_key": "id",
-                "filter": { "jsonObject.type": { "$eq": "ammunition_type" } }
-            },
-            "options": {
-                "hidden": false
-            }
-        },
-        "max_charges": {
-            "type": "integer",
-            "id": "/properties/max_charges",
-            "title": "Max charges",
-            "default": 100,
-            "description": "Maximum charges tool can hold",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 30
-        },
-        "charges_per_use": {
-            "type": "integer",
-            "id": "/properties/charges_per_use",
-            "title": "Charges per use",
-            "default": 1,
-            "description": "Charges consumed per tool use",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 30
-        },
-        "flags": {
-            "type": "array",
-            "id": "/properties/flags",
-            "title": "Flags",
-            "format": "selectize",
-            "uniqueItems": true,
-            "options": {
-                "disable_collapse": false,
-                "disable_array_add": false,
-                "disable_array_delete": false,
-                "disable_array_reorder": true,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false,
-                "multiple": true
-            },
-            "items": {
-                "type": "string",
-                "enum": [ 
-                  "RADIO_MODABLE",
-                  "RADIO_CONTAINER",
-                  "RADIO_INVOKE_PROC",
-                  "LIGHT_2",
-                  "LIGHT_3",
-                  "LIGHT_4",
-                  "LIGHT_6",
-                  "LIGHT_8",
-                  "LIGHT_10",
-                  "LIGHT_15",
-                  "LIGHT_20",
-                  "LIGHT_30",
-                  "LIGHT_240",
-                  "LIGHT_300",
-                  "LIGHT_310",
-                  "LIGHT_450",
-                  "LIGHT_500",
-                  "BELT_CLIP",
-                  "REFILLABLE_LIGHTER",
-                  "UNARMED_WEAPON",
-                  "ALWAYS_TWOHAND",
-                  "DURABLE_MELEE",
-                  "HURT_WHEN_PULLED",
-                  "DANGEROUS",
-                  "ACT_IN_FIRE",
-                  "ACT_ON_RANGED_HIT",
-                  "REQUIRES_TINDER",
-                  "WATER_EXTINGUISH",
-                  "WIND_EXTINGUISH",
-                  "TRADER_AVOID",
-                  "SHEATH_KNIFE",
-                  "SHEATH_SWORD",
-                  "SHEATH_SPEAR",
-                  "NO_UNLOAD",
-                  "NO_SALVAGE",
-                  "NO_RELOAD",
-                  "NO_REPAIR",
-                  "NPC_THROWN",
-                  "NPC_THROW_NOW",
-                  "NPC_ACTIVATE",
-                  "NONCONDUCTIVE",
-                  "THERMOMETER",
-                  "HYGROMETER",
-                  "BAROMETER",
-                  "USE_UPS",
-                  "IS_UPS",
-                  "NO_CVD",
-                  "POWERED",
-                  "CHARGEDIM",
-                  "ALARMCLOCK",
-                  "WATCH",
-                  "FIRESTARTER",
-                  "RADIOSIGNAL_2",
-                  "RADIO_ACTIVATION",
-                  "ALLOWS_REMOTE_USE",
-                  "RADIOACTIVE",
-                  "FISH_POOR",
-                  "LEAK_DAM",
-                  "GRENADE",
-                  "FLAMING",
-                  "FANCY",
-                  "MESSY",
-                  "SPEAR",
-                  "FIRE",
-                  "STAB",
-                  "ZOOM",
-                  "BOMB"
-                ]
-            },
-            "propertyOrder": 60
-        },
+        "flags": { "$ref": "#/definitions/flags_ref" },
         "sub": {
             "type": "string",
             "id": "/properties/sub",
@@ -686,13 +552,98 @@
                 "AEP_SICK"
              ]
         },
-        "yesno": {
-            "default": "yes",
-            "type": "string",
-            "enum": [
-                "yes",
-                "no"
-            ]
+        "flags_ref": {
+            "type": "array",
+            "id": "/definitions/flags_ref",
+            "title": "Flags",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "enum": [ 
+                  "RADIO_MODABLE",
+                  "RADIO_CONTAINER",
+                  "RADIO_INVOKE_PROC",
+                  "LIGHT_2",
+                  "LIGHT_3",
+                  "LIGHT_4",
+                  "LIGHT_6",
+                  "LIGHT_8",
+                  "LIGHT_10",
+                  "LIGHT_15",
+                  "LIGHT_20",
+                  "LIGHT_30",
+                  "LIGHT_240",
+                  "LIGHT_300",
+                  "LIGHT_310",
+                  "LIGHT_450",
+                  "LIGHT_500",
+                  "BELT_CLIP",
+                  "REFILLABLE_LIGHTER",
+                  "UNARMED_WEAPON",
+                  "ALWAYS_TWOHAND",
+                  "DURABLE_MELEE",
+                  "HURT_WHEN_PULLED",
+                  "DANGEROUS",
+                  "ACT_IN_FIRE",
+                  "ACT_ON_RANGED_HIT",
+                  "REQUIRES_TINDER",
+                  "WATER_EXTINGUISH",
+                  "WIND_EXTINGUISH",
+                  "TRADER_AVOID",
+                  "SHEATH_KNIFE",
+                  "SHEATH_SWORD",
+                  "SHEATH_SPEAR",
+                  "SHEATH_AXE",
+                  "CAMERA_PRO",
+                  "NO_UNLOAD",
+                  "NO_SALVAGE",
+                  "NO_RELOAD",
+                  "NO_REPAIR",
+                  "NPC_THROWN",
+                  "NPC_THROW_NOW",
+                  "NPC_ACTIVATE",
+                  "NONCONDUCTIVE",
+                  "THERMOMETER",
+                  "HYGROMETER",
+                  "BAROMETER",
+                  "USE_UPS",
+                  "IS_UPS",
+                  "NO_CVD",
+                  "DIG_TOOL",
+                  "POWERED",
+                  "CHARGEDIM",
+                  "ALARMCLOCK",
+                  "WATCH",
+                  "FIRESTARTER",
+                  "RADIOSIGNAL_2",
+                  "RADIO_ACTIVATION",
+                  "ALLOWS_REMOTE_USE",
+                  "RADIOACTIVE",
+                  "FISH_POOR",
+                  "LEAK_DAM",
+                  "GRENADE",
+                  "FLAMING",
+                  "FANCY",
+                  "MESSY",
+                  "SPEAR",
+                  "FIRE",
+                  "STAB",
+                  "ZOOM",
+                  "BOMB"
+                ]
+            },
+            "propertyOrder": 60
         }
     }
 }

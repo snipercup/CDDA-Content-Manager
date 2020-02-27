@@ -20,12 +20,9 @@
       },
       "items": {
           "type": "array",
-          "id": "/properties/magazines/oneof0",
           "default": [ "45", [ "m1911mag", "m1911bigmag" ] ],
           "title": "magazines",
-          "stringifyOptions": {
-            "maxLength": 116
-          },
+          "stringifyOptions": { "maxLength": 116 },
           "format": "tabs",
           "options": {
               "disable_collapse": true,
@@ -40,7 +37,6 @@
           "items": [
               {
                   "type": "string",
-                  "id": "/properties/magazines/items/oneof0",
                   "default": "DEFAULT",
                   "format": "text",
                   "filteredEnum": {
@@ -54,12 +50,9 @@
               },
               {
                   "type": "array",
-                  "id": "/properties/magazines/items/oneof0",
                   "title": "Magazines",
                   "format": "selectize",
-                  "stringifyOptions": {
-                    "maxLength": 120
-                  },
+                  "stringifyOptions": { "maxLength": 120 },
                   "uniqueItems": true,
                   "options": {
                       "disable_collapse": false,
@@ -83,12 +76,8 @@
               },
               {
                   "type": "integer",
-                  "id": "/properties/magazines/items/oneof1",
                   "default": 1,
-                  "options": {
-                    "hidden": false,
-                    "compact": true
-                  }
+                  "options": { "compact": true }
               }
           ]
       }

@@ -4,6 +4,9 @@
     "title": "Martial art",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
+    "stringifyOptions": {
+      "maxLength": 117
+    },
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -29,6 +32,363 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 13
+        },
+        "arm_block": {
+            "type": "integer",
+            "title": "Arm block",
+            "default": 2,
+            "description": "Unarmed skill level at which arm blocking is unlocked"
+        },
+        "leg_block": {
+            "type": "integer",
+            "title": "Leg block",
+            "default": 2,
+            "description": "Unarmed skill level at which leg blocking is unlocked"
+        },
+        "initiate": {
+            "type": "array",
+            "id": "/properties/initiate",
+            "title": "Initiate",
+            "description": "Message shown when player or NPC chooses this art",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+              "type": "string",
+              "default": "You enter an open guard stance and prepare to strike.",
+              "format": "text"
+            },
+            "propertyOrder": 50
+        },
+        "learn_difficulty": {
+            "type": "integer",
+            "title": "Learn Difficulty",
+            "default": 8,
+            "description": "Difficulty to learn a style from book based on \"primary skill\"",
+            "propertyOrder": 60
+        },
+        "primary_skill": {
+            "type": "string",
+            "title": "Primary Skill",
+            "default": "bashing",
+            "format": "text",
+            "description": "Results of this style are based on this primary skill",
+            "propertyOrder": 70
+        },
+        "strictly_melee": {
+            "type": "boolean",
+            "title": "Strictly Melee",
+            "format": "checkbox",
+            "default": true,
+            "description": "Whether this is used stricly in melee",
+            "propertyOrder": 80
+        },
+        "arm_block_with_bio_armor_arms": {
+            "type": "boolean",
+            "title": "Arm block with bionic armor arms",
+            "format": "checkbox",
+            "default": false,
+            "description": "Whether you can block with bionic armor on your arms",
+            "propertyOrder": 80
+        },
+        "leg_block_with_bio_armor_legs": {
+            "type": "boolean",
+            "title": "Arm block with bionic armor legs",
+            "format": "checkbox",
+            "default": false,
+            "description": "Whether you can block with bionic armor on your arms",
+            "propertyOrder": 80
+        },
+        "force_unarmed": {
+            "type": "boolean",
+            "title": "Force unarmed",
+            "format": "checkbox",
+            "default": false,
+            "description": "Whether you have to be unarmed before using this style",
+            "propertyOrder": 80
+        },
+        "static_buffs": {
+            "title": "Static buffs",
+            "description": "List of buffs that are automatically applied every turn",
+            "$ref": "#/definitions/buff_ref"
+        },
+        "oncrit_buffs": {
+            "title": "Oncrit buffs",
+            "description": "List of buffs that are automatically applied on a crit",
+            "$ref": "#/definitions/buff_ref"
+        },
+        "onhit_buffs": {
+            "title": "Onhit buffs",
+            "description": "List of buffs that are automatically applied on a hit",
+            "$ref": "#/definitions/buff_ref"
+        },
+        "onkill_buffs": {
+            "title": "Onkill buffs",
+            "description": "List of buffs that are automatically applied on a kill",
+            "$ref": "#/definitions/buff_ref"
+        },
+        "ongethit_buffs": {
+            "title": "Ongethit buffs",
+            "description": "List of buffs that are automatically applied on getting hit",
+            "$ref": "#/definitions/buff_ref"
+        },
+        "onmiss_buffs": {
+            "title": "Onmiss buffs",
+            "description": "List of buffs that are automatically applied on a miss",
+            "$ref": "#/definitions/buff_ref"
+        },
+        "onblock_buffs": {
+            "title": "Onblock buffs",
+            "description": "List of buffs that are automatically applied on a block",
+            "$ref": "#/definitions/buff_ref"
+        },
+        "onmove_buffs": {
+            "title": "Onmove buffs",
+            "description": "List of buffs that are automatically applied on a move",
+            "$ref": "#/definitions/buff_ref"
+        },
+        "techniques": {
+          "$ref": "#/definitions/string_array",
+          "title": "Techniques",
+          "description": "Combat techniques used by this tool",
+          "items": {
+              "filteredEnum": {
+                  "display_key": "id",
+                  "filter": { "jsonObject.type": { "$eq": "technique" } }
+              }
+          }
+        },
+        "weapons": {
+            "$ref": "#/definitions/string_array",
+            "title": "Weapons",
+            "description": "List of weapons usable with this art",
+            "items": {
+                "type": "string",
+                "filteredEnum": {
+                    "display_key": "id",
+                    "filter": { "$and": [ 
+                        { "$or": [ 
+                            { "jsonObject.type": { "$eq": "TOOL" } },
+                            { "jsonObject.type": { "$eq": "GENERIC" } }
+                        ] },
+                        { "jsonObject.id": { "$exists": true } }
+                    ] }
+                }
+            }
+        },
+        "autolearn": {
+            "$ref": "#/definitions/array_array",
+            "title": "Autolearn",
+            "description": "A list of skill requirements that if met, automatically teach the player the martial art",
+            "items": {
+                "items": [
+                    {
+                        "type": "string",
+                        "filteredEnum": {
+                            "display_key": "ident",
+                            "filter": { "$and": [ 
+                                { "jsonObject.type": { "$eq": "skill" } },
+                                { "jsonObject.ident": { "$exists": true } }
+                            ] }
+                        }
+                    },
+                    {
+                        "type": "integer"
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "buff_ref": {
+            "type": "array",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "object",
+                "title": "Buff",
+                "options": {
+                    "disable_collapse": false,
+                    "disable_edit_json": false,
+                    "disable_properties": false,
+                    "collapsed": false,
+                    "hidden": false
+                },
+                "defaultProperties": [
+                    "id",
+                    "name",
+                    "description",
+                    "melee_allowed",
+                    "flat_bonuses"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id",
+                        "default": "buff_eskrima_static",
+                        "format": "text",
+                        "description": "Unique ID. Must be one continuous word",
+                        "propertyOrder": 10
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name",
+                        "default": "Eskrima Stance",
+                        "format": "text",
+                        "description": "In-game name displayed",
+                        "propertyOrder": 20
+                    },
+                    "description": {
+                      "$ref": "#/definitions/description", 
+                      "propertyOrder": 13
+                    },
+                    "buff_duration": {
+                        "type": "integer",
+                        "title": "Buff duration",
+                        "default": 2,
+                        "description": "Duration in turns that this buff lasts"
+                    },
+                    "max_stacks": {
+                        "type": "integer",
+                        "title": "Max stacks",
+                        "default": 2,
+                        "description": "Maximum number of stacks on the buff. Buff bonuses are multiplied by current buff intensity"
+                    },
+                    "bonus_blocks": {
+                        "type": "integer",
+                        "title": "Bonus blocks",
+                        "default": 2,
+                        "description": "Extra blocks per turn"
+                    },
+                    "bonus_dodges": {
+                        "type": "integer",
+                        "title": "Bonus doges",
+                        "default": 2,
+                        "description": "Extra dodges per turn"
+                    },
+                    "melee_allowed": {
+                        "type": "boolean",
+                        "title": "Melee Allowed",
+                        "format": "checkbox",
+                        "default": false,
+                        "description": "Means that ANY melee weapon can be used, NOT just the martial art's weapons",
+                        "propertyOrder": 40
+                    },
+                    "unarmed_allowed": {
+                        "type": "boolean",
+                        "title": "Unarmed Allowed",
+                        "format": "checkbox",
+                        "default": false,
+                        "description": "Can an unarmed character use this technique",
+                        "propertyOrder": 40
+                    },
+                    "req_buffs": {
+                      "$ref": "#/definitions/string_array",
+                      "title": "Req buffs",
+                      "description": "This technique requires a named buff to be active",
+                      "items": {
+                          "type": "string",
+                          "enum": [ "buff_leopard_onmove1" ]
+                      }
+                    },
+                    "skill_requirements": {
+                        "$ref": "#/definitions/object_array", 
+                        "title": "Skill requirement",
+                        "description": "Skills and their minimum levels required to use this technique. Can be any skill.",
+                        "items": {
+                            "title": "Skill",
+                            "defaultProperties": [
+                                "name",
+                                "level"
+                            ],
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "title": "Name",
+                                    "default": "unarmed",
+                                    "format": "text"
+                                },
+                                "level": {
+                                    "type": "integer",
+                                    "title": "Level",
+                                    "default": 1
+                                }
+                            }
+                        },
+                        "propertyOrder": 40
+                    },
+                    "flat_bonuses": {
+                        "$ref": "#/definitions/bonuses_ref"
+                    },
+                    "mult_bonuses": {
+                        "$ref": "#/definitions/bonuses_ref"
+                    }
+                }
+            }
+        },
+        "bonuses_ref": {
+            "type": "array",
+            "title": "Bonuses",
+            "description": "Bonuses contain 2 to 4 of the following tokens, in order: \nAffected statistic. Any of: \"hit\", \"dodge\", \"block\", \"speed\", \"movecost\", \"damage\", \"armor\", \"arpen\", Damage type (\"bash\", \"cut\", \"heat\", etc.) if the affected statistic is damage, armor, or arpen, Scaling stat. Any of: \"str\", \"dex\", \"int\", \"per\", The value of the bonus itself",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "array",
+                "title": "Flat Bonus",
+                "format": "grid",
+                "options": {
+                    "disable_collapse": false,
+                    "disable_array_add": false,
+                    "disable_array_delete": false,
+                    "disable_array_reorder": true,
+                    "disable_properties": false,
+                    "collapsed": false,
+                    "hidden": false
+                },
+                "items": {
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "default": "hit",
+                            "format": "text",
+                            "options": { "compact": true }
+                        },
+                        {
+                            "type": "number",
+                            "default": 0.75,
+                            "options": { "compact": true }
+                        }
+                    ]
+                }
+            }
         }
     }
 }
+

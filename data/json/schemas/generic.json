@@ -77,6 +77,42 @@
             "type": "string",
             "enum": [ ]
         },
+        "proportional": {
+            "type": "object",
+            "title": "Proportional",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "reload"
+            ],
+            "properties": {
+                "price": {
+                    "type": "number",
+                    "title": "Price",
+                    "default": 0.5
+                },
+                "weight": {
+                    "type": "number",
+                    "title": "Weight",
+                    "default": 0.5
+                },
+                "volume": {
+                    "type": "number",
+                    "title": "Volume",
+                    "default": 0.5
+                },
+                "bashing": {
+                    "type": "number",
+                    "title": "Bashing",
+                    "default": 0.5
+                }
+            }
+        },
         "container": {
             "type": "string",
             "format": "selectize",
@@ -93,9 +129,16 @@
             "format": "selectize",
             "filteredEnum": {
                 "display_key": "id",
-                "filter": { "$or": [
-                    { "jsonObject.type": { "$eq": "AMMO" } },
-                    { "jsonObject.type": { "$eq": "GENERIC" } }
+                "filter": { "$and": [
+                    { "$or": [
+                        { "jsonObject.type": { "$eq": "AMMO" } },
+                        { "jsonObject.type": { "$eq": "GENERIC" } },
+                        { "jsonObject.type": { "$eq": "TOOL" } }
+                    ] },
+                    { "$or": [
+                        { "jsonObject.symbol": { "$exists": true } },
+                        { "jsonObject.copy-from": { "$exists": true } }
+                    ] }
                 ] }
             }
         },
@@ -118,8 +161,13 @@
                     "MC_TURN_USED",
                     "MC_SCIENCE_STUFF",
                     "MC_ENCRYPTED",
+                    "MC_RANDOM_STUFF",
+                    "MC_MAY_BE_ENCRYPTED",
                     "SPEAR",
                     "STAB",
+                    "SLEEP_AID",
+                    "NO_REPAIR",
+                    "UNRECOVERABLE",
                     "CONDUCTIVE",
                     "FAKE_SMOKE",
                     "FAKE_MILL",
@@ -130,11 +178,13 @@
                     "PSEUDO",
                     "BELT_CLIP",
                     "FIRESTARTER",
+                    "FRAGILE_MELEE",
                     "ALWAYS_TWOHAND",
                     "SHEATH_SPEAR",
                     "REACH_ATTACK",
                     "SHEATH_SWORD",
                     "SHEATH_KNIFE",
+                    "SHEATH_AXE",
                     "UNARMED_WEAPON",
                     "UNBREAKABLE_MELEE",
                     "TRADER_AVOID",
@@ -145,7 +195,9 @@
                     "NO_DROP",
                     "NO_INGEST",
                     "EDIBLE_FROZEN",
-                    "EATEN_COLD"
+                    "EATEN_COLD",
+                    "LIGHT_10",
+                    "LIGHT_15"
                 ]
             },
             "propertyOrder": 60

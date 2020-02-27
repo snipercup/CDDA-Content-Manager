@@ -457,18 +457,10 @@
                 "flags"
             ],
             "properties": {
-                "flags": { 
-                    "type": "array",
-                    "id": "/properties/delete/properties/flags",
-                    "$ref": "#/definitions/flags_ref" 
-                }
+                "flags": { "$ref": "#/definitions/flags_ref" }
             }
         },
-        "flags": {
-            "type": "array",
-            "id": "/properties/flags",
-            "$ref": "#/definitions/flags_ref" 
-        }
+        "flags": { "$ref": "#/definitions/flags_ref" }
     },
     "definitions": {
         "AMMO": {
@@ -499,6 +491,7 @@
                     "NEEDS_UNFOLD",
                     "WATER_FRIENDLY",
                     "WATERPROOF_GUN",
+                    "TRADER_AVOID",
                     "REDUCED_BASHING",
                     "STAB",
                     "COLLAPSIBLE_STOCK",
@@ -508,6 +501,9 @@
                     "PUMP_RAIL_COMPATIBLE",
                     "SKINTIGHT",
                     "IS_ARMOR",
+                    "OVERSIZE",
+                    "BELTED",
+                    "STR_RELOAD",
                     "SLOW_WIELD",
                     "BIPOD",
                     "NON-FOULING",

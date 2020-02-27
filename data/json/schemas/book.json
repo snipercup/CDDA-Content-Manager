@@ -4,6 +4,9 @@
     "title": "Book",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
+    "stringifyOptions": {
+      "maxLength": 117
+    },
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -38,6 +41,86 @@
           "$ref": "#/definitions/description", 
           "propertyOrder": 13
         },
-        "snippet_category": {"$ref": "#/definitions/snippet_category"}
+        "snippet_category": {"$ref": "#/definitions/snippet_category"},
+        "weight": {
+            "$ref": "#/definitions/weight", 
+            "propertyOrder": 13
+        },
+        "volume": {
+          "$ref": "#/definitions/volume", 
+          "propertyOrder": 13
+        },
+        "material": {
+          "$ref": "#/definitions/material", 
+          "propertyOrder": 13
+        },
+        "price": {
+          "$ref": "#/definitions/price", 
+          "propertyOrder": 16
+        },
+        "price_postapoc": {
+          "$ref": "#/definitions/price_postapoc", 
+          "propertyOrder": 16
+        },
+        "bashing": {
+          "$ref": "#/definitions/bashing", 
+          "propertyOrder": 13
+        },
+        "symbol": {
+          "$ref": "#/definitions/symbol", 
+          "propertyOrder": 13
+        },
+        "color": {
+          "$ref": "#/definitions/color", 
+          "propertyOrder": 13
+        },
+        "skill": {
+            "type": "string",
+            "title": "Skill",
+            "default": "tailor",
+            "format": "text",
+            "description": "The skill you train when reading",
+            "filteredEnum": {
+                "display_key": "ident",
+                "filter": { "jsonObject.type": { "$eq": "skill" } }
+            },
+            "propertyOrder": 130
+        },
+        "required_level": {
+            "type": "integer",
+            "title": "Required Level",
+            "default": 5,
+            "description": "Minimum skill level required to learn",
+            "propertyOrder": 140
+        },
+        "max_level": {
+            "type": "integer",
+            "title": "Max Level",
+            "default": 8,
+            "description": "Maximum skill level this book will train to",
+            "propertyOrder": 150
+        },
+        "intelligence": {
+            "type": "integer",
+            "title": "Intelligence",
+            "default": 10,
+            "description": "Intelligence required to read this book without penalty",
+            "propertyOrder": 160
+        },
+        "time": {
+            "type": "string",
+            "title": "Time",
+            "default": "55 m",
+            "format": "text",
+            "description": "Time a single read session takes. An integer will be read in minutes or a time string can be used.",
+            "propertyOrder": 170
+        },
+        "fun": {
+            "type": "integer",
+            "title": "Fun",
+            "default": -1,
+            "description": "Morale bonus/penalty for reading",
+            "propertyOrder": 180
+        }
     }
 }

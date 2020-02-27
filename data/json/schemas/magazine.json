@@ -114,10 +114,17 @@
             "format": "selectize",
             "filteredEnum": {
                 "display_key": "id",
-                "filter": { "$or": [
-                    { "jsonObject.type": { "$eq": "AMMO" } },
-                    { "jsonObject.type": { "$eq": "MAGAZINE" } },
-                    { "jsonObject.type": { "$eq": "BATTERY" } }
+                "filter": { "$and": [
+                    { "$or": [
+                        { "jsonObject.symbol": { "$exists": true } },
+                        { "jsonObject.copy-from": { "$exists": true } }
+                    ] },
+                    { "$or": [
+                        { "jsonObject.type": { "$eq": "AMMO" } },
+                        { "jsonObject.type": { "$eq": "MAGAZINE" } },
+                        { "jsonObject.type": { "$eq": "GENERIC" } },
+                        { "jsonObject.type": { "$eq": "BATTERY" } }
+                    ] }
                 ] }
             }
         },
@@ -153,9 +160,15 @@
                 "enum": [ 
                     "NO_UNLOAD", 
                     "NO_RELOAD", 
+                    "MECH_BAT", 
                     "MAG_COMPACT", 
                     "MAG_BULKY", 
                     "MAG_EJECT", 
+                    "MAG_BELT", 
+                    "MAG_DESTROY", 
+                    "BELTED", 
+                    "OVERSIZE", 
+                    "WATER_FRIENDLY", 
                     "SPEEDLOADER", 
                     "RECHARGE", 
                     "RADIOACTIVE", 

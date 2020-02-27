@@ -264,11 +264,17 @@
                 "enum": [ 
                   "NOGIB", 
                   "TINDER", 
+                  "LEAK_ALWAYS", 
+                  "LEAK_DAM", 
+                  "IRREMOVABLE", 
+                  "RADIOACTIVE", 
                   "DETERGENT", 
                   "TANGLE", 
+                  "NO_DROP",
                   "DROP_ACTION_ONLY_IF_LIQUID",
                   "PRIMITIVE_RANGED_WEAPON",
                   "TRADER_AVOID",
+                  "UNRECOVERABLE",
                   "NO_SALVAGE"
                 ]
             },
@@ -305,9 +311,14 @@
             "filteredEnum": {
                 "display_key": "id",
                 "filter": { "$and": [
-                    { "jsonObject.symbol": { "$exists": true } },
+                    { "$or": [
+                        { "jsonObject.symbol": { "$exists": true } },
+                        { "jsonObject.copy-from": { "$exists": true } }
+                    ] },
+                    { "jsonObject.id": { "$exists": true } },
                     { "$or": [
                         { "jsonObject.type": { "$eq": "AMMO" } },
+                        { "jsonObject.type": { "$eq": "GENERIC" } },
                         { "jsonObject.type": { "$eq": "COMESTIBLE" } },
                         { "jsonObject.type": { "$eq": "furniture" } }
                     ] }
@@ -378,104 +389,7 @@
             }
         },
         "explosion": {
-            "type": "object",
-            "id": "/properties/explosion",
-            "title": "Explosion",
-            "options": {
-                "disable_collapse": false,
-                "disable_edit_json": false,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false
-            },
-            "defaultProperties": [
-                "power",
-                "distance_factor",
-                "shrapnel"
-            ],
-            "properties": {
-                "power": {
-                    "type": "integer",
-                    "id": "/properties/explosion/properties/power",
-                    "title": "Power",
-                    "default": 24,
-                    "description": "Power of the explosion",
-                    "options": {
-                        "hidden": false
-                    }
-                },
-                "distance_factor": {
-                    "type": "number",
-                    "id": "/properties/explosion/properties/distance_factor",
-                    "title": "Distance Factor",
-                    "default": 0.6,
-                    "description": "The distance factor",
-                    "options": {
-                        "hidden": false
-                    }
-                },
-                "shrapnel": {
-                    "type": "object",
-                    "id": "/properties/explosion/properties/shrapnel",
-                    "title": "Shrapnel",
-                    "options": {
-                        "disable_collapse": false,
-                        "disable_edit_json": false,
-                        "disable_properties": false,
-                        "collapsed": false,
-                        "hidden": false
-                    },
-                    "defaultProperties": [
-                        "count",
-                        "mass",
-                        "recovery",
-                        "drop"
-                    ],
-                    "properties": {
-                        "count": {
-                            "type": "integer",
-                            "id": "/properties/explosion/properties/shrapnel/properties/count",
-                            "title": "Count",
-                            "default": 40,
-                            "description": "The amount of schrapnel",
-                            "options": {
-                                "hidden": false
-                            }
-                        },
-                        "mass": {
-                            "type": "integer",
-                            "id": "/properties/explosion/properties/shrapnel/properties/mass",
-                            "title": "Mass",
-                            "default": 5,
-                            "description": "The mass of schrapnel",
-                            "options": {
-                                "hidden": false
-                            }
-                        },
-                        "recovery": {
-                            "type": "integer",
-                            "id": "/properties/explosion/properties/shrapnel/properties/recovery",
-                            "title": "Recovery",
-                            "default": 100,
-                            "description": "The recovery",
-                            "options": {
-                                "hidden": false
-                            }
-                        },
-                        "drop": {
-                            "type": "string",
-                            "id": "/properties/explosion/properties/shrapnel/properties/drop",
-                            "title": "Drop",
-                            "default": "shrapnel",
-                            "format": "text",
-                            "description": "The drop",
-                            "options": {
-                                "hidden": false
-                            }
-                        }
-                    }
-                }
-            }
+          "$ref": "#/definitions/explosion"
         }
     },
     "definitions": {
@@ -521,6 +435,7 @@
                     "FRAG", 
                     "INCENDIARY", 
                     "LARGE_BEANBAG", 
+                    "PARALYZEPOISON", 
                     "LASER", 
                     "LIGHTNING", 
                     "MININUKE_MOD", 
@@ -540,16 +455,24 @@
                     "SMOKE", 
                     "STREAM_BIG", 
                     "STREAM", 
+                    "IGNITE", 
                     "TRAIL", 
                     "WIDE",
                     "STREAM_GAS_INSECTICIDAL",
                     "JET",
+                    "RECOVER_2",
+                    "RECOVER_3",
                     "RECOVER_5",
                     "RECOVER_6",
+                    "RECOVER_8",
+                    "RECOVER_10",
                     "RECOVER_15",
+                    "RECOVER_20",
+                    "RECOVER_30",
                     "RECOVER_35",
                     "RECOVER_40",
-                    "RECOVER_45"
+                    "RECOVER_45",
+                    "RECOVER_80"
                 ]
             }
         },
@@ -560,14 +483,10 @@
         },
         "casing": {
             "type": "string",
-            "id": "/properties/casing",
             "title": "Casing",
             "default": "46mm_casing",
             "format": "text",
-            "description": "The casing it will drop.",
-            "options": {
-                "hidden": false
-            }
+            "description": "The casing it will drop."
         }
     }
 }

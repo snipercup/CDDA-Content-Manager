@@ -225,6 +225,24 @@
       },
       "propertyOrder": 60
   },
+  "integer_array": {
+      "type": "array",
+      "id": "/definitions/integer_array",
+      "default": [ 0 ],
+      "options": {
+          "disable_collapse": false,
+          "disable_array_add": false,
+          "disable_array_delete": false,
+          "disable_array_reorder": true,
+          "disable_properties": false,
+          "collapsed": false,
+          "hidden": false,
+          "multiple": true
+      },
+      "items": {
+          "type": "integer"
+      }
+  },
   "string_array": {
       "type": "array",
       "id": "/definitions/string_array",
@@ -244,9 +262,69 @@
           "type": "string"
       }
   },
+  "object_array": {
+      "type": "array",
+      "id": "/definitions/object_array",
+      "format": "selectize",
+      "uniqueItems": true,
+      "options": {
+          "disable_collapse": false,
+          "disable_array_add": false,
+          "disable_array_delete": false,
+          "disable_array_reorder": true,
+          "disable_properties": false,
+          "collapsed": false,
+          "hidden": false,
+          "multiple": true
+      },
+      "items": {
+          "type": "object",
+          "title": "Title of object",
+          "options": {
+              "disable_collapse": false,
+              "disable_edit_json": false,
+              "disable_properties": false,
+              "collapsed": false,
+              "hidden": false
+          }
+      }
+  },
+  "array_array": {
+      "type": "array",
+      "id": "/definitions/object_array",
+      "format": "selectize",
+      "uniqueItems": true,
+      "options": {
+          "disable_collapse": false,
+          "disable_array_add": false,
+          "disable_array_delete": false,
+          "disable_array_reorder": true,
+          "disable_properties": false,
+          "collapsed": false,
+          "hidden": false,
+          "multiple": true
+      },
+      "items": {
+          "type": "array",
+          "options": {
+              "disable_collapse": false,
+              "disable_array_add": false,
+              "disable_array_delete": false,
+              "disable_array_reorder": true,
+              "disable_properties": false,
+              "collapsed": false,
+              "hidden": false,
+              "multiple": true
+          }
+      }
+  },
   "category": {
       "default": "yes",
       "type": "string",
+      "filteredEnum": {
+          "display_key": "id",
+          "filter": { "jsonObject.type": { "$eq": "ITEM_CATEGORY" } }
+      },
       "enum": [
           "spare_parts",
           "container",
@@ -254,6 +332,7 @@
           "drugs",
           "chems",
           "food",
+          "maps",
           "fuel",
           "books",
           "armor",
@@ -271,9 +350,6 @@
       "title": "Fun",
       "default": 3,
       "description": "Morale effects when used",
-      "options": {
-          "hidden": false
-      },
       "propertyOrder": 160
   },
   "vitamins": {
@@ -582,10 +658,14 @@
               "BOUNCE",
               "FLAME",
               "PLASMA",
+              "RECOVER_10",
               "INCENDIARY",
+              "TRAIL",
               "LASER",
+              "DRAW_LASER_BEAM",
               "DRAW_AS_LINE",
               "BEANBAG",
+              "JET",
               "WIDE",
               "NEVER_MISFIRES",
               "SHOT",
@@ -862,9 +942,6 @@
       "filteredEnum": {
           "display_key": "id",
           "filter": { "jsonObject.type": { "$eq": "ammunition_type" } }
-      },
-      "options": {
-          "hidden": false
       }
   },
   "storage": {
@@ -1070,7 +1147,8 @@
               "type": "string",
               "title": "Message",
               "default": "You light the fuse on the ANFO charge.  Run survivor, run!",
-              "format": "text",
+              "format": "xhtml",
+              "options": { "ace": { "tabSize": 2, "useSoftTabs": true, "wrap": true, "autoExpand": true } },
               "description": "Message to display when activated.",
               "propertyOrder": 20
           },
@@ -1489,6 +1567,45 @@
               }
           }
       ]
+  },
+  "max_charges": {
+      "type": "integer",
+      "id": "/definitions/max_charges",
+      "title": "Max charges",
+      "default": 100,
+      "description": "Maximum charges tool can hold",
+      "propertyOrder": 30
+  },
+  "charges_per_use": {
+      "type": "integer",
+      "id": "/definitions/charges_per_use",
+      "title": "Charges per use",
+      "default": 1,
+      "description": "Charges consumed per tool use",
+      "propertyOrder": 30
+  },
+  "ammo": {
+      "title": "Ammo",
+      "id": "/definitions/ammo",
+      "type": "string",
+      "default": "460",
+      "format": "text",
+      "description": "Ammo types accepted for reloading",
+      "filteredEnum": {
+          "display_key": "id",
+          "filter": { "$and": [
+              { "jsonObject.type": { "$eq": "ammunition_type" } },
+              { "jsonObject.id": { "$exists": true } }
+          ] }
+      },
+      "enum": ["water"]
+  },
+  "initial_charges": {
+      "type": "integer",
+      "id": "/definitions/initial_charges",
+      "title": "Initial charges",
+      "default": 25,
+      "description": "Charges when spawned"
   },
   "snippet_category": {
       "id": "/definitions/snippet_category",

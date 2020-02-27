@@ -94,9 +94,14 @@
                     "PERMANENT", 
                     "LOUD", 
                     "IGNORE_WALLS", 
+                    "RANDOM_TARGET", 
+                    "UNSAFE_TELEPORT", 
+                    "HOSTILE_SUMMON", 
+                    "WONDER", 
                     "SILENT", 
                     "NO_LEGS", 
                     "NO_HANDS", 
+                    "RANDOM_DURATION", 
                     "VERBAL", 
                     "SOMATIC", 
                     "CONCENTRATE" 
@@ -174,15 +179,11 @@
         },
         "damage_type": {
             "type": "string",
-            "id": "/properties/damage_type",
             "title": "Damage type",
             "default": "cold",
             "format": "text",
             "description": "The damage type of the spell.",
-            "enum": [ "cold", "fire", "electric", "cut", "stab", "bash", "none" ],
-            "options": {
-                "hidden": false
-            },
+            "enum": [ "cold", "fire", "electric", "cut", "acid", "stab", "bash", "none" ],
             "propertyOrder": 90
         },
         "effect": {

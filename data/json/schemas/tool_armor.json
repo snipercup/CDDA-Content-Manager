@@ -11,6 +11,9 @@
         "collapsed": false,
         "hidden": false
     },
+    "include_properties": [
+        { "property": "magazines", "propertyOrder": 150 }
+    ],
     "defaultProperties": [
         "type",
         "id",
@@ -34,7 +37,13 @@
             "type": "string",
             "filteredEnum": {
                 "display_key": "id",
-                "filter": { "jsonObject.type": { "$eq": "TOOL_ARMOR" } }
+                "filter": { "$and": [
+                    { "jsonObject.id": { "$exists": true } },
+                    { "$or": [
+                        { "jsonObject.type": { "$eq": "TOOL_ARMOR" } },
+                        { "jsonObject.type": { "$eq": "ARMOR" } }
+                    ] }
+                ] }
             },
             "enum": [ ]
         },
@@ -58,16 +67,55 @@
             "type": "string",
             "filteredEnum": {
                 "display_key": "id",
-                "filter": { "jsonObject.type": { "$eq": "TOOL_ARMOR" } }
+                "filter": { "$and": [
+                    { "$or": [
+                        { "jsonObject.type": { "$eq": "TOOL_ARMOR" } },
+                        { "jsonObject.type": { "$eq": "TOOL" } }
+                    ] },
+                    { "jsonObject.id": { "$exists": true } }
+                ] }
             },
             "enum": [ ]
+        },
+        "max_charges": {
+          "$ref": "#/definitions/max_charges"
+        },
+        "charges_per_use": {
+          "$ref": "#/definitions/charges_per_use"
+        },
+        "ammo": {
+          "$ref": "#/definitions/ammo"
+        },
+        "bashing": {
+          "$ref": "#/definitions/bashing", 
+          "propertyOrder": 13
+        },
+        "initial_charges": {
+          "$ref": "#/definitions/initial_charges"
+        },
+        "environmental_protection_with_filter": {
+            "type": "integer",
+            "title": "Environmental protection with filter",
+            "default": 25,
+            "description": "The item provides this amount of environmental protection when a filter is applied."
         },
         "looks_like": {
             "type": "string",
             "format": "selectize",
             "filteredEnum": {
                 "display_key": "id",
-                "filter": { "jsonObject.type": { "$eq": "TOOL_ARMOR" } }
+                "filter": { "$and": [
+                    { "$or": [
+                        { "jsonObject.symbol": { "$exists": true } },
+                        { "jsonObject.copy-from": { "$exists": true } }
+                    ] },
+                    { "jsonObject.id": { "$exists": true } },
+                    { "$or": [
+                        { "jsonObject.type": { "$eq": "TOOL_ARMOR" } },
+                        { "jsonObject.type": { "$eq": "TOOL" } },
+                        { "jsonObject.type": { "$eq": "ARMOR" } }
+                    ] }
+                ] }
             }
         },
         "category": {
@@ -139,8 +187,13 @@
                   "ALLOWS_NATURAL_ATTACKS",
                   "STRAPPED",
                   "BELTED",
+                  "WET",
+                  "SAFECRACK",
+                  "RAD_RESIST",
+                  "HOOD",
                   "FIRESTARTER",
                   "SKINTIGHT",
+                  "FANCY",
                   "STURDY",
                   "WATCH",
                   "TRADER_AVOID",
@@ -169,6 +222,7 @@
                   "IR_EFFECT",
                   "NO_TAKEOFF",
                   "LIGHT_10",
+                  "LIGHT_200",
                   "LIGHT_300",
                   "LIGHT_350",
                   "LIGHT_450",

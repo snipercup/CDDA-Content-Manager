@@ -230,9 +230,9 @@
 		"display_name": "is equal to id",
 		"display_key": "id",
 		"filter": { "$or": [
-            { "jsonObject.id": { "$eq": "repair_item" } },
-            { "jsonObject.abstract": { "$eq": "repair_item" } }
-        ] }
+        { "jsonObject.id": { "$eq": "geiger_OFF" } },
+        { "jsonObject.abstract": { "$eq": "geiger_OFF" } }
+    ] }
 	},
 	{
 		"type": "filter",
@@ -289,8 +289,6 @@
         { "jsonObject.type": { "$ne": "vehicle" } },
         { "jsonObject.type": { "$ne": "monstergroup" } },
         { "jsonObject.type": { "$ne": "start_location" } },
-        { "jsonObject.type": { "$ne": "MAGAZINE" } },
-        { "jsonObject.type": { "$ne": "bionic" } },
         { "jsonObject.type": { "$ne": "AMMO" } },
         { "fileName": { "$containsNone": "dining_kitchen.json" } },
         { "fileName": { "$containsNone": "soup.json" } },
@@ -304,7 +302,8 @@
 		"display_key": "name",
 		"filter": { "$and": [ 
         { "$or": [
-            { "jsonObject.type": { "$eq": "AMMO" } },
+            { "jsonObject.type": { "$eq": "TOOL" } },
+            { "jsonObject.type": { "$eq": "MAGAZINE" } },
             { "jsonObject.type": { "$eq": "bionic" } }
         ] },
         { "jsonObject.name": { "$type": "string" } },
@@ -317,6 +316,7 @@
         { "fileName": { "$containsNone": "soup.json" } },
         { "fileName": { "$containsNone": "NPC_Dana_Nunez" } },
         { "fileName": { "$containsNone": "mapgen" } },
+        { "fileName": { "$containsNone": "book\\misc.json" } },
         { "fileName": { "$containsNone": "obsolete" } }
     ] }
 	},

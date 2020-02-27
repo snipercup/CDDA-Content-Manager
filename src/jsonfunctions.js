@@ -111,7 +111,7 @@ const stringifyPrettyCompact = (json) => {
       getTypeOptions = true;
     }
     if(getTypeOptions) {
-      options = { maxLength: 140, indent: 6, arrayMargins: true, objectMargins: true}; //defaults
+      options = { maxLength: 120, indent: 6, arrayMargins: true, objectMargins: true}; //defaults
       //Set options defined in the schema. these are the top-level options for the whole entry.
       schemaDefinition = schemas.findOne({ "jsonObject.properties.type.default": { "$eq": type } }).jsonObject;
       if(schemaDefinition.stringifyOptions){
@@ -151,15 +151,9 @@ function recursiveStringify(jsonEntry, schemaDefinition, options, depth = 0, ext
   
   if(typeof jsonEntry === 'object' && jsonEntry !== null){
     if(Array.isArray(jsonEntry)){ //It's an array
-      // if(schemaDefinition.title == "magazines"){ 
-        // console.log("magazines")
-      // }
       for(let x = 0, arrLen = jsonEntry.length; x < arrLen; x++){ //Loop over every item in the array
         optionsCopy = getStringifyOptions(schemaDefinition, options, x);
         arrItem = jsonEntry[x];
-        if(arrItem == "id" && value == "deluxe_beansnrice"){ 
-          console.log("magazines")
-        }
         if(typeof arrItem === 'object' && arrItem !== null){
           if(x == 0){ //the first entry in an object list gets 3 space extra in a line length because that's what the official linter does.
              tempstring += recursiveStringify(arrItem, schemaDefinition, optionsCopy, depth+1, 3);
@@ -185,24 +179,9 @@ function recursiveStringify(jsonEntry, schemaDefinition, options, depth = 0, ext
       optionsCopy = options
       keys = Object.keys(jsonEntry);
       
-      //failsafe get the right schema
-      // if(depth == 0){
-        // if(jsonEntry.type != schemaDefinition.properties.type.default){
-          // schemaDefinition = schemas.findOne({ "jsonObject.properties.type.default": { "$eq": jsonEntry.type } }).jsonObject;
-        // }
-      // }
       for(let y = 0, keyLen = keys.length; y < keyLen; y++){ //Loop over every key in the entry
         key = keys[y];
         value = jsonEntry[key];
-        // if(value == "candle_lit"){ 
-          // console.log("candle_lit")
-        // }
-        if(key == "name" && value == "currywurst"){ 
-          console.log("magazines")
-        }
-        if(key == "name" && value == "meat fried rice"){ 
-          console.log("magazines")
-        }
         if(key.includes("comment")){key = "//"} //Comments are transformed from // to commentx where x is a number. Transform them back to // here.
         if(depth == 0){ jsonString += "    " }
         jsonString += "\"" +key+ "\": "

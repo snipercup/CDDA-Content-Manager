@@ -5,6 +5,9 @@
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
     "get_ids_of_type": [ { "type": "mutation_category", "display_key": "id" }, { "type": "mutation_type", "display_key": "id" } ],
+    "stringifyOptions": {
+      "maxLength": 115
+    },
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -893,36 +896,31 @@
         },
         "thirst": {
             "type": "boolean",
-            "id": "/properties/thirst",
             "title": "Thirst",
             "format": "checkbox",
             "default": true,
             "description": "If true, activated mutation increases thirst by cost. (default: false)",
-            "options": {
-                "hidden": false
-            },
             "propertyOrder": 160
         },
         "movecost_modifier": {
             "type": "number",
-            "id": "/properties/movecost_modifier",
             "title": "Movecost Modifier",
             "default": 0.75,
             "description": "A description for 'movecost_modifier'  Type: 'number'",
-            "options": {
-                "hidden": false
-            },
+            "propertyOrder": 170
+        },
+        "mending_modifier": {
+            "type": "number",
+            "title": "Movecost Modifier",
+            "default": 0.75,
+            "description": "Multiplier on how fast your limbs mend - This value would make your limbs mend 20% faster",
             "propertyOrder": 170
         },
         "thirst_modifier": {
             "type": "number",
-            "id": "/properties/thirst_modifier",
             "title": "Thirst Modifier",
             "default": 0.75,
             "description": "The modifier for thirst",
-            "options": {
-                "hidden": false
-            },
             "propertyOrder": 170
         },
         "vitamins_absorb_multi": {

@@ -151,6 +151,45 @@
             "maxLength": 117
           }
         },
+        "proportional": {
+          "$ref": "#/definitions/proportional"
+        },
+        "relative": {
+            "type": "object",
+            "id": "/properties/relative",
+            "title": "Relative",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "weight",
+                "durability"
+            ],
+            "properties": {
+                "bashing": {
+                    "type": "integer",
+                    "title": "Bashing",
+                    "default": 10,
+                    "propertyOrder": 40
+                },
+                "material_thickness": {
+                    "type": "integer",
+                    "title": "Material thickness",
+                    "default": 4,
+                    "propertyOrder": 40
+                },
+                "environmental_protection": {
+                    "type": "integer",
+                    "title": "Environmental protection",
+                    "default": 4,
+                    "propertyOrder": 40
+                }
+            }
+        },
         "rigid": {
             "type": "boolean",
             "title": "Rigid",
@@ -193,7 +232,10 @@
             "description": "If this item does not have recipe, what item to look for a recipe for when repairing it.",
             "filteredEnum": {
                 "display_key": "id",
-                "filter": { "jsonObject.type": { "$eq": "ARMOR" } }
+                "filter": { "$or": [
+                    { "jsonObject.type": { "$eq": "ARMOR" } },
+                    { "jsonObject.type": { "$eq": "TOOL_ARMOR" } }
+                ] }
             }
         },
         "delete": {
@@ -252,8 +294,16 @@
                   "STURDY", 
                   "ROLLER_QUAD", 
                   "ROLLER_INLINE", 
+                  "NO_REPAIR", 
                   "HELMET_COMPAT", 
-                  "MAG_COMPACT", 
+                  "RESTRICT_HANDS", 
+                  "PARTIAL_DEAF", 
+                  "SLOWS_MOVEMENT", 
+                  "SLOWS_THIRST", 
+                  "SPLINT", 
+                  "NONCONDUCTIVE", 
+                  "ACTIVE_CLOAKING", 
+                  "RAD_PROOF", 
                   "ELECTRIC_IMMUNE", 
                   "STAB", 
                   "FLASH_PROTECTION", 

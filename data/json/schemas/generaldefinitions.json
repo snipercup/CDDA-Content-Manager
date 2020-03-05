@@ -50,9 +50,6 @@
               "filteredEnum": {
                   "display_key": "id",
                   "filter": { "jsonObject.type": { "$eq": "technique" } }
-              },
-              "options": {
-                  "hidden": false
               }
           }
       ]
@@ -227,6 +224,7 @@
   },
   "integer_array": {
       "type": "array",
+      "title": "Array of any number of integers",
       "id": "/definitions/integer_array",
       "default": [ 0 ],
       "options": {
@@ -242,6 +240,26 @@
       "items": {
           "type": "integer"
       }
+  },
+  "integer_array_pair": {
+      "type": "array",
+      "title": "Array of exacly 2 integers",
+      "id": "/definitions/integer_array_pair",
+      "format": "grid",
+      "default": [ 0, 0 ],
+      "options": {
+          "disable_collapse": true,
+          "disable_array_add": true,
+          "disable_array_delete": true,
+          "disable_array_reorder": true,
+          "disable_properties": true,
+          "collapsed": false,
+          "hidden": false
+      },
+      "items": [
+          { "type": "integer", "default": 2, "options": { "compact": true } },
+          { "type": "integer", "default": 4, "options": { "compact": true } }
+      ]
   },
   "string_array": {
       "type": "array",
@@ -680,10 +698,7 @@
       "id": "/definitions/price_postapoc",
       "title": "Price Postapoc",
       "default": 5200,
-      "description": "The price after the cataclysm",
-      "options": {
-          "hidden": false
-      }
+      "description": "The price after the cataclysm"
   },
   "fuel": {
       "type": "object",
@@ -770,14 +785,10 @@
                   },
                   "fiery": {
                       "type": "boolean",
-                      "id": "/definitions/fuel/properties/explosion_data/properties/fiery",
                       "title": "Fiery",
                       "format": "checkbox",
                       "default": true,
-                      "description": "true for fiery explosions",
-                      "options": {
-                          "hidden": false
-                      }
+                      "description": "true for fiery explosions"
                   },
                   "size_factor": {
                       "type": "number",
@@ -920,6 +931,57 @@
       "description": "The amount of noise",
       "options": {
           "hidden": false
+      }
+  },
+  "proportional": {
+      "type": "object",
+      "title": "Proportional",
+      "options": {
+          "disable_collapse": false,
+          "disable_edit_json": false,
+          "disable_properties": false,
+          "collapsed": false,
+          "hidden": false
+      },
+      "defaultProperties": [
+          "reload"
+      ],
+      "properties": {
+          "price": {
+              "type": "number",
+              "title": "Price",
+              "default": 0.5
+          },
+          "weight": {
+              "type": "number",
+              "title": "Weight",
+              "default": 0.5
+          },
+          "price": {
+              "type": "number",
+              "title": "Price",
+              "default": 0.5
+          },
+          "encumbrance": {
+              "type": "number",
+              "title": "Encumbrance",
+              "default": 0.5
+          },
+          "warmth": {
+              "type": "number",
+              "title": "warmth",
+              "default": 0.5
+          },
+          "volume": {
+              "type": "number",
+              "title": "Volume",
+              "default": 0.5
+          },
+          "bashing": {
+              "type": "number",
+              "title": "Bashing",
+              "default": 0.5
+          }
       }
   },
   "dispersion": {
@@ -1287,7 +1349,10 @@
                   "type": "string",
                   "enum": [ 
                       "GRENADE",
+                      "SHEATH_AXE",
                       "SHEATH_KNIFE",
+                      "MAG_COMPACT",
+                      "MAG_BULKY", 
                       "SHEATH_SWORD"
                   ]
               },
@@ -1465,6 +1530,10 @@
                           "default": "cough_suppress",
                           "format": "text",
                           "description": "ID of the effect",
+                          "filteredEnum": {
+                              "display_key": "id",
+                              "filter": { "jsonObject.type": { "$eq": "effect_type" } }
+                          },
                           "enum": [
                             "pkill1",
                             "pkill2",
@@ -1930,11 +1999,13 @@
             "EYES", 
             "MOUTH",
             "LEG_EITHER",
+            "ARM_EITHER",
             "FOOT_EITHER",
             "HAND_EITHER"
           ]
       },
       "propertyOrder": 60
   },
-  "body_parts_enum": { "enum": [ "HEAD", "TORSO", "MOUTH", "EYES", "ARM_L", "ARM_R", "HAND_R", "HAND_L", "LEG_L", "LEG_R", "FOOT_L", "FOOT_R" ] }
+  "body_parts_enum": { "enum": [ "HEAD", "TORSO", "MOUTH", "EYES", "ARM_L", "ARM_R", "HAND_R", "HAND_L", "LEG_L", "LEG_R", "FOOT_L", "FOOT_R" ] },
+  "mod_locations_enum": { "enum": [ "grip", "accessories", "mechanism", "sights", "rail mount", "conversion", "underbarrel mount", "lens", "emitter", "barrel", "bore", "sights mount", "loading port", "stabilizer", "sling", "dampening", "stock mount", "grip mount", "brass catcher", "muzzle", "underbarrel", "rail", "magazine", "stock" ] }
 }

@@ -4,6 +4,9 @@
     "title": "Engine",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
+    "stringifyOptions": {
+      "maxLength": 115
+    },
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -17,6 +20,10 @@
         "name"
     ],
     "properties": {
+        "abstract": {
+          "$ref": "#/definitions/abstract", 
+          "propertyOrder": 1
+        },
         "id": {
           "$ref": "#/definitions/id", 
           "propertyOrder": 10
@@ -29,6 +36,62 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 13
+        },
+        "weight": {
+          "$ref": "#/definitions/weight", 
+          "propertyOrder": 13
+        },
+        "volume": {
+          "$ref": "#/definitions/volume", 
+          "propertyOrder": 140
+        },
+        "price": {
+          "$ref": "#/definitions/price", 
+          "propertyOrder": 13
+        },
+        "category": {
+          "$ref": "#/definitions/category"
+        },
+        "material": {
+          "$ref": "#/definitions/material", 
+          "propertyOrder": 13
+        },
+        "symbol": {
+          "$ref": "#/definitions/symbol", 
+          "propertyOrder": 13
+        },
+        "color": {
+          "$ref": "#/definitions/color", 
+          "propertyOrder": 13
+        },
+        "displacement": {
+            "type": "integer",
+            "title": "Displacement",
+            "default": 600,
+            "description": "for combustion engines the displacement (cc)",
+            "propertyOrder": 100
+        },
+        "copy-from": {
+            "type": "string",
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { "jsonObject.type": { "$eq": "ENGINE" } }
+            }
+        },
+        "faults": {
+          "$ref": "#/definitions/string_array",
+          "title": "Faults",
+          "description": "The faults this engine can have",
+          "items": {
+              "filteredEnum": {
+                  "display_key": "id",
+                  "filter": { "jsonObject.type": { "$eq": "fault" } }
+              }
+          }
         }
     }
 }

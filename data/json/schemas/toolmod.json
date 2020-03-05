@@ -4,6 +4,9 @@
     "title": "Toolmod",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
+    "stringifyOptions": {
+      "maxLength": 116
+    },
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -17,6 +20,10 @@
         "name"
     ],
     "properties": {
+        "abstract": {
+          "$ref": "#/definitions/abstract", 
+          "propertyOrder": 1
+        },
         "id": {
           "$ref": "#/definitions/id", 
           "propertyOrder": 10
@@ -29,6 +36,162 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "description": {
+            "$ref": "#/definitions/description", 
+            "propertyOrder": 13
+        },
+        "color": {
+            "$ref": "#/definitions/color", 
+            "propertyOrder": 13
+        },
+        "weight": {
+          "$ref": "#/definitions/weight", 
+          "propertyOrder": 13
+        },
+        "volume": {
+          "$ref": "#/definitions/volume", 
+          "propertyOrder": 13
+        },
+        "price": {
+          "$ref": "#/definitions/price", 
+          "propertyOrder": 13
+        },
+        "material": {
+          "$ref": "#/definitions/material", 
+          "propertyOrder": 13
+        },
+        "symbol": {
+          "$ref": "#/definitions/symbol", 
+          "propertyOrder": 13
+        },
+        "capacity_multiplier": {
+            "type": "number",
+            "title": "Capacity multiplier",
+            "default": 5200,
+            "description": "Proportional adjustment of parent item ammo capacity"
+        },
+        "copy-from": {
+            "type": "string",
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { "jsonObject.type": { "$eq": "TOOLMOD" } }
+            },
+            "propertyOrder": 13
+        },
+        "magazine_adaptor": {
+            "type": "array",
+            "title": "Magazine adaptor",
+            "description": "Optional field which changes the types of magazines the parent accepts",
+            "format": "table",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "array",
+                "default": [ "300blk", [ "stanag30" ] ],
+                "title": "magazines",
+                "format": "tabs",
+                "options": {
+                    "disable_collapse": true,
+                    "disable_array_add": true,
+                    "disable_array_delete": true,
+                    "disable_array_reorder": true,
+                    "disable_properties": true,
+                    "collapsed": false,
+                    "compact": true,
+                    "hidden": false
+                },
+                "items": [
+                    {
+                        "type": "string",
+                        "default": "DEFAULT",
+                        "format": "selectize",
+                        "filteredEnum": {
+                            "display_key": "id",
+                            "filter": { "jsonObject.type": { "$eq": "ammunition_type" } }
+                        },
+                        "options": { 
+                            "compact": true,
+                            "inputAttributes": {
+                              "style": "width: 100px"
+                            }
+                        }
+                    },
+                    {
+                        "type": "array",
+                        "title": "Magazine",
+                        "format": "selectize",
+                        "uniqueItems": true,
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": true,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false,
+                            "compact": true,
+                            "multiple": true
+                        },
+                        "items": {
+                            "type": "string",
+                            "filteredEnum": {
+                                "display_key": "id",
+                                "filter": { "jsonObject.type": { "$eq": "MAGAZINE" } }
+                            }
+                        },
+                        "propertyOrder": 60
+                    }
+                ]
+            },
+            "propertyOrder": 15
+        },
+        "category": {
+            "$ref": "#/definitions/category",
+            "propertyOrder": 17
+        },
+        "acceptable_ammo": {
+            "type": "array",
+            "title": "Acceptable ammo",
+            "format": "selectize",
+            "uniqueItems": true,
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false,
+                "multiple": true
+            },
+            "items": {
+                "type": "string",
+                "filteredEnum": {
+                    "display_key": "id",
+                    "filter": { "jsonObject.type": { "$eq": "ammunition_type" } }
+                }
+            },
+            "propertyOrder": 60
+        },
+        "flags": {
+            "$ref": "#/definitions/flags", 
+            "items": {
+                "type": "string",
+                "enum": [
+                  "NO_UNLOAD",
+                  "USE_UPS",
+                  "NO_RELOAD"
+                ]
+            },
+            "propertyOrder": 60
         }
     }
 }

@@ -4,6 +4,9 @@
     "title": "Trap",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
+    "stringifyOptions": {
+      "maxLength": 120
+    },
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -29,6 +32,287 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "color": {
+          "$ref": "#/definitions/color", 
+          "propertyOrder": 13
+        },
+        "symbol": {
+          "$ref": "#/definitions/symbol", 
+          "propertyOrder": 14
+        },
+        "visibility": {
+            "type": "integer",
+            "title": "Visibility",
+            "default": 4,
+            "description": "A description for 'visibility'  Type: 'integer'",
+            "propertyOrder": 70
+        },
+        "benign": {
+            "type": "boolean",
+            "title": "Benign",
+            "format": "checkbox",
+            "default": true
+        },
+        "always_invisible": {
+            "type": "boolean",
+            "title": "Always invisible",
+            "format": "checkbox",
+            "default": true
+        },
+        "trigger_weight": {
+            "type": "integer",
+            "title": "Trigger Weight",
+            "default": 200,
+            "description": "A description for 'trigger_weight'  Type: 'integer'",
+            "propertyOrder": 30
+        },
+        "floor_bedding_warmth": {
+            "type": "integer",
+            "title": "Floor bedding warmth",
+            "default": 200,
+            "description": "A description for 'trigger_weight'  Type: 'integer'",
+            "propertyOrder": 30
+        },
+        "comfort": {
+            "type": "integer",
+            "title": "Comfort",
+            "default": 200,
+            "description": "A description for 'trigger_weight'  Type: 'integer'",
+            "propertyOrder": 30
+        },
+        "funnel_radius": {
+            "type": "integer",
+            "title": "Funnel radius",
+            "default": 200,
+            "description": "A description for 'trigger_weight'  Type: 'integer'",
+            "propertyOrder": 30
+        },
+        "avoidance": {
+            "type": "integer",
+            "title": "Avoidance",
+            "default": 5,
+            "description": "A description for 'avoidance'  Type: 'integer'",
+            "propertyOrder": 80
+        },
+        "difficulty": {
+            "type": "integer",
+            "title": "Difficulty",
+            "default": 6,
+            "description": "A description for 'difficulty'  Type: 'integer'",
+            "propertyOrder": 90
+        },
+        "action": {
+            "type": "string",
+            "title": "Action",
+            "default": "shotgun",
+            "format": "text",
+            "description": "Description for 'action' Type: 'string' Path: '/properties/action'",
+            "propertyOrder": 100
+        },
+        "drops": {
+            "type": "array",
+            "title": "Drops",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "headerTemplate": "Item {{i1}}",
+                "oneOf": [
+                    {
+                        "type": "string",
+                        "title": "Item",
+                        "default": "string_36",
+                        "format": "text",
+                        "description": "Description for 'items' Type: 'string' Path: '/properties/drops/items'"
+                    },
+                    {
+                        "type": "object",
+                        "title": "Advanced item",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_edit_json": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "defaultProperties": [
+                            "item",
+                            "quantity",
+                            "charges"
+                        ],
+                        "properties": {
+                            "item": {
+                                "type": "string",
+                                "title": "Item",
+                                "default": "shot_00",
+                                "format": "text",
+                                "description": "Description for 'item' Type: 'string' Path: '/properties/drops/items/properties/item'",
+                                "propertyOrder": 10
+                            },
+                            "quantity": {
+                                "type": "integer",
+                                "title": "Quantity",
+                                "default": 1,
+                                "description": "A description for 'quantity'  Type: 'integer'",
+                                "propertyOrder": 20
+                            },
+                            "charges": {
+                                "type": "integer",
+                                "title": "Charges",
+                                "default": 1,
+                                "description": "A description for 'charges'  Type: 'integer'",
+                                "propertyOrder": 30
+                            }
+                        }
+                    }
+                ]
+            },
+            "propertyOrder": 110
+        },
+        "vehicle_data": {
+            "type": "object",
+            "title": "Vehicle Data",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "chance",
+                "damage",
+                "sound_volume",
+                "sound",
+                "sound_type",
+                "sound_variant",
+                "remove_trap",
+                "spawn_items"
+            ],
+            "properties": {
+                "chance": {
+                    "type": "integer",
+                    "title": "Chance",
+                    "default": 70,
+                    "description": "A description for 'chance'  Type: 'integer'",
+                    "propertyOrder": 10
+                },
+                "damage": {
+                    "type": "integer",
+                    "title": "Damage",
+                    "default": 300,
+                    "description": "A description for 'damage'  Type: 'integer'",
+                    "propertyOrder": 20
+                },
+                "sound_volume": {
+                    "type": "integer",
+                    "title": "Sound Volume",
+                    "default": 60,
+                    "description": "A description for 'sound_volume'  Type: 'integer'",
+                    "propertyOrder": 30
+                },
+                "sound": {
+                    "type": "string",
+                    "title": "Sound",
+                    "default": "Bang!",
+                    "format": "text",
+                    "description": "Description for 'sound' Type: 'string' Path: '/properties/vehicle_data/properties/sound'",
+                    "propertyOrder": 40
+                },
+                "sound_type": {
+                    "type": "string",
+                    "title": "Sound Type",
+                    "default": "fire_gun",
+                    "format": "text",
+                    "description": "Description for 'sound_type' Type: 'string' Path: '/properties/vehicle_data/properties/sound_type'",
+                    "propertyOrder": 50
+                },
+                "sound_variant": {
+                    "type": "string",
+                    "title": "Sound Variant",
+                    "default": "shotgun_d",
+                    "format": "text",
+                    "description": "Description for 'sound_variant' Type: 'string' Path: '/properties/vehicle_data/properties/sound_variant'",
+                    "propertyOrder": 60
+                },
+                "remove_trap": {
+                    "type": "boolean",
+                    "title": "Remove Trap",
+                    "format": "checkbox",
+                    "default": true,
+                    "description": "A description for 'remove_trap'  Type: 'boolean'",
+                    "propertyOrder": 70
+                },
+                "spawn_items": {
+                    "type": "array",
+                    "title": "Spawn items",
+                    "format": "grid",
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_array_add": false,
+                        "disable_array_delete": false,
+                        "disable_array_reorder": true,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false
+                    },
+                    "items": {
+                        "headerTemplate": "Item {{i1}}",
+                        "oneOf": [
+                            {
+                                "type": "string",
+                                "title": "Item",
+                                "default": "string_36",
+                                "format": "text",
+                                "description": "Description for 'items' Type: 'string' Path: '/properties/drops/items'"
+                            },
+                            {
+                                "type": "object",
+                                "title": "Advanced item",
+                                "options": {
+                                    "disable_collapse": false,
+                                    "disable_edit_json": false,
+                                    "disable_properties": false,
+                                    "collapsed": false,
+                                    "hidden": false
+                                },
+                                "defaultProperties": [
+                                    "item",
+                                    "quantity",
+                                    "charges"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "title": "Id",
+                                        "default": "shot_00",
+                                        "format": "text",
+                                        "description": "Description for 'item' Type: 'string' Path: '/properties/drops/items/properties/item'",
+                                        "propertyOrder": 10
+                                    },
+                                    "chance": {
+                                        "type": "number",
+                                        "title": "Chance",
+                                        "default": 0.9,
+                                        "description": "A description for 'quantity'  Type: 'integer'",
+                                        "propertyOrder": 20
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "propertyOrder": 110
+                }
+            },
+            "propertyOrder": 120
         }
     }
 }

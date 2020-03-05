@@ -1,0 +1,37 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "additionalProperties": true,
+    "title": "Migration",
+    "type": "object",
+    "id": "https://niebert.github.io/json-editor",
+    "stringifyOptions": {
+      "maxLength": 117
+    },
+    "options": {
+        "disable_collapse": false,
+        "disable_edit_json": false,
+        "disable_properties": false,
+        "collapsed": false,
+        "hidden": false
+    },
+    "defaultProperties": [
+        "type",
+        "id",
+        "name"
+    ],
+    "properties": {
+        "id": {
+          "$ref": "#/definitions/id", 
+          "propertyOrder": 10
+        },
+        "type": {
+          "$ref": "#/definitions/type", 
+          "propertyOrder": 11,
+          "default": "MIGRATION"
+        },
+        "name": {
+          "$ref": "#/definitions/name", 
+          "propertyOrder": 12
+        }
+    }
+}

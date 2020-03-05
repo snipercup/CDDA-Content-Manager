@@ -367,48 +367,15 @@
                 "items": [
                     {
                         "type": "string",
-                        "id": "/properties/valid_mod_locations/items/oneof0",
                         "default": "grip",
                         "format": "text",
-                        "enum": [ 
-                            "grip", 
-                            "accessories", 
-                            "mechanism", 
-                            "sights", 
-                            "rail mount", 
-                            "conversion", 
-                            "underbarrel mount",
-                            "lens",
-                            "emitter",
-                            "barrel",
-                            "bore",
-                            "sights mount",
-                            "loading port",
-                            "stabilizer",
-                            "sling",
-                            "dampening",
-                            "stock mount",
-                            "grip mount",
-                            "brass catcher",
-                            "muzzle",
-                            "underbarrel",
-                            "rail",
-                            "magazine",
-                            "stock"
-                        ],
-                        "options": {
-                          "hidden": false,
-                          "compact": true
-                        }
+                        "$ref": "#/definitions/mod_locations_enum",
+                        "options": { "compact": true }
                     },
                     {
                         "type": "integer",
-                        "id": "/properties/valid_mod_locations/items/oneof1",
                         "default": 20,
-                        "options": {
-                          "hidden": false,
-                          "compact": true
-                        }
+                        "options": { "compact": true }
                     }
                 ]
             },

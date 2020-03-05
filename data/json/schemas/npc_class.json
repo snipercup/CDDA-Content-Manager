@@ -29,6 +29,233 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "job_description": {
+            "type": "string",
+            "title": "Job Description",
+            "default": "Zzzzzt…  I… I'm a Cy… BEEEEEP… borg.",
+            "format": "text",
+            "description": "Description for 'job_description' Type: 'string' Path: '/properties/job_description'",
+            "propertyOrder": 40
+        },
+        "traits": {
+            "$ref": "#/definitions/object_array", 
+            "title": "Traits",
+            "items": {
+                "title": "Trait ",
+                "defaultProperties": [
+                    "group"
+                ],
+                "properties": {
+                    "group": {
+                        "type": "string",
+                        "title": "Group",
+                        "default": "BG_survival_story_CYBORG",
+                        "format": "text",
+                        "description": "Description for 'group' Type: 'string' Path: '/properties/traits/items/properties/group'",
+                        "propertyOrder": 10
+                    },
+                    "trait": {
+                        "type": "string",
+                        "title": "Trait",
+                        "default": "GLASSJAW",
+                        "format": "text",
+                        "description": "Description for 'trait' Type: 'string' Path: '/properties/traits/items/properties/group'",
+                        "propertyOrder": 10
+                    }
+                }
+            },
+            "propertyOrder": 50
+        },
+        "skills": {
+            "$ref": "#/definitions/object_array", 
+            "title": "Skills",
+            "items": {
+                "title": "Skill ",
+                "defaultProperties": [
+                    "skill",
+                    "level"
+                ],
+                "properties": {
+                    "skill": {
+                        "type": "string",
+                        "title": "Skill",
+                        "default": "ALL",
+                        "format": "text",
+                        "propertyOrder": 10
+                    },
+                    "level": {
+                        "type": "object",
+                        "title": "Level",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_edit_json": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "defaultProperties": [
+                            "mul"
+                        ],
+                        "properties": {
+                            "mul": {
+                                "$ref": "#/definitions/object_array", 
+                                "title": "Mul",
+                                "items": {
+                                    "headerTemplate": "Mul {{i1}}",
+                                    "oneOf": [
+                                        {
+                                            "type": "object",
+                                            "title": "Multiplu",
+                                            "options": {
+                                                "disable_collapse": false,
+                                                "disable_edit_json": false,
+                                                "disable_properties": false,
+                                                "collapsed": false,
+                                                "hidden": false
+                                            },
+                                            "defaultProperties": [
+                                                "one_in"
+                                            ],
+                                            "properties": {
+                                                "one_in": {
+                                                    "type": "integer",
+                                                    "id": "/properties/skills/items/properties/level/properties/mul/items/properties/one_in",
+                                                    "title": "One In",
+                                                    "default": 3,
+                                                    "description": "A description for 'one_in'  Type: 'integer'",
+                                                    "options": {
+                                                        "hidden": false
+                                                    },
+                                                    "propertyOrder": 10
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "type": "object",
+                                            "title": "Sum",
+                                            "options": {
+                                                "disable_collapse": false,
+                                                "disable_edit_json": false,
+                                                "disable_properties": false,
+                                                "collapsed": false,
+                                                "hidden": false
+                                            },
+                                            "defaultProperties": [
+                                                "sum"
+                                            ],
+                                            "properties": {
+                                                "sum": {
+                                                    "$ref": "#/definitions/object_array", 
+                                                    "title": "Sum",
+                                                    "items": {
+                                                        "headerTemplate": "Sum {{i1}}",
+                                                        "oneOf": [
+                                                            {
+                                                                "type": "object",
+                                                                "title": "Dice",
+                                                                "options": { "disable_edit_json": true },
+                                                                "defaultProperties": [
+                                                                    "dice"
+                                                                ],
+                                                                "properties": {
+                                                                    "dice": {
+                                                                        "$ref": "#/definitions/integer_array_pair",
+                                                                        "title": "Dice"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "object",
+                                                                "title": "Rng",
+                                                                "options": { "disable_edit_json": true },
+                                                                "defaultProperties": [
+                                                                    "rng"
+                                                                ],
+                                                                "properties": {
+                                                                    "rng": {
+                                                                        "$ref": "#/definitions/integer_array_pair",
+                                                                        "title": "Rng"
+                                                                    }
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    "propertyOrder": 10
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "propertyOrder": 10
+                            }
+                        },
+                        "propertyOrder": 20
+                    }
+                }
+            },
+            "propertyOrder": 60
+        },
+        "common": {
+            "type": "boolean",
+            "title": "Common",
+            "format": "checkbox",
+            "default": false,
+            "description": "A description for 'common'  Type: 'boolean'",
+            "propertyOrder": 70
+        },
+        "worn_override": {
+            "type": "string",
+            "title": "Worn Override",
+            "default": "NC_CYBORG_worn",
+            "format": "text",
+            "description": "Description for 'worn_override' Type: 'string' Path: '/properties/worn_override'",
+            "propertyOrder": 80
+        },
+        "carry_override": {
+            "type": "string",
+            "title": "Carry Override",
+            "default": "NC_CYBORG_carried",
+            "format": "text",
+            "description": "Description for 'carry_override' Type: 'string' Path: '/properties/carry_override'",
+            "propertyOrder": 90
+        },
+        "weapon_override": {
+            "type": "string",
+            "title": "Weapon Override",
+            "default": "EMPTY_GROUP",
+            "format": "text",
+            "description": "Description for 'weapon_override' Type: 'string' Path: '/properties/weapon_override'",
+            "propertyOrder": 100
+        },
+        "bionics": {
+            "$ref": "#/definitions/object_array", 
+            "title": "Bionics",
+            "items": {
+                "title": "Bionic ",
+                "defaultProperties": [
+                    "id",
+                    "chance"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id",
+                        "default": "bio_ankles",
+                        "format": "text",
+                        "description": "Description for 'id' Type: 'string' Path: '/properties/bionics/items/properties/id'",
+                        "propertyOrder": 10
+                    },
+                    "chance": {
+                        "type": "integer",
+                        "title": "Chance",
+                        "default": 100,
+                        "description": "A description for 'chance'  Type: 'integer'",
+                        "propertyOrder": 20
+                    }
+                }
+            },
+            "propertyOrder": 110
         }
     }
 }

@@ -504,7 +504,6 @@
                 },
                 "groups": {
                     "type": "array",
-                    "id": "/properties/death_drops/properties/groups",
                     "title": "Groups",
                     "format": "tabs",
                     "options": {
@@ -520,9 +519,8 @@
                     "items": {
                         "headerTemplate": "Groups {{i1}}",
                         "type": "array",
-                        "id": "/properties/death_drops/properties/groups/oneof0",
                         "title": "Group",
-                        "format": "tabs",
+                        "format": "grid",
                         "options": {
                             "disable_collapse": false,
                             "disable_array_add": true,
@@ -535,24 +533,16 @@
                         "items": [
                             {
                                 "type": "string",
-                                "id": "/properties/death_drops/properties/groups/items/oneof0",
                                 "title": "Group name",
                                 "default": "default_zombie_clothes",
                                 "format": "text",
-                                "description": "The name of the group to drop from",
-                                "options": {
-                                    "hidden": false
-                                }
+                                "description": "The name of the group to drop from"
                             },
                             {
                                 "type": "integer",
-                                "id": "/properties/death_drops/properties/groups/items/oneof1",
                                 "title": "Chance",
                                 "default": 100,
-                                "description": "The drop chance",
-                                "options": {
-                                    "hidden": false
-                                }
+                                "description": "The drop chance"
                             }
                         ]
                     },
@@ -943,7 +933,6 @@
                             },
                             "fake_skills": {
                                 "type": "array",
-                                "id": "/properties/special_attacks/items/properties/fake_skills",
                                 "title": "Fake skill",
                                 "format": "grid",
                                 "options": {
@@ -958,9 +947,8 @@
                                 "items": {
                                     "headerTemplate": "Fake skill {{i1}}",
                                     "type": "array",
-                                    "id": "/properties/special_attacks/items/properties/fake_skills/oneof0",
                                     "title": "Fake Skills",
-                                    "format": "tabs",
+                                    "format": "grid",
                                     "options": {
                                         "disable_collapse": false,
                                         "disable_array_add": true,
@@ -973,24 +961,16 @@
                                     "items": [
                                         {
                                             "type": "string",
-                                            "id": "/properties/special_attacks/items/properties/fake_skills/items/oneof0",
                                             "title": "Skill",
                                             "default": "gun",
                                             "format": "text",
-                                            "description": "The id of the skill",
-                                            "options": {
-                                                "hidden": false
-                                            }
+                                            "description": "The id of the skill"
                                         },
                                         {
                                             "type": "integer",
-                                            "id": "/properties/special_attacks/items/properties/fake_skills/items/oneof1",
                                             "title": "Amount",
                                             "default": 0,
-                                            "description": "The amount of skill",
-                                            "options": {
-                                                "hidden": false
-                                            }
+                                            "description": "The amount of skill"
                                         }
                                     ]
                                 },
@@ -1015,7 +995,7 @@
                                     "type": "array",
                                     "id": "/properties/special_attacks/items/properties/ranges/oneof0",
                                     "title": "Range",
-                                    "format": "tabs",
+                                    "format": "grid",
                                     "options": {
                                         "disable_collapse": false,
                                         "disable_array_add": true,

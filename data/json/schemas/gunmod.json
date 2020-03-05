@@ -91,13 +91,9 @@
         },
         "integral_volume": {
             "type": "string",
-            "id": "/properties/integral_volume",
             "title": "Integral Volume",
             "default": "0 ml",
             "description": "Volume added to base item when item is integrated into another (eg. a gunmod integrated to a gun). Volume in ml and L can be used - \"50 ml\" or \"2 L\".",
-            "options": {
-                "hidden": false
-            },
             "propertyOrder": 70
         },
         "price": {
@@ -185,7 +181,6 @@
         },
         "gun_data": {
             "type": "object",
-            "id": "/properties/gun_data",
             "title": "Gun Data",
             "stringifyOptions": {
                 "maxLength": 100
@@ -207,7 +202,6 @@
             "properties": {
                 "ammo": {
                     "title": "Ammo",
-                    "id": "/properties/ammo",
                     "type": "string",
                     "default": "460",
                     "format": "text",
@@ -215,21 +209,14 @@
                     "filteredEnum": {
                         "display_key": "id",
                         "filter": { "jsonObject.type": { "$eq": "ammunition_type" } }
-                    },
-                    "options": {
-                        "hidden": false
                     }
                 },
                 "skill": {
                     "type": "string",
-                    "id": "/properties/skill",
                     "title": "Skill",
                     "default": "launcher",
                     "format": "text",
                     "description": "Skill used for firing",
-                    "options": {
-                        "hidden": false
-                    },
                     "propertyOrder": 20
                 },
                 "dispersion": {
@@ -241,28 +228,64 @@
                 },
                 "durability": {
                     "type": "integer",
-                    "id": "/properties/gun_data/properties/durability",
                     "title": "Durability",
                     "default": 10,
                     "description": "Resistance to damage/rusting, also determines misfire chance",
-                    "options": {
-                        "hidden": false
-                    },
                     "propertyOrder": 40
                 },
                 "clip_size": {
                     "type": "integer",
-                    "id": "/properties/gun_data/properties/clip_size",
                     "title": "Clip Size",
                     "default": 1,
                     "description": "Maximum amount of ammo that can be loaded",
-                    "options": {
-                        "hidden": false
-                    },
                     "propertyOrder": 50
                 }
             },
             "propertyOrder": 130
+        },
+        "add_mod": {
+            "type": "array",
+            "title": "Add Mod location",
+            "description": "Additional gunmod slots to add to the gun",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "array",
+                "title": "Mod location",
+                "format": "grid",
+                "options": {
+                    "disable_collapse": false,
+                    "disable_array_add": true,
+                    "disable_array_delete": true,
+                    "disable_array_reorder": true,
+                    "disable_properties": true,
+                    "collapsed": false,
+                    "hidden": false
+                },
+                "items": [
+                    {
+                        "type": "string",
+                        "default": "sights",
+                        "$ref": "#/definitions/mod_locations_enum",
+                        "options": { "compact": true },
+                        "format": "text"
+                    },
+                    {
+                        "type": "integer",
+                        "options": { "compact": true },
+                        "default": 1
+                    }
+                ]
+            },
+            "propertyOrder": 150
         },
         "dispersion_modifier": {
             "type": "integer",
@@ -270,9 +293,6 @@
             "title": "Dispersion Modifier",
             "default": 15,
             "description": "Optional field increasing or decreasing base gun dispersion",
-            "options": {
-                "hidden": false
-            },
             "propertyOrder": 150
         },
         "to_hit": {
@@ -386,9 +406,7 @@
                         },
                         "options": { 
                             "compact": true,
-                            "inputAttributes": {
-                              "style": "width: 100px"
-                            }
+                            "inputAttributes": { "style": "width: 100px" }
                         }
                     },
                     {
@@ -421,7 +439,6 @@
         },
         "install_time": {
             "type": "string",
-            "id": "/properties/install_time",
             "title": "Install time",
             "default": "1 m",
             "format": "text",
@@ -444,7 +461,6 @@
         },
         "delete": {
             "type": "object",
-            "id": "/properties/delete",
             "title": "Delete",
             "options": {
                 "disable_collapse": false,

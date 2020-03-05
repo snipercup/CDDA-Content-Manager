@@ -54,6 +54,29 @@
   display: none;
 }
 
+/* ############################################################################### */
+/* ########################## --- Comestible schema --- ########################## */
+/* ############################################################################### */
+[data-schemapath*='requirements.components'] div.je-panel, h4 {
+    display: inline-block;
+}
+[data-schemapath*='requirements.components'] div.je-panel, td, p, h4 {
+  margin: 1px !important;
+  padding: 1px !important;
+}
+[data-schemapath*='requirements.components'] .form-group {
+  margin: 0;
+}
+[data-schemapath*='requirements.components'] table {
+    overflow: visible !important;
+}
+[data-schemapath*='requirements.components'] .btn-group:empty, .form-group + div:empty {
+  display: none;
+}
+[data-schemapath*='requirements.components'] tr h4, th {
+  display: none;
+}
+
 
 /* ########################################################################### */
 /* ########################## --- Gunmod schema --- ########################## */
@@ -279,7 +302,33 @@
 }*/
 
 
-    
+
+
+
+/* ######################################################################## */
+/* ########################## --- Toolmod schema --- ########################## */
+/* ######################################################################## */
+[data-schemapath='root.magazine_adaptor'] div.je-panel {
+    display: inline-block;
+}
+[data-schemapath='root.magazine_adaptor'] div.je-panel, td, p {
+  margin: 1px !important;
+  padding: 1px !important;
+}
+[data-schemapath='root.magazine_adaptor'] .form-group {
+  margin: 0;
+}
+[data-schemapath='root.magazine_adaptor'] table {
+    overflow: visible !important;
+}
+[data-schemapath='root.magazine_adaptor'] .btn-group:empty, .form-group + div:empty {
+  display: none;
+}
+[data-schemapath='root.magazine_adaptor'] tr h4, th {
+  display: none;
+}
+
+
     
     
 

@@ -121,6 +121,44 @@
             "default": -1,
             "description": "Morale bonus/penalty for reading",
             "propertyOrder": 180
+        },
+        "chapters": {
+            "type": "integer",
+            "title": "chapters",
+            "default": 3,
+            "description": "Number of chapters (for fun only books), each reading \"consumes\" a chapter.",
+            "propertyOrder": 40
+        },
+        "relative": {
+            "type": "object",
+            "title": "Relative",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "weight",
+                "durability"
+            ],
+            "properties": {
+                "time": {
+                    "type": "integer",
+                    "title": "Time",
+                    "default": 10,
+                    "description": "Time a single read session takes. The time will become the sum of the time in the copy-from item and this value.",
+                    "propertyOrder": 40
+                },
+                "chapters": {
+                    "type": "integer",
+                    "title": "chapters",
+                    "default": 3,
+                    "description": "Number of chapters relative to the copy-from item",
+                    "propertyOrder": 40
+                }
+            }
         }
     }
 }

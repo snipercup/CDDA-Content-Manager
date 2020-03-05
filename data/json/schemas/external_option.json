@@ -17,10 +17,6 @@
         "name"
     ],
     "properties": {
-        "id": {
-          "$ref": "#/definitions/id", 
-          "propertyOrder": 10
-        },
         "type": {
           "$ref": "#/definitions/type", 
           "propertyOrder": 11,
@@ -29,6 +25,43 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "info": {
+            "type": "string",
+            "title": "Info",
+            "default": "Enables CBM slots mechanics. If true CBM slots are enabled.",
+            "format": "text",
+            "description": "Description of the value that is being referenced",
+            "propertyOrder": 20
+        },
+        "stype": {
+            "type": "string",
+            "title": "Stype",
+            "default": "bool",
+            "enum": [ "bool", "int", "float" ],
+            "description": "The type of variable being changed",
+            "propertyOrder": 40
+        },
+        "value": {
+            "title": "Value",
+            "description": "The new value. the type should be the same as stype",
+            "oneOf": [
+                {
+                    "type": "integer",
+                    "title": "Integer type",
+                    "default": 0
+                },
+                {
+                    "type": "number",
+                    "title": "Float type",
+                    "default": 0.5
+                },
+                {
+                    "type": "boolean",
+                    "title": "Boolean type",
+                    "default": false
+                }
+            ]
         }
     }
 }

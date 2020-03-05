@@ -29,6 +29,29 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "land_use_code": {
+            "type": "integer",
+            "title": "Land Use Code",
+            "default": 1,
+            "propertyOrder": 30
+        },
+        "detailed_definition": {
+            "type": "string",
+            "title": "Detailed Definition",
+            "default": "Generally tilled land used to grow row crops.  Boundaries follow the shape of the fields and include associated buildings (e.g., barns).  This category also includes turf farms that grow sod.",
+            "format": "text",
+            "propertyOrder": 50
+        },
+        "sym": {
+            "$ref": "#/definitions/symbol", 
+            "description": "The symbol for this overmap land use code",
+            "propertyOrder": 13
+        },
+        "color": {
+            "$ref": "#/definitions/color", 
+            "description": "The color for this overmap land use code",
+            "propertyOrder": 13
         }
     }
 }

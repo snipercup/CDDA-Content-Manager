@@ -216,6 +216,8 @@
                     "SMOKED",
                     "LUPINE",
                     "NPC_SAFE",
+                    "IRREMOVABLE",
+                    "NO_DROP",
                     "FELINE",
                     "BIRD",
                     "RAW",

@@ -17,6 +17,10 @@
         "name"
     ],
     "properties": {
+        "abstract": {
+          "$ref": "#/definitions/abstract", 
+          "propertyOrder": 1
+        },
         "id": {
           "$ref": "#/definitions/id", 
           "propertyOrder": 10
@@ -34,8 +38,63 @@
           "$ref": "#/definitions/description", 
           "propertyOrder": 12
         },
+        "category": {
+          "$ref": "#/definitions/category"
+        },
+        "volume": {
+          "$ref": "#/definitions/volume", 
+          "propertyOrder": 13
+        },
+        "bashing": {
+          "$ref": "#/definitions/bashing", 
+          "propertyOrder": 13
+        },
+        "material": {
+          "$ref": "#/definitions/material",
+          "propertyOrder": 13
+        },
+        "symbol": {
+          "$ref": "#/definitions/symbol", 
+          "propertyOrder": 13
+        },
+        "color": {
+          "$ref": "#/definitions/color", 
+          "propertyOrder": 13
+        },
         "weight": {
           "$ref": "#/definitions/weight", 
+          "propertyOrder": 13
+        },
+        "is_upgrade": {
+            "type": "boolean",
+            "title": "Is upgrade",
+            "format": "checkbox",
+            "default": true,
+            "description": "Whether the CBM is an upgrade of another bionic.",
+            "propertyOrder": 140
+        },
+        "faults": {
+          "$ref": "#/definitions/string_array",
+          "title": "Faults",
+          "description": "The faults this bionic item can have",
+          "items": {
+              "filteredEnum": {
+                  "display_key": "id",
+                  "filter": { "jsonObject.type": { "$eq": "fault" } }
+              }
+          }
+        },
+        "use_action": {
+          "$ref": "#/definitions/use_action",
+          "stringifyOptions": {
+            "maxLength": 116
+          }
+        },
+        "flags": {
+          "$ref": "#/definitions/flags", 
+          "items": {
+              "enum": [ "CBM" ]
+          },
           "propertyOrder": 13
         },
         "looks_like": {

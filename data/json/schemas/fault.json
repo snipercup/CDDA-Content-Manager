@@ -4,6 +4,11 @@
     "title": "Fault",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
+    "format": "categories",
+    "basicCategoryTitle": "Main",
+    "stringifyOptions": {
+      "maxLength": 117
+    },
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -29,6 +34,330 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 13
+        },
+        "mending_methods": {
+            "type": "array",
+            "title": "Mending Methods",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "object",
+                "title": "Method ",
+                "options": {
+                    "disable_collapse": false,
+                    "disable_edit_json": false,
+                    "disable_properties": false,
+                    "collapsed": false,
+                    "hidden": false
+                },
+                "defaultProperties": [
+                    "id",
+                    "name",
+                    "success_msg",
+                    "time",
+                    "skills",
+                    "turns_into",
+                    "requirements"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id",
+                        "default": "mend_fault_gun_dirt_clean",
+                        "format": "text",
+                        "description": "Description for 'id' Type: 'string' Path: '/properties/mending_methods/items/properties/id'",
+                        "propertyOrder": 10
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name",
+                        "default": "Clean gun",
+                        "format": "text",
+                        "description": "Description for 'name' Type: 'string' Path: '/properties/mending_methods/items/properties/name'",
+                        "propertyOrder": 20
+                    },
+                    "success_msg": {
+                        "type": "string",
+                        "title": "Success Msg",
+                        "default": "You clean your %s.",
+                        "format": "text",
+                        "description": "Description for 'success_msg' Type: 'string' Path: '/properties/mending_methods/items/properties/success_msg'",
+                        "propertyOrder": 30
+                    },
+                    "description": {
+                      "$ref": "#/definitions/description", 
+                      "propertyOrder": 13
+                    },
+                    "time": {
+                        "type": "string",
+                        "title": "Time",
+                        "default": "50 m",
+                        "format": "text",
+                        "description": "Description for 'time' Type: 'string' Path: '/properties/mending_methods/items/properties/time'",
+                        "propertyOrder": 40
+                    },
+                    "skills": {
+                        "type": "array",
+                        "title": "Skills",
+                        "format": "grid",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "items": {
+                            "type": "object",
+                            "title": "Skill ",
+                            "options": {
+                                "disable_collapse": false,
+                                "disable_edit_json": false,
+                                "disable_properties": false,
+                                "collapsed": false,
+                                "hidden": false
+                            },
+                            "defaultProperties": [
+                                "id",
+                                "level"
+                            ],
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "title": "Id",
+                                    "default": "mechanics",
+                                    "format": "text",
+                                    "description": "Description for 'id' Type: 'string' Path: '/properties/mending_methods/items/properties/skills/items/properties/id'",
+                                    "propertyOrder": 10
+                                },
+                                "level": {
+                                    "type": "integer",
+                                    "title": "Level",
+                                    "default": 1,
+                                    "description": "A description for 'level'  Type: 'integer'",
+                                    "propertyOrder": 20
+                                }
+                            }
+                        },
+                        "propertyOrder": 50
+                    },
+                    "turns_into": {
+                        "type": "string",
+                        "title": "Turns Into",
+                        "default": "fault_gun_unlubricated",
+                        "format": "text",
+                        "description": "Description for 'turns_into' Type: 'string' Path: '/properties/mending_methods/items/properties/turns_into'",
+                        "propertyOrder": 60
+                    },
+                    "requirements": {
+                        "type": "object",
+                        "title": "Requirements",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_edit_json": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "defaultProperties": [
+                            "qualities",
+                            "tools",
+                            "components"
+                        ],
+                        "properties": {
+                            "qualities": {
+                                "type": "array",
+                                "title": "Qualities",
+                                "format": "grid",
+                                "options": {
+                                    "disable_collapse": false,
+                                    "disable_array_add": false,
+                                    "disable_array_delete": false,
+                                    "disable_array_reorder": true,
+                                    "disable_properties": false,
+                                    "collapsed": false,
+                                    "hidden": false
+                                },
+                                "items": {
+                                    "type": "object",
+                                     "title": "Quality ",
+                                    "options": {
+                                        "disable_collapse": false,
+                                        "disable_edit_json": true,
+                                        "disable_properties": true,
+                                        "collapsed": false,
+                                        "hidden": false,
+                                        "compact": true
+                                    },
+                                    "defaultProperties": [
+                                        "id",
+                                        "level"
+                                    ],
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "default": "SCREW",
+                                            "format": "text",
+                                            "options": { "compact": true }
+                                        },
+                                        "level": {
+                                            "type": "integer",
+                                            "default": 1,
+                                            "options": { "compact": true }
+                                        }
+                                    }
+                                },
+                                "propertyOrder": 10
+                            },
+                            "tools": {
+                                "type": "array",
+                                "title": "Tools",
+                                "format": "tabs",
+                                "options": {
+                                    "disable_collapse": false,
+                                    "disable_array_add": false,
+                                    "disable_array_delete": false,
+                                    "disable_array_reorder": false,
+                                    "disable_properties": false,
+                                    "collapsed": false,
+                                    "hidden": false
+                                },
+                                "items": {
+                                    "type": "array",
+                                    "title": "Tool list ",
+                                    "format": "grid",
+                                    "options": {
+                                        "disable_collapse": false,
+                                        "disable_array_add": false,
+                                        "disable_array_delete": false,
+                                        "disable_array_reorder": true,
+                                        "disable_properties": false,
+                                        "collapsed": false,
+                                        "hidden": false,
+                                        "compact": true
+                                    },
+                                    "items": {
+                                        "type": "array",
+                                        "title": "Tool ",
+                                        "format": "grid",
+                                        "options": {
+                                            "disable_collapse": true,
+                                            "disable_array_add": true,
+                                            "disable_array_delete": true,
+                                            "disable_array_reorder": true,
+                                            "disable_properties": false,
+                                            "collapsed": false,
+                                            "hidden": false,
+                                            "compact": true
+                                        },
+                                        "items": [
+                                            {
+                                                "type": "string",
+                                                "default": "pipe_cleaner",
+                                                "format": "text",
+                                                "options": { "compact": true }
+                                            },
+                                            {
+                                                "type": "integer",
+                                                "default": -1,
+                                                "options": { "compact": true }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "propertyOrder": 20
+                            },
+                            "components": {
+                                "type": "array",
+                                "title": "Components",
+                                "format": "tabs",
+                                "options": {
+                                    "disable_collapse": false,
+                                    "disable_array_add": false,
+                                    "disable_array_delete": false,
+                                    "disable_array_reorder": true,
+                                    "disable_array_delete_last_row": true,
+                                    "disable_properties": false,
+                                    "collapsed": false,
+                                    "hidden": false
+                                },
+                                "items": {
+                                    "type": "array",
+                                    "title": "Equivalents list",
+                                    "headerTemplate": "Equivalents",
+                                    "default": [ [ "rag", 125 ] ],
+                                    "format": "grid",
+                                    "options": {
+                                        "disable_collapse": false,
+                                        "disable_array_add": false,
+                                        "disable_array_delete": false,
+                                        "disable_array_reorder": true,
+                                        "disable_array_delete_last_row": true,
+                                        "disable_properties": false,
+                                        "collapsed": false,
+                                        "compact": true
+                                    },
+                                    "items": {
+                                        "type": "array",
+                                        "title": "Component ",
+                                        "default": [ "rag", 125 ],
+                                        "format": "grid",
+                                        "options": {
+                                            "disable_collapse": true,
+                                            "disable_array_add": true,
+                                            "disable_array_delete": true,
+                                            "disable_array_reorder": true,
+                                            "disable_properties": false,
+                                            "collapsed": false,
+                                            "compact": true,
+                                            "inputAttributes": { "style": "display: inline-block;" }
+                                        },
+                                        "items": [
+                                            {
+                                                "type": "string",
+                                                "format": "text",
+                                                "default": "rag",
+                                                "options": { "compact": true }
+                                            },
+                                            {
+                                                "type": "integer",
+                                                "default": 125,
+                                                "options": { "compact": true }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "propertyOrder": 30
+                            }
+                        },
+                        "propertyOrder": 70
+                    }
+                }
+            },
+            "propertyOrder": 50
+        },
+        "flags": {
+            "$ref": "#/definitions/flags", 
+            "items": {
+                "enum": [ 
+                    "SILENT"
+                ]
+            },
+            "propertyOrder": 60
         }
     }
 }

@@ -36,6 +36,10 @@
         "vitamins"
     ],
     "properties": {
+        "abstract": {
+          "$ref": "#/definitions/abstract", 
+          "propertyOrder": 1
+        },
         "id": {
           "$ref": "#/definitions/id", 
           "propertyOrder": 10
@@ -75,43 +79,17 @@
         },
         "copy-from": {
             "type": "string",
-            "enum": [ ]
+            "filteredEnum": {
+                "display_key": "id",
+                "format": "selectize",
+                "filter": { "$or": [
+                    { "jsonObject.type": { "$eq": "COMESTIBLE" } },
+                    { "jsonObject.type": { "$eq": "GENERIC" } }
+                ] }
+            }
         },
         "proportional": {
-            "type": "object",
-            "title": "Proportional",
-            "options": {
-                "disable_collapse": false,
-                "disable_edit_json": false,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false
-            },
-            "defaultProperties": [
-                "reload"
-            ],
-            "properties": {
-                "price": {
-                    "type": "number",
-                    "title": "Price",
-                    "default": 0.5
-                },
-                "weight": {
-                    "type": "number",
-                    "title": "Weight",
-                    "default": 0.5
-                },
-                "volume": {
-                    "type": "number",
-                    "title": "Volume",
-                    "default": 0.5
-                },
-                "bashing": {
-                    "type": "number",
-                    "title": "Bashing",
-                    "default": 0.5
-                }
-            }
+          "$ref": "#/definitions/proportional"
         },
         "container": {
             "type": "string",
@@ -132,6 +110,7 @@
                 "filter": { "$and": [
                     { "$or": [
                         { "jsonObject.type": { "$eq": "AMMO" } },
+                        { "jsonObject.type": { "$eq": "CONTAINER" } },
                         { "jsonObject.type": { "$eq": "GENERIC" } },
                         { "jsonObject.type": { "$eq": "TOOL" } }
                     ] },
@@ -158,10 +137,16 @@
                 "enum": [ 
                     "MC_MOBILE",
                     "MC_USED",
+                    "JAVELIN",
+                    "USE_PART_ITEM",
+                    "FIREWOOD",
+                    "SHEATH_GOLF",
                     "MC_TURN_USED",
                     "MC_SCIENCE_STUFF",
                     "MC_ENCRYPTED",
                     "MC_RANDOM_STUFF",
+                    "CAN_HAVE_CHARGES",
+                    "CANNIBALISM",
                     "MC_MAY_BE_ENCRYPTED",
                     "SPEAR",
                     "STAB",
@@ -171,10 +156,15 @@
                     "CONDUCTIVE",
                     "FAKE_SMOKE",
                     "FAKE_MILL",
+                    "LEAK_ALWAYS",
+                    "CORPSE",
+                    "NO_UNLOAD",
                     "ALLOWS_REMOTE_USE",
                     "PERPETUAL",
                     "RADIOACTIVE",
                     "LEAK_DAM",
+                    "TOBACCO",
+                    "LITCIG",
                     "PSEUDO",
                     "BELT_CLIP",
                     "FIRESTARTER",
@@ -196,6 +186,14 @@
                     "NO_INGEST",
                     "EDIBLE_FROZEN",
                     "EATEN_COLD",
+                    "HURT_WHEN_WIELDED",
+                    "GRENADE",
+                    "BOMB",
+                    "RADIO_INVOKE_PROC",
+                    "RADIO_MODABLE",
+                    "WHIP",
+                    "REACH3",
+                    "LIGHT_4",
                     "LIGHT_10",
                     "LIGHT_15"
                 ]
@@ -262,13 +260,9 @@
         },
         "healthy": {
             "type": "integer",
-            "id": "/properties/healthy",
             "title": "Healthy",
             "default": 1,
             "description": "How much it will affect your health.",
-            "options": {
-                "hidden": false
-            },
             "propertyOrder": 100
         },
         "calories": {"$ref": "#/definitions/calories"},

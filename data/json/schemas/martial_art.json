@@ -94,6 +94,14 @@
             "description": "Whether this is used stricly in melee",
             "propertyOrder": 80
         },
+        "allow_melee": {
+            "type": "boolean",
+            "title": "Allow Melee",
+            "format": "checkbox",
+            "default": true,
+            "description": "Can use unarmed or with ANY weapon",
+            "propertyOrder": 80
+        },
         "arm_block_with_bio_armor_arms": {
             "type": "boolean",
             "title": "Arm block with bionic armor arms",

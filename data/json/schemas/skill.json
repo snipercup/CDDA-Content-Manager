@@ -17,7 +17,8 @@
         "name"
     ],
     "properties": {
-        "id": {
+        "ident": {
+          "title": "Ident", 
           "$ref": "#/definitions/id", 
           "propertyOrder": 10
         },
@@ -29,6 +30,115 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 13
+        },
+        "tags": {
+          "$ref": "#/definitions/string_array",
+          "title": "Tags",
+          "description": "Special flags (default: none)",
+          "items": {
+              "enum": [ "combat_skill" ]
+          }
+        },
+        "time_to_attack": {
+            "type": "object",
+            "title": "Time To Attack",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "min_time",
+                "base_time",
+                "time_reduction_per_level"
+            ],
+            "properties": {
+                "min_time": {
+                    "type": "integer",
+                    "title": "Min Time",
+                    "default": 20,
+                    "description": "A description for 'min_time'  Type: 'integer'",
+                    "propertyOrder": 10
+                },
+                "base_time": {
+                    "type": "integer",
+                    "title": "Base Time",
+                    "default": 80,
+                    "description": "A description for 'base_time'  Type: 'integer'",
+                    "propertyOrder": 20
+                },
+                "time_reduction_per_level": {
+                    "type": "integer",
+                    "title": "Time Reduction Per Level",
+                    "default": 6,
+                    "description": "A description for 'time_reduction_per_level'  Type: 'integer'",
+                    "propertyOrder": 30
+                }
+            },
+            "propertyOrder": 60
+        },
+        "companion_combat_rank_factor": {
+            "type": "integer",
+            "title": "Companion Combat Rank Factor",
+            "default": 1,
+            "description": "A description for 'companion_combat_rank_factor'  Type: 'integer'",
+            "propertyOrder": 70
+        },
+        "companion_survival_rank_factor": {
+            "type": "integer",
+            "title": "Companion Survival Rank Factor",
+            "default": 1,
+            "description": "A description for 'companion_survival_rank_factor'  Type: 'integer'",
+            "propertyOrder": 80
+        },
+        "display_category": {
+            "type": "string",
+            "title": "Display Category",
+            "default": "display_ranged",
+            "format": "text",
+            "description": "Description for 'display_category' Type: 'string' Path: '/properties/display_category'",
+            "propertyOrder": 90
+        },
+        "companion_skill_practice": {
+            "$ref": "#/definitions/object_array", 
+            "title": "Companion Skill Practice",
+            "items": {
+                "type": "object",
+                "title": "Title Root Companion Skill Practice ",
+                "options": {
+                    "disable_collapse": false,
+                    "disable_edit_json": false,
+                    "disable_properties": false,
+                    "collapsed": false,
+                    "hidden": false
+                },
+                "defaultProperties": [
+                    "skill",
+                    "weight"
+                ],
+                "properties": {
+                    "skill": {
+                        "type": "string",
+                        "title": "Skill",
+                        "default": "",
+                        "format": "text",
+                        "description": "Description for 'skill' Type: 'string' Path: '/properties/companion_skill_practice/items/properties/skill'"
+                    },
+                    "weight": {
+                        "type": "integer",
+                        "title": "Weight",
+                        "default": 5,
+                        "description": "A description for 'weight'  Type: 'integer'"
+                    }
+                }
+            },
+            "propertyOrder": 100
         }
     }
 }

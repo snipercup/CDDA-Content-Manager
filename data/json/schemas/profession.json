@@ -17,7 +17,7 @@
         "name"
     ],
     "properties": {
-        "id": {
+        "ident": {
           "$ref": "#/definitions/id", 
           "propertyOrder": 10
         },
@@ -29,6 +29,295 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 13
+        },
+        "points": {
+            "type": "integer",
+            "title": "Points",
+            "default": 8,
+            "description": "A description for 'points'  Type: 'integer'",
+            "propertyOrder": 50
+        },
+        "CBMs": {
+            "$ref": "#/definitions/string_array",
+            "title": "CBMs",
+            "description": "The bionics this profession has",
+            "items": {
+                "filteredEnum": {
+                    "display_key": "id",
+                    "filter": { "jsonObject.type": { "$eq": "bionic" } }
+                }
+            }
+        },
+        "skills": {
+            "type": "array",
+            "title": "Skills",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "object",
+                "title": "Skill ",
+                "options": {
+                    "disable_collapse": false,
+                    "disable_edit_json": false,
+                    "disable_properties": false,
+                    "collapsed": false,
+                    "hidden": false
+                },
+                "defaultProperties": [
+                    "level",
+                    "name"
+                ],
+                "properties": {
+                    "level": {
+                        "type": "integer",
+                        "default": 5,
+                        "options": { "compact": true }
+                    },
+                    "name": {
+                        "type": "string",
+                        "default": "gun",
+                        "format": "text",
+                        "filteredEnum": {
+                            "display_key": "ident",
+                            "filter": { "jsonObject.type": { "$eq": "skill" } }
+                        },
+                        "options": { "compact": true }
+                    }
+                }
+            },
+            "propertyOrder": 70
+        },
+        "items": {
+            "type": "object",
+            "title": "Items",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "both",
+                "male",
+                "female"
+            ],
+            "properties": {
+                "both": {
+                    "title": "Both",
+                    "$ref": "#/definitions/items_ref",
+                    "propertyOrder": 5
+                },
+                "male": {
+                    "title": "Male",
+                    "$ref": "#/definitions/items_ref",
+                    "propertyOrder": 7
+                },
+                "female": {
+                    "title": "Female",
+                    "$ref": "#/definitions/items_ref",
+                    "propertyOrder": 10
+                }
+            },
+            "propertyOrder": 80
+        },
+        "traits": {
+            "$ref": "#/definitions/string_array",
+            "title": "Trais",
+            "description": "Traits this profession has",
+            "items": {
+                "filteredEnum": {
+                    "display_key": "id",
+                    "filter": { "$and": [ 
+                        { "jsonObject.type": { "$eq": "mutation" } }, 
+                        { "jsonObject.valid": { "$eq": false } } ,
+                        { "jsonObject.threshold": { "$exists": false } }
+                    ] }
+                }
+            },
+            "propertyOrder": 30
+        }
+    },
+    "definitions": {
+        "items_ref": {
+            "oneOf": [
+                {
+                    "type": "object",
+                    "title": "Advanced list",
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_edit_json": false,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false
+                    },
+                    "defaultProperties": [
+                        "items",
+                        "entries"
+                    ],
+                    "properties": {
+                        "items": {
+                          "title": "Items",
+                          "$ref": "#/definitions/items_list_ref"
+                        },
+                        "entries": {
+                            "type": "array",
+                            "title": "Entries",
+                            "format": "tabs",
+                            "options": {
+                                "disable_collapse": false,
+                                "disable_array_add": false,
+                                "disable_array_delete": false,
+                                "disable_array_reorder": false,
+                                "disable_properties": false,
+                                "collapsed": false,
+                                "hidden": false
+                            },
+                            "items": {
+                                "headerTemplate": "Entries {{i1}}",
+                                "anyOf": [
+                                    {
+                                        "type": "object",
+                                        "title": "Group",
+                                        "options": {
+                                            "disable_collapse": false,
+                                            "disable_edit_json": false,
+                                            "disable_properties": false,
+                                            "collapsed": false,
+                                            "hidden": false
+                                        },
+                                        "defaultProperties": [
+                                            "group"
+                                        ],
+                                        "properties": {
+                                            "group": {
+                                                "type": "string",
+                                                "title": "Group",
+                                                "default": "charged_two_way_radio",
+                                                "format": "text",
+                                                "filteredEnum": {
+                                                    "display_key": "id",
+                                                    "filter": { "jsonObject.type": { "$eq": "item_group" } }
+                                                },
+                                                "description": "Description for 'group' Type: 'string' Path: '/properties/items/properties/both/properties/entries/items/properties/group'"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "type": "object",
+                                        "title": "Single",
+                                        "options": {
+                                            "disable_collapse": false,
+                                            "disable_edit_json": false,
+                                            "disable_properties": false,
+                                            "collapsed": false,
+                                            "hidden": false
+                                        },
+                                        "defaultProperties": [
+                                            "item",
+                                            "custom-flags"
+                                        ],
+                                        "properties": {
+                                            "item": {
+                                                "type": "string",
+                                                "title": "Item",
+                                                "default": "hat_boonie",
+                                                "format": "text",
+                                                "description": "Description for 'item' Type: 'string' Path: '/properties/items/properties/both/properties/entries/items/properties/item'",
+                                                "propertyOrder": 10
+                                            },
+                                            "custom-flags": {
+                                                "$ref": "#/definitions/string_array",
+                                                "title": "Custom flags",
+                                                "description": "Flags for this entry",
+                                                "items": {
+                                                    "enum": [ "no_auto_equip" ]
+                                                }
+                                            },
+                                            "contents-group": {
+                                                "$ref": "#/definitions/string_array",
+                                                "title": "Contents group",
+                                                "description": "Flags for this entry",
+                                                "items": {
+                                                    "enum": [ "army_mags_m2010" ]
+                                                }
+                                            },
+                                            "ammo-item": {
+                                                "type": "string",
+                                                "title": "Ammo Item",
+                                                "default": "45_acp",
+                                                "format": "text",
+                                                "description": "Description for 'ammo-item' Type: 'string' Path: '/properties/items/properties/both/properties/entries/items/properties/ammo-item'",
+                                                "propertyOrder": 20
+                                            },
+                                            "contents-item": {
+                                                "type": "string",
+                                                "title": "Contents Item",
+                                                "default": "knife_trench",
+                                                "format": "text",
+                                                "description": "Description for 'ammo-item' Type: 'string' Path: '/properties/items/properties/both/properties/entries/items/properties/ammo-item'",
+                                                "propertyOrder": 20
+                                            },
+                                            "charges": {
+                                                "type": "integer",
+                                                "title": "Charges",
+                                                "default": 12,
+                                                "description": "A description for 'charges'  Type: 'integer'",
+                                                "propertyOrder": 30
+                                            },
+                                            "container-item": {
+                                                "type": "string",
+                                                "title": "Container Item",
+                                                "default": "holster",
+                                                "format": "text",
+                                                "description": "Description for 'container-item' Type: 'string' Path: '/properties/items/properties/both/properties/entries/items/properties/container-item'",
+                                                "propertyOrder": 40
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            "propertyOrder": 20
+                        }
+                    },
+                    "propertyOrder": 10
+                },
+                {
+                    "title": "Simple list",
+                    "$ref": "#/definitions/items_list_ref"
+                }
+            ]
+        },
+        "items_list_ref": {
+            "type": "array",
+            "description": "Items this profession has",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "string",
+                "default": "boxer_shorts",
+                "format": "text"
+            }
         }
     }
 }

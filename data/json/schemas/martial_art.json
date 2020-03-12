@@ -129,42 +129,60 @@
         "static_buffs": {
             "title": "Static buffs",
             "description": "List of buffs that are automatically applied every turn",
-            "$ref": "#/definitions/buff_ref"
+            "includeDefinition": "buff_ref"
         },
         "oncrit_buffs": {
             "title": "Oncrit buffs",
             "description": "List of buffs that are automatically applied on a crit",
-            "$ref": "#/definitions/buff_ref"
+            "includeDefinition": "buff_ref"
         },
         "onhit_buffs": {
             "title": "Onhit buffs",
             "description": "List of buffs that are automatically applied on a hit",
-            "$ref": "#/definitions/buff_ref"
+            "includeDefinition": "buff_ref"
         },
         "onkill_buffs": {
             "title": "Onkill buffs",
             "description": "List of buffs that are automatically applied on a kill",
-            "$ref": "#/definitions/buff_ref"
+            "includeDefinition": "buff_ref"
         },
         "ongethit_buffs": {
             "title": "Ongethit buffs",
             "description": "List of buffs that are automatically applied on getting hit",
-            "$ref": "#/definitions/buff_ref"
+            "includeDefinition": "buff_ref"
         },
         "onmiss_buffs": {
             "title": "Onmiss buffs",
             "description": "List of buffs that are automatically applied on a miss",
-            "$ref": "#/definitions/buff_ref"
+            "includeDefinition": "buff_ref"
         },
         "onblock_buffs": {
             "title": "Onblock buffs",
             "description": "List of buffs that are automatically applied on a block",
-            "$ref": "#/definitions/buff_ref"
+            "includeDefinition": "buff_ref"
         },
         "onmove_buffs": {
             "title": "Onmove buffs",
             "description": "List of buffs that are automatically applied on a move",
-            "$ref": "#/definitions/buff_ref"
+            "includeDefinition": "buff_ref"
+        },
+        "ondodge_buffs": {
+            "title": "Onmove buffs",
+            "description": "List of buffs that are automatically applied on a dodge",
+            "includeDefinition": "buff_ref"
+        },
+        "onattack_buffs": {
+            "title": "Onattack buffs",
+            "description": "List of buffs that are automatically applied on an attack",
+            "includeDefinition": "buff_ref"
+        },
+        "onpause_buffs": {
+            "title": "Onpause buffs",
+            "description": "List of buffs that are automatically applied on a pause",
+            "includeDefinition": "buff_ref"
+        },
+        "mult_bonuses": {
+            "includeDefinition": "bonuses_ref"
         },
         "techniques": {
           "$ref": "#/definitions/string_array",
@@ -188,6 +206,7 @@
                     "filter": { "$and": [ 
                         { "$or": [ 
                             { "jsonObject.type": { "$eq": "TOOL" } },
+                            { "jsonObject.type": { "$eq": "GUN" } },
                             { "jsonObject.type": { "$eq": "GENERIC" } }
                         ] },
                         { "jsonObject.id": { "$exists": true } }
@@ -212,7 +231,7 @@
                         }
                     },
                     {
-                        "type": "integer"
+                        "type": "string"
                     }
                 ]
             }
@@ -315,7 +334,7 @@
                       "description": "This technique requires a named buff to be active",
                       "items": {
                           "type": "string",
-                          "enum": [ "buff_leopard_onmove1" ]
+                          "enum": [ "buff_leopard_onmove1", "buff_pankration_ondodge" ]
                       }
                     },
                     "skill_requirements": {
@@ -345,10 +364,10 @@
                         "propertyOrder": 40
                     },
                     "flat_bonuses": {
-                        "$ref": "#/definitions/bonuses_ref"
+                        "includeDefinition": "bonuses_ref"
                     },
                     "mult_bonuses": {
-                        "$ref": "#/definitions/bonuses_ref"
+                        "includeDefinition": "bonuses_ref"
                     }
                 }
             }

@@ -4,6 +4,9 @@
     "title": "Recipe group",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
+    "stringifyOptions": {
+      "maxLength": 115
+    },
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -17,10 +20,6 @@
         "name"
     ],
     "properties": {
-        "id": {
-          "$ref": "#/definitions/id", 
-          "propertyOrder": 10
-        },
         "type": {
           "$ref": "#/definitions/type", 
           "propertyOrder": 11,
@@ -29,6 +28,44 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "building_type": {
+            "type": "string",
+            "title": "Building Type",
+            "default": "SMITH",
+            "format": "text",
+            "description": "Description for 'building_type' Type: 'string' Path: '/properties/building_type'",
+            "propertyOrder": 30
+        },
+        "recipes": {
+            "$ref": "#/definitions/object_array",
+            "title": "Recipes",
+            "items": {
+                "title": "Recipe ",
+                "defaultProperties": [
+                    "id",
+                    "description"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id",
+                        "default": "pliers",
+                        "format": "text",
+                        "description": "Description for 'id' Type: 'string' Path: '/properties/recipes/items/properties/id'",
+                        "propertyOrder": 10
+                    },
+                    "description": {
+                        "type": "string",
+                        "title": "Description",
+                        "default": " Craft: Pliers",
+                        "format": "text",
+                        "description": "Description for 'description' Type: 'string' Path: '/properties/recipes/items/properties/description'",
+                        "propertyOrder": 20
+                    }
+                }
+            },
+            "propertyOrder": 40
         }
     }
 }

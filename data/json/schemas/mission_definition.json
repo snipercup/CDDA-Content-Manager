@@ -26,6 +26,10 @@
           "propertyOrder": 11,
           "default": "mission_definition"
         },
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 12
+        },
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
@@ -79,10 +83,8 @@
             "description": "The item that must be found when using MGOAL_FIND_ITEM",
             "format": "selectize"
         },
-        
         "start": {
             "type": "object",
-            "id": "/properties/start",
             "title": "Start",
             "options": {
                 "disable_collapse": false,
@@ -98,7 +100,6 @@
             "properties": {
                 "effect": {
                     "type": "array",
-                    "id": "/properties/start/properties/effect",
                     "title": "Effect",
                     "format": "tabs",
                     "options": {
@@ -115,19 +116,14 @@
                         "oneOf": [
                             {
                                 "type": "string",
-                                "id": "/properties/start/properties/effect/oneof0",
-                                "title": "oneof 0 /properties/start/properties/effect",
+                                "title": "String effect",
                                 "default": "follow",
                                 "format": "text",
-                                "description": "Description for 'items' Type: 'string' Path: '/properties/start/properties/effect/items'",
-                                "options": {
-                                    "hidden": false
-                                }
+                                "description": "Description for 'items' Type: 'string' Path: '/properties/start/properties/effect/items'"
                             },
                             {
                                 "type": "object",
-                                "id": "/properties/start/properties/effect/oneof1",
-                                "title": "oneof 1 /properties/start/properties/effect",
+                                "title": "Object effect",
                                 "options": {
                                     "disable_collapse": false,
                                     "disable_edit_json": false,
@@ -141,14 +137,10 @@
                                 "properties": {
                                     "u_buy_item": {
                                         "type": "string",
-                                        "id": "/properties/start/properties/effect/items/properties/u_buy_item",
                                         "title": "U Buy Item",
                                         "default": "sarcophagus_access_code",
                                         "format": "text",
                                         "description": "Description for 'u_buy_item' Type: 'string' Path: '/properties/start/properties/effect/items/properties/u_buy_item'",
-                                        "options": {
-                                            "hidden": false
-                                        },
                                         "propertyOrder": 10
                                     }
                                 }
@@ -159,7 +151,6 @@
                 },
                 "assign_mission_target": {
                     "type": "object",
-                    "id": "/properties/start/properties/assign_mission_target",
                     "title": "Assign Mission Target",
                     "options": {
                         "disable_collapse": false,
@@ -176,37 +167,25 @@
                     "properties": {
                         "om_terrain": {
                             "type": "string",
-                            "id": "/properties/start/properties/assign_mission_target/properties/om_terrain",
                             "title": "Om Terrain",
                             "default": "haz_sar_1_1",
                             "format": "text",
                             "description": "Description for 'om_terrain' Type: 'string' Path: '/properties/start/properties/assign_mission_target/properties/om_terrain'",
-                            "options": {
-                                "hidden": false
-                            },
                             "propertyOrder": 10
                         },
                         "om_special": {
                             "type": "string",
-                            "id": "/properties/start/properties/assign_mission_target/properties/om_special",
                             "title": "Om Special",
                             "default": "Hazardous Waste Sarcophagus",
                             "format": "text",
                             "description": "Description for 'om_special' Type: 'string' Path: '/properties/start/properties/assign_mission_target/properties/om_special'",
-                            "options": {
-                                "hidden": false
-                            },
                             "propertyOrder": 20
                         },
                         "reveal_radius": {
                             "type": "integer",
-                            "id": "/properties/start/properties/assign_mission_target/properties/reveal_radius",
                             "title": "Reveal Radius",
                             "default": 3,
                             "description": "A description for 'reveal_radius'  Type: 'integer'",
-                            "options": {
-                                "hidden": false
-                            },
                             "propertyOrder": 30
                         }
                     },
@@ -216,47 +195,22 @@
             "propertyOrder": 70
         },
         "origins": {
-            "type": "array",
-            "id": "/properties/origins",
+            "$ref": "#/definitions/string_array",
             "title": "Origins",
-            "format": "tabs",
-            "options": {
-                "disable_collapse": false,
-                "disable_array_add": false,
-                "disable_array_delete": false,
-                "disable_array_reorder": false,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false
-            },
-            "items": {
-                "type": "string",
-                "id": "/properties/origins/items",
-                "title": "Title Root Origins ",
-                "default": "ORIGIN_SECONDARY",
-                "format": "text",
-                "description": "Description for 'items' Type: 'string' Path: '/properties/origins/items'",
-                "options": {
-                    "hidden": false
-                }
-            },
+            "default": [ "ORIGIN_SECONDARY" ],
+            "items": { "enum": [ "ORIGIN_SECONDARY" ], "default": "ORIGIN_SECONDARY" },
             "propertyOrder": 80
         },
         "destination": {
             "type": "string",
-            "id": "/properties/destination",
             "title": "Destination",
             "default": "haz_sar_b_1",
             "format": "text",
             "description": "Description for 'destination' Type: 'string' Path: '/properties/destination'",
-            "options": {
-                "hidden": false
-            },
             "propertyOrder": 90
         },
         "dialogue": {
             "type": "object",
-            "id": "/properties/dialogue",
             "title": "Dialogue",
             "options": {
                 "disable_collapse": false,
@@ -279,110 +233,74 @@
             "properties": {
                 "describe": {
                     "type": "string",
-                    "id": "/properties/dialogue/properties/describe",
                     "title": "Describe",
                     "default": "You wouldn't believe what I found…",
                     "format": "text",
                     "description": "Description for 'describe' Type: 'string' Path: '/properties/dialogue/properties/describe'",
-                    "options": {
-                        "hidden": false
-                    },
                     "propertyOrder": 10
                 },
                 "offer": {
                     "type": "string",
-                    "id": "/properties/dialogue/properties/offer",
                     "title": "Offer",
                     "default": "Holy hell, the crash you recovered the black box from wasn't as old as I thought.  Check this out, it was on its approach to pick up a team sent to secure and destroy something called a 'Hazardous Waste Sarcophagus' in the middle of nowhere.  If the bird never picked up the team then we may still have a chance to meet up with them.  It includes an access code for the elevator and an encoded message for the team leader, I guess.  If we want to join up with what remains of the government then now may be our only chance.",
                     "format": "text",
                     "description": "Description for 'offer' Type: 'string' Path: '/properties/dialogue/properties/offer'",
-                    "options": {
-                        "hidden": false
-                    },
                     "propertyOrder": 20
                 },
                 "accepted": {
                     "type": "string",
-                    "id": "/properties/dialogue/properties/accepted",
                     "title": "Accepted",
                     "default": "Fuck ya, America!",
                     "format": "text",
                     "description": "Description for 'accepted' Type: 'string' Path: '/properties/dialogue/properties/accepted'",
-                    "options": {
-                        "hidden": false
-                    },
                     "propertyOrder": 30
                 },
                 "rejected": {
                     "type": "string",
-                    "id": "/properties/dialogue/properties/rejected",
                     "title": "Rejected",
                     "default": "Are you going to forfeit your duty when the country needs you the most?",
                     "format": "text",
                     "description": "Description for 'rejected' Type: 'string' Path: '/properties/dialogue/properties/rejected'",
-                    "options": {
-                        "hidden": false
-                    },
                     "propertyOrder": 40
                 },
                 "advice": {
                     "type": "string",
-                    "id": "/properties/dialogue/properties/advice",
                     "title": "Advice",
                     "default": "If there is a military team down there then we better go in prepared if we want to impress them.  Carry as much ammo as you can and prepare to ditch this place if they have a second bird coming to pick them up.",
                     "format": "text",
                     "description": "Description for 'advice' Type: 'string' Path: '/properties/dialogue/properties/advice'",
-                    "options": {
-                        "hidden": false
-                    },
                     "propertyOrder": 50
                 },
                 "inquire": {
                     "type": "string",
-                    "id": "/properties/dialogue/properties/inquire",
                     "title": "Inquire",
                     "default": "Having any trouble following the map?",
                     "format": "text",
                     "description": "Description for 'inquire' Type: 'string' Path: '/properties/dialogue/properties/inquire'",
-                    "options": {
-                        "hidden": false
-                    },
                     "propertyOrder": 60
                 },
                 "success": {
                     "type": "string",
-                    "id": "/properties/dialogue/properties/success",
                     "title": "Success",
                     "default": "We got this shit!",
                     "format": "text",
                     "description": "Description for 'success' Type: 'string' Path: '/properties/dialogue/properties/success'",
-                    "options": {
-                        "hidden": false
-                    },
                     "propertyOrder": 70
                 },
                 "success_lie": {
                     "type": "string",
-                    "id": "/properties/dialogue/properties/success_lie",
                     "title": "Success Lie",
                     "default": "What?!  I out'ta whip your ass.",
                     "format": "text",
                     "description": "Description for 'success_lie' Type: 'string' Path: '/properties/dialogue/properties/success_lie'",
-                    "options": {
-                        "hidden": false
-                    },
                     "propertyOrder": 80
                 },
                 "failure": {
                     "type": "string",
-                    "id": "/properties/dialogue/properties/failure",
                     "title": "Failure",
                     "default": "Damn, we were so close.",
                     "format": "text",
                     "description": "Description for 'failure' Type: 'string' Path: '/properties/dialogue/properties/failure'",
-                    "options": {
-                        "hidden": false
-                    },
                     "propertyOrder": 90
                 }
             },
@@ -390,327 +308,14 @@
         },
         "followup": {
             "type": "string",
-            "id": "/properties/followup",
             "title": "Followup",
             "default": "MISSION_RANCH_FOREMAN_2",
             "format": "text",
             "description": "Description for 'followup' Type: 'string' Path: '/properties/followup'",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 100
-        },
-        "start": {
-            "type": "object",
-            "id": "/properties/start",
-            "title": "Start",
-            "options": {
-                "disable_collapse": false,
-                "disable_edit_json": false,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false
-            },
-            "defaultProperties": [
-                "effect",
-                "assign_mission_target"
-            ],
-            "properties": {
-                "effect": {
-                    "type": "array",
-                    "id": "/properties/start/properties/effect",
-                    "title": "Effect",
-                    "format": "tabs",
-                    "options": {
-                        "disable_collapse": false,
-                        "disable_array_add": false,
-                        "disable_array_delete": false,
-                        "disable_array_reorder": false,
-                        "disable_properties": false,
-                        "collapsed": false,
-                        "hidden": false
-                    },
-                    "items": {
-                        "headerTemplate": "Effect {{i1}}",
-                        "oneOf": [
-                            {
-                                "type": "string",
-                                "id": "/properties/start/properties/effect/oneof0",
-                                "title": "oneof 0 /properties/start/properties/effect",
-                                "default": "follow",
-                                "format": "text",
-                                "description": "Description for 'items' Type: 'string' Path: '/properties/start/properties/effect/items'",
-                                "options": {
-                                    "hidden": false
-                                }
-                            },
-                            {
-                                "type": "object",
-                                "id": "/properties/start/properties/effect/oneof1",
-                                "title": "oneof 1 /properties/start/properties/effect",
-                                "options": {
-                                    "disable_collapse": false,
-                                    "disable_edit_json": false,
-                                    "disable_properties": false,
-                                    "collapsed": false,
-                                    "hidden": false
-                                },
-                                "defaultProperties": [
-                                    "u_buy_item"
-                                ],
-                                "properties": {
-                                    "u_buy_item": {
-                                        "type": "string",
-                                        "id": "/properties/start/properties/effect/items/properties/u_buy_item",
-                                        "title": "U Buy Item",
-                                        "default": "sarcophagus_access_code",
-                                        "format": "text",
-                                        "description": "Description for 'u_buy_item' Type: 'string' Path: '/properties/start/properties/effect/items/properties/u_buy_item'",
-                                        "options": {
-                                            "hidden": false
-                                        },
-                                        "propertyOrder": 10
-                                    }
-                                }
-                            }
-                        ]
-                    },
-                    "propertyOrder": 10
-                },
-                "assign_mission_target": {
-                    "type": "object",
-                    "id": "/properties/start/properties/assign_mission_target",
-                    "title": "Assign Mission Target",
-                    "options": {
-                        "disable_collapse": false,
-                        "disable_edit_json": false,
-                        "disable_properties": false,
-                        "collapsed": false,
-                        "hidden": false
-                    },
-                    "defaultProperties": [
-                        "om_terrain",
-                        "om_special",
-                        "reveal_radius"
-                    ],
-                    "properties": {
-                        "om_terrain": {
-                            "type": "string",
-                            "id": "/properties/start/properties/assign_mission_target/properties/om_terrain",
-                            "title": "Om Terrain",
-                            "default": "haz_sar_1_1",
-                            "format": "text",
-                            "description": "Description for 'om_terrain' Type: 'string' Path: '/properties/start/properties/assign_mission_target/properties/om_terrain'",
-                            "options": {
-                                "hidden": false
-                            },
-                            "propertyOrder": 10
-                        },
-                        "om_special": {
-                            "type": "string",
-                            "id": "/properties/start/properties/assign_mission_target/properties/om_special",
-                            "title": "Om Special",
-                            "default": "Hazardous Waste Sarcophagus",
-                            "format": "text",
-                            "description": "Description for 'om_special' Type: 'string' Path: '/properties/start/properties/assign_mission_target/properties/om_special'",
-                            "options": {
-                                "hidden": false
-                            },
-                            "propertyOrder": 20
-                        },
-                        "reveal_radius": {
-                            "type": "integer",
-                            "id": "/properties/start/properties/assign_mission_target/properties/reveal_radius",
-                            "title": "Reveal Radius",
-                            "default": 3,
-                            "description": "A description for 'reveal_radius'  Type: 'integer'",
-                            "options": {
-                                "hidden": false
-                            },
-                            "propertyOrder": 30
-                        }
-                    },
-                    "propertyOrder": 20
-                }
-            },
-            "propertyOrder": 70
-        },
-        "origins": {
-            "type": "array",
-            "id": "/properties/origins",
-            "title": "Origins",
-            "format": "tabs",
-            "options": {
-                "disable_collapse": false,
-                "disable_array_add": false,
-                "disable_array_delete": false,
-                "disable_array_reorder": false,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false
-            },
-            "items": {
-                "type": "string",
-                "id": "/properties/origins/items",
-                "title": "Title Root Origins ",
-                "default": "ORIGIN_SECONDARY",
-                "format": "text",
-                "description": "Description for 'items' Type: 'string' Path: '/properties/origins/items'",
-                "options": {
-                    "hidden": false
-                }
-            },
-            "propertyOrder": 80
-        },
-        "destination": {
-            "type": "string",
-            "id": "/properties/destination",
-            "title": "Destination",
-            "default": "haz_sar_b_1",
-            "format": "text",
-            "description": "Description for 'destination' Type: 'string' Path: '/properties/destination'",
-            "options": {
-                "hidden": false
-            },
-            "propertyOrder": 90
-        },
-        "dialogue": {
-            "type": "object",
-            "id": "/properties/dialogue",
-            "title": "Dialogue",
-            "options": {
-                "disable_collapse": false,
-                "disable_edit_json": false,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false
-            },
-            "defaultProperties": [
-                "describe",
-                "offer",
-                "accepted",
-                "rejected",
-                "advice",
-                "inquire",
-                "success",
-                "success_lie",
-                "failure"
-            ],
-            "properties": {
-                "describe": {
-                    "type": "string",
-                    "id": "/properties/dialogue/properties/describe",
-                    "title": "Describe",
-                    "default": "You wouldn't believe what I found…",
-                    "format": "text",
-                    "description": "Description for 'describe' Type: 'string' Path: '/properties/dialogue/properties/describe'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 10
-                },
-                "offer": {
-                    "type": "string",
-                    "id": "/properties/dialogue/properties/offer",
-                    "title": "Offer",
-                    "default": "Holy hell, the crash you recovered the black box from wasn't as old as I thought.  Check this out, it was on its approach to pick up a team sent to secure and destroy something called a 'Hazardous Waste Sarcophagus' in the middle of nowhere.  If the bird never picked up the team then we may still have a chance to meet up with them.  It includes an access code for the elevator and an encoded message for the team leader, I guess.  If we want to join up with what remains of the government then now may be our only chance.",
-                    "format": "text",
-                    "description": "Description for 'offer' Type: 'string' Path: '/properties/dialogue/properties/offer'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 20
-                },
-                "accepted": {
-                    "type": "string",
-                    "id": "/properties/dialogue/properties/accepted",
-                    "title": "Accepted",
-                    "default": "Fuck ya, America!",
-                    "format": "text",
-                    "description": "Description for 'accepted' Type: 'string' Path: '/properties/dialogue/properties/accepted'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 30
-                },
-                "rejected": {
-                    "type": "string",
-                    "id": "/properties/dialogue/properties/rejected",
-                    "title": "Rejected",
-                    "default": "Are you going to forfeit your duty when the country needs you the most?",
-                    "format": "text",
-                    "description": "Description for 'rejected' Type: 'string' Path: '/properties/dialogue/properties/rejected'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 40
-                },
-                "advice": {
-                    "type": "string",
-                    "id": "/properties/dialogue/properties/advice",
-                    "title": "Advice",
-                    "default": "If there is a military team down there then we better go in prepared if we want to impress them.  Carry as much ammo as you can and prepare to ditch this place if they have a second bird coming to pick them up.",
-                    "format": "text",
-                    "description": "Description for 'advice' Type: 'string' Path: '/properties/dialogue/properties/advice'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 50
-                },
-                "inquire": {
-                    "type": "string",
-                    "id": "/properties/dialogue/properties/inquire",
-                    "title": "Inquire",
-                    "default": "Having any trouble following the map?",
-                    "format": "text",
-                    "description": "Description for 'inquire' Type: 'string' Path: '/properties/dialogue/properties/inquire'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 60
-                },
-                "success": {
-                    "type": "string",
-                    "id": "/properties/dialogue/properties/success",
-                    "title": "Success",
-                    "default": "We got this shit!",
-                    "format": "text",
-                    "description": "Description for 'success' Type: 'string' Path: '/properties/dialogue/properties/success'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 70
-                },
-                "success_lie": {
-                    "type": "string",
-                    "id": "/properties/dialogue/properties/success_lie",
-                    "title": "Success Lie",
-                    "default": "What?!  I out'ta whip your ass.",
-                    "format": "text",
-                    "description": "Description for 'success_lie' Type: 'string' Path: '/properties/dialogue/properties/success_lie'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 80
-                },
-                "failure": {
-                    "type": "string",
-                    "id": "/properties/dialogue/properties/failure",
-                    "title": "Failure",
-                    "default": "Damn, we were so close.",
-                    "format": "text",
-                    "description": "Description for 'failure' Type: 'string' Path: '/properties/dialogue/properties/failure'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 90
-                }
-            },
             "propertyOrder": 100
         },
         "end": {
             "type": "object",
-            "id": "/properties/end",
             "title": "End",
             "options": {
                 "disable_collapse": false,
@@ -725,7 +330,6 @@
             "properties": {
                 "update_mapgen": {
                     "type": "array",
-                    "id": "/properties/end/properties/update_mapgen",
                     "title": "Update Mapgen",
                     "format": "tabs",
                     "options": {
@@ -738,1079 +342,443 @@
                         "hidden": false
                     },
                     "items": {
-                        "headerTemplate": "Update Mapgen {{i1}}",
-                        "oneOf": [
-                            {
-                                "type": "object",
-                                "id": "/properties/end/properties/update_mapgen/oneof0",
-                                "title": "oneof 0 /properties/end/properties/update_mapgen",
+                        "type": "object",
+                        "title": "Update ",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_edit_json": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "defaultProperties": [
+                            "om_terrain",
+                            "translate_ter",
+                            "place_nested"
+                        ],
+                        "properties": {
+                            "om_terrain": {
+                                "type": "string",
+                                "title": "Om Terrain",
+                                "default": "ranch_camp_65",
+                                "format": "text",
+                                "description": "Description for 'om_terrain' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/om_terrain'",
+                                "propertyOrder": 10
+                            },
+                            "translate_ter": {
+                                "type": "array",
+                                "title": "Translate Ter",
+                                "format": "tabs",
                                 "options": {
                                     "disable_collapse": false,
-                                    "disable_edit_json": false,
+                                    "disable_array_add": false,
+                                    "disable_array_delete": false,
+                                    "disable_array_reorder": false,
                                     "disable_properties": false,
                                     "collapsed": false,
                                     "hidden": false
                                 },
-                                "defaultProperties": [
-                                    "om_terrain",
-                                    "translate_ter",
-                                    "place_nested"
-                                ],
-                                "properties": {
-                                    "om_terrain": {
-                                        "type": "string",
-                                        "id": "/properties/end/properties/update_mapgen/items/properties/om_terrain",
-                                        "title": "Om Terrain",
-                                        "default": "ranch_camp_65",
-                                        "format": "text",
-                                        "description": "Description for 'om_terrain' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/om_terrain'",
-                                        "options": {
-                                            "hidden": false
-                                        },
-                                        "propertyOrder": 10
+                                "items": {
+                                    "type": "object",
+                                    "title": "Title Root End Update Mapgen Translate Ter ",
+                                    "options": {
+                                        "disable_collapse": false,
+                                        "disable_edit_json": false,
+                                        "disable_properties": false,
+                                        "collapsed": false,
+                                        "hidden": false
                                     },
-                                    "translate_ter": {
-                                        "type": "array",
-                                        "id": "/properties/end/properties/update_mapgen/items/properties/translate_ter",
-                                        "title": "Translate Ter",
-                                        "format": "tabs",
-                                        "options": {
-                                            "disable_collapse": false,
-                                            "disable_array_add": false,
-                                            "disable_array_delete": false,
-                                            "disable_array_reorder": false,
-                                            "disable_properties": false,
-                                            "collapsed": false,
-                                            "hidden": false
+                                    "defaultProperties": [
+                                        "from",
+                                        "to",
+                                        "x",
+                                        "y"
+                                    ],
+                                    "properties": {
+                                        "from": {
+                                            "type": "string",
+                                            "title": "From",
+                                            "default": "t_underbrush",
+                                            "format": "text",
+                                            "description": "Description for 'from' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/from'",
+                                            "propertyOrder": 10
                                         },
-                                        "items": {
-                                            "type": "object",
-                                            "id": "/properties/end/properties/update_mapgen/items/properties/translate_ter/items",
-                                            "title": "Title Root End Update Mapgen Translate Ter ",
-                                            "options": {
-                                                "disable_collapse": false,
-                                                "disable_edit_json": false,
-                                                "disable_properties": false,
-                                                "collapsed": false,
-                                                "hidden": false
-                                            },
-                                            "defaultProperties": [
-                                                "from",
-                                                "to",
-                                                "x",
-                                                "y"
-                                            ],
-                                            "properties": {
-                                                "from": {
-                                                    "type": "string",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/from",
-                                                    "title": "From",
-                                                    "default": "t_underbrush",
-                                                    "format": "text",
-                                                    "description": "Description for 'from' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/from'",
-                                                    "options": {
-                                                        "hidden": false
-                                                    },
-                                                    "propertyOrder": 10
-                                                },
-                                                "to": {
-                                                    "type": "string",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/to",
-                                                    "title": "To",
-                                                    "default": "t_dirt",
-                                                    "format": "text",
-                                                    "description": "Description for 'to' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/to'",
-                                                    "options": {
-                                                        "hidden": false
-                                                    },
-                                                    "propertyOrder": 20
-                                                },
-                                                "x": {
-                                                    "type": "integer",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/x",
-                                                    "title": "X",
-                                                    "default": 0,
-                                                    "description": "A description for 'x'  Type: 'integer'",
-                                                    "options": {
-                                                        "hidden": false
-                                                    },
-                                                    "propertyOrder": 30
-                                                },
-                                                "y": {
-                                                    "type": "integer",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/y",
-                                                    "title": "Y",
-                                                    "default": 0,
-                                                    "description": "A description for 'y'  Type: 'integer'",
-                                                    "options": {
-                                                        "hidden": false
-                                                    },
-                                                    "propertyOrder": 40
+                                        "to": {
+                                            "type": "string",
+                                            "title": "To",
+                                            "default": "t_dirt",
+                                            "format": "text",
+                                            "description": "Description for 'to' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/to'",
+                                            "propertyOrder": 20
+                                        },
+                                        "x": {
+                                            "type": "integer",
+                                            "title": "X",
+                                            "default": 0,
+                                            "description": "A description for 'x'  Type: 'integer'",
+                                            "propertyOrder": 30
+                                        },
+                                        "y": {
+                                            "type": "integer",
+                                            "title": "Y",
+                                            "default": 0,
+                                            "description": "A description for 'y'  Type: 'integer'",
+                                            "propertyOrder": 40
+                                        }
+                                    }
+                                },
+                                "propertyOrder": 20
+                            },
+                            "place_nested": {
+                                "type": "array",
+                                "title": "Place Nested",
+                                "format": "tabs",
+                                "options": {
+                                    "disable_collapse": false,
+                                    "disable_array_add": false,
+                                    "disable_array_delete": false,
+                                    "disable_array_reorder": false,
+                                    "disable_properties": false,
+                                    "collapsed": false,
+                                    "hidden": false
+                                },
+                                "items": {
+                                    "type": "object",
+                                    "title": "Title Root End Update Mapgen Place Nested ",
+                                    "options": {
+                                        "disable_collapse": false,
+                                        "disable_edit_json": false,
+                                        "disable_properties": false,
+                                        "collapsed": false,
+                                        "hidden": false
+                                    },
+                                    "defaultProperties": [
+                                        "chunks",
+                                        "x",
+                                        "y"
+                                    ],
+                                    "properties": {
+                                        "chunks": {
+                                            "$ref": "#/definitions/string_array",
+                                            "title": "Chunks",
+                                            "items": {
+                                                "default": "tacoma_commune_west_wall_door",
+                                                "filteredEnum": {
+                                                    "display_key": "nested_mapgen_id",
+                                                    "filter": { "jsonObject.nested_mapgen_id": { "$exists": true } }
                                                 }
                                             }
                                         },
-                                        "propertyOrder": 20
-                                    },
-                                    "place_nested": {
-                                        "type": "array",
-                                        "id": "/properties/end/properties/update_mapgen/items/properties/place_nested",
-                                        "title": "Place Nested",
-                                        "format": "tabs",
-                                        "options": {
-                                            "disable_collapse": false,
-                                            "disable_array_add": false,
-                                            "disable_array_delete": false,
-                                            "disable_array_reorder": false,
-                                            "disable_properties": false,
-                                            "collapsed": false,
-                                            "hidden": false
+                                        "x": {
+                                            "type": "integer",
+                                            "title": "X",
+                                            "default": 22,
+                                            "description": "A description for 'x'  Type: 'integer'",
+                                            "propertyOrder": 20
                                         },
-                                        "items": {
-                                            "type": "object",
-                                            "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items",
-                                            "title": "Title Root End Update Mapgen Place Nested ",
-                                            "options": {
-                                                "disable_collapse": false,
-                                                "disable_edit_json": false,
-                                                "disable_properties": false,
-                                                "collapsed": false,
-                                                "hidden": false
-                                            },
-                                            "defaultProperties": [
-                                                "chunks",
-                                                "x",
-                                                "y"
-                                            ],
-                                            "properties": {
-                                                "chunks": {
-                                                    "type": "array",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/chunks",
-                                                    "title": "Chunks",
-                                                    "format": "tabs",
-                                                    "options": {
-                                                        "disable_collapse": false,
-                                                        "disable_array_add": false,
-                                                        "disable_array_delete": false,
-                                                        "disable_array_reorder": false,
-                                                        "disable_properties": false,
-                                                        "collapsed": false,
-                                                        "hidden": false
-                                                    },
-                                                    "items": {
-                                                        "type": "string",
-                                                        "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/chunks/items",
-                                                        "title": "Title Root End Update Mapgen Place Nested Chunks ",
-                                                        "default": "tacoma_commune_west_wall_door",
-                                                        "format": "text",
-                                                        "description": "Description for 'items' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/chunks/items'",
-                                                        "options": {
-                                                            "hidden": false
-                                                        }
-                                                    },
-                                                    "propertyOrder": 10
-                                                },
-                                                "x": {
-                                                    "type": "integer",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/x",
-                                                    "title": "X",
-                                                    "default": 22,
-                                                    "description": "A description for 'x'  Type: 'integer'",
-                                                    "options": {
-                                                        "hidden": false
-                                                    },
-                                                    "propertyOrder": 20
-                                                },
-                                                "y": {
-                                                    "type": "integer",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/y",
-                                                    "title": "Y",
-                                                    "default": 0,
-                                                    "description": "A description for 'y'  Type: 'integer'",
-                                                    "options": {
-                                                        "hidden": false
-                                                    },
-                                                    "propertyOrder": 30
-                                                }
-                                            }
-                                        },
-                                        "propertyOrder": 30
+                                        "y": {
+                                            "type": "integer",
+                                            "title": "Y",
+                                            "default": 0,
+                                            "description": "A description for 'y'  Type: 'integer'",
+                                            "propertyOrder": 30
+                                        }
                                     }
                                 }
                             },
-                            {
-                                "type": "object",
-                                "id": "/properties/end/properties/update_mapgen/oneof1",
-                                "title": "oneof 1 /properties/end/properties/update_mapgen",
+                            "place_npcs": {
+                                "type": "array",
+                                "title": "Place Npcs",
+                                "format": "tabs",
                                 "options": {
                                     "disable_collapse": false,
-                                    "disable_edit_json": false,
+                                    "disable_array_add": false,
+                                    "disable_array_delete": false,
+                                    "disable_array_reorder": false,
                                     "disable_properties": false,
                                     "collapsed": false,
                                     "hidden": false
                                 },
-                                "defaultProperties": [
-                                    "om_terrain",
-                                    "translate_ter",
-                                    "place_nested"
-                                ],
-                                "properties": {
-                                    "om_terrain": {
-                                        "type": "string",
-                                        "id": "/properties/end/properties/update_mapgen/items/properties/om_terrain",
-                                        "title": "Om Terrain",
-                                        "default": "ranch_camp_66",
-                                        "format": "text",
-                                        "description": "Description for 'om_terrain' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/om_terrain'",
-                                        "options": {
-                                            "hidden": false
-                                        },
-                                        "propertyOrder": 10
+                                "items": {
+                                    "type": "object",
+                                    "title": "Npc ",
+                                    "options": {
+                                        "disable_collapse": false,
+                                        "disable_edit_json": false,
+                                        "disable_properties": false,
+                                        "collapsed": false,
+                                        "hidden": false
                                     },
-                                    "translate_ter": {
-                                        "type": "array",
-                                        "id": "/properties/end/properties/update_mapgen/items/properties/translate_ter",
-                                        "title": "Translate Ter",
-                                        "format": "tabs",
-                                        "options": {
-                                            "disable_collapse": false,
-                                            "disable_array_add": false,
-                                            "disable_array_delete": false,
-                                            "disable_array_reorder": false,
-                                            "disable_properties": false,
-                                            "collapsed": false,
-                                            "hidden": false
+                                    "defaultProperties": [
+                                        "class",
+                                        "x",
+                                        "y"
+                                    ],
+                                    "properties": {
+                                        "class": {
+                                            "type": "string",
+                                            "title": "Class",
+                                            "default": "ranch_farmer_1",
+                                            "format": "text",
+                                            "description": "Description for 'class' Type: 'string' Path: '/properties/place_npcs/items/properties/class'",
+                                            "propertyOrder": 10
                                         },
-                                        "items": {
-                                            "type": "object",
-                                            "id": "/properties/end/properties/update_mapgen/items/properties/translate_ter/items",
-                                            "title": "Title Root End Update Mapgen Translate Ter ",
-                                            "options": {
-                                                "disable_collapse": false,
-                                                "disable_edit_json": false,
-                                                "disable_properties": false,
-                                                "collapsed": false,
-                                                "hidden": false
-                                            },
-                                            "defaultProperties": [
-                                                "from",
-                                                "to",
-                                                "x",
-                                                "y"
-                                            ],
-                                            "properties": {
-                                                "from": {
-                                                    "type": "string",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/from",
-                                                    "title": "From",
-                                                    "default": "t_underbrush",
-                                                    "format": "text",
-                                                    "description": "Description for 'from' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/from'",
-                                                    "options": {
-                                                        "hidden": false
-                                                    },
-                                                    "propertyOrder": 10
-                                                },
-                                                "to": {
-                                                    "type": "string",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/to",
-                                                    "title": "To",
-                                                    "default": "t_dirt",
-                                                    "format": "text",
-                                                    "description": "Description for 'to' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/to'",
-                                                    "options": {
-                                                        "hidden": false
-                                                    },
-                                                    "propertyOrder": 20
-                                                },
-                                                "x": {
-                                                    "type": "integer",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/x",
-                                                    "title": "X",
-                                                    "default": 0,
-                                                    "description": "A description for 'x'  Type: 'integer'",
-                                                    "options": {
-                                                        "hidden": false
-                                                    },
-                                                    "propertyOrder": 30
-                                                },
-                                                "y": {
-                                                    "type": "integer",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/y",
-                                                    "title": "Y",
-                                                    "default": 0,
-                                                    "description": "A description for 'y'  Type: 'integer'",
-                                                    "options": {
-                                                        "hidden": false
-                                                    },
-                                                    "propertyOrder": 40
-                                                }
-                                            }
+                                        "x": {
+                                            "type": "integer",
+                                            "title": "X",
+                                            "default": 19,
+                                            "description": "A description for 'x'  Type: 'integer'",
+                                            "propertyOrder": 20
                                         },
-                                        "propertyOrder": 20
-                                    },
-                                    "place_nested": {
-                                        "type": "array",
-                                        "id": "/properties/end/properties/update_mapgen/items/properties/place_nested",
-                                        "title": "Place Nested",
-                                        "format": "tabs",
-                                        "options": {
-                                            "disable_collapse": false,
-                                            "disable_array_add": false,
-                                            "disable_array_delete": false,
-                                            "disable_array_reorder": false,
-                                            "disable_properties": false,
-                                            "collapsed": false,
-                                            "hidden": false
-                                        },
-                                        "items": {
-                                            "headerTemplate": "Place Nested {{i1}}",
-                                            "oneOf": [
-                                                {
-                                                    "type": "object",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/oneof0",
-                                                    "title": "oneof 0 /properties/end/properties/update_mapgen/items/properties/place_nested",
-                                                    "options": {
-                                                        "disable_collapse": false,
-                                                        "disable_edit_json": false,
-                                                        "disable_properties": false,
-                                                        "collapsed": false,
-                                                        "hidden": false
-                                                    },
-                                                    "defaultProperties": [
-                                                        "chunks",
-                                                        "x",
-                                                        "y"
-                                                    ],
-                                                    "properties": {
-                                                        "chunks": {
-                                                            "type": "array",
-                                                            "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/chunks",
-                                                            "title": "Chunks",
-                                                            "format": "tabs",
-                                                            "options": {
-                                                                "disable_collapse": false,
-                                                                "disable_array_add": false,
-                                                                "disable_array_delete": false,
-                                                                "disable_array_reorder": false,
-                                                                "disable_properties": false,
-                                                                "collapsed": false,
-                                                                "hidden": false
-                                                            },
-                                                            "items": {
-                                                                "type": "string",
-                                                                "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/chunks/items",
-                                                                "title": "Title Root End Update Mapgen Place Nested Chunks ",
-                                                                "default": "tacoma_commune_east_wall_door",
-                                                                "format": "text",
-                                                                "description": "Description for 'items' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/chunks/items'",
-                                                                "options": {
-                                                                    "hidden": false
-                                                                }
-                                                            },
-                                                            "propertyOrder": 10
-                                                        },
-                                                        "x": {
-                                                            "type": "integer",
-                                                            "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/x",
-                                                            "title": "X",
-                                                            "default": 0,
-                                                            "description": "A description for 'x'  Type: 'integer'",
-                                                            "options": {
-                                                                "hidden": false
-                                                            },
-                                                            "propertyOrder": 20
-                                                        },
-                                                        "y": {
-                                                            "type": "integer",
-                                                            "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/y",
-                                                            "title": "Y",
-                                                            "default": 0,
-                                                            "description": "A description for 'y'  Type: 'integer'",
-                                                            "options": {
-                                                                "hidden": false
-                                                            },
-                                                            "propertyOrder": 30
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    "type": "object",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/oneof1",
-                                                    "title": "oneof 1 /properties/end/properties/update_mapgen/items/properties/place_nested",
-                                                    "options": {
-                                                        "disable_collapse": false,
-                                                        "disable_edit_json": false,
-                                                        "disable_properties": false,
-                                                        "collapsed": false,
-                                                        "hidden": false
-                                                    },
-                                                    "defaultProperties": [
-                                                        "chunks",
-                                                        "x",
-                                                        "y"
-                                                    ],
-                                                    "properties": {
-                                                        "chunks": {
-                                                            "type": "array",
-                                                            "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/chunks",
-                                                            "title": "Chunks",
-                                                            "format": "tabs",
-                                                            "options": {
-                                                                "disable_collapse": false,
-                                                                "disable_array_add": false,
-                                                                "disable_array_delete": false,
-                                                                "disable_array_reorder": false,
-                                                                "disable_properties": false,
-                                                                "collapsed": false,
-                                                                "hidden": false
-                                                            },
-                                                            "items": {
-                                                                "type": "string",
-                                                                "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/chunks/items",
-                                                                "title": "Title Root End Update Mapgen Place Nested Chunks ",
-                                                                "default": "tacoma_commune_west_wall_door",
-                                                                "format": "text",
-                                                                "description": "Description for 'items' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/chunks/items'",
-                                                                "options": {
-                                                                    "hidden": false
-                                                                }
-                                                            },
-                                                            "propertyOrder": 10
-                                                        },
-                                                        "x": {
-                                                            "type": "integer",
-                                                            "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/x",
-                                                            "title": "X",
-                                                            "default": 13,
-                                                            "description": "A description for 'x'  Type: 'integer'",
-                                                            "options": {
-                                                                "hidden": false
-                                                            },
-                                                            "propertyOrder": 20
-                                                        },
-                                                        "y": {
-                                                            "type": "integer",
-                                                            "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/y",
-                                                            "title": "Y",
-                                                            "default": 0,
-                                                            "description": "A description for 'y'  Type: 'integer'",
-                                                            "options": {
-                                                                "hidden": false
-                                                            },
-                                                            "propertyOrder": 30
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    "type": "object",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/oneof2",
-                                                    "title": "oneof 2 /properties/end/properties/update_mapgen/items/properties/place_nested",
-                                                    "options": {
-                                                        "disable_collapse": false,
-                                                        "disable_edit_json": false,
-                                                        "disable_properties": false,
-                                                        "collapsed": false,
-                                                        "hidden": false
-                                                    },
-                                                    "defaultProperties": [
-                                                        "chunks",
-                                                        "x",
-                                                        "y"
-                                                    ],
-                                                    "properties": {
-                                                        "chunks": {
-                                                            "type": "array",
-                                                            "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/chunks",
-                                                            "title": "Chunks",
-                                                            "format": "tabs",
-                                                            "options": {
-                                                                "disable_collapse": false,
-                                                                "disable_array_add": false,
-                                                                "disable_array_delete": false,
-                                                                "disable_array_reorder": false,
-                                                                "disable_properties": false,
-                                                                "collapsed": false,
-                                                                "hidden": false
-                                                            },
-                                                            "items": {
-                                                                "type": "string",
-                                                                "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/chunks/items",
-                                                                "title": "Title Root End Update Mapgen Place Nested Chunks ",
-                                                                "default": "tacoma_commune_east_wall_door",
-                                                                "format": "text",
-                                                                "description": "Description for 'items' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/chunks/items'",
-                                                                "options": {
-                                                                    "hidden": false
-                                                                }
-                                                            },
-                                                            "propertyOrder": 10
-                                                        },
-                                                        "x": {
-                                                            "type": "integer",
-                                                            "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/x",
-                                                            "title": "X",
-                                                            "default": 15,
-                                                            "description": "A description for 'x'  Type: 'integer'",
-                                                            "options": {
-                                                                "hidden": false
-                                                            },
-                                                            "propertyOrder": 20
-                                                        },
-                                                        "y": {
-                                                            "type": "integer",
-                                                            "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/y",
-                                                            "title": "Y",
-                                                            "default": 0,
-                                                            "description": "A description for 'y'  Type: 'integer'",
-                                                            "options": {
-                                                                "hidden": false
-                                                            },
-                                                            "propertyOrder": 30
-                                                        }
-                                                    }
-                                                }
-                                            ]
-                                        },
-                                        "propertyOrder": 30
+                                        "y": {
+                                            "type": "integer",
+                                            "title": "Y",
+                                            "default": 20,
+                                            "description": "A description for 'y'  Type: 'integer'",
+                                            "propertyOrder": 30
+                                        }
                                     }
-                                }
+                                },
+                                "propertyOrder": 10
                             },
-                            {
-                                "type": "object",
-                                "id": "/properties/end/properties/update_mapgen/oneof2",
-                                "title": "oneof 2 /properties/end/properties/update_mapgen",
+                            "set": {
+                                "type": "array",
+                                "title": "Set",
+                                "format": "tabs",
                                 "options": {
                                     "disable_collapse": false,
-                                    "disable_edit_json": false,
+                                    "disable_array_add": false,
+                                    "disable_array_delete": false,
+                                    "disable_array_reorder": false,
                                     "disable_properties": false,
                                     "collapsed": false,
                                     "hidden": false
                                 },
-                                "defaultProperties": [
-                                    "om_terrain",
-                                    "translate_ter",
-                                    "place_nested"
-                                ],
-                                "properties": {
-                                    "om_terrain": {
-                                        "type": "string",
-                                        "id": "/properties/end/properties/update_mapgen/items/properties/om_terrain",
-                                        "title": "Om Terrain",
-                                        "default": "ranch_camp_74",
-                                        "format": "text",
-                                        "description": "Description for 'om_terrain' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/om_terrain'",
-                                        "options": {
-                                            "hidden": false
-                                        },
-                                        "propertyOrder": 10
+                                "items": {
+                                    "type": "object",
+                                    "title": "Set ",
+                                    "options": {
+                                        "disable_collapse": false,
+                                        "disable_edit_json": false,
+                                        "disable_properties": false,
+                                        "collapsed": false,
+                                        "hidden": false
                                     },
-                                    "translate_ter": {
-                                        "type": "array",
-                                        "id": "/properties/end/properties/update_mapgen/items/properties/translate_ter",
-                                        "title": "Translate Ter",
-                                        "format": "tabs",
-                                        "options": {
-                                            "disable_collapse": false,
-                                            "disable_array_add": false,
-                                            "disable_array_delete": false,
-                                            "disable_array_reorder": false,
-                                            "disable_properties": false,
-                                            "collapsed": false,
-                                            "hidden": false
+                                    "defaultProperties": [
+                                        "square",
+                                        "id",
+                                        "x",
+                                        "y",
+                                        "x2",
+                                        "y2"
+                                    ],
+                                    "properties": {
+                                        "square": {
+                                            "type": "string",
+                                            "title": "Square",
+                                            "default": "terrain",
+                                            "format": "text",
+                                            "description": "Description for 'square' Type: 'string' Path: '/properties/set/items/properties/square'",
+                                            "propertyOrder": 10
                                         },
-                                        "items": {
-                                            "type": "object",
-                                            "id": "/properties/end/properties/update_mapgen/items/properties/translate_ter/items",
-                                            "title": "Title Root End Update Mapgen Translate Ter ",
-                                            "options": {
-                                                "disable_collapse": false,
-                                                "disable_edit_json": false,
-                                                "disable_properties": false,
-                                                "collapsed": false,
-                                                "hidden": false
-                                            },
-                                            "defaultProperties": [
-                                                "from",
-                                                "to",
-                                                "x",
-                                                "y"
-                                            ],
-                                            "properties": {
-                                                "from": {
-                                                    "type": "string",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/from",
-                                                    "title": "From",
-                                                    "default": "t_underbrush",
-                                                    "format": "text",
-                                                    "description": "Description for 'from' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/from'",
-                                                    "options": {
-                                                        "hidden": false
-                                                    },
-                                                    "propertyOrder": 10
-                                                },
-                                                "to": {
-                                                    "type": "string",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/to",
-                                                    "title": "To",
-                                                    "default": "t_dirt",
-                                                    "format": "text",
-                                                    "description": "Description for 'to' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/to'",
-                                                    "options": {
-                                                        "hidden": false
-                                                    },
-                                                    "propertyOrder": 20
-                                                },
-                                                "x": {
-                                                    "type": "integer",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/x",
-                                                    "title": "X",
-                                                    "default": 0,
-                                                    "description": "A description for 'x'  Type: 'integer'",
-                                                    "options": {
-                                                        "hidden": false
-                                                    },
-                                                    "propertyOrder": 30
-                                                },
-                                                "y": {
-                                                    "type": "integer",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/y",
-                                                    "title": "Y",
-                                                    "default": 0,
-                                                    "description": "A description for 'y'  Type: 'integer'",
-                                                    "options": {
-                                                        "hidden": false
-                                                    },
-                                                    "propertyOrder": 40
-                                                }
-                                            }
+                                        "point": {
+                                            "type": "string",
+                                            "title": "Point",
+                                            "default": "terrain",
+                                            "format": "text",
+                                            "description": "Description for 'point' Type: 'string' Path: '/properties/set/items/properties/id'",
+                                            "propertyOrder": 20
                                         },
-                                        "propertyOrder": 20
-                                    },
-                                    "place_nested": {
-                                        "type": "array",
-                                        "id": "/properties/end/properties/update_mapgen/items/properties/place_nested",
-                                        "title": "Place Nested",
-                                        "format": "tabs",
-                                        "options": {
-                                            "disable_collapse": false,
-                                            "disable_array_add": false,
-                                            "disable_array_delete": false,
-                                            "disable_array_reorder": false,
-                                            "disable_properties": false,
-                                            "collapsed": false,
-                                            "hidden": false
+                                        "id": {
+                                            "type": "string",
+                                            "title": "Id",
+                                            "default": "t_dirt",
+                                            "format": "text",
+                                            "description": "Description for 'id' Type: 'string' Path: '/properties/set/items/properties/id'",
+                                            "propertyOrder": 20
                                         },
-                                        "items": {
-                                            "type": "object",
-                                            "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items",
-                                            "title": "Title Root End Update Mapgen Place Nested ",
-                                            "options": {
-                                                "disable_collapse": false,
-                                                "disable_edit_json": false,
-                                                "disable_properties": false,
-                                                "collapsed": false,
-                                                "hidden": false
-                                            },
-                                            "defaultProperties": [
-                                                "chunks",
-                                                "x",
-                                                "y"
-                                            ],
-                                            "properties": {
-                                                "chunks": {
-                                                    "type": "array",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/chunks",
-                                                    "title": "Chunks",
-                                                    "format": "tabs",
-                                                    "options": {
-                                                        "disable_collapse": false,
-                                                        "disable_array_add": false,
-                                                        "disable_array_delete": false,
-                                                        "disable_array_reorder": false,
-                                                        "disable_properties": false,
-                                                        "collapsed": false,
-                                                        "hidden": false
-                                                    },
-                                                    "items": {
-                                                        "type": "string",
-                                                        "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/chunks/items",
-                                                        "title": "Title Root End Update Mapgen Place Nested Chunks ",
-                                                        "default": "tacoma_commune_west_wall_door",
-                                                        "format": "text",
-                                                        "description": "Description for 'items' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/chunks/items'",
-                                                        "options": {
-                                                            "hidden": false
-                                                        }
-                                                    },
-                                                    "propertyOrder": 10
-                                                },
-                                                "x": {
-                                                    "type": "integer",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/x",
-                                                    "title": "X",
-                                                    "default": 22,
-                                                    "description": "A description for 'x'  Type: 'integer'",
-                                                    "options": {
-                                                        "hidden": false
-                                                    },
-                                                    "propertyOrder": 20
-                                                },
-                                                "y": {
-                                                    "type": "integer",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/y",
-                                                    "title": "Y",
-                                                    "default": 0,
-                                                    "description": "A description for 'y'  Type: 'integer'",
-                                                    "options": {
-                                                        "hidden": false
-                                                    },
-                                                    "propertyOrder": 30
-                                                }
-                                            }
+                                        "x": {
+                                            "type": "integer",
+                                            "title": "X",
+                                            "default": 7,
+                                            "description": "A description for 'x'  Type: 'integer'",
+                                            "propertyOrder": 30
                                         },
-                                        "propertyOrder": 30
+                                        "y": {
+                                            "type": "integer",
+                                            "title": "Y",
+                                            "default": 4,
+                                            "description": "A description for 'y'  Type: 'integer'",
+                                            "propertyOrder": 40
+                                        },
+                                        "x2": {
+                                            "type": "integer",
+                                            "title": "X2",
+                                            "default": 22,
+                                            "description": "A description for 'x2'  Type: 'integer'",
+                                            "propertyOrder": 50
+                                        },
+                                        "y2": {
+                                            "type": "integer",
+                                            "title": "Y2",
+                                            "default": 23,
+                                            "description": "A description for 'y2'  Type: 'integer'",
+                                            "propertyOrder": 60
+                                        }
                                     }
-                                }
+                                },
+                                "propertyOrder": 20
                             },
-                            {
-                                "type": "object",
-                                "id": "/properties/end/properties/update_mapgen/oneof3",
-                                "title": "oneof 3 /properties/end/properties/update_mapgen",
+                            "place_vehicles": {
+                                "type": "array",
+                                "title": "Place Vehicles",
+                                "format": "tabs",
                                 "options": {
                                     "disable_collapse": false,
-                                    "disable_edit_json": false,
+                                    "disable_array_add": false,
+                                    "disable_array_delete": false,
+                                    "disable_array_reorder": false,
                                     "disable_properties": false,
                                     "collapsed": false,
                                     "hidden": false
                                 },
-                                "defaultProperties": [
-                                    "om_terrain",
-                                    "translate_ter",
-                                    "place_nested"
-                                ],
-                                "properties": {
-                                    "om_terrain": {
-                                        "type": "string",
-                                        "id": "/properties/end/properties/update_mapgen/items/properties/om_terrain",
-                                        "title": "Om Terrain",
-                                        "default": "ranch_camp_66",
-                                        "format": "text",
-                                        "description": "Description for 'om_terrain' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/om_terrain'",
-                                        "options": {
-                                            "hidden": false
-                                        },
-                                        "propertyOrder": 10
+                                "items": {
+                                    "type": "object",
+                                    "title": "Vehicle ",
+                                    "options": {
+                                        "disable_collapse": false,
+                                        "disable_edit_json": false,
+                                        "disable_properties": false,
+                                        "collapsed": false,
+                                        "hidden": false
                                     },
-                                    "translate_ter": {
-                                        "type": "array",
-                                        "id": "/properties/end/properties/update_mapgen/items/properties/translate_ter",
-                                        "title": "Translate Ter",
-                                        "format": "tabs",
-                                        "options": {
-                                            "disable_collapse": false,
-                                            "disable_array_add": false,
-                                            "disable_array_delete": false,
-                                            "disable_array_reorder": false,
-                                            "disable_properties": false,
-                                            "collapsed": false,
-                                            "hidden": false
+                                    "defaultProperties": [
+                                        "vehicle",
+                                        "x",
+                                        "y",
+                                        "rotation",
+                                        "chance"
+                                    ],
+                                    "properties": {
+                                        "vehicle": {
+                                            "type": "string",
+                                            "title": "Vehicle",
+                                            "default": "car_chassis",
+                                            "format": "text",
+                                            "description": "Description for 'vehicle' Type: 'string' Path: '/properties/place_vehicles/items/properties/vehicle'",
+                                            "propertyOrder": 10
                                         },
-                                        "items": {
-                                            "type": "object",
-                                            "id": "/properties/end/properties/update_mapgen/items/properties/translate_ter/items",
-                                            "title": "Title Root End Update Mapgen Translate Ter ",
-                                            "options": {
-                                                "disable_collapse": false,
-                                                "disable_edit_json": false,
-                                                "disable_properties": false,
-                                                "collapsed": false,
-                                                "hidden": false
-                                            },
-                                            "defaultProperties": [
-                                                "from",
-                                                "to",
-                                                "x",
-                                                "y"
-                                            ],
-                                            "properties": {
-                                                "from": {
-                                                    "type": "string",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/from",
-                                                    "title": "From",
-                                                    "default": "t_underbrush",
-                                                    "format": "text",
-                                                    "description": "Description for 'from' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/from'",
-                                                    "options": {
-                                                        "hidden": false
-                                                    },
-                                                    "propertyOrder": 10
-                                                },
-                                                "to": {
-                                                    "type": "string",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/to",
-                                                    "title": "To",
-                                                    "default": "t_dirt",
-                                                    "format": "text",
-                                                    "description": "Description for 'to' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/to'",
-                                                    "options": {
-                                                        "hidden": false
-                                                    },
-                                                    "propertyOrder": 20
-                                                },
-                                                "x": {
-                                                    "type": "integer",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/x",
-                                                    "title": "X",
-                                                    "default": 0,
-                                                    "description": "A description for 'x'  Type: 'integer'",
-                                                    "options": {
-                                                        "hidden": false
-                                                    },
-                                                    "propertyOrder": 30
-                                                },
-                                                "y": {
-                                                    "type": "integer",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/y",
-                                                    "title": "Y",
-                                                    "default": 0,
-                                                    "description": "A description for 'y'  Type: 'integer'",
-                                                    "options": {
-                                                        "hidden": false
-                                                    },
-                                                    "propertyOrder": 40
-                                                }
-                                            }
+                                        "x": {
+                                            "type": "integer",
+                                            "title": "X",
+                                            "default": 17,
+                                            "description": "A description for 'x'  Type: 'integer'",
+                                            "propertyOrder": 20
                                         },
-                                        "propertyOrder": 20
-                                    },
-                                    "place_nested": {
-                                        "type": "array",
-                                        "id": "/properties/end/properties/update_mapgen/items/properties/place_nested",
-                                        "title": "Place Nested",
-                                        "format": "tabs",
-                                        "options": {
-                                            "disable_collapse": false,
-                                            "disable_array_add": false,
-                                            "disable_array_delete": false,
-                                            "disable_array_reorder": false,
-                                            "disable_properties": false,
-                                            "collapsed": false,
-                                            "hidden": false
+                                        "y": {
+                                            "type": "integer",
+                                            "title": "Y",
+                                            "default": 11,
+                                            "description": "A description for 'y'  Type: 'integer'",
+                                            "propertyOrder": 30
                                         },
-                                        "items": {
-                                            "headerTemplate": "Place Nested {{i1}}",
-                                            "oneOf": [
-                                                {
-                                                    "type": "object",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/oneof0",
-                                                    "title": "oneof 0 /properties/end/properties/update_mapgen/items/properties/place_nested",
-                                                    "options": {
-                                                        "disable_collapse": false,
-                                                        "disable_edit_json": false,
-                                                        "disable_properties": false,
-                                                        "collapsed": false,
-                                                        "hidden": false
-                                                    },
-                                                    "defaultProperties": [
-                                                        "chunks",
-                                                        "x",
-                                                        "y"
-                                                    ],
-                                                    "properties": {
-                                                        "chunks": {
-                                                            "type": "array",
-                                                            "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/chunks",
-                                                            "title": "Chunks",
-                                                            "format": "tabs",
-                                                            "options": {
-                                                                "disable_collapse": false,
-                                                                "disable_array_add": false,
-                                                                "disable_array_delete": false,
-                                                                "disable_array_reorder": false,
-                                                                "disable_properties": false,
-                                                                "collapsed": false,
-                                                                "hidden": false
-                                                            },
-                                                            "items": {
-                                                                "type": "string",
-                                                                "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/chunks/items",
-                                                                "title": "Title Root End Update Mapgen Place Nested Chunks ",
-                                                                "default": "tacoma_commune_east_wall_door",
-                                                                "format": "text",
-                                                                "description": "Description for 'items' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/chunks/items'",
-                                                                "options": {
-                                                                    "hidden": false
-                                                                }
-                                                            },
-                                                            "propertyOrder": 10
-                                                        },
-                                                        "x": {
-                                                            "type": "integer",
-                                                            "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/x",
-                                                            "title": "X",
-                                                            "default": 0,
-                                                            "description": "A description for 'x'  Type: 'integer'",
-                                                            "options": {
-                                                                "hidden": false
-                                                            },
-                                                            "propertyOrder": 20
-                                                        },
-                                                        "y": {
-                                                            "type": "integer",
-                                                            "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/y",
-                                                            "title": "Y",
-                                                            "default": 0,
-                                                            "description": "A description for 'y'  Type: 'integer'",
-                                                            "options": {
-                                                                "hidden": false
-                                                            },
-                                                            "propertyOrder": 30
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    "type": "object",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/oneof1",
-                                                    "title": "oneof 1 /properties/end/properties/update_mapgen/items/properties/place_nested",
-                                                    "options": {
-                                                        "disable_collapse": false,
-                                                        "disable_edit_json": false,
-                                                        "disable_properties": false,
-                                                        "collapsed": false,
-                                                        "hidden": false
-                                                    },
-                                                    "defaultProperties": [
-                                                        "chunks",
-                                                        "x",
-                                                        "y"
-                                                    ],
-                                                    "properties": {
-                                                        "chunks": {
-                                                            "type": "array",
-                                                            "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/chunks",
-                                                            "title": "Chunks",
-                                                            "format": "tabs",
-                                                            "options": {
-                                                                "disable_collapse": false,
-                                                                "disable_array_add": false,
-                                                                "disable_array_delete": false,
-                                                                "disable_array_reorder": false,
-                                                                "disable_properties": false,
-                                                                "collapsed": false,
-                                                                "hidden": false
-                                                            },
-                                                            "items": {
-                                                                "type": "string",
-                                                                "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/chunks/items",
-                                                                "title": "Title Root End Update Mapgen Place Nested Chunks ",
-                                                                "default": "tacoma_commune_west_wall_door",
-                                                                "format": "text",
-                                                                "description": "Description for 'items' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/chunks/items'",
-                                                                "options": {
-                                                                    "hidden": false
-                                                                }
-                                                            },
-                                                            "propertyOrder": 10
-                                                        },
-                                                        "x": {
-                                                            "type": "integer",
-                                                            "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/x",
-                                                            "title": "X",
-                                                            "default": 13,
-                                                            "description": "A description for 'x'  Type: 'integer'",
-                                                            "options": {
-                                                                "hidden": false
-                                                            },
-                                                            "propertyOrder": 20
-                                                        },
-                                                        "y": {
-                                                            "type": "integer",
-                                                            "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/y",
-                                                            "title": "Y",
-                                                            "default": 0,
-                                                            "description": "A description for 'y'  Type: 'integer'",
-                                                            "options": {
-                                                                "hidden": false
-                                                            },
-                                                            "propertyOrder": 30
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    "type": "object",
-                                                    "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/oneof2",
-                                                    "title": "oneof 2 /properties/end/properties/update_mapgen/items/properties/place_nested",
-                                                    "options": {
-                                                        "disable_collapse": false,
-                                                        "disable_edit_json": false,
-                                                        "disable_properties": false,
-                                                        "collapsed": false,
-                                                        "hidden": false
-                                                    },
-                                                    "defaultProperties": [
-                                                        "chunks",
-                                                        "x",
-                                                        "y"
-                                                    ],
-                                                    "properties": {
-                                                        "chunks": {
-                                                            "type": "array",
-                                                            "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/chunks",
-                                                            "title": "Chunks",
-                                                            "format": "tabs",
-                                                            "options": {
-                                                                "disable_collapse": false,
-                                                                "disable_array_add": false,
-                                                                "disable_array_delete": false,
-                                                                "disable_array_reorder": false,
-                                                                "disable_properties": false,
-                                                                "collapsed": false,
-                                                                "hidden": false
-                                                            },
-                                                            "items": {
-                                                                "type": "string",
-                                                                "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/chunks/items",
-                                                                "title": "Title Root End Update Mapgen Place Nested Chunks ",
-                                                                "default": "tacoma_commune_east_wall_door",
-                                                                "format": "text",
-                                                                "description": "Description for 'items' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/chunks/items'",
-                                                                "options": {
-                                                                    "hidden": false
-                                                                }
-                                                            },
-                                                            "propertyOrder": 10
-                                                        },
-                                                        "x": {
-                                                            "type": "integer",
-                                                            "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/x",
-                                                            "title": "X",
-                                                            "default": 15,
-                                                            "description": "A description for 'x'  Type: 'integer'",
-                                                            "options": {
-                                                                "hidden": false
-                                                            },
-                                                            "propertyOrder": 20
-                                                        },
-                                                        "y": {
-                                                            "type": "integer",
-                                                            "id": "/properties/end/properties/update_mapgen/items/properties/place_nested/items/properties/y",
-                                                            "title": "Y",
-                                                            "default": 0,
-                                                            "description": "A description for 'y'  Type: 'integer'",
-                                                            "options": {
-                                                                "hidden": false
-                                                            },
-                                                            "propertyOrder": 30
-                                                        }
-                                                    }
-                                                }
-                                            ]
+                                        "rotation": {
+                                            "type": "integer",
+                                            "title": "Rotation",
+                                            "default": 90,
+                                            "description": "A description for 'rotation'  Type: 'integer'",
+                                            "propertyOrder": 40
                                         },
-                                        "propertyOrder": 30
+                                        "chance": {
+                                            "type": "integer",
+                                            "title": "Chance",
+                                            "default": 100,
+                                            "description": "A description for 'chance'  Type: 'integer'",
+                                            "propertyOrder": 50
+                                        }
                                     }
-                                }
+                                },
+                                "propertyOrder": 10
                             }
-                        ]
+                        }
+                    }
+                },
+                "effect": {
+                    "type": "array",
+                    "title": "Effect",
+                    "format": "tabs",
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_array_add": false,
+                        "disable_array_delete": false,
+                        "disable_array_reorder": false,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false
+                    },
+                    "items": {
+                        "type": "object",
+                        "title": "Title Root End Effect ",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_edit_json": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "defaultProperties": [
+                            "u_buy_item",
+                            "count"
+                        ],
+                        "properties": {
+                            "u_buy_item": {
+                                "type": "string",
+                                "title": "U Buy Item",
+                                "default": "icon",
+                                "format": "text",
+                                "description": "Description for 'u_buy_item' Type: 'string' Path: '/properties/end/properties/effect/items/properties/u_buy_item'",
+                                "propertyOrder": 10
+                            },
+                            "count": {
+                                "type": "integer",
+                                "title": "Count",
+                                "default": 2,
+                                "description": "A description for 'count'  Type: 'integer'",
+                                "propertyOrder": 20
+                            },
+                            "u_add_var": {
+                                "type": "string",
+                                "title": "U Add Var",
+                                "default": "NC_REFUGEE_Draco_has_guitar",
+                                "format": "text",
+                                "description": "Description for 'u_add_var' Type: 'string' Path: '/properties/end/properties/effect/properties/u_add_var'",
+                                "propertyOrder": 10
+                            },
+                            "type": {
+                                "type": "string",
+                                "title": "Type",
+                                "default": "general",
+                                "format": "text",
+                                "description": "Description for 'type' Type: 'string' Path: '/properties/end/properties/effect/properties/type'",
+                                "propertyOrder": 20
+                            },
+                            "context": {
+                                "type": "string",
+                                "title": "Context",
+                                "default": "mission",
+                                "format": "text",
+                                "description": "Description for 'context' Type: 'string' Path: '/properties/end/properties/effect/properties/context'",
+                                "propertyOrder": 30
+                            },
+                            "value": {
+                                "type": "string",
+                                "title": "Value",
+                                "default": "yes",
+                                "format": "text",
+                                "description": "Description for 'value' Type: 'string' Path: '/properties/end/properties/effect/properties/value'",
+                                "propertyOrder": 40
+                            }
+                        }
                     },
                     "propertyOrder": 10
                 }

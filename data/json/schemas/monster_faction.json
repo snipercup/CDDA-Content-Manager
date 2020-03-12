@@ -17,10 +17,6 @@
         "name"
     ],
     "properties": {
-        "id": {
-          "$ref": "#/definitions/id", 
-          "propertyOrder": 10
-        },
         "type": {
           "$ref": "#/definitions/type", 
           "propertyOrder": 11,
@@ -29,6 +25,71 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "friendly": {
+          "$ref": "#/definitions/faction_ref",
+          "title": "Friendly"
+        },
+        "neutral": {
+          "$ref": "#/definitions/faction_ref",
+          "title": "Neutral"
+        },
+        "by_mood": {
+            "$ref": "#/definitions/faction_ref",
+            "title": "By Mood"
+        },
+        "base_faction": {
+            "type": "string",
+            "title": "Base faction",
+            "default": "bee",
+            "format": "selectize",
+            "description": "Description for 'base_faction' Type: 'string' Path: '/properties/by_mood'",
+            "filteredEnum": {
+                "display_key": "name",
+                "filter": { "jsonObject.type": { "$eq": "MONSTER_FACTION" } }
+            },
+            "propertyOrder": 50
+        }
+    },
+    "definitions": {
+        "faction_ref": {
+            "oneOf": [
+                {
+                    "type": "array",
+                    "format": "selectize",
+                    "uniqueItems": true,
+                    "default": [ "bee" ],
+                    "title": "Multiple",
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_array_add": false,
+                        "disable_array_delete": false,
+                        "disable_array_reorder": true,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false,
+                        "multiple": true
+                    },
+                    "items": {
+                        "default": "bee",
+                        "type": "string",
+                        "filteredEnum": {
+                            "display_key": "name",
+                            "filter": { "jsonObject.type": { "$eq": "MONSTER_FACTION" } }
+                        }
+                    }
+                },
+                {
+                    "type": "string",
+                    "default": "bee",
+                    "title": "Single",
+                    "format": "selectize",
+                    "filteredEnum": {
+                        "display_key": "name",
+                        "filter": { "jsonObject.type": { "$eq": "MONSTER_FACTION" } }
+                    }
+                }
+            ]
         }
     }
 }

@@ -575,6 +575,7 @@
                 "enum": [ 
                   "RADIO_MODABLE",
                   "RADIO_CONTAINER",
+                  "TWO_WAY_RADIO",
                   "RADIO_INVOKE_PROC",
                   "LIGHT_2",
                   "LIGHT_3",

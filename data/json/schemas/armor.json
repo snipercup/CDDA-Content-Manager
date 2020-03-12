@@ -49,11 +49,6 @@
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
         },
-        "name_plural": {
-          "title": "name_plural", 
-          "$ref": "#/definitions/name", 
-          "propertyOrder": 12
-        },
         "description": {
           "$ref": "#/definitions/description", 
           "propertyOrder": 13
@@ -198,6 +193,17 @@
             "description": "For non-rigid items volume (and for worn items encumbrance) increases proportional to contents",
             "propertyOrder": 40
         },
+        "power_armor": {
+            "type": "boolean",
+            "title": "Power armor",
+            "format": "checkbox",
+            "default": false,
+            "description": "Wether this armor is power armor",
+            "propertyOrder": 40
+        },
+        "qualities": {
+          "$ref": "#/definitions/qualities"
+        },
         "valid_mods": {
             "type": "array",
             "id": "/properties/valid_mods",
@@ -292,9 +298,11 @@
                 "enum": [ 
                   "VARSIZE", 
                   "STURDY", 
+                  "ONLY_ONE", 
                   "ROLLER_QUAD", 
                   "ROLLER_INLINE", 
-                  "NO_REPAIR", 
+                  "NO_SALVAGE",
+                  "NO_REPAIR",
                   "HELMET_COMPAT", 
                   "RESTRICT_HANDS", 
                   "PARTIAL_DEAF", 

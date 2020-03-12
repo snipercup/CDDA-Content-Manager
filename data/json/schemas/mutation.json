@@ -925,7 +925,6 @@
         },
         "vitamins_absorb_multi": {
             "type": "array",
-            "id": "/properties/vitamins_absorb_multi",
             "title": "Vitamins Absorb Multi",
             "description": "multiplier of vitamin absorption based on material. \"all\" is every material. supports multiple materials.",
             "format": "tabs",
@@ -940,7 +939,6 @@
             },
             "items": {
                 "type": "array",
-                "id": "/properties/vitamins_absorb_multi/items",
                 "title": "Vitamins Absorb Multi ",
                 "format": "tabs",
                 "options": {
@@ -955,11 +953,10 @@
                 "items": [
                     {
                       "type": "string",
-                      "enum": [ "steel", "junk", "wheat", "veggy", "milk", "flesh" ]
+                      "enum": [ "steel", "fruit", "junk", "wheat", "veggy", "milk", "flesh" ]
                     },
                     {
                         "type": "array",
-                        "id": "/properties/vitamins_absorb_multi/items/oneof1",
                         "title": "Vitamins",
                         "format": "tabs",
                         "options": {
@@ -974,7 +971,6 @@
                         "items": [
                             {
                                 "type": "array",
-                                "id": "/properties/vitamins_absorb_multi/items/items/oneof0",
                                 "title": "Vitamin",
                                 "format": "grid",
                                 "options": {
@@ -989,24 +985,16 @@
                                 "items": [
                                     {
                                         "type": "string",
-                                        "id": "/properties/vitamins_absorb_multi/items/items/items/oneof0",
                                         "title": "Vitamin",
                                         "default": "vitA",
                                         "format": "text",
-                                        "description": "The vitamin to modify",
-                                        "options": {
-                                            "hidden": false
-                                        }
+                                        "description": "The vitamin to modify"
                                     },
                                     {
                                         "type": "integer",
-                                        "id": "/properties/vitamins_absorb_multi/items/items/items/oneof1",
                                         "title": "Modifier",
                                         "default": 0,
-                                        "description": "The modifier for the vitamin",
-                                        "options": {
-                                            "hidden": false
-                                        }
+                                        "description": "The modifier for the vitamin"
                                     }
                                 ]
                             }
@@ -1201,10 +1189,23 @@
                 "type": "string",
                 "enum": [ 
                     "BG_SURVIVAL_STORY",
+                    "PRED1",
+                    "PRED2",
                     "PRED4",
                     "CANNIBAL",
-                    "NO_DISEASE",
-                    "PRED1"
+                    "hair_white",
+                    "hair_red",
+                    "hair_gray",
+                    "hair_brown",
+                    "hair_blond",
+                    "hair_short",
+                    "hair_mohawk",
+                    "hair_medium",
+                    "hair_long",
+                    "hair_crewcut",
+                    "hair_fro",
+                    "hair_black",
+                    "NO_DISEASE"
                 ]
             },
             "propertyOrder": 60

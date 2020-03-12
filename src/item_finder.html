@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html style="height:100%">
+  <head>
+    <meta charset="utf-8" />
+		<title>Cataclysm: Dark Days Ahead item finder</title>
+    <link rel="stylesheet" href="style\spectre.min.css">
+    <link rel="stylesheet" href="style\spectre-exp.min.css">
+    <link rel="stylesheet" href="style\spectre-icons.min.css">
+    <link rel="stylesheet" href="style\schema-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/jsoneditor.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@latest/dist/js/select2.min.js "></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@latest/dist/css/select2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/js/standalone/selectize.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/css/selectize.bootstrap3.css">
+    <script src="https://cdn.jsdelivr.net/npm/ace-builds@latest/src-noconflict/ace.min.js"></script>
+    <script src="lib/lokijs.min.js"></script>
+    <script src="filesystemfunctions.js"></script>
+    <script src="commonfunctions.js"></script> 
+    <script src="jsonfunctions.js"></script> 
+    <script src="commonclasses.js"></script> 
+    <script src="constants.js"></script> 
+    <script src="htmlfunctions.js"></script> 
+    <script src="editform.js"></script> 
+    <script src="schemas.js"></script> 
+  <style>
+  .selectize-control.multi .selectize-input > div {
+    color: #FFF;
+  }
+  .selectize-control.multi .selectize-input > div.active {
+    color: #AAA;
+  }
+  .btn-group:empty, .form-group + div:empty {
+    display: none;
+  }
+  .form-group {
+    margin: 0;
+  }
+  </style>
+  </head>
+  <body style="height:100%">
+    <script>
+    var entryList;
+		var editorList = [];
+    var db = new loki();
+    var entries = db.addCollection("entries", { indices: ['jsonObject.type'] });
+    var schemas = db.addCollection("schemas");
+		
+		//When the page finishes loading
+		document.addEventListener("DOMContentLoaded", function(event) {
+			init();
+		});
+		
+		
+		//Initialize function, it is asynchonous to allow await-ing for the functions called in init.
+		async function init(){
+      // Set ACE Editor basePath to same path as CDN Library.
+      window.ace.config.set("basePath", "https://cdn.jsdelivr.net/npm/ace-builds@latest/src-noconflict/");
+      await addItemsToCollectionFromFolderList(await getContentFolderList(), entries); //Get all entries from all json file and put them in one big collection. at the time of writing this is about 25600 entries.
+      await addItemsToCollectionFromFolderList([await getWorkingDirectory() + SCHEMAS_PATH], schemas); //Put all the schemas in one collection
+      await loadExtraDefinitions(schemas, entries); //Add the dynamic content to the schemas.
+      document.getElementById("mainListContainer").style.display = "";
+      document.getElementById("editForm").innerHTML = "select an entry to start"
+		}
+    
+		async function find_click(){
+      let inputElement = document.getElementById('findInput');
+      let value = inputElement.value;
+      let filter = { "$or": [
+                      { "jsonObject.id": { "$contains": value } },
+                      { "jsonObject.name": { "$contains": value } },
+                      { "jsonObject.name.str": { "$contains": value } },
+                      { "jsonObject.abstract": { "$contains": value } }
+                  ] }
+      if(entryList){ //Check to see if there is already an entrylist. Otherwise, create one
+        entryList.recreate(document.getElementById("entryList"), entries, "id", filter);
+      } else {
+        entryList = new collectionList(document.getElementById("entryList"), entries, "id", filter);
+      }
+      document.getElementById('editForm').style.display = "none";
+    }
+    
+		//When the user selects an item from the spell list
+		async function entryList_change(selectElement){
+			//User selects an item
+			let item = selectElement.options[selectElement.selectedIndex];
+			if(!item){return;}
+			//Get item title (it's a json string)
+			let itemTitle = item.title;
+			//Transform the title string to a json object
+			var jsonObj = JSON.parse(itemTitle);  
+			//Transform the json object to html
+			if(editorList[0]){
+				editorList[0].setValue(jsonObj["$loki"]);
+			} else {
+        var editor = new EditForm(jsonObj["$loki"], document.getElementById('editForm'), entries, schemas);
+        editorList.push(editor);
+			}
+			entryList.selectedEntryId = item.value;
+      document.getElementById('editForm').style.display = "";
+		}
+    
+    
+    
+    </script>
+    
+    
+		<div class="header" style="height:5%;">
+      <h2>Cataclysm: Dark Days Ahead item finder. <a href="index.html">Back to home</a> | <a href="https://github.com/snipercup/CDDA-Content-Manager/blob/master/doc/Using%20the%20Content%20Editor.md" target="_blank">Help</a></h2>
+    </div>
+		<div class="mainContent" style="height:95%;">
+		<table style="height:100%;">
+		<tr>
+			<td class="mainListContainer" id="mainListContainer" style="vertical-align: top;  display:none;">
+          <label>Find:</label><input type="text" id="findInput" name="findInput">
+          <input type="button" onclick="find_click();" value="Find"><BR>
+					<select name="entryList" id="entryList" onchange="entryList_change(this);" size="5" style="height:90%;"></select>
+		</td>
+			<td class="mainContentContainer" style="padding:25px; height:100%; overflow:auto;">
+				<div class="contentContainer" style="height:100%; overflow:auto; min-width: 725px;" id="editForm">
+					<p >Loading.</p>
+				</div>
+			</td>
+		</tr>
+		</table>
+		</div>
+		
+    
+    
+    
+  </body>
+</html>

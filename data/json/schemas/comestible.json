@@ -418,23 +418,15 @@
         },
         "rot_spawn": {
             "type": "string",
-            "id": "/properties/rot_spawn",
-            "title": "rot_spawn",
-            "default": 0.46,
-            "description": "What it will spawn when rotten",
-            "options": {
-                "hidden": false
-            }
+            "title": "Rot spawn",
+            "default": "GROUP_EGG_BIRD_WILD",
+            "description": "What it will spawn when rotten"
         },
         "rot_spawn_chance": {
             "type": "integer",
-            "id": "/properties/proportional/properties/rot_spawn_chance",
             "title": "Rot spawn chance",
             "default": 0.1,
-            "description": "The chance it will spawn when rotten",
-            "options": {
-                "hidden": false
-            }
+            "description": "The chance it will spawn when rotten"
         },
         "charges": {
             "type": "integer",

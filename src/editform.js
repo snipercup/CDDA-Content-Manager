@@ -60,6 +60,7 @@ class EditForm {
     });
     this.editor.theme.options.object_indent = true;
     this.editor.setValue(this.jsonObject);
+    this.editor.setValue(this.jsonObject); //Use setvalue twice as workaround described here https://github.com/json-editor/json-editor/issues/159
 	}
   
   setValue(loki){

@@ -4,6 +4,9 @@
     "title": "Vehicle part",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
+    "stringifyOptions": {
+      "maxLength": 116
+    },
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -29,6 +32,684 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "color": {
+          "$ref": "#/definitions/color", 
+          "propertyOrder": 13
+        },
+        "symbol": {
+          "$ref": "#/definitions/symbol", 
+          "propertyOrder": 14
+        },
+        "looks_like": {
+            "type": "string",
+            "title": "Looks like",
+            "format": "selectize",
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { "$and": [
+                    { "$or": [
+                        { "jsonObject.symbol": { "$exists": true } },
+                        { "jsonObject.copy-from": { "$exists": true } }
+                    ] },
+                    { "$or": [
+                        { "jsonObject.type": { "$eq": "terrain" } },
+                        { "jsonObject.type": { "$eq": "furniture" } },
+                        { "jsonObject.type": { "$eq": "vehicle_part" } }
+                    ] }
+                ] }
+            }
+        },
+        "broken_symbol": {
+            "type": "string",
+            "title": "Broken Symbol",
+            "default": "x",
+            "format": "text",
+            "description": "Description for 'broken_symbol' Type: 'string' Path: '/properties/broken_symbol'",
+            "propertyOrder": 70
+        },
+        "broken_color": {
+            "type": "string",
+            "title": "Broken Color",
+            "default": "light_gray",
+            "format": "text",
+            "description": "Description for 'broken_color' Type: 'string' Path: '/properties/broken_color'",
+            "propertyOrder": 80
+        },
+        "damage_modifier": {
+            "type": "integer",
+            "title": "Damage Modifier",
+            "default": 10,
+            "description": "A description for 'damage_modifier'  Type: 'integer'",
+            "propertyOrder": 90
+        },
+        "durability": {
+            "type": "integer",
+            "title": "Durability",
+            "default": 80,
+            "description": "A description for 'durability'  Type: 'integer'",
+            "propertyOrder": 100
+        },
+        "description": {
+            "type": "string",
+            "title": "Description",
+            "default": "A multi-function crafting station, with a water purifier, food dehydrator, vacuum sealer, and hand press for making ammo.  Draws power from the vehicle's batteries.  'e'xamine the tile with the kitchen buddy to access the water faucet or to purify water in a vehicle tank or in a container in your inventory.  If you attempt craft an item that needs one of the kitchen buddy's functions, it will automatically be selected as a tool.",
+            "format": "text",
+            "description": "Description for 'description' Type: 'string' Path: '/properties/description'",
+            "propertyOrder": 110
+        },
+        "copy-from": {
+            "type": "string",
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { "jsonObject.type": { "$eq": "vehicle_part" }
+                }
+            },
+            "enum": [ ]
+        },
+        "size": {
+            "type": "integer",
+            "title": "Size",
+            "default": 200,
+            "description": "A description for 'size'  Type: 'integer'",
+            "propertyOrder": 120
+        },
+        "item": {
+            "type": "string",
+            "title": "Item",
+            "default": "craftrig",
+            "format": "text",
+            "description": "Description for 'item' Type: 'string' Path: '/properties/item'",
+            "propertyOrder": 130
+        },
+        "location": {
+            "type": "string",
+            "title": "Location",
+            "default": "center",
+            "format": "text",
+            "description": "Description for 'location' Type: 'string' Path: '/properties/location'",
+            "propertyOrder": 140
+        },
+        "requirements": {
+            "type": "object",
+            "id": "/properties/requirements",
+            "title": "Requirements",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "install",
+                "removal",
+                "repair"
+            ],
+            "properties": {
+                "install": {
+                    "type": "object",
+                    "title": "Install",
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_edit_json": false,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false
+                    },
+                    "defaultProperties": [
+                        "skills",
+                        "time",
+                        "using"
+                    ],
+                    "properties": {
+                        "skills": {
+                            "type": "array",
+                            "title": "Skills",
+                            "format": "tabs",
+                            "options": {
+                                "disable_collapse": false,
+                                "disable_array_add": false,
+                                "disable_array_delete": false,
+                                "disable_array_reorder": false,
+                                "disable_properties": false,
+                                "collapsed": false,
+                                "hidden": false
+                            },
+                            "items": {
+                                "type": "array",
+                                "title": "Title Root Requirements Install Skills ",
+                                "format": "grid",
+                                "options": {
+                                    "disable_collapse": false,
+                                    "disable_array_add": false,
+                                    "disable_array_delete": false,
+                                    "disable_array_reorder": false,
+                                    "disable_properties": false,
+                                    "collapsed": false,
+                                    "hidden": false
+                                },
+                                "items": [
+                                    {
+                                        "type": "string",
+                                        "default": "mechanics",
+                                        "format": "text"
+                                    },
+                                    {
+                                        "type": "integer",
+                                        "default": 3
+                                    }
+                                ]
+                            },
+                            "propertyOrder": 10
+                        },
+                        "time": {
+                            "type": "string",
+                            "id": "/properties/requirements/properties/install/properties/time",
+                            "title": "Time",
+                            "default": "60 m",
+                            "format": "text",
+                            "description": "Description for 'time' Type: 'string' Path: '/properties/requirements/properties/install/properties/time'",
+                            "options": {
+                                "hidden": false
+                            },
+                            "propertyOrder": 20
+                        },
+                        "using": {
+                            "type": "array",
+                            "title": "Using",
+                            "format": "tabs",
+                            "options": {
+                                "disable_collapse": false,
+                                "disable_array_add": false,
+                                "disable_array_delete": false,
+                                "disable_array_reorder": false,
+                                "disable_properties": false,
+                                "collapsed": false,
+                                "hidden": false
+                            },
+                            "items": {
+                                "type": "array",
+                                "title": "Using ",
+                                "format": "grid",
+                                "options": {
+                                    "disable_collapse": false,
+                                    "disable_array_add": false,
+                                    "disable_array_delete": false,
+                                    "disable_array_reorder": false,
+                                    "disable_properties": false,
+                                    "collapsed": false,
+                                    "hidden": false
+                                },
+                                "items": [
+                                    {
+                                        "type": "string",
+                                        "default": "vehicle_bolt",
+                                        "format": "text"
+                                    },
+                                    {
+                                        "type": "integer",
+                                        "default": 1
+                                    }
+                                ]
+                            },
+                            "propertyOrder": 30
+                        }
+                    },
+                    "propertyOrder": 10
+                },
+                "removal": {
+                    "type": "object",
+                    "title": "Removal",
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_edit_json": false,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false
+                    },
+                    "defaultProperties": [
+                        "skills",
+                        "time",
+                        "using"
+                    ],
+                    "properties": {
+                        "skills": {
+                            "type": "array",
+                            "title": "Skills",
+                            "format": "tabs",
+                            "options": {
+                                "disable_collapse": false,
+                                "disable_array_add": false,
+                                "disable_array_delete": false,
+                                "disable_array_reorder": false,
+                                "disable_properties": false,
+                                "collapsed": false,
+                                "hidden": false
+                            },
+                            "items": {
+                                "type": "array",
+                                "title": "Skill ",
+                                "format": "grid",
+                                "options": {
+                                    "disable_collapse": false,
+                                    "disable_array_add": false,
+                                    "disable_array_delete": false,
+                                    "disable_array_reorder": false,
+                                    "disable_properties": false,
+                                    "collapsed": false,
+                                    "hidden": false
+                                },
+                                "items": [
+                                    {
+                                        "type": "string",
+                                        "default": "mechanics",
+                                        "format": "text"
+                                    },
+                                    {
+                                        "type": "integer",
+                                        "default": 2
+                                    }
+                                ]
+                            },
+                            "propertyOrder": 10
+                        },
+                        "time": {
+                            "type": "string",
+                            "title": "Time",
+                            "default": "30 m",
+                            "format": "text",
+                            "description": "Description for 'time' Type: 'string' Path: '/properties/requirements/properties/removal/properties/time'",
+                            "propertyOrder": 20
+                        },
+                        "using": {
+                            "type": "array",
+                            "title": "Using",
+                            "format": "tabs",
+                            "options": {
+                                "disable_collapse": false,
+                                "disable_array_add": false,
+                                "disable_array_delete": false,
+                                "disable_array_reorder": false,
+                                "disable_properties": false,
+                                "collapsed": false,
+                                "hidden": false
+                            },
+                            "items": {
+                                "type": "array",
+                                "title": "Using ",
+                                "format": "grid",
+                                "options": {
+                                    "disable_collapse": false,
+                                    "disable_array_add": true,
+                                    "disable_array_delete": true,
+                                    "disable_array_reorder": true,
+                                    "disable_properties": false,
+                                    "collapsed": false,
+                                    "hidden": false
+                                },
+                                "items": [
+                                    {
+                                        "type": "string",
+                                        "default": "vehicle_bolt",
+                                        "format": "text"
+                                    },
+                                    {
+                                        "type": "integer",
+                                        "default": 1
+                                    }
+                                ]
+                            },
+                            "propertyOrder": 30
+                        }
+                    },
+                    "propertyOrder": 20
+                },
+                "repair": {
+                    "type": "object",
+                    "id": "/properties/requirements/properties/repair",
+                    "title": "Repair",
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_edit_json": false,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false
+                    },
+                    "defaultProperties": [
+                        "skills",
+                        "time",
+                        "using"
+                    ],
+                    "properties": {
+                        "skills": {
+                            "type": "array",
+                            "title": "Skills",
+                            "format": "tabs",
+                            "options": {
+                                "disable_collapse": false,
+                                "disable_array_add": false,
+                                "disable_array_delete": false,
+                                "disable_array_reorder": false,
+                                "disable_properties": false,
+                                "collapsed": false,
+                                "hidden": false
+                            },
+                            "items": {
+                                "type": "array",
+                                "title": "Skill ",
+                                "format": "tabs",
+                                "options": {
+                                    "disable_collapse": false,
+                                    "disable_array_add": true,
+                                    "disable_array_delete": true,
+                                    "disable_array_reorder": true,
+                                    "disable_properties": false,
+                                    "collapsed": false,
+                                    "hidden": false
+                                },
+                                "items": [
+                                    {
+                                        "type": "string",
+                                        "default": "mechanics",
+                                        "format": "text"
+                                    },
+                                    {
+                                        "type": "integer",
+                                        "default": 4
+                                    }
+                                ]
+                            },
+                            "propertyOrder": 10
+                        },
+                        "time": {
+                            "type": "string",
+                            "id": "/properties/requirements/properties/repair/properties/time",
+                            "title": "Time",
+                            "default": "60 m",
+                            "format": "text",
+                            "description": "Description for 'time' Type: 'string' Path: '/properties/requirements/properties/repair/properties/time'",
+                            "options": {
+                                "hidden": false
+                            },
+                            "propertyOrder": 20
+                        },
+                        "using": {
+                            "type": "array",
+                            "id": "/properties/requirements/properties/repair/properties/using",
+                            "title": "Using",
+                            "format": "tabs",
+                            "options": {
+                                "disable_collapse": false,
+                                "disable_array_add": false,
+                                "disable_array_delete": false,
+                                "disable_array_reorder": false,
+                                "disable_properties": false,
+                                "collapsed": false,
+                                "hidden": false
+                            },
+                            "items": {
+                                "type": "array",
+                                "id": "/properties/requirements/properties/repair/properties/using/items",
+                                "title": "Title Root Requirements Repair Using ",
+                                "format": "tabs",
+                                "options": {
+                                    "disable_collapse": false,
+                                    "disable_array_add": false,
+                                    "disable_array_delete": false,
+                                    "disable_array_reorder": false,
+                                    "disable_properties": false,
+                                    "collapsed": false,
+                                    "hidden": false
+                                },
+                                "items": {
+                                    "headerTemplate": "Title Root Requirements Repair Using  {{i1}}",
+                                    "oneOf": [
+                                        {
+                                            "type": "string",
+                                            "id": "/properties/requirements/properties/repair/properties/using/items/oneof0",
+                                            "title": "oneof 0 /properties/requirements/properties/repair/properties/using/items",
+                                            "default": "welding_standard",
+                                            "format": "text",
+                                            "description": "Description for 'items' Type: 'string' Path: '/properties/requirements/properties/repair/properties/using/items/items'",
+                                            "options": {
+                                                "hidden": false
+                                            }
+                                        },
+                                        {
+                                            "type": "integer",
+                                            "id": "/properties/requirements/properties/repair/properties/using/items/oneof1",
+                                            "title": "oneof 1 /properties/requirements/properties/repair/properties/using/items",
+                                            "default": 5,
+                                            "description": "A description for 'items'  Type: 'integer'",
+                                            "options": {
+                                                "hidden": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "propertyOrder": 30
+                        }
+                    },
+                    "propertyOrder": 30
+                }
+            },
+            "propertyOrder": 150
+        },
+        "proportional": {
+            "type": "object",
+            "title": "Proportional",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "reload"
+            ],
+            "properties": {
+                "epower": {
+                    "type": "number",
+                    "title": "Epower",
+                    "default": 0.5
+                }
+            }
+        },
+        "flags": {
+            "$ref": "#/definitions/flags", 
+            "items": {
+                "enum": [ 
+                    "WATER_PURIFIER",
+                    "CRAFTRIG",
+                    "AISLE",
+                    "BOARDABLE",
+                    "CAPTURE_MONSTER_VEH",
+                    "SEATBELT",
+                    "RADIOACTIVE",
+                    "LEAK_DAM",
+                    "ATOMIC_LIGHT",
+                    "NO_ROOF_NEEDED",
+                    "FULL_BOARD",
+                    "SHARP",
+                    "MULTISQUARE",
+                    "FUNNEL",
+                    "NEEDS_WHEEL_MOUNT_LIGHT",
+                    "NEEDS_WHEEL_MOUNT_HEAVY",
+                    "ODDTURN",
+                    "BED",
+                    "HORN",
+                    "BIKE_RACK_VEH",
+                    "MOUNTABLE",
+                    "BEEPER",
+                    "AUTOCLAVE",
+                    "NEEDS_JACKING",
+                    "WHEEL",
+                    "CURTAIN",
+                    "OPENCLOSE_INSIDE",
+                    "CARGO",
+                    "LOCKABLE_CARGO",
+                    "ADVANCED_PLANTER",
+                    "PLANTER",
+                    "ENABLED_DRAINS_EPOWER",
+                    "AISLE_LIGHT",
+                    "SELF_JACK",
+                    "PROTRUSION",
+                    "COVERED",
+                    "ROOF",
+                    "FOLDABLE",
+                    "EXTRA_DRAG",
+                    "REAPER",
+                    "OPENABLE",
+                    "OBSTACLE",
+                    "WINDOW",
+                    "OPAQUE"
+                ]
+            },
+            "propertyOrder": 60
+        },
+        "breaks_into": {
+            "oneOf": [
+                {
+                    "type": "array",
+                    "title": "List of items",
+                    "format": "tabs",
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_array_add": false,
+                        "disable_array_delete": false,
+                        "disable_array_reorder": false,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false
+                    },
+                    "items": {
+                        "type": "object",
+                        "title": "item ",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_edit_json": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "defaultProperties": [
+                            "item",
+                            "count"
+                        ],
+                        "properties": {
+                            "item": {
+                                "type": "string",
+                                "title": "Items",
+                                "default": "steel_lump",
+                                "format": "text",
+                                "description": "Description for 'item' Type: 'string' Path: '/properties/breaks_into/items/properties/item'",
+                                "propertyOrder": 10
+                            },
+                            "charges": {
+                                "title": "Charges",
+                                "oneOf": [
+                                    {
+                                        "title": "Pair of numbers",
+                                        "propertyOrder": 40,
+                                        "type": "array",
+                                        "format": "grid",
+                                        "default": [ 0, 0 ],
+                                        "options": {
+                                            "disable_collapse": true,
+                                            "disable_array_add": true,
+                                            "disable_array_delete": true,
+                                            "disable_array_reorder": true,
+                                            "disable_properties": true,
+                                            "collapsed": false,
+                                            "hidden": false
+                                        },
+                                        "items": [
+                                            { "type": "integer", "default": 2, "options": { "compact": true } },
+                                            { "type": "integer", "default": 4, "options": { "compact": true } }
+                                        ]
+                                    },
+                                    {
+                                        "type": "integer",
+                                        "title": "Single number",
+                                        "default": 50,
+                                        "description": "A description for 'prob'  Type: 'integer'",
+                                        "propertyOrder": 30
+                                    }
+                                ]
+                            },
+                            "prob": {
+                                "type": "integer",
+                                "title": "Prob",
+                                "default": 50,
+                                "description": "A description for 'prob'  Type: 'integer'",
+                                "propertyOrder": 30
+                            },
+                            "count": {
+                                "title": "Count",
+                                "propertyOrder": 40,
+                                "type": "array",
+                                "format": "grid",
+                                "default": [ 0, 0 ],
+                                "options": {
+                                    "disable_collapse": true,
+                                    "disable_array_add": true,
+                                    "disable_array_delete": true,
+                                    "disable_array_reorder": true,
+                                    "disable_properties": true,
+                                    "collapsed": false,
+                                    "hidden": false
+                                },
+                                "items": [
+                                    { "type": "integer", "default": 2, "options": { "compact": true } },
+                                    { "type": "integer", "default": 4, "options": { "compact": true } }
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "type": "string",
+                    "title": "Single item",
+                    "default": "steel_lump",
+                    "format": "text",
+                    "description": "Description for 'item' Type: 'string' Path: '/properties/breaks_into/items/properties/item'"
+                }
+            ]
+        },
+        "damage_reduction": {
+            "type": "object",
+            "title": "Damage Reduction",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "all"
+            ],
+            "properties": {
+                "all": {
+                    "type": "integer",
+                    "title": "All",
+                    "default": 20
+                },
+                "cut": {
+                    "type": "integer",
+                    "title": "Cut",
+                    "default": 20
+                },
+                "stab": {
+                    "type": "integer",
+                    "title": "Stab",
+                    "default": 20
+                }
+            },
+            "propertyOrder": 180
         }
     }
 }

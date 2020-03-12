@@ -20,20 +20,6 @@ async function loadExtraDefinitions(schemas, entries){
     if(schemaJSONObj.properties["copy-from"]){
       schemaJSONObj.properties["copy-from"].enum = IDListOfType; //If there's a copy-from then the id list of this type goes here.
     }
-    /*
-    // Get a list of looks like entries. This is a list of anything that has a symbol
-    if(schemaJSONObj.properties["looks_like"]){
-      let retreivedItems = entries.find({ "jsonObject.symbol": { $exists: true } })
-      let collectedItems = [];
-      let jsonElementID = "", jsonObject, jsonEntry, retrievedItem;
-      for (let i = 0, amountOfJSONObjects = retreivedItems.length; i < amountOfJSONObjects; i++) {
-        retrievedItem = retreivedItems[i];
-        jsonObject = retrievedItem.jsonObject;
-        collectedItems.push(jsonObject["id"]);
-      }
-      schemaJSONObj.properties["looks_like"].enum = collectedItems;
-    }
-    */
     
     //The schema can include a request to add the list of id's of a certain type.
     if(schemaJSONObj.get_ids_of_type){
@@ -76,40 +62,6 @@ async function loadExtraDefinitions(schemas, entries){
       }
     }
     
-    //The schema can include a request to move a enum property from a definition to a certain property.
-    //This is a workaround because the reference in a nested array fails when the editor is created again.
-    if(schemaJSONObj.get_enums_from_definition){
-      let getEnums = schemaJSONObj.get_enums_from_definition;
-      let from, to, enumProperty, pathArray, traverseStep, traverseProperty, pathInt, c;
-      
-      //Loop over the defined path and set the property in the end
-      for (let x = 0, gLen = getEnums.length; x < gLen; x++) {
-        from = schemaJSONObj.definitions[getEnums[x].from];
-        to = getEnums[x].to;
-        enumProperty = from["enum"];
-        pathArray = to.split(".")
-        
-        traverseProperty = schemaJSONObj.properties
-        for (let i = 0, pathLen = pathArray.length; i < pathLen; i++) {
-          traverseStep = pathArray[i];
-          pathInt = parseInt(traverseStep); //Sometimes it can be items.0 and we want to get the 0 to get the correct property
-          if(isNaN(pathInt)){
-            traverseProperty = traverseProperty[traverseStep];
-          } else {
-            traverseProperty = traverseProperty[pathInt];
-          }
-          if(i == pathLen-1){ //When at the end of the path, set the enum for the property
-            if(traverseProperty.enum){ //If the enum property is there, append to it. otherwise, set it.
-              c = traverseProperty.enum; //Save the list that's already defined in the schema.
-              traverseProperty.enum = c.concat(enumProperty.filter((item) => c.indexOf(item) < 0)); //Merge the two lists and put it back into the enumeration.
-            } else {
-              traverseProperty.enum = enumProperty;
-            }
-          }
-        }
-      }
-    }
-    
     //The schema can include a request include properties from generalproperties.json.
     //In contrast to generalDefinitions, these become properties of the schema itself.
     if(schemaJSONObj.include_properties){
@@ -133,19 +85,19 @@ async function loadExtraDefinitions(schemas, entries){
       }
     }
     
-    schemaJSONObj = await recursiveSetProperties(schemaJSONObj, entries);
+    schemaJSONObj = await recursiveSetProperties(schemaJSONObj, entries, schemaJSONObj);
   }
 }
 
 
 
-async function recursiveSetProperties(schemaDefinition, entries){
+async function recursiveSetProperties(schemaDefinition, entries, currentSchema){
   let jsonString = "", keys, key, value, c, schemakey, schemakeys, objectKey, genericDefinitions, filteredEnum;
   
   if(typeof schemaDefinition === 'object' && schemaDefinition !== null){
     if(Array.isArray(schemaDefinition)){ //It's an array
       for(let x = 0, arrLen = schemaDefinition.length; x < arrLen; x++){ //Loop over every item in the array
-        schemaDefinition[x] = await recursiveSetProperties(schemaDefinition[x], entries);
+        schemaDefinition[x] = await recursiveSetProperties(schemaDefinition[x], entries, currentSchema);
       }
     } else { //It's an object
       keys = Object.keys(schemaDefinition);
@@ -165,6 +117,9 @@ async function recursiveSetProperties(schemaDefinition, entries){
           //Copy the contents of the definition into this object. This is a workaround since the jsonEditor forgets its schema when you reference another property from a property that is also referenced elsewhere.
           genericDefinitions = schemas.findOne({ "jsonObject.generalDefinitions": { $eq: true } });
           schemakey = genericDefinitions.jsonObject[value];
+          if(!schemakey) { //If generaldefinitions does not have the definition, look inside the current schema
+            schemakey = currentSchema.definitions[value];
+          }
           if(schemakey) {
             schemakeys = Object.keys(schemakey); //take all of the keys in the requested object
             for(let n = 0, schemakeysLen = schemakeys.length; n < schemakeysLen; n++){ //Loop over every key in the entry
@@ -176,7 +131,7 @@ async function recursiveSetProperties(schemaDefinition, entries){
           }
         }
         if(typeof value === 'object' && value !== null){
-          schemaDefinition[key] = await recursiveSetProperties(schemaDefinition[key], entries);
+          schemaDefinition[key] = await recursiveSetProperties(schemaDefinition[key], entries, currentSchema);
         }
       }
     }

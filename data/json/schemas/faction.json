@@ -29,6 +29,164 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 13
+        },
+        "likes_u": {
+            "type": "integer",
+            "title": "Likes U",
+            "default": 30,
+            "description": "A description for 'likes_u'  Type: 'integer'",
+            "propertyOrder": 40
+        },
+        "respects_u": {
+            "type": "integer",
+            "title": "Respects U",
+            "default": 20,
+            "description": "A description for 'respects_u'  Type: 'integer'",
+            "propertyOrder": 50
+        },
+        "known_by_u": {
+            "type": "boolean",
+            "title": "Known By U",
+            "format": "checkbox",
+            "default": false,
+            "description": "A description for 'known_by_u'  Type: 'boolean'",
+            "propertyOrder": 60
+        },
+        "size": {
+            "type": "integer",
+            "title": "Size",
+            "default": 25,
+            "description": "A description for 'size'  Type: 'integer'",
+            "propertyOrder": 70
+        },
+        "power": {
+            "type": "integer",
+            "title": "Power",
+            "default": 20,
+            "description": "A description for 'power'  Type: 'integer'",
+            "propertyOrder": 80
+        },
+        "currency": {
+            "type": "string",
+            "title": "Currency",
+            "default": "icon",
+            "format": "text",
+            "description": "Description for 'currency' Type: 'string' Path: '/properties/currency'",
+            "propertyOrder": 90
+        },
+        "food_supply": {
+            "type": "integer",
+            "title": "Food Supply",
+            "default": 87500,
+            "description": "A description for 'food_supply'  Type: 'integer'",
+            "propertyOrder": 100
+        },
+        "wealth": {
+            "type": "integer",
+            "title": "Wealth",
+            "default": 82500,
+            "description": "A description for 'wealth'  Type: 'integer'",
+            "propertyOrder": 110
+        },
+        "relations": {
+            "type": "object",
+            "title": "Relations",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "free_merchants"
+            ],
+            "properties": {
+                "free_merchants": {
+                    "type": "object",
+                    "title": "Free Merchants",
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_edit_json": false,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false
+                    },
+                    "defaultProperties": [
+                        "kill on sight",
+                        "watch your back",
+                        "share my stuff",
+                        "guard your stuff",
+                        "lets you in",
+                        "defends your space",
+                        "knows your voice"
+                    ],
+                    "properties": {
+                        "kill on sight": {
+                            "type": "boolean",
+                            "title": "Kill On Sight",
+                            "format": "checkbox",
+                            "default": false,
+                            "description": "A description for 'kill on sight'  Type: 'boolean'",
+                            "propertyOrder": 10
+                        },
+                        "watch your back": {
+                            "type": "boolean",
+                            "title": "Watch Your Back",
+                            "format": "checkbox",
+                            "default": true,
+                            "description": "A description for 'watch your back'  Type: 'boolean'",
+                            "propertyOrder": 20
+                        },
+                        "share my stuff": {
+                            "type": "boolean",
+                            "title": "Share My Stuff",
+                            "format": "checkbox",
+                            "default": true,
+                            "description": "A description for 'share my stuff'  Type: 'boolean'",
+                            "propertyOrder": 30
+                        },
+                        "guard your stuff": {
+                            "type": "boolean",
+                            "title": "Guard Your Stuff",
+                            "format": "checkbox",
+                            "default": true,
+                            "description": "A description for 'guard your stuff'  Type: 'boolean'",
+                            "propertyOrder": 40
+                        },
+                        "lets you in": {
+                            "type": "boolean",
+                            "title": "Lets You In",
+                            "format": "checkbox",
+                            "default": true,
+                            "description": "A description for 'lets you in'  Type: 'boolean'",
+                            "propertyOrder": 50
+                        },
+                        "defends your space": {
+                            "type": "boolean",
+                            "title": "Defends Your Space",
+                            "format": "checkbox",
+                            "default": true,
+                            "description": "A description for 'defends your space'  Type: 'boolean'",
+                            "propertyOrder": 60
+                        },
+                        "knows your voice": {
+                            "type": "boolean",
+                            "title": "Knows Your Voice",
+                            "format": "checkbox",
+                            "default": true,
+                            "description": "A description for 'knows your voice'  Type: 'boolean'",
+                            "propertyOrder": 70
+                        }
+                    },
+                    "propertyOrder": 10
+                }
+            },
+            "propertyOrder": 120
         }
     }
 }

@@ -4,6 +4,9 @@
     "title": "Technique",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
+    "stringifyOptions": {
+      "maxLength": 117
+    },
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -29,6 +32,234 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "messages": {
+            "type": "array",
+            "title": "Messages",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "string",
+                "title": "Message",
+                "default": "You flip your weapon around and deliver a mordhau to %s",
+                "format": "text",
+                "options": { "compact": true }
+            },
+            "propertyOrder": 40
+        },
+        "skill_requirements": {
+            "type": "array",
+            "title": "Skill Requirements",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "object",
+                "title": "Skill Requirement ",
+                "options": {
+                    "disable_collapse": false,
+                    "disable_edit_json": false,
+                    "disable_properties": false,
+                    "collapsed": false,
+                    "hidden": false
+                },
+                "defaultProperties": [
+                    "name",
+                    "level"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name",
+                        "default": "melee",
+                        "format": "text",
+                        "description": "Description for 'name' Type: 'string' Path: '/properties/skill_requirements/items/properties/name'",
+                        "propertyOrder": 10
+                    },
+                    "level": {
+                        "type": "integer",
+                        "title": "Level",
+                        "default": 4,
+                        "description": "A description for 'level'  Type: 'integer'",
+                        "propertyOrder": 20
+                    }
+                }
+            },
+            "propertyOrder": 50
+        },
+        "melee_allowed": {
+            "type": "boolean",
+            "title": "Melee Allowed",
+            "format": "checkbox",
+            "default": true,
+            "description": "A description for 'melee_allowed'  Type: 'boolean'",
+            "propertyOrder": 60
+        },
+        "req_buffs": {
+            "type": "array",
+            "title": "Req Buffs",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "string",
+                "title": "Title Root Req Buffs ",
+                "default": "buff_swordsmanship_onblock",
+                "format": "text",
+                "description": "Description for 'items' Type: 'string' Path: '/properties/req_buffs/items'"
+            },
+            "propertyOrder": 70
+        },
+        "crit_tec": {
+            "type": "boolean",
+            "title": "Crit Tec",
+            "format": "checkbox",
+            "default": true,
+            "description": "A description for 'crit_tec'  Type: 'boolean'",
+            "propertyOrder": 80
+        },
+        "unarmed_allowed": {
+            "type": "boolean",
+            "title": "Unarmed allowed",
+            "format": "checkbox",
+            "default": true,
+            "description": "A description for 'unarmed_allowed'  Type: 'boolean'",
+            "propertyOrder": 80
+        },
+        "unarmed_weapons_allowed": {
+            "type": "boolean",
+            "title": "Unarmed weapons allowed",
+            "format": "checkbox",
+            "default": true,
+            "description": "A description for 'unarmed_weapons_allowed'  Type: 'boolean'",
+            "propertyOrder": 80
+        },
+        "disarms": {
+            "type": "boolean",
+            "title": "Disarms",
+            "format": "checkbox",
+            "default": true,
+            "description": "A description for 'disarms'  Type: 'boolean'",
+            "propertyOrder": 80
+        },
+        "block_counter": {
+            "type": "boolean",
+            "title": "Block counter",
+            "format": "checkbox",
+            "default": true,
+            "description": "A description for 'block_counter'  Type: 'boolean'",
+            "propertyOrder": 80
+        },
+        "crit_ok": {
+            "type": "boolean",
+            "title": "Crit ok",
+            "format": "checkbox",
+            "default": true,
+            "description": "A description for 'crit_ok'  Type: 'boolean'",
+            "propertyOrder": 80
+        },
+        "defensive": {
+            "type": "boolean",
+            "title": "Defensive",
+            "format": "checkbox",
+            "default": true,
+            "description": "A description for 'defensive'  Type: 'boolean'",
+            "propertyOrder": 80
+        },
+        "miss_recovery": {
+            "type": "boolean",
+            "title": "Miss recovery",
+            "format": "checkbox",
+            "default": true,
+            "description": "A description for 'miss_recovery'  Type: 'boolean'",
+            "propertyOrder": 80
+        },
+        "stun_dur": {
+            "type": "integer",
+            "title": "Stun Dur",
+            "default": 2,
+            "description": "A description for 'stun_dur'  Type: 'integer'",
+            "propertyOrder": 90
+        },
+        "down_dur": {
+            "type": "integer",
+            "title": "Down Dur",
+            "default": 2,
+            "description": "A description for 'down_dur'  Type: 'integer'",
+            "propertyOrder": 90
+        },
+        "knockback_dist": {
+            "type": "integer",
+            "title": "Knockback dist",
+            "default": 2,
+            "description": "A description for 'knockback_dist'  Type: 'integer'",
+            "propertyOrder": 90
+        },
+        "mult_bonuses": {
+            "type": "array",
+            "title": "Mult Bonuses",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "array",
+                "title": "Bonus ",
+                "format": "grid",
+                "options": {
+                    "disable_collapse": false,
+                    "disable_array_add": false,
+                    "disable_array_delete": false,
+                    "disable_array_reorder": true,
+                    "enable_array_copy": true,
+                    "disable_properties": false,
+                    "collapsed": false,
+                    "hidden": false
+                },
+                "items": {
+                    "headerTemplate": "Bonus  {{i1}}",
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "default": "movecost",
+                            "format": "text"
+                        },
+                        {
+                            "type": "number",
+                            "default": 1.5
+                        }
+                    ]
+                }
+            },
+            "propertyOrder": 100
         }
     }
 }

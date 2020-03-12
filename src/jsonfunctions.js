@@ -147,12 +147,13 @@ depth: the recursion depth
 extraspace: a hack to allow the first object in an array of object to have more space
 */
 function recursiveStringify(jsonEntry, schemaDefinition, options, depth = 0, extraspace = 0){
-  let jsonString = "", keys, key, value, tempstring = "", arrItem, addSpace, schemakey, optionsCopy, optionsKeys, isNumber;
+  let jsonString = "", keys, key, value, tempstring = "", arrItem, addSpace, schemakey, optionsCopy, optionsKeys, isNumber, oneOfArr, oneOf;
   
   if(typeof jsonEntry === 'object' && jsonEntry !== null){
     if(Array.isArray(jsonEntry)){ //It's an array
       for(let x = 0, arrLen = jsonEntry.length; x < arrLen; x++){ //Loop over every item in the array
         optionsCopy = getStringifyOptions(schemaDefinition, options, x);
+        if(schemaDefinition.items){schemaDefinition = schemaDefinition.items}
         arrItem = jsonEntry[x];
         if(typeof arrItem === 'object' && arrItem !== null){
           if(x == 0){ //the first entry in an object list gets 3 space extra in a line length because that's what the official linter does.
@@ -162,6 +163,22 @@ function recursiveStringify(jsonEntry, schemaDefinition, options, depth = 0, ext
           }
         } else {
           tempstring += stringify(arrItem, optionsCopy);
+          if(schemaDefinition.oneOf){
+            oneOfArr = schemaDefinition.oneOf
+            for(let t = 0, oneofLen = oneOfArr.length; t < oneofLen; t++){ //Loop over every item in the array
+              oneOf = oneOfArr[t];
+              let trueNum = typeof arrItem === "number";
+              let trueInt = Number.isInteger(arrItem);
+              let oneOfNumber = oneOf.type == "number";
+              // if(arrItem === -1.0){
+                  // console.log("arrItem")
+              // }
+              if(oneOfNumber && trueInt){
+                tempstring.replace(/.$/,".0\"");
+                tempstring += ".0"
+              } //If the value is a integer but the schema sais it's a number, put a .0 in the string to make it a number again.
+            }
+          }
         }
         if(x < arrLen-1){
           tempstring += "||==|| ";
@@ -184,10 +201,16 @@ function recursiveStringify(jsonEntry, schemaDefinition, options, depth = 0, ext
         value = jsonEntry[key];
         if(key.includes("comment")){key = "//"} //Comments are transformed from // to commentx where x is a number. Transform them back to // here.
         if(depth == 0){ jsonString += "    " }
-        jsonString += "\"" +key+ "\": "
+        jsonString += "\"" +key+ "\": ";
         if(!schemaDefinition){
           console.log("no schemaDefinition")
         }
+        // if(key == "onattack_buffs"){
+          // console.log("buff_niten_onattack")
+        // }
+        // if(key == "id" && (value == "buff_niten_onattack" || value == "style_niten")){
+          // console.log("buff_niten_onattack")
+        // }
         if(schemaDefinition.properties){
           schemakey = schemaDefinition.properties[key];
           if(schemakey){

@@ -29,6 +29,68 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 12
+        },
+        "generator": {
+            "type": "object",
+            "title": "Generator",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "generator_method",
+                "generator_id"
+            ],
+            "properties": {
+                "generator_method": {
+                    "type": "string",
+                    "title": "Generator Method",
+                    "default": "map_extra_function",
+                    "format": "text",
+                    "description": "Description for 'generator_method' Type: 'string' Path: '/properties/generator/properties/generator_method'",
+                    "propertyOrder": 10
+                },
+                "generator_id": {
+                    "type": "string",
+                    "title": "Generator Id",
+                    "default": "mx_crater",
+                    "format": "text",
+                    "description": "Description for 'generator_id' Type: 'string' Path: '/properties/generator/properties/generator_id'",
+                    "propertyOrder": 20
+                }
+            },
+            "propertyOrder": 50
+        },
+        "sym": {
+            "type": "string",
+            "title": "Sym",
+            "default": "x",
+            "format": "text",
+            "description": "Description for 'sym' Type: 'string' Path: '/properties/sym'",
+            "propertyOrder": 60
+        },
+        "color": {
+            "type": "string",
+            "title": "Color",
+            "default": "yellow",
+            "format": "text",
+            "description": "Description for 'color' Type: 'string' Path: '/properties/color'",
+            "propertyOrder": 70
+        },
+        "autonote": {
+            "type": "boolean",
+            "title": "Autonote",
+            "format": "checkbox",
+            "default": true,
+            "description": "A description for 'autonote'  Type: 'boolean'",
+            "propertyOrder": 80
         }
     }
 }

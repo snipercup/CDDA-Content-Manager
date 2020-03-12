@@ -29,6 +29,103 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "usages": {
+            "$ref": "#/definitions/array_array",
+            "format": "tabs",
+            "title": "Usages",
+            "items": {
+                "title": "Usage ",
+                "options": {
+                    "disable_array_add": true,
+                    "disable_array_delete": true,
+                    "disable_array_reorder": true
+                },
+                "items": [
+                    {
+                        "type": "integer",
+                        "title": "Usage",
+                        "default": 1,
+                        "options": { "compact": true }
+                    },
+                    {
+                        "includeDefinition": "string_array",
+                        "$ref": "#/definitions/string_array",
+                        "format": "selectize",
+                        "options": { "compact": true },
+                        "items": {
+                            "default": "MAKEMOUND",
+                            "filteredEnum": {
+                                "display_key": "id",
+                                "filter": { "jsonObject.type": { "$eq": "item_action" } }
+                            }
+                        }
+                    }
+                ]
+            },
+            "propertyOrder": 40
+        },
+        "usages": {
+            "type": "array",
+            "id": "/properties/usages",
+            "title": "Usages",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "array",
+                "title": "Usage ",
+                "format": "grid",
+                "options": {
+                    "disable_collapse": false,
+                    "disable_array_add": true,
+                    "disable_array_delete": true,
+                    "disable_array_reorder": true,
+                    "disable_properties": false,
+                    "collapsed": false,
+                    "hidden": false
+                },
+                "items": [
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "options": { "compact": true }
+                    },
+                    {
+                        "type": "array",
+                        "format": "selectize",
+                        "uniqueItems": true,
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": true,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false,
+                            "multiple": true,
+                            "compact": true
+                        },
+                        "items": {
+                            "type": "string",
+                            "default": "MAKEMOUND",
+                            "format": "text",
+                            "filteredEnum": {
+                                "display_key": "id",
+                                "filter": { "jsonObject.type": { "$eq": "item_action" } }
+                            }
+                        }
+                    }
+                ]
+            },
+            "propertyOrder": 40
         }
     }
 }

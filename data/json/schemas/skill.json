@@ -40,7 +40,7 @@
           "title": "Tags",
           "description": "Special flags (default: none)",
           "items": {
-              "enum": [ "combat_skill" ]
+              "enum": [ "combat_skill", "contextual_skill" ]
           }
         },
         "time_to_attack": {
@@ -110,7 +110,7 @@
             "title": "Companion Skill Practice",
             "items": {
                 "type": "object",
-                "title": "Title Root Companion Skill Practice ",
+                "title": "Companion Skill Practice ",
                 "options": {
                     "disable_collapse": false,
                     "disable_edit_json": false,

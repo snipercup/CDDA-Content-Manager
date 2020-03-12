@@ -53,29 +53,25 @@
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
         },
-        "name_plural": {
-          "title": "name_plural", 
-          "$ref": "#/definitions/name", 
-          "propertyOrder": 12
-        },
         "description": {
           "$ref": "#/definitions/description", 
           "propertyOrder": 13
         },
         "bashing": {
           "$ref": "#/definitions/bashing", 
-          "propertyOrder": 13
+          "propertyOrder": 14
         },
         "cutting": {
           "$ref": "#/definitions/cutting", 
-          "propertyOrder": 13
+          "propertyOrder": 15
         },
         "to_hit": {
           "$ref": "#/definitions/to_hit", 
-          "propertyOrder": 13
+          "propertyOrder": 16
         },
         "category": {
-          "$ref": "#/definitions/category"
+          "$ref": "#/definitions/category",
+          "propertyOrder": 16
         },
         "copy-from": {
             "type": "string",
@@ -137,8 +133,11 @@
                 "enum": [ 
                     "MC_MOBILE",
                     "MC_USED",
+                    "RAIN_PROTECT",
                     "JAVELIN",
                     "USE_PART_ITEM",
+                    "NANOFAB_TEMPLATE",
+                    "IRREMOVABLE",
                     "FIREWOOD",
                     "SHEATH_GOLF",
                     "MC_TURN_USED",
@@ -201,8 +200,8 @@
             "propertyOrder": 60
         },
         "weight": {
-          "$ref": "#/definitions/weight", 
-          "propertyOrder": 13
+          "$ref": "#/definitions/weight",
+          "propertyOrder": 16
         },
         "use_action": {
           "$ref": "#/definitions/use_action",
@@ -212,7 +211,7 @@
         },
         "color": {
           "$ref": "#/definitions/color", 
-          "propertyOrder": 13
+          "propertyOrder": 16
         },
         "fuel": { "$ref": "#/definitions/fuel" },
         "stackable": {
@@ -252,11 +251,11 @@
         },
         "symbol": {
           "$ref": "#/definitions/symbol", 
-          "propertyOrder": 13
+          "propertyOrder": 16
         },
         "quench": {
           "$ref": "#/definitions/quench", 
-          "propertyOrder": 13
+          "propertyOrder": 16
         },
         "healthy": {
             "type": "integer",
@@ -268,15 +267,15 @@
         "calories": {"$ref": "#/definitions/calories"},
         "price": {
           "$ref": "#/definitions/price", 
-          "propertyOrder": 13
+          "propertyOrder": 16
         },
         "price_postapoc": {
           "$ref": "#/definitions/price_postapoc", 
-          "propertyOrder": 13
+          "propertyOrder": 16
         },
         "material": {
           "$ref": "#/definitions/material", 
-          "propertyOrder": 13
+          "propertyOrder": 16
         },
         "volume": {
           "$ref": "#/definitions/volume", 
@@ -291,6 +290,69 @@
             "stringifyOptions": {
               "maxLength": 110
             }
+        },
+        "armor_data": {
+            "type": "object",
+            "title": "Armor Data",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "covers",
+                "coverage",
+                "encumbrance",
+                "material_thickness"
+            ],
+            "properties": {
+                "covers": {
+                    "type": "array",
+                    "title": "Covers",
+                    "format": "tabs",
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_array_add": false,
+                        "disable_array_delete": false,
+                        "disable_array_reorder": false,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false
+                    },
+                    "items": {
+                        "type": "string",
+                        "title": "Title Root Armor Data Covers ",
+                        "default": "TORSO",
+                        "format": "text",
+                        "description": "Description for 'items' Type: 'string' Path: '/properties/armor_data/properties/covers/items'"
+                    },
+                    "propertyOrder": 10
+                },
+                "coverage": {
+                    "type": "integer",
+                    "title": "Coverage",
+                    "default": 5,
+                    "description": "A description for 'coverage'  Type: 'integer'",
+                    "propertyOrder": 20
+                },
+                "encumbrance": {
+                    "type": "integer",
+                    "title": "Encumbrance",
+                    "default": 3,
+                    "description": "A description for 'encumbrance'  Type: 'integer'",
+                    "propertyOrder": 30
+                },
+                "material_thickness": {
+                    "type": "integer",
+                    "title": "Material Thickness",
+                    "default": 2,
+                    "description": "A description for 'material_thickness'  Type: 'integer'",
+                    "propertyOrder": 40
+                }
+            },
+            "propertyOrder": 20
         },
         "damage_states": {
             "type": "array",

@@ -79,7 +79,7 @@ class jsonObjList {
 class collectionList {
 	selectionBox; //An element in the DOM that will get updated with its content
 	folderList; //Look in this folder list for items to add to the list
-	displayKey; //The key to display in the list. for example ID.
+	displayKey; //The key to display in the list. for example ID. May be a single string or an array
 	filter; //A list reprisenting a filter. See getItemsFromListOfJsonItems in jsonfunctions.js for a description.
 	selectedEntryId; //The id of the selected entry.
 	
@@ -114,7 +114,7 @@ class collectionList {
 		for (; i < amountOfJSONObjects; i++) {
 			retrievedItem = retreivedItems[i];
 			jsonObject = retrievedItem.jsonObject
-			jsonElementID = jsonObject[this.displayKey];
+			jsonElementID = this.getDisplayKeyValue(this.displayKey, jsonObject);
 			let opt = document.createElement('option');
 			opt.value = jsonElementID;
 			opt.innerHTML = jsonElementID;
@@ -143,6 +143,22 @@ class collectionList {
 			}
 		}
 		this.selectionBox.dispatchEvent(new Event('change'));
+	}
+	
+	getDisplayKeyValue(displayKey, jsonObj){
+    if(typeof displayKey == "string"){
+      return jsonObj[displayKey];
+    } else if(Array.isArray(displayKey)) {
+      let keyName;
+      for (let i = 0, displayKeyLen = displayKey.length; i < displayKeyLen; i++) {
+        keyName = displayKey[i];
+        if (jsonObj[keyName]) {
+          return jsonObj[keyName];
+        }
+      }
+    }
+    
+    return "displaykey not present!"
 	}
 	
 	selectRandom(){

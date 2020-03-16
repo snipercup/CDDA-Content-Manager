@@ -20,18 +20,22 @@
         "name"
     ],
     "properties": {
+        "abstract": {
+          "$ref": "#/definitions/abstract", 
+          "propertyOrder": 1
+        },
         "id": {
           "$ref": "#/definitions/id", 
-          "propertyOrder": 10
+          "propertyOrder": 2
         },
         "type": {
           "$ref": "#/definitions/type", 
-          "propertyOrder": 11,
+          "propertyOrder": 3,
           "default": "vehicle_part"
         },
         "name": {
           "$ref": "#/definitions/name", 
-          "propertyOrder": 12
+          "propertyOrder": 4
         },
         "color": {
           "$ref": "#/definitions/color", 
@@ -101,11 +105,10 @@
         "copy-from": {
             "type": "string",
             "filteredEnum": {
-                "display_key": "id",
-                "filter": { "jsonObject.type": { "$eq": "vehicle_part" }
+                    "display_key": "id",
+                    "filter": { "jsonObject.type": { "$eq": "vehicle_part" }
                 }
-            },
-            "enum": [ ]
+            }
         },
         "size": {
             "type": "integer",
@@ -132,7 +135,6 @@
         },
         "requirements": {
             "type": "object",
-            "id": "/properties/requirements",
             "title": "Requirements",
             "options": {
                 "disable_collapse": false,
@@ -216,44 +218,7 @@
                             "propertyOrder": 20
                         },
                         "using": {
-                            "type": "array",
-                            "title": "Using",
-                            "format": "tabs",
-                            "options": {
-                                "disable_collapse": false,
-                                "disable_array_add": false,
-                                "disable_array_delete": false,
-                                "disable_array_reorder": false,
-                                "disable_properties": false,
-                                "collapsed": false,
-                                "hidden": false
-                            },
-                            "items": {
-                                "type": "array",
-                                "title": "Using ",
-                                "format": "grid",
-                                "options": {
-                                    "disable_collapse": false,
-                                    "disable_array_add": false,
-                                    "disable_array_delete": false,
-                                    "disable_array_reorder": false,
-                                    "disable_properties": false,
-                                    "collapsed": false,
-                                    "hidden": false
-                                },
-                                "items": [
-                                    {
-                                        "type": "string",
-                                        "default": "vehicle_bolt",
-                                        "format": "text"
-                                    },
-                                    {
-                                        "type": "integer",
-                                        "default": 1
-                                    }
-                                ]
-                            },
-                            "propertyOrder": 30
+                            "$ref": "#/definitions/using_ref"
                         }
                     },
                     "propertyOrder": 10
@@ -323,44 +288,7 @@
                             "propertyOrder": 20
                         },
                         "using": {
-                            "type": "array",
-                            "title": "Using",
-                            "format": "tabs",
-                            "options": {
-                                "disable_collapse": false,
-                                "disable_array_add": false,
-                                "disable_array_delete": false,
-                                "disable_array_reorder": false,
-                                "disable_properties": false,
-                                "collapsed": false,
-                                "hidden": false
-                            },
-                            "items": {
-                                "type": "array",
-                                "title": "Using ",
-                                "format": "grid",
-                                "options": {
-                                    "disable_collapse": false,
-                                    "disable_array_add": true,
-                                    "disable_array_delete": true,
-                                    "disable_array_reorder": true,
-                                    "disable_properties": false,
-                                    "collapsed": false,
-                                    "hidden": false
-                                },
-                                "items": [
-                                    {
-                                        "type": "string",
-                                        "default": "vehicle_bolt",
-                                        "format": "text"
-                                    },
-                                    {
-                                        "type": "integer",
-                                        "default": 1
-                                    }
-                                ]
-                            },
-                            "propertyOrder": 30
+                            "$ref": "#/definitions/using_ref"
                         }
                     },
                     "propertyOrder": 20
@@ -518,57 +446,29 @@
                 }
             }
         },
-        "flags": {
-            "$ref": "#/definitions/flags", 
-            "items": {
-                "enum": [ 
-                    "WATER_PURIFIER",
-                    "CRAFTRIG",
-                    "AISLE",
-                    "BOARDABLE",
-                    "CAPTURE_MONSTER_VEH",
-                    "SEATBELT",
-                    "RADIOACTIVE",
-                    "LEAK_DAM",
-                    "ATOMIC_LIGHT",
-                    "NO_ROOF_NEEDED",
-                    "FULL_BOARD",
-                    "SHARP",
-                    "MULTISQUARE",
-                    "FUNNEL",
-                    "NEEDS_WHEEL_MOUNT_LIGHT",
-                    "NEEDS_WHEEL_MOUNT_HEAVY",
-                    "ODDTURN",
-                    "BED",
-                    "HORN",
-                    "BIKE_RACK_VEH",
-                    "MOUNTABLE",
-                    "BEEPER",
-                    "AUTOCLAVE",
-                    "NEEDS_JACKING",
-                    "WHEEL",
-                    "CURTAIN",
-                    "OPENCLOSE_INSIDE",
-                    "CARGO",
-                    "LOCKABLE_CARGO",
-                    "ADVANCED_PLANTER",
-                    "PLANTER",
-                    "ENABLED_DRAINS_EPOWER",
-                    "AISLE_LIGHT",
-                    "SELF_JACK",
-                    "PROTRUSION",
-                    "COVERED",
-                    "ROOF",
-                    "FOLDABLE",
-                    "EXTRA_DRAG",
-                    "REAPER",
-                    "OPENABLE",
-                    "OBSTACLE",
-                    "WINDOW",
-                    "OPAQUE"
-                ]
+        "extend": {
+            "type": "object",
+            "title": "Extend",
+            "description": "Modders can add an \"extends\" field to their definition to append entries to a list instead of overriding the entire list.",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
             },
-            "propertyOrder": 60
+            "defaultProperties": [
+                "flags"
+            ],
+            "properties": {
+                "flags": {
+                    "type": "array",
+                    "$ref": "#/definitions/flags_ref"
+                }
+            }
+        },
+        "flags": {
+            "$ref": "#/definitions/flags_ref"
         },
         "breaks_into": {
             "oneOf": [
@@ -710,6 +610,150 @@
                 }
             },
             "propertyOrder": 180
+        }
+    },
+    "definitions": {
+        "using_ref": {
+            "title": "Using",
+            "oneOf": [
+                {
+                    "type": "array",
+                    "title": "Multiple",
+                    "format": "tabs",
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_array_add": false,
+                        "disable_array_delete": false,
+                        "disable_array_reorder": false,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false
+                    },
+                    "items": {
+                        "type": "array",
+                        "title": "Using ",
+                        "format": "grid",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "items": [
+                            {
+                                "type": "string",
+                                "default": "vehicle_bolt",
+                                "format": "text"
+                            },
+                            {
+                                "type": "integer",
+                                "default": 1
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "string",
+                    "title": "Single",
+                    "default": "welding_standard",
+                    "format": "text",
+                    "description": "Description for 'items' Type: 'string' Path: '/properties/requirements/properties/repair/properties/using/items/items'"
+                }
+            ]
+        },
+        "flags_ref": {
+            "$ref": "#/definitions/flags", 
+            "items": {
+                "enum": [ 
+                    "WATER_PURIFIER",
+                    "CRAFTRIG",
+                    "AISLE",
+                    "VISION",
+                    "SEAT",
+                    "CIRCLE_LIGHT",
+                    "HALF_BOARD",
+                    "INITIAL_PART",
+                    "LOW_FINAL_AIR_DRAG",
+                    "CONE_LIGHT",
+                    "FLUIDTANK",
+                    "REMOTE_CONTROLS",
+                    "E_HEATER",
+                    "E_HIGHER_SKILL",
+                    "DOOR_MOTOR",
+                    "DISHWASHER",
+                    "DOME_LIGHT",
+                    "CTRL_ELECTRONIC",
+                    "HALF_CIRCLE_LIGHT",
+                    "INTERNAL",
+                    "ENGINE", 
+                    "E_STARTS_INSTANTLY", 
+                    "ANIMAL_CTRL", 
+                    "HARNESS_human", 
+                    "STEERABLE", 
+                    "UNMOUNT_ON_DAMAGE",
+                    "STABLE",
+                    "WINDOW_CURTAIN",
+                    "CONTROLS",
+                    "ALARMCLOCK",
+                    "WATCH",
+                    "ARMOR",
+                    "CHIMES",
+                    "CARGO_LOCKING",
+                    "FLOATS",
+                    "CAMERA_CONTROL",
+                    "CAMERA",
+                    "BOARDABLE",
+                    "CAPTURE_MONSTER_VEH",
+                    "SEATBELT",
+                    "RADIOACTIVE",
+                    "LEAK_DAM",
+                    "ATOMIC_LIGHT",
+                    "NO_ROOF_NEEDED",
+                    "FULL_BOARD",
+                    "SHARP",
+                    "MULTISQUARE",
+                    "FUNNEL",
+                    "NEEDS_WHEEL_MOUNT_LIGHT",
+                    "NEEDS_WHEEL_MOUNT_HEAVY",
+                    "ODDTURN",
+                    "BED",
+                    "HORN",
+                    "BIKE_RACK_VEH",
+                    "MOUNTABLE",
+                    "BEEPER",
+                    "AUTOCLAVE",
+                    "NEEDS_JACKING",
+                    "WHEEL",
+                    "CURTAIN",
+                    "OPENCLOSE_INSIDE",
+                    "CARGO",
+                    "LOCKABLE_CARGO",
+                    "ADVANCED_PLANTER",
+                    "PLANTER",
+                    "ENABLED_DRAINS_EPOWER",
+                    "NOINSTALL",
+                    "UNMOUNT_ON_MOVE",
+                    "VARIABLE_SIZE",
+                    "WHEEL_MOUNT_HEAVY",
+                    "POWER_TRANSFER",
+                    "AISLE_LIGHT",
+                    "SELF_JACK",
+                    "PROTRUSION",
+                    "COVERED",
+                    "ROOF",
+                    "FOLDABLE",
+                    "EXTRA_DRAG",
+                    "REAPER",
+                    "OPENABLE",
+                    "OBSTACLE",
+                    "WINDOW",
+                    "OPAQUE"
+                ]
+            },
+            "propertyOrder": 60
         }
     }
 }

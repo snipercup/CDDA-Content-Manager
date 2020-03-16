@@ -209,25 +209,30 @@
             "properties": {
                 "age_grow": {
                     "type": "integer",
-                    "id": "/properties/reproduction/upgrades/age_grow",
                     "title": "Age grow",
                     "default": 7,
                     "description": "The age at which this monster will upgrade",
-                    "options": {
-                        "hidden": false
-                    },
                     "propertyOrder": 20
+                },
+                "half_life": {
+                    "type": "integer",
+                    "title": "Half life",
+                    "default": 14,
+                    "propertyOrder": 20
+                },
+                "into_group": {
+                    "type": "string",
+                    "title": "Into group",
+                    "default": "GROUP_ZOMBIE_UPGRADE",
+                    "format": "text",
+                    "propertyOrder": 10
                 },
                 "into": {
                     "type": "string",
-                    "id": "/properties/reproduction/upgrades/into",
                     "title": "Baby Monster",
                     "default": "mon_dog_gpyrenees_pup",
                     "format": "text",
                     "description": "The monster that this monster will upgrade into",
-                    "options": {
-                        "hidden": false
-                    },
                     "propertyOrder": 10
                 }
             },
@@ -455,7 +460,8 @@
                   "FRIEND_DIED",
                   "PLAYER_CLOSE",
                   "FRIEND_ATTACKED",
-                  "PLAYER_WEAK"
+                  "PLAYER_WEAK",
+                  "STALK"
                 ],
                 "options": {
                     "hidden": false
@@ -475,81 +481,97 @@
             "propertyOrder": 260
         },
         "death_drops": {
-            "type": "object",
-            "id": "/properties/death_drops",
+            "propertyOrder": 270,
             "title": "Death Drops",
-            "options": {
-                "disable_collapse": false,
-                "disable_edit_json": false,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false
-            },
-            "defaultProperties": [
-                "subtype",
-                "groups"
-            ],
-            "properties": {
-                "subtype": {
-                    "type": "string",
-                    "id": "/properties/death_drops/properties/subtype",
-                    "title": "Subtype",
-                    "default": "collection",
-                    "format": "text",
-                    "description": "The subtype of death drops",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 10
-                },
-                "groups": {
-                    "type": "array",
-                    "title": "Groups",
-                    "format": "tabs",
+            "oneOf": [
+                {
+                    "type": "object",
                     "options": {
                         "disable_collapse": false,
-                        "disable_array_add": true,
-                        "disable_array_delete": false,
-                        "disable_array_reorder": true,
-                        "enable_array_copy": true,
+                        "disable_edit_json": false,
                         "disable_properties": false,
                         "collapsed": false,
                         "hidden": false
                     },
-                    "items": {
-                        "headerTemplate": "Groups {{i1}}",
-                        "type": "array",
-                        "title": "Group",
-                        "format": "grid",
-                        "options": {
-                            "disable_collapse": false,
-                            "disable_array_add": true,
-                            "disable_array_delete": true,
-                            "disable_array_reorder": true,
-                            "disable_properties": false,
-                            "collapsed": false,
-                            "hidden": false
-                        },
-                        "items": [
-                            {
-                                "type": "string",
-                                "title": "Group name",
-                                "default": "default_zombie_clothes",
-                                "format": "text",
-                                "description": "The name of the group to drop from"
+                    "defaultProperties": [
+                        "subtype",
+                        "groups"
+                    ],
+                    "properties": {
+                        "subtype": {
+                            "type": "string",
+                            "id": "/properties/death_drops/properties/subtype",
+                            "title": "Subtype",
+                            "default": "collection",
+                            "format": "text",
+                            "description": "The subtype of death drops",
+                            "options": {
+                                "hidden": false
                             },
-                            {
-                                "type": "integer",
-                                "title": "Chance",
-                                "default": 100,
-                                "description": "The drop chance"
+                            "propertyOrder": 10
+                        },
+                        "groups": {
+                            "type": "array",
+                            "title": "Groups",
+                            "format": "tabs",
+                            "options": {
+                                "disable_collapse": false,
+                                "disable_array_add": true,
+                                "disable_array_delete": false,
+                                "disable_array_reorder": true,
+                                "enable_array_copy": true,
+                                "disable_properties": false,
+                                "collapsed": false,
+                                "hidden": false
+                            },
+                            "items": {
+                                "headerTemplate": "Groups {{i1}}",
+                                "title": "Group",
+                                "oneOf": [
+                                    {
+                                        "type": "array",
+                                        "title": "List",
+                                        "format": "grid",
+                                        "options": {
+                                            "disable_collapse": false,
+                                            "disable_array_add": true,
+                                            "disable_array_delete": true,
+                                            "disable_array_reorder": true,
+                                            "disable_properties": false,
+                                            "collapsed": false,
+                                            "hidden": false
+                                        },
+                                        "items": [
+                                            {
+                                                "type": "string",
+                                                "title": "Group name",
+                                                "default": "default_zombie_clothes",
+                                                "format": "text",
+                                                "description": "The name of the group to drop from"
+                                            },
+                                            {
+                                                "type": "integer",
+                                                "title": "Chance",
+                                                "default": 100,
+                                                "description": "The drop chance"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "string",
+                                        "default": "default_zombie_death_drops",
+                                        "title": "Single"
+                                    }
+                                ]
                             }
-                        ]
-                    },
-                    "propertyOrder": 20
+                        }
+                    }
+                },
+                {
+                    "type": "string",
+                    "default": "mon_dragon_dummy_drops"
                 }
-            },
-            "propertyOrder": 270
+            ]
         },
         "half_life": {
             "type": "integer",
@@ -1096,6 +1118,8 @@
                 "type": "string",
                 "enum": [ 
                   "SOUND",
+                  "FIRE",
+                  "HURT",
                   "PLAYER_CLOSE",
                   "FRIEND_ATTACKED"
                 ]
@@ -1108,6 +1132,7 @@
             "items": {
                 "type": "string",
                 "enum": [ 
+                  "MEAT",
                   "PLAYER_WEAK"
                 ]
             }
@@ -1193,6 +1218,7 @@
                   "CBM_TECH", 
                   "CHITIN", 
                   "CLIMBS", 
+                  "COLDPROOF", 
                   "CURRENT", 
                   "DESTROYS", 
                   "DIGS", 
@@ -1234,17 +1260,20 @@
                   "NOHEAD", 
                   "NO_BREATHE", 
                   "NO_BREED", 
+                  "NO_NECRO", 
                   "PAY_BOT", 
                   "PET_MOUNTABLE", 
                   "PET_HARNESSABLE", 
                   "NULL", 
                   "PACIFIST", 
+                  "PUSH_VEH", 
                   "PARALYZE", 
                   "PLASTIC", 
                   "POISON", 
                   "PUSH_MON", 
                   "QUEEN", 
                   "REVIVES", 
+                  "REVIVES_HEALTHY", 
                   "RIDEABLE_MECH", 
                   "SEES", 
                   "SLUDGEPROOF", 

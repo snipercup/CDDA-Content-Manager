@@ -132,6 +132,9 @@
             },
             "propertyOrder": 70
         },
+        "flat_bonuses": {
+            "includeDefinition": "bonuses_ref"
+        },
         "crit_tec": {
             "type": "boolean",
             "title": "Crit Tec",

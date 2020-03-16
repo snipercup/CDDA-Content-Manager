@@ -29,6 +29,10 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 13
         }
     }
 }

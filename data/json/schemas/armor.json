@@ -299,6 +299,8 @@
                   "VARSIZE", 
                   "STURDY", 
                   "ONLY_ONE", 
+                  "TRADER_AVOID", 
+                  "PSYSHIELD_PARTIAL",
                   "ROLLER_QUAD", 
                   "ROLLER_INLINE", 
                   "NO_SALVAGE",

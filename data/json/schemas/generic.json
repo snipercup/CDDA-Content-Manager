@@ -149,6 +149,7 @@
                     "MC_MAY_BE_ENCRYPTED",
                     "SPEAR",
                     "STAB",
+                    "NPC_THROWN",
                     "SLEEP_AID",
                     "NO_REPAIR",
                     "UNRECOVERABLE",

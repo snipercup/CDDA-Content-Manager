@@ -863,10 +863,7 @@
       "id": "/definitions/count",
       "title": "Count",
       "default": 40,
-      "description": "The default spawn stack",
-      "options": {
-          "hidden": false
-      }
+      "description": "The default spawn stack"
   },
   "to_hit": {
       "type": "integer",
@@ -1705,6 +1702,50 @@
       "description": "Maximum charges tool can hold",
       "propertyOrder": 30
   },
+  "bonuses_ref": {
+      "type": "array",
+      "title": "Bonuses",
+      "description": "Bonuses contain 2 to 4 of the following tokens, in order: \nAffected statistic. Any of: \"hit\", \"dodge\", \"block\", \"speed\", \"movecost\", \"damage\", \"armor\", \"arpen\", Damage type (\"bash\", \"cut\", \"heat\", etc.) if the affected statistic is damage, armor, or arpen, Scaling stat. Any of: \"str\", \"dex\", \"int\", \"per\", The value of the bonus itself",
+      "format": "grid",
+      "options": {
+          "disable_collapse": false,
+          "disable_array_add": false,
+          "disable_array_delete": false,
+          "disable_array_reorder": true,
+          "disable_properties": false,
+          "collapsed": false,
+          "hidden": false
+      },
+      "items": {
+          "type": "array",
+          "title": "Flat Bonus",
+          "format": "grid",
+          "options": {
+              "disable_collapse": false,
+              "disable_array_add": false,
+              "disable_array_delete": false,
+              "disable_array_reorder": true,
+              "disable_properties": false,
+              "collapsed": false,
+              "hidden": false
+          },
+          "items": {
+              "oneOf": [
+                  {
+                      "type": "string",
+                      "default": "hit",
+                      "format": "text",
+                      "options": { "compact": true }
+                  },
+                  {
+                      "type": "number",
+                      "default": 0.75,
+                      "options": { "compact": true }
+                  }
+              ]
+          }
+      }
+  },
   "charges_per_use": {
       "type": "integer",
       "id": "/definitions/charges_per_use",
@@ -2066,6 +2107,6 @@
       },
       "propertyOrder": 60
   },
-  "body_parts_enum": { "enum": [ "HEAD", "TORSO", "MOUTH", "EYES", "ARM_L", "ARM_R", "HAND_R", "HAND_L", "LEG_L", "LEG_R", "FOOT_L", "FOOT_R" ] },
+  "body_parts_enum": { "enum": [ "HEAD", "TORSO", "MOUTH", "EYES", "ARM_L", "ARM_R", "HAND_R", "HAND_L", "LEG_L", "LEG_R", "FOOT_L", "FOOT_R", "ALL" ] },
   "mod_locations_enum": { "enum": [ "grip", "accessories", "mechanism", "sights", "rail mount", "conversion", "underbarrel mount", "lens", "emitter", "barrel", "bore", "sights mount", "loading port", "stabilizer", "sling", "dampening", "stock mount", "grip mount", "brass catcher", "muzzle", "underbarrel", "rail", "magazine", "stock" ] }
 }

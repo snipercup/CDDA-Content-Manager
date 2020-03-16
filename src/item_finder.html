@@ -73,9 +73,9 @@
                       { "jsonObject.abstract": { "$contains": value } }
                   ] }
       if(entryList){ //Check to see if there is already an entrylist. Otherwise, create one
-        entryList.recreate(document.getElementById("entryList"), entries, "id", filter);
+        entryList.recreate(document.getElementById("entryList"), entries, [ "id", "abstract" ], filter);
       } else {
-        entryList = new collectionList(document.getElementById("entryList"), entries, "id", filter);
+        entryList = new collectionList(document.getElementById("entryList"), entries, [ "id", "abstract" ], filter);
       }
       document.getElementById('editForm').style.display = "none";
     }

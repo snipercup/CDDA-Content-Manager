@@ -29,6 +29,193 @@
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 13
+        },
+        "symbol": {
+          "$ref": "#/definitions/symbol", 
+          "propertyOrder": 13
+        },
+        "color": {"$ref": "#/definitions/color"},
+        "move_cost_mod": {
+            "type": "integer",
+            "title": "Move Cost Mod",
+            "default": -1,
+            "description": "A description for 'move_cost_mod'  Type: 'integer'",
+            "propertyOrder": 70
+        },
+        "tent_centers": {
+          "$ref": "#/definitions/string_array",
+          "title": "Ten centers",
+          "items": {
+              "filteredEnum": {
+                  "display_key": "id",
+                  "filter": { "jsonObject.type": { "$eq": "furniture" } }
+              }
+          }
+        },
+        "coverage": {
+            "type": "integer",
+            "title": "Coverage",
+            "default": 90,
+            "description": "A description for 'coverage'  Type: 'integer'",
+            "propertyOrder": 80
+        },
+        "required_str": {
+            "type": "integer",
+            "title": "Required Str",
+            "default": 30,
+            "description": "A description for 'required_str'  Type: 'integer'",
+            "propertyOrder": 90
+        },
+        "flags": {
+          "$ref": "#/definitions/flags", 
+          "items": {
+              "enum": [ 
+                  "PLACE_ITEM",
+                  "CONTAINER",
+                  "BLOCKSDOOR",
+                  "MINEABLE"
+              ]
+          },
+          "propertyOrder": 13
+        },
+        "examine_action": {
+            "type": "string",
+            "title": "Examine Action",
+            "default": "vending",
+            "format": "text",
+            "description": "Description for 'examine_action' Type: 'string' Path: '/properties/examine_action'",
+            "propertyOrder": 110
+        },
+        "bash": {
+            "type": "object",
+            "title": "Bash",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "str_min",
+                "str_max",
+                "sound",
+                "sound_fail",
+                "furn_set",
+                "items"
+            ],
+            "properties": {
+                "str_min": {
+                    "type": "integer",
+                    "title": "Str Min",
+                    "default": 150,
+                    "description": "A description for 'str_min'  Type: 'integer'",
+                    "propertyOrder": 10
+                },
+                "str_max": {
+                    "type": "integer",
+                    "title": "Str Max",
+                    "default": 520,
+                    "description": "A description for 'str_max'  Type: 'integer'",
+                    "propertyOrder": 20
+                },
+                "sound": {
+                    "type": "string",
+                    "title": "Sound",
+                    "default": "glass breaking!",
+                    "format": "text",
+                    "description": "Description for 'sound' Type: 'string' Path: '/properties/bash/properties/sound'",
+                    "propertyOrder": 30
+                },
+                "sound_fail": {
+                    "type": "string",
+                    "title": "Sound Fail",
+                    "default": "whack!",
+                    "format": "text",
+                    "description": "Description for 'sound_fail' Type: 'string' Path: '/properties/bash/properties/sound_fail'",
+                    "propertyOrder": 40
+                },
+                "furn_set": {
+                    "type": "string",
+                    "title": "Furn Set",
+                    "default": "f_vending_o",
+                    "format": "text",
+                    "description": "Description for 'furn_set' Type: 'string' Path: '/properties/bash/properties/furn_set'",
+                    "propertyOrder": 50
+                },
+                "items": {
+                    "type": "array",
+                    "title": "Items",
+                    "format": "tabs",
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_array_add": false,
+                        "disable_array_delete": false,
+                        "disable_array_reorder": false,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false
+                    },
+                    "items": {
+                        "type": "object",
+                        "title": "Bash Item ",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_edit_json": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "defaultProperties": [
+                            "item",
+                            "count"
+                        ],
+                        "properties": {
+                            "item": {
+                                "type": "string",
+                                "title": "Items",
+                                "default": "steel_lump",
+                                "format": "text",
+                                "description": "Description for 'item' Type: 'string' Path: '/properties/breaks_into/items/properties/item'",
+                                "propertyOrder": 10
+                            },
+                            "prob": {
+                                "type": "integer",
+                                "title": "Prob",
+                                "default": 50,
+                                "description": "A description for 'prob'  Type: 'integer'",
+                                "propertyOrder": 30
+                            },
+                            "count": {
+                                "title": "Count",
+                                "propertyOrder": 40,
+                                "type": "array",
+                                "format": "grid",
+                                "default": [ 0, 0 ],
+                                "options": {
+                                    "disable_collapse": true,
+                                    "disable_array_add": true,
+                                    "disable_array_delete": true,
+                                    "disable_array_reorder": true,
+                                    "disable_properties": true,
+                                    "collapsed": false,
+                                    "hidden": false
+                                },
+                                "items": [
+                                    { "type": "integer", "default": 2, "options": { "compact": true } },
+                                    { "type": "integer", "default": 4, "options": { "compact": true } }
+                                ]
+                            }
+                        }
+                    },
+                    "propertyOrder": 60
+                }
+            },
+            "propertyOrder": 120
         }
     }
 }

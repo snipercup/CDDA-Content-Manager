@@ -73,6 +73,7 @@
                     "items": {
                         "default": "bee",
                         "type": "string",
+                        "enum": [ "utility_bot" ],
                         "filteredEnum": {
                             "display_key": "name",
                             "filter": { "jsonObject.type": { "$eq": "MONSTER_FACTION" } }
@@ -84,6 +85,7 @@
                     "default": "bee",
                     "title": "Single",
                     "format": "selectize",
+                    "enum": [ "utility_bot" ],
                     "filteredEnum": {
                         "display_key": "name",
                         "filter": { "jsonObject.type": { "$eq": "MONSTER_FACTION" } }

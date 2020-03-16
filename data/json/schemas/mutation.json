@@ -4,7 +4,7 @@
     "title": "Mutation",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
-    "get_ids_of_type": [ { "type": "mutation_category", "display_key": "id" }, { "type": "mutation_type", "display_key": "id" } ],
+    "get_ids_of_type": [ { "type": "mutation_type", "display_key": "id" } ],
     "stringifyOptions": {
       "maxLength": 115
     },
@@ -421,7 +421,15 @@
             },
             "items": {
                 "type": "string",
-                "$ref": "#/definitions/mutation_category"
+                "default": "MARLOSS",
+                "enum": [ "MARLOSS", "MYCUS" ],
+                "filteredEnum": {
+                    "display_key": "id",
+                    "filter": { "$and": [
+                        { "jsonObject.type": { "$eq": "mutation_category" } },
+                        { "jsonObject.id": { "$exists": true } }
+                    ] }
+                }
             },
             "propertyOrder": 60
         },
@@ -1193,6 +1201,7 @@
                     "PRED2",
                     "PRED4",
                     "CANNIBAL",
+                    "UNARMED_BONUS",
                     "hair_white",
                     "hair_red",
                     "hair_gray",
@@ -1205,7 +1214,8 @@
                     "hair_crewcut",
                     "hair_fro",
                     "hair_black",
-                    "NO_DISEASE"
+                    "NO_DISEASE",
+                    "mycus"
                 ]
             },
             "propertyOrder": 60
@@ -1365,11 +1375,6 @@
         }
     },
     "definitions": {
-      "mutation_category": {
-        "type": "string", 
-        "description": "The id of an mutation_category entry", 
-        "enum": [ ]
-      },
       "mutation_type": {
         "type": "string", 
         "description": "The id of an mutation_type entry", 

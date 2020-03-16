@@ -57,6 +57,15 @@
           "$ref": "#/definitions/price", 
           "propertyOrder": 13
         },
+        "copy-from": {
+            "type": "string",
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { "jsonObject.type": { "$eq": "WHEEL" }
+                }
+            },
+            "enum": [ ]
+        },
         "to_hit": {
           "$ref": "#/definitions/to_hit", 
           "propertyOrder": 13

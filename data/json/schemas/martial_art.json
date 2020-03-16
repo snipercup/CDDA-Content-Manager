@@ -5,7 +5,7 @@
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
     "stringifyOptions": {
-      "maxLength": 117
+      "maxLength": 115
     },
     "options": {
         "disable_collapse": false,
@@ -369,50 +369,6 @@
                     "mult_bonuses": {
                         "includeDefinition": "bonuses_ref"
                     }
-                }
-            }
-        },
-        "bonuses_ref": {
-            "type": "array",
-            "title": "Bonuses",
-            "description": "Bonuses contain 2 to 4 of the following tokens, in order: \nAffected statistic. Any of: \"hit\", \"dodge\", \"block\", \"speed\", \"movecost\", \"damage\", \"armor\", \"arpen\", Damage type (\"bash\", \"cut\", \"heat\", etc.) if the affected statistic is damage, armor, or arpen, Scaling stat. Any of: \"str\", \"dex\", \"int\", \"per\", The value of the bonus itself",
-            "format": "grid",
-            "options": {
-                "disable_collapse": false,
-                "disable_array_add": false,
-                "disable_array_delete": false,
-                "disable_array_reorder": true,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false
-            },
-            "items": {
-                "type": "array",
-                "title": "Flat Bonus",
-                "format": "grid",
-                "options": {
-                    "disable_collapse": false,
-                    "disable_array_add": false,
-                    "disable_array_delete": false,
-                    "disable_array_reorder": true,
-                    "disable_properties": false,
-                    "collapsed": false,
-                    "hidden": false
-                },
-                "items": {
-                    "oneOf": [
-                        {
-                            "type": "string",
-                            "default": "hit",
-                            "format": "text",
-                            "options": { "compact": true }
-                        },
-                        {
-                            "type": "number",
-                            "default": 0.75,
-                            "options": { "compact": true }
-                        }
-                    ]
                 }
             }
         }

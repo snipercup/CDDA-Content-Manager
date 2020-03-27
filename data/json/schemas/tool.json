@@ -74,8 +74,7 @@
                         { "jsonObject.abstract": { "$eq": "fake_item" } }
                     ]
                 }
-            },
-            "enum": [ ]
+            }
         },
         "weight": {
           "$ref": "#/definitions/weight", 
@@ -214,22 +213,14 @@
                 "properties": {
                     "damage_type": {
                         "type": "string",
-                        "id": "properties/ranged_damage/oneof0/properties/damage_type",
                         "$ref": "#/definitions/damage_type",
-                        "options": {
-                          "hidden": false,
-                          "compact": true
-                        }
+                        "options": { "compact": true }
                     },
                     "amount": {
                         "type": "integer",
-                        "id": "properties/ranged_damage/oneof0/properties/amount",
                         "default": 1,
                         "description": "The amount",
-                        "options": {
-                          "hidden": false,
-                          "compact": true
-                        }
+                        "options": { "compact": true }
                     }
                 }
             },
@@ -585,6 +576,7 @@
                   "LIGHT_10",
                   "LIGHT_15",
                   "LIGHT_20",
+                  "LIGHT_25",
                   "LIGHT_30",
                   "LIGHT_240",
                   "LIGHT_300",
@@ -647,10 +639,12 @@
                   "UNBREAKABLE_MELEE",
                   "RADIO_ACTIVATION",
                   "ALLOWS_REMOTE_USE",
+                  "STURDY",
                   "RADIOACTIVE",
                   "FISH_GOOD",
                   "FISH_POOR",
                   "LEAK_DAM",
+                  "ARTC_TIME",
                   "GRENADE",
                   "FLAMING",
                   "FANCY",

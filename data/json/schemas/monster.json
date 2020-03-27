@@ -449,7 +449,6 @@
             "items": {
                 "headerTemplate": "Anger Triggers {{i1}}",
                 "type": "string",
-                "id": "/properties/anger_triggers/oneof0",
                 "title": "Anger trigger",
                 "default": "FRIEND_ATTACKED",
                 "format": "text",
@@ -461,6 +460,8 @@
                   "PLAYER_CLOSE",
                   "FRIEND_ATTACKED",
                   "PLAYER_WEAK",
+                  "MATING_SEASON",
+                  "SOUND",
                   "STALK"
                 ],
                 "options": {
@@ -1098,7 +1099,6 @@
         },
         "categories": {
             "$ref": "#/definitions/string_array",
-            "id": "/properties/categories",
             "title": "Categories",
             "description": "(array of strings, optional) Monster categories. Can be NULL, CLASSIC (only mobs found in classic zombie movies) or WILDLIFE (natural animals). If they are not CLASSIC or WILDLIFE, they will not spawn in classic mode. One can add or remove entries in mods via \"add:flags\" and \"remove:flags\".",
             "items": {
@@ -1106,6 +1106,7 @@
                 "enum": [ 
                   "NULL",
                   "CLASSIC",
+                  "DINOSAUR",
                   "WILDLIFE"
                 ]
             }
@@ -1120,6 +1121,7 @@
                   "SOUND",
                   "FIRE",
                   "HURT",
+                  "FRIEND_DIED",
                   "PLAYER_CLOSE",
                   "FRIEND_ATTACKED"
                 ]
@@ -1133,7 +1135,8 @@
                 "type": "string",
                 "enum": [ 
                   "MEAT",
-                  "PLAYER_WEAK"
+                  "PLAYER_WEAK",
+                  "HURT"
                 ]
             }
         },
@@ -1200,6 +1203,8 @@
                   "ATTACKMON", 
                   "BADVENOM", 
                   "BASHES", 
+                  "PARALYZEVENOM", 
+                  "ELECTRIC_FIELD", 
                   "BILE_BLOOD", 
                   "BIRDFOOD", 
                   "BLEED", 
@@ -1305,8 +1310,8 @@
     "definitions": {
       "SPECIES": {
           "type": "array",
-          "id": "/definitions/SPECIES",
           "title": "SPECIES",
+          "description": "A list of species ids. One can add or remove entries in mods via \"add:species\" and \"remove:species\". Properties (currently only triggers) from species are added to the properties of each monster that belong to the species.",
           "format": "selectize",
           "uniqueItems": true,
           "options": {
@@ -1325,7 +1330,6 @@
               "title": "SPECIES",
               "default": "ZOMBIE",
               "format": "text",
-              "description": "The SPECIES of this entry",
               "enum": [ 
                 "ZOMBIE", 
                 "MAMMAL", 

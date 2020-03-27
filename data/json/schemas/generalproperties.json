@@ -6,7 +6,7 @@
       "title": "magazines",
       "description": "The magazines this item can use. First column: the ammunition_type, second column: the magazine.",
       "stringifyOptions": {
-        "maxLength": 95
+        "maxLength": 110
       },
       "format": "table",
       "options": {

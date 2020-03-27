@@ -36,6 +36,58 @@
   .form-group {
     margin: 0;
   }
+  
+  .menu-content {
+    font-family: 'Oswald', sans-serif; 
+    padding: 0 0 0 0px;
+  }.collapsible-menu {
+      background-color: rgb(255, 255, 255);
+      padding: 0px 0px;
+      display: inline;
+  }.collapsible-menu ul {
+      list-style-type: none;
+      padding: 0;
+  }.collapsible-menu a {
+      display:inline;
+      padding: 0px;
+      text-decoration: none;
+  }
+  .collapsible-menu label {
+    font-family: 'Sedgwick Ave Display', cursive;
+    font-size: 10px;
+    display: inline;
+    cursor: pointer;
+    height: 32px;
+    width: 32px;
+    background: url(img/menu.png) no-repeat left center;
+    padding: 10px;
+  }
+  input#menu {
+      display: none;
+  }
+  input:checked +label {
+    background-image: url(img/menu.png);
+  }
+  
+  .menu-content {
+    max-height: 0;
+    overflow: hidden;
+    font-family: 'Oswald', sans-serif; 
+    padding: 0 0 0 50px;
+  }
+  /* Toggle Effect */
+  input:checked ~ label {
+    background-image: url(img/menu.png);
+  }
+  input:checked ~ .menu-content {
+    max-height: 100%;
+    position: absolute;
+    padding: 50px;
+    background-color: floralwhite;
+    left: 300px;
+    z-index: 1000;
+  }
+  
   </style>
   </head>
   <body style="height:100%">
@@ -45,6 +97,7 @@
     var db = new loki();
     var entries = db.addCollection("entries", { indices: ['jsonObject.type'] });
     var schemas = db.addCollection("schemas");
+    var userSettingsJSON = {};
 		
 		//When the page finishes loading
 		document.addEventListener("DOMContentLoaded", function(event) {
@@ -54,6 +107,7 @@
 		
 		//Initialize function, it is asynchonous to allow await-ing for the functions called in init.
 		async function init(){
+      readUserSettings();
       // Set ACE Editor basePath to same path as CDN Library.
       window.ace.config.set("basePath", "https://cdn.jsdelivr.net/npm/ace-builds@latest/src-noconflict/");
       await addItemsToCollectionFromFolderList(await getContentFolderList(), entries); //Get all entries from all json file and put them in one big collection. at the time of writing this is about 25600 entries.
@@ -70,8 +124,25 @@
         opt.title = JSON.stringify(filter);
         document.getElementById("filterList").appendChild(opt);
       }
-      document.getElementById("filterList").style.display = "";
+      document.getElementById("filterList").style.display = "inline";
       document.getElementById("editForm").innerHTML = "select an entry to start"
+		}
+    
+    
+		async function readUserSettings(){
+      userSettingsJSON = await getJsonFromFile("userSettings.json");
+      if(!userSettingsJSON){
+        userSettingsJSON = {}
+        //document.getElementById("cataclysmGameFolder").innerHTML = "Cataclysm game folder: not set!";
+      } else {
+        //document.getElementById("cataclysmGameFolder").innerHTML = "Cataclysm game folder: " + userSettingsJSON["cataclysmGameFolder"];
+        if(userSettingsJSON.toolbar_old_json == false){
+          document.getElementById("chkToolbarOldJson").checked = false;
+        } else {
+          document.getElementById("chkToolbarOldJson").checked = true;
+          document.getElementById('old_json_update_toolbar').style.display = "";
+        }
+      }
 		}
     
 		async function filterList_change(selectElement){
@@ -84,7 +155,65 @@
       } else {
         entryList = new collectionList(document.getElementById("entryList"), entries, jsonObj.display_key, jsonObj.filter);
       }
-      document.getElementById('editForm').style.display = "none";
+      //document.getElementById('editForm').style.display = "none";
+      document.getElementById("editForm").innerHTML = "select an entry to start"
+    }
+    
+    function chkContentSelectionClicked(htmlElement){
+        if(htmlElement.value == "chkToolbarOldJson") {
+          if(htmlElement.checked){
+            userSettingsJSON.toolbar_old_json = true;
+            document.getElementById('old_json_update_toolbar').style.display = "";
+          } else {
+            userSettingsJSON.toolbar_old_json = false;
+            document.getElementById('old_json_update_toolbar').style.display = "none";
+          }
+        }
+				writeUserSettingsFile(userSettingsJSON);
+    }
+    
+    function btnTransformNameClicked(htmlElement){
+      let loki = editorList[0].loki
+      let jsonObj = entries.get(loki).jsonObject;
+      if(jsonObj) {
+        let nameString = jsonObj.name;
+        let pluralString = jsonObj.name_plural;
+        let newNameObj = {};
+        newNameObj.str = nameString;
+        if(pluralString) {
+          newNameObj.str_pl = pluralString;
+          delete jsonObj.name_plural;
+        }
+        jsonObj.name = newNameObj;
+        entries.get(editorList[0].loki).jsonObject = jsonObj
+				editorList[0].setValue(loki);
+      }
+    }
+    
+    function btnTransformItemsEntriesClicked(htmlElement){
+      let loki = editorList[0].loki
+      let jsonObj = entries.get(loki).jsonObject;
+      if(jsonObj) {
+        let itemsArray = jsonObj.items;
+        let entriesArray = [];
+        let newEntriesObj, item;
+        for (let i = 0, amountOfItems = itemsArray.length; i < amountOfItems; i++) {
+          item = itemsArray[i];
+          if(Array.isArray(item)) {
+            newEntriesObj = {};
+            newEntriesObj.item = item[0];
+            newEntriesObj.prob = item[1];
+            entriesArray.push(newEntriesObj);
+          } else { //It's already an object so just push it.
+            entriesArray.push(item);
+          }
+        }
+        delete jsonObj.items;
+        jsonObj.subtype = "distribution";
+        jsonObj.entries = entriesArray;
+        entries.get(editorList[0].loki).jsonObject = jsonObj
+				editorList[0].setValue(loki);
+      }
     }
     
 		//When the user selects an item from the spell list
@@ -118,22 +247,34 @@
 		<div class="mainContent" style="height:95%;">
 		<table style="height:100%;">
 		<tr>
-			<td class="mainListContainer" style="vertical-align: top;">
+			<td class="mainListContainer" style="vertical-align: top; width: 305px;">
           <select name="filterList" id="filterList"  onchange="filterList_change(this);" style="display:none;">
             <option selected>Select a filter</option>
           </select>
+          <div class="collapsible-menu">
+            <input type="checkbox" id="menu">
+            <label for="menu">&nbsp&nbsp&nbsp</label>
+            <div class="menu-content">
+                <ul>
+                    <li><input onclick="chkContentSelectionClicked(this)" type="checkbox" id="chkToolbarOldJson" value="chkToolbarOldJson" checked>Update old json toolbar</li>
+                </ul>
+            </div>
+          </div>
 					<select name="entryList" id="entryList"  onchange="entryList_change(this);" size="5" style="height:94%; display:none;"></select>
 		</td>
 			<td class="mainContentContainer" style="padding:25px; height:100%; overflow:auto;">
-				<div class="contentContainer" style="height:100%; overflow:auto; min-width: 725px;" id="editForm">
+				<div class="contentContainer" style="overflow:auto; min-width: 725px; display:none;" id="old_json_update_toolbar">
+          <button type="button" class="btn btn-sm btn-primary mr-2 my-1" onclick="btnTransformNameClicked(this)">Name to object</button>
+          <button type="button" class="btn btn-sm btn-primary mr-2 my-1" onclick="btnTransformItemsEntriesClicked(this)">item_group items to entries</button>
+				</div>
+				<div class="contentContainer" style="height:95%; overflow:auto; min-width: 725px;" id="editForm">
 					<p >Loading.</p>
 				</div>
 			</td>
 		</tr>
 		</table>
 		</div>
-		
-    
+
     
     
   </body>

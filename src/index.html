@@ -6,6 +6,7 @@
 		<link rel="stylesheet" href="index.css">
 	</head>
 	 <script src="filesystemfunctions.js"></script> 
+   <script src="commonfunctions.js"></script> 
 	<script>
     var userSettingsJSON = {};
   
@@ -34,19 +35,6 @@
       }
 		}
 		
-		//Writes the settings for the user to a json file.
-		function writeUserSettingsFile(){
-			const fs = require('fs'); // file system module to perform file operations
-			 
-			// Write the settings to disk
-			var jsonContent = JSON.stringify(userSettingsJSON);
-			fs.writeFile("userSettings.json", jsonContent, 'utf8', function (err) {
-				if (err) {
-					console.log("An error occured while writing JSON Object to File.");
-					return console.log(err);
-				}
-			}); 
-		}
     
     function chkContentSelectionClicked(htmlElement){
         if(htmlElement.value == "core") {
@@ -62,7 +50,7 @@
             userSettingsJSON.includeMods = false;
           }
         }
-				writeUserSettingsFile();
+				writeUserSettingsFile(userSettingsJSON);
     }
 		
 		//When the get caltaclysmgamefolder button is clicked

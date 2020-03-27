@@ -4,6 +4,9 @@
     "title": "NPC class",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
+    "stringifyOptions": {
+      "maxLength": 114
+    },
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -39,31 +42,93 @@
             "propertyOrder": 40
         },
         "traits": {
-            "$ref": "#/definitions/object_array", 
+            "type": "array",
+            "id": "/properties/traits",
             "title": "Traits",
+            "format": "tabs",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
             "items": {
-                "title": "Trait ",
-                "defaultProperties": [
-                    "group"
-                ],
-                "properties": {
-                    "group": {
-                        "type": "string",
-                        "title": "Group",
-                        "default": "BG_survival_story_CYBORG",
-                        "format": "text",
-                        "description": "Description for 'group' Type: 'string' Path: '/properties/traits/items/properties/group'",
-                        "propertyOrder": 10
+                "headerTemplate": "Traits {{i1}}",
+                "oneOf": [
+                    {
+                        "type": "object",
+                        "id": "/properties/traits/oneof0",
+                        "title": "oneof 0 /properties/traits",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_edit_json": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "defaultProperties": [
+                            "group"
+                        ],
+                        "properties": {
+                            "group": {
+                                "type": "string",
+                                "id": "/properties/traits/items/properties/group",
+                                "title": "Group",
+                                "default": "BG_survival_story_POLICE",
+                                "format": "text",
+                                "description": "Description for 'group' Type: 'string' Path: '/properties/traits/items/properties/group'",
+                                "options": {
+                                    "hidden": false
+                                },
+                                "propertyOrder": 10
+                            }
+                        }
                     },
-                    "trait": {
-                        "type": "string",
-                        "title": "Trait",
-                        "default": "GLASSJAW",
-                        "format": "text",
-                        "description": "Description for 'trait' Type: 'string' Path: '/properties/traits/items/properties/group'",
-                        "propertyOrder": 10
+                    {
+                        "type": "array",
+                        "id": "/properties/traits/oneof1",
+                        "title": "oneof 1 /properties/traits",
+                        "format": "tabs",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "items": {
+                            "headerTemplate": "Title Root Traits  {{i1}}",
+                            "oneOf": [
+                                {
+                                    "type": "string",
+                                    "id": "/properties/traits/items/oneof0",
+                                    "title": "oneof 0 /properties/traits/items",
+                                    "default": "TOUGH2",
+                                    "format": "text",
+                                    "description": "Description for 'items' Type: 'string' Path: '/properties/traits/items/items'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                },
+                                {
+                                    "type": "integer",
+                                    "id": "/properties/traits/items/oneof1",
+                                    "title": "oneof 1 /properties/traits/items",
+                                    "default": 100,
+                                    "description": "A description for 'items'  Type: 'integer'",
+                                    "options": {
+                                        "hidden": false
+                                    }
+                                }
+                            ]
+                        }
                     }
-                }
+                ]
             },
             "propertyOrder": 50
         },

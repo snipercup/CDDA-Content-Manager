@@ -666,6 +666,7 @@
       "items": {
           "type": "string",
           "enum": [ 
+              "ACID",
               "EMP",
               "LIGHTNING",
               "NO_DAMAGE_SCALING",
@@ -680,6 +681,8 @@
               "DRAW_LASER_BEAM",
               "DRAW_AS_LINE",
               "BEANBAG",
+              "EXPLOSIVE_HUGE",
+              "STREAM_BIG",
               "JET",
               "WIDE",
               "NEVER_MISFIRES",
@@ -696,6 +699,122 @@
       "title": "Price Postapoc",
       "default": 5200,
       "description": "The price after the cataclysm"
+  },
+  "relic_data": {
+      "type": "object",
+      "title": "Relic Data",
+      "options": {
+          "disable_collapse": false,
+          "disable_edit_json": false,
+          "disable_properties": false,
+          "collapsed": false,
+          "hidden": false
+      },
+      "defaultProperties": [
+          "passive_effects"
+      ],
+      "properties": {
+          "passive_effects": {
+              "type": "array",
+              "title": "Passive Effects",
+              "format": "tabs",
+              "options": {
+                  "disable_collapse": false,
+                  "disable_array_add": false,
+                  "disable_array_delete": false,
+                  "disable_array_reorder": false,
+                  "disable_properties": false,
+                  "collapsed": false,
+                  "hidden": false
+              },
+              "items": {
+                  "type": "object",
+                  "title": "Passive Effect ",
+                  "options": {
+                      "disable_collapse": false,
+                      "disable_edit_json": false,
+                      "disable_properties": false,
+                      "collapsed": false,
+                      "hidden": false
+                  },
+                  "defaultProperties": [
+                      "has",
+                      "condition",
+                      "values"
+                  ],
+                  "properties": {
+                      "has": {
+                          "type": "string",
+                          "title": "Has",
+                          "default": "WORN",
+                          "format": "text",
+                          "propertyOrder": 10
+                      },
+                      "condition": {
+                          "type": "string",
+                          "title": "Condition",
+                          "default": "ALWAYS",
+                          "format": "text",
+                          "propertyOrder": 20
+                      },
+                      "values": {
+                          "type": "array",
+                          "title": "Values",
+                          "format": "grid",
+                          "options": {
+                              "disable_collapse": false,
+                              "disable_array_add": false,
+                              "disable_array_delete": false,
+                              "disable_array_reorder": true,
+                              "disable_properties": false,
+                              "collapsed": false,
+                              "hidden": false
+                          },
+                          "items": {
+                              "type": "object",
+                              "title": "Value ",
+                              "options": {
+                                  "disable_collapse": false,
+                                  "disable_edit_json": false,
+                                  "disable_properties": false,
+                                  "collapsed": false,
+                                  "hidden": false
+                              },
+                              "defaultProperties": [
+                                  "value",
+                                  "multiply",
+                                  "add"
+                              ],
+                              "properties": {
+                                  "value": {
+                                      "type": "string",
+                                      "title": "Value",
+                                      "default": "SPEED",
+                                      "format": "text",
+                                      "propertyOrder": 10
+                                  },
+                                  "multiply": {
+                                      "type": "number",
+                                      "title": "Multiply",
+                                      "default": 0.15,
+                                      "propertyOrder": 20
+                                  },
+                                  "add": {
+                                      "type": "integer",
+                                      "title": "Add",
+                                      "default": 5,
+                                      "propertyOrder": 30
+                                  }
+                              }
+                          },
+                          "propertyOrder": 30
+                      }
+                  }
+              },
+              "propertyOrder": 10
+          }
+      },
+      "propertyOrder": 10
   },
   "fuel": {
       "type": "object",
@@ -919,16 +1038,14 @@
   },
   "loudness": {
       "type": "number",
-      "id": "/properties/proportional/properties/loudness",
+      "id": "/definitions/loudness",
       "title": "Loudness",
       "default": 0.46,
-      "description": "The amount of noise",
-      "options": {
-          "hidden": false
-      }
+      "description": "The amount of noise"
   },
   "proportional": {
       "type": "object",
+      "id": "/definitions/proportional",
       "title": "Proportional",
       "options": {
           "disable_collapse": false,
@@ -949,11 +1066,6 @@
           "weight": {
               "type": "number",
               "title": "Weight",
-              "default": 0.5
-          },
-          "price": {
-              "type": "number",
-              "title": "Price",
               "default": 0.5
           },
           "encumbrance": {
@@ -1814,7 +1926,7 @@
                   "properties": {
                       "id": {
                           "type": "string",
-                          "id": "/properties/use_action/properties/id",
+                          "id": "/definitions/use_action/properties/id",
                           "title": "ID",
                           "default": "unique_entry_here",
                           "format": "text",
@@ -1822,7 +1934,7 @@
                       },
                       "text": {
                           "type": "string",
-                          "id": "/properties/use_action/properties/id",
+                          "id": "/definitions/use_action/properties/id",
                           "title": "Text",
                           "default": "A soft, cushioned hairbrush.  The shiny chrome design appears modern.",
                           "format": "text",
@@ -1833,7 +1945,7 @@
           },
           {
               "type": "string",
-              "id": "/properties/use_action/properties/id",
+              "id": "/definitions/use_action/properties/id",
               "title": "Single entry",
               "default": "unique_entry_here",
               "format": "text",
@@ -1848,7 +1960,7 @@
   },
   "material_thickness": {
       "type": "integer",
-      "id": "/properties/material_thickness",
+      "id": "/definitions/material_thickness",
       "title": "Material Thickness",
       "default": 1,
       "description": "The thickness of the material",
@@ -1859,7 +1971,7 @@
   },
   "turns_per_charge": {
       "type": "integer",
-      "id": "properties/turns_per_charge",
+      "id": "definitions/turns_per_charge",
       "title": "Turns per charge",
       "default": 25,
       "description": "Charges consumed over time, deprecated in favor of power_draw",
@@ -1869,7 +1981,7 @@
   },
   "seed_data": {
       "type": "object",
-      "id": "/properties/seed_data",
+      "id": "/definitions/seed_data",
       "title": "Seed data",
       "description": "Every item type can have optional seed data, if the item has seed data, it's considered a seed and can be planted",
       "options": {
@@ -1886,7 +1998,7 @@
       "properties": {
           "fruit_div": {
               "type": "integer",
-              "id": "/properties/seed_data/properties/fruit_div",
+              "id": "/definitions/seed_data/properties/fruit_div",
               "title": "Fruit div",
               "default": 2,
               "description": "(optional, default is 1). Final amount of fruit charges produced is divided by this number. Works only if fruit item is counted by charges.",
@@ -1894,7 +2006,7 @@
           },
           "seeds": {
               "type": "boolean",
-              "id": "/properties/seed_data/properties/seeds",
+              "id": "/definitions/seed_data/properties/seeds",
               "title": "Seeds",
               "format": "checkbox",
               "default": true,
@@ -1905,7 +2017,7 @@
           },
           "grow": {
               "type": "string",
-              "id": "/properties/seed_data/properties/grow",
+              "id": "/definitions/seed_data/properties/grow",
               "title": "Grow",
               "default": "91 days",
               "format": "text",
@@ -1914,7 +2026,7 @@
           },
           "byproducts": {
               "type": "array",
-              "id": "/properties/seed_data/properties/byproducts",
+              "id": "/definitions/seed_data/properties/byproducts",
               "title": "Byproducts",
               "description": "A list of further items that should spawn upon harvest.",
               "default": [ "withered", "straw_pile" ],
@@ -1940,7 +2052,7 @@
           },
           "fruit": {
               "type": "string",
-              "id": "/properties/seed_data/properties/fruit",
+              "id": "/definitions/seed_data/properties/fruit",
               "title": "Fruit",
               "default": "weed",
               "format": "text",
@@ -1949,7 +2061,7 @@
           },
           "plant_name": {
               "type": "string",
-              "id": "/properties/seed_data/properties/plant_name",
+              "id": "/definitions/seed_data/properties/plant_name",
               "title": "Plant name",
               "default": "cattail",
               "format": "text",
@@ -1960,7 +2072,7 @@
   },
   "coverage": {
       "type": "integer",
-      "id": "/properties/coverage",
+      "id": "/definitions/coverage",
       "title": "Coverage",
       "default": 10,
       "description": "The amount of coverage",
@@ -1971,7 +2083,7 @@
   },
   "encumbrance": {
       "type": "integer",
-      "id": "/properties/encumbrance",
+      "id": "/definitions/encumbrance",
       "title": "Encumbrance",
       "default": 3,
       "description": "The amount of encumbrance",
@@ -1982,7 +2094,7 @@
   },
   "range": {
       "type": "integer",
-      "id": "/properties/range",
+      "id": "/definitions/range",
       "title": "Range",
       "default": 14,
       "description": "The range when fired",
@@ -1992,7 +2104,7 @@
   },
   "environmental_protection": {
       "type": "integer",
-      "id": "/properties/environmental_protection",
+      "id": "/definitions/environmental_protection",
       "title": "Environmental Protection",
       "default": 1,
       "description": "The environmental protection",
@@ -2003,7 +2115,7 @@
   },
   "qualities": {
       "type": "array",
-      "id": "/properties/qualities",
+      "id": "/definitions/qualities",
       "title": "Qualities",
       "description": "The qualities this item provides",
       "format": "table",
@@ -2018,7 +2130,7 @@
       },
       "items": {
           "type": "array",
-          "id": "/properties/qualities/oneof0",
+          "id": "/definitions/qualities/oneof0",
           "default": [ "CUT", 1 ],
           "title": "Quality",
           "format": "tabs",
@@ -2035,7 +2147,7 @@
           "items": [
               {
                   "type": "string",
-                  "id": "/properties/qualities/items/oneof0",
+                  "id": "/definitions/qualities/items/oneof0",
                   "default": "VISE",
                   "format": "text",
                   "filteredEnum": {
@@ -2049,7 +2161,7 @@
               },
               {
                   "type": "integer",
-                  "id": "/properties/qualities/items/oneof1",
+                  "id": "/definitions/qualities/items/oneof1",
                   "default": 1,
                   "options": {
                     "hidden": false,
@@ -2062,7 +2174,7 @@
   },
   "warmth": {
       "type": "integer",
-      "id": "/properties/warmth",
+      "id": "/definitions/warmth",
       "title": "Warmth",
       "default": 25,
       "description": "The warmth",

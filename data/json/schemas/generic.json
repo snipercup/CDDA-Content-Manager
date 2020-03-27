@@ -85,7 +85,7 @@
             }
         },
         "proportional": {
-          "$ref": "#/definitions/proportional"
+          "includeDefinition": "proportional"
         },
         "container": {
             "type": "string",
@@ -107,9 +107,13 @@
                     { "$or": [
                         { "jsonObject.type": { "$eq": "AMMO" } },
                         { "jsonObject.type": { "$eq": "CONTAINER" } },
+                        { "jsonObject.type": { "$eq": "COMESTIBLE" } },
+                        { "jsonObject.type": { "$eq": "MAGAZINE" } },
+                        { "jsonObject.type": { "$eq": "ARMOR" } },
                         { "jsonObject.type": { "$eq": "GENERIC" } },
                         { "jsonObject.type": { "$eq": "TOOL" } }
                     ] },
+                    { "jsonObject.id": { "$exists": true } },
                     { "$or": [
                         { "jsonObject.symbol": { "$exists": true } },
                         { "jsonObject.copy-from": { "$exists": true } }
@@ -136,8 +140,12 @@
                     "RAIN_PROTECT",
                     "JAVELIN",
                     "USE_PART_ITEM",
+                    "OVERSIZE",
+                    "MESSY",
                     "NANOFAB_TEMPLATE",
                     "IRREMOVABLE",
+                    "VARSIZE",
+                    "STURDY",
                     "FIREWOOD",
                     "SHEATH_GOLF",
                     "MC_TURN_USED",
@@ -147,6 +155,7 @@
                     "CAN_HAVE_CHARGES",
                     "CANNIBALISM",
                     "MC_MAY_BE_ENCRYPTED",
+                    "FLAMING",
                     "SPEAR",
                     "STAB",
                     "NPC_THROWN",
@@ -182,6 +191,7 @@
                     "NONCONDUCTIVE",
                     "NO_UNWIELD",
                     "NO_SALVAGE",
+                    "SLOW_WIELD",
                     "NO_DROP",
                     "NO_INGEST",
                     "EDIBLE_FROZEN",
@@ -191,9 +201,11 @@
                     "BOMB",
                     "RADIO_INVOKE_PROC",
                     "RADIO_MODABLE",
+                    "MAGIC_FOCUS",
                     "WHIP",
                     "REACH3",
                     "LIGHT_4",
+                    "LIGHT_5",
                     "LIGHT_10",
                     "LIGHT_15"
                 ]
@@ -265,7 +277,6 @@
             "description": "How much it will affect your health.",
             "propertyOrder": 100
         },
-        "calories": {"$ref": "#/definitions/calories"},
         "price": {
           "$ref": "#/definitions/price", 
           "propertyOrder": 16

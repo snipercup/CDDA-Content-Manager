@@ -4,6 +4,9 @@
     "title": "Mission definition",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
+    "stringifyOptions": {
+      "maxLength": 117
+    },
     "options": {
         "disable_collapse": false,
         "disable_edit_json": false,
@@ -26,34 +29,34 @@
           "propertyOrder": 11,
           "default": "mission_definition"
         },
-        "description": {
-          "$ref": "#/definitions/description", 
-          "propertyOrder": 12
-        },
         "name": {
           "$ref": "#/definitions/name", 
           "propertyOrder": 12
+        },
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 13
         },
         "difficulty": {
             "type": "integer",
             "title": "Difficulty",
             "default": 1,
             "description": "The difficulty of the mission",
-            "propertyOrder": 10
+            "propertyOrder": 45
         },
         "value": {
             "type": "integer",
             "title": "Value",
             "default": 1,
             "description": "The value of the mission",
-            "propertyOrder": 10
+            "propertyOrder": 45
         },
         "count": {
             "type": "integer",
             "title": "Count",
             "default": 1,
             "description": "The number of items to retreive",
-            "propertyOrder": 10
+            "propertyOrder": 45
         },
         "goal": {
             "type": "string",
@@ -84,74 +87,11 @@
             "format": "selectize"
         },
         "start": {
-            "type": "object",
             "title": "Start",
-            "options": {
-                "disable_collapse": false,
-                "disable_edit_json": false,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false
-            },
-            "defaultProperties": [
-                "effect",
-                "assign_mission_target"
-            ],
-            "properties": {
-                "effect": {
-                    "type": "array",
-                    "title": "Effect",
-                    "format": "tabs",
-                    "options": {
-                        "disable_collapse": false,
-                        "disable_array_add": false,
-                        "disable_array_delete": false,
-                        "disable_array_reorder": false,
-                        "disable_properties": false,
-                        "collapsed": false,
-                        "hidden": false
-                    },
-                    "items": {
-                        "headerTemplate": "Effect {{i1}}",
-                        "oneOf": [
-                            {
-                                "type": "string",
-                                "title": "String effect",
-                                "default": "follow",
-                                "format": "text",
-                                "description": "Description for 'items' Type: 'string' Path: '/properties/start/properties/effect/items'"
-                            },
-                            {
-                                "type": "object",
-                                "title": "Object effect",
-                                "options": {
-                                    "disable_collapse": false,
-                                    "disable_edit_json": false,
-                                    "disable_properties": false,
-                                    "collapsed": false,
-                                    "hidden": false
-                                },
-                                "defaultProperties": [
-                                    "u_buy_item"
-                                ],
-                                "properties": {
-                                    "u_buy_item": {
-                                        "type": "string",
-                                        "title": "U Buy Item",
-                                        "default": "sarcophagus_access_code",
-                                        "format": "text",
-                                        "description": "Description for 'u_buy_item' Type: 'string' Path: '/properties/start/properties/effect/items/properties/u_buy_item'",
-                                        "propertyOrder": 10
-                                    }
-                                }
-                            }
-                        ]
-                    },
-                    "propertyOrder": 10
-                },
-                "assign_mission_target": {
+            "oneOf": [
+                {
                     "type": "object",
-                    "title": "Assign Mission Target",
+                    "title": "Object format",
                     "options": {
                         "disable_collapse": false,
                         "disable_edit_json": false,
@@ -160,45 +100,126 @@
                         "hidden": false
                     },
                     "defaultProperties": [
-                        "om_terrain",
-                        "om_special",
-                        "reveal_radius"
+                        "effect",
+                        "assign_mission_target"
                     ],
                     "properties": {
-                        "om_terrain": {
-                            "type": "string",
-                            "title": "Om Terrain",
-                            "default": "haz_sar_1_1",
-                            "format": "text",
-                            "description": "Description for 'om_terrain' Type: 'string' Path: '/properties/start/properties/assign_mission_target/properties/om_terrain'",
+                        "effect": {
+                            "type": "array",
+                            "title": "Effect",
+                            "format": "tabs",
+                            "options": {
+                                "disable_collapse": false,
+                                "disable_array_add": false,
+                                "disable_array_delete": false,
+                                "disable_array_reorder": false,
+                                "disable_properties": false,
+                                "collapsed": false,
+                                "hidden": false
+                            },
+                            "items": {
+                                "headerTemplate": "Effect {{i1}}",
+                                "oneOf": [
+                                    {
+                                        "type": "string",
+                                        "title": "String effect",
+                                        "default": "follow",
+                                        "format": "text",
+                                        "description": "Description for 'items' Type: 'string' Path: '/properties/start/properties/effect/items'"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "title": "Object effect",
+                                        "options": {
+                                            "disable_collapse": false,
+                                            "disable_edit_json": false,
+                                            "disable_properties": false,
+                                            "collapsed": false,
+                                            "hidden": false
+                                        },
+                                        "defaultProperties": [
+                                            "u_buy_item"
+                                        ],
+                                        "properties": {
+                                            "u_buy_item": {
+                                                "type": "string",
+                                                "title": "U Buy Item",
+                                                "default": "sarcophagus_access_code",
+                                                "format": "text",
+                                                "description": "Description for 'u_buy_item' Type: 'string' Path: '/properties/start/properties/effect/items/properties/u_buy_item'",
+                                                "propertyOrder": 10
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
                             "propertyOrder": 10
                         },
-                        "om_special": {
-                            "type": "string",
-                            "title": "Om Special",
-                            "default": "Hazardous Waste Sarcophagus",
-                            "format": "text",
-                            "description": "Description for 'om_special' Type: 'string' Path: '/properties/start/properties/assign_mission_target/properties/om_special'",
+                        "assign_mission_target": {
+                            "type": "object",
+                            "title": "Assign Mission Target",
+                            "options": {
+                                "disable_collapse": false,
+                                "disable_edit_json": false,
+                                "disable_properties": false,
+                                "collapsed": false,
+                                "hidden": false
+                            },
+                            "defaultProperties": [
+                                "om_terrain",
+                                "om_special",
+                                "reveal_radius"
+                            ],
+                            "properties": {
+                                "om_terrain": {
+                                    "type": "string",
+                                    "title": "Om Terrain",
+                                    "default": "haz_sar_1_1",
+                                    "format": "text",
+                                    "description": "Description for 'om_terrain' Type: 'string' Path: '/properties/start/properties/assign_mission_target/properties/om_terrain'",
+                                    "propertyOrder": 10
+                                },
+                                "om_special": {
+                                    "type": "string",
+                                    "title": "Om Special",
+                                    "default": "Hazardous Waste Sarcophagus",
+                                    "format": "text",
+                                    "description": "Description for 'om_special' Type: 'string' Path: '/properties/start/properties/assign_mission_target/properties/om_special'",
+                                    "propertyOrder": 20
+                                },
+                                "reveal_radius": {
+                                    "type": "integer",
+                                    "title": "Reveal Radius",
+                                    "default": 3,
+                                    "description": "A description for 'reveal_radius'  Type: 'integer'",
+                                    "propertyOrder": 30
+                                }
+                            },
                             "propertyOrder": 20
-                        },
-                        "reveal_radius": {
-                            "type": "integer",
-                            "title": "Reveal Radius",
-                            "default": 3,
-                            "description": "A description for 'reveal_radius'  Type: 'integer'",
-                            "propertyOrder": 30
                         }
-                    },
-                    "propertyOrder": 20
+                    }
+                },
+                {
+                    "type": "string",
+                    "title": "string format",
+                    "default": "ranch_nurse_5",
+                    "format": "text"
                 }
-            },
-            "propertyOrder": 70
+            ]
         },
         "origins": {
             "$ref": "#/definitions/string_array",
             "title": "Origins",
             "default": [ "ORIGIN_SECONDARY" ],
-            "items": { "enum": [ "ORIGIN_SECONDARY" ], "default": "ORIGIN_SECONDARY" },
+            "items": { 
+                "enum": [ 
+                    "ORIGIN_SECONDARY",
+                    "ORIGIN_GAME_START",
+                    "ORIGIN_ANY_NPC",
+                    "ORIGIN_OPENER_NPC"
+                ], 
+                "default": "ORIGIN_SECONDARY" 
+            },
             "propertyOrder": 80
         },
         "destination": {
@@ -329,458 +350,631 @@
             ],
             "properties": {
                 "update_mapgen": {
-                    "type": "array",
                     "title": "Update Mapgen",
-                    "format": "tabs",
-                    "options": {
-                        "disable_collapse": false,
-                        "disable_array_add": false,
-                        "disable_array_delete": false,
-                        "disable_array_reorder": false,
-                        "disable_properties": false,
-                        "collapsed": false,
-                        "hidden": false
-                    },
-                    "items": {
-                        "type": "object",
-                        "title": "Update ",
-                        "options": {
-                            "disable_collapse": false,
-                            "disable_edit_json": false,
-                            "disable_properties": false,
-                            "collapsed": false,
-                            "hidden": false
-                        },
-                        "defaultProperties": [
-                            "om_terrain",
-                            "translate_ter",
-                            "place_nested"
-                        ],
-                        "properties": {
-                            "om_terrain": {
-                                "type": "string",
-                                "title": "Om Terrain",
-                                "default": "ranch_camp_65",
-                                "format": "text",
-                                "description": "Description for 'om_terrain' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/om_terrain'",
-                                "propertyOrder": 10
+                    "oneOf": [
+                        {
+                            "type": "object",
+                            "title": "Object format",
+                            "options": {
+                                "disable_collapse": false,
+                                "disable_edit_json": false,
+                                "disable_properties": false,
+                                "collapsed": false,
+                                "hidden": false
                             },
-                            "translate_ter": {
-                                "type": "array",
-                                "title": "Translate Ter",
-                                "format": "tabs",
-                                "options": {
-                                    "disable_collapse": false,
-                                    "disable_array_add": false,
-                                    "disable_array_delete": false,
-                                    "disable_array_reorder": false,
-                                    "disable_properties": false,
-                                    "collapsed": false,
-                                    "hidden": false
+                            "defaultProperties": [
+                                "om_terrain",
+                                "place_nested"
+                            ],
+                            "properties": {
+                                "om_terrain": {
+                                    "type": "string",
+                                    "title": "Om Terrain",
+                                    "default": "ranch_camp_51",
+                                    "format": "text",
+                                    "description": "Description for 'om_terrain' Type: 'string' Path: '/properties/update_mapgen/properties/om_terrain'",
+                                    "propertyOrder": 10
                                 },
-                                "items": {
-                                    "type": "object",
-                                    "title": "Title Root End Update Mapgen Translate Ter ",
+                                "place_nested": {
+                                    "type": "array",
+                                    "title": "Place Nested",
+                                    "format": "tabs",
                                     "options": {
                                         "disable_collapse": false,
-                                        "disable_edit_json": false,
+                                        "disable_array_add": false,
+                                        "disable_array_delete": false,
+                                        "disable_array_reorder": false,
                                         "disable_properties": false,
                                         "collapsed": false,
                                         "hidden": false
                                     },
-                                    "defaultProperties": [
-                                        "from",
-                                        "to",
-                                        "x",
-                                        "y"
-                                    ],
-                                    "properties": {
-                                        "from": {
-                                            "type": "string",
-                                            "title": "From",
-                                            "default": "t_underbrush",
-                                            "format": "text",
-                                            "description": "Description for 'from' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/from'",
-                                            "propertyOrder": 10
+                                    "items": {
+                                        "type": "object",
+                                        "title": "Title Root Update Mapgen Place Nested ",
+                                        "options": {
+                                            "disable_collapse": false,
+                                            "disable_edit_json": false,
+                                            "disable_properties": false,
+                                            "collapsed": false,
+                                            "hidden": false
                                         },
-                                        "to": {
-                                            "type": "string",
-                                            "title": "To",
-                                            "default": "t_dirt",
-                                            "format": "text",
-                                            "description": "Description for 'to' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/to'",
-                                            "propertyOrder": 20
-                                        },
-                                        "x": {
-                                            "type": "integer",
-                                            "title": "X",
-                                            "default": 0,
-                                            "description": "A description for 'x'  Type: 'integer'",
-                                            "propertyOrder": 30
-                                        },
-                                        "y": {
-                                            "type": "integer",
-                                            "title": "Y",
-                                            "default": 0,
-                                            "description": "A description for 'y'  Type: 'integer'",
-                                            "propertyOrder": 40
+                                        "defaultProperties": [
+                                            "chunks",
+                                            "x",
+                                            "y"
+                                        ],
+                                        "properties": {
+                                            "chunks": {
+                                                "type": "array",
+                                                "title": "Chunks",
+                                                "format": "tabs",
+                                                "options": {
+                                                    "disable_collapse": false,
+                                                    "disable_array_add": false,
+                                                    "disable_array_delete": false,
+                                                    "disable_array_reorder": false,
+                                                    "disable_properties": false,
+                                                    "collapsed": false,
+                                                    "hidden": false
+                                                },
+                                                "items": {
+                                                    "type": "string",
+                                                    "title": "Title Root Update Mapgen Place Nested Chunks ",
+                                                    "default": "tacoma_commune_bar_bartender_2",
+                                                    "format": "text"
+                                                }
+                                            },
+                                            "x": {
+                                                "type": "integer",
+                                                "title": "X",
+                                                "default": 0
+                                            },
+                                            "y": {
+                                                "type": "integer",
+                                                "title": "Y",
+                                                "default": 0
+                                            }
                                         }
-                                    }
-                                },
-                                "propertyOrder": 20
+                                    },
+                                    "propertyOrder": 20
+                                }
+                            }
+                        },
+                        {
+                            "type": "array",
+                            "title": "List format",
+                            "format": "tabs",
+                            "options": {
+                                "disable_collapse": false,
+                                "disable_array_add": false,
+                                "disable_array_delete": false,
+                                "disable_array_reorder": false,
+                                "disable_properties": false,
+                                "collapsed": false,
+                                "hidden": false
                             },
-                            "place_nested": {
-                                "type": "array",
-                                "title": "Place Nested",
-                                "format": "tabs",
+                            "items": {
+                                "type": "object",
+                                "title": "Update ",
                                 "options": {
                                     "disable_collapse": false,
-                                    "disable_array_add": false,
-                                    "disable_array_delete": false,
-                                    "disable_array_reorder": false,
+                                    "disable_edit_json": false,
                                     "disable_properties": false,
                                     "collapsed": false,
                                     "hidden": false
                                 },
-                                "items": {
-                                    "type": "object",
-                                    "title": "Title Root End Update Mapgen Place Nested ",
-                                    "options": {
-                                        "disable_collapse": false,
-                                        "disable_edit_json": false,
-                                        "disable_properties": false,
-                                        "collapsed": false,
-                                        "hidden": false
+                                "defaultProperties": [
+                                    "om_terrain",
+                                    "translate_ter",
+                                    "place_nested"
+                                ],
+                                "properties": {
+                                    "om_terrain": {
+                                        "type": "string",
+                                        "title": "Om Terrain",
+                                        "default": "ranch_camp_65",
+                                        "format": "text",
+                                        "description": "Description for 'om_terrain' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/om_terrain'",
+                                        "propertyOrder": 10
                                     },
-                                    "defaultProperties": [
-                                        "chunks",
-                                        "x",
-                                        "y"
-                                    ],
-                                    "properties": {
-                                        "chunks": {
-                                            "$ref": "#/definitions/string_array",
-                                            "title": "Chunks",
-                                            "items": {
-                                                "default": "tacoma_commune_west_wall_door",
-                                                "filteredEnum": {
-                                                    "display_key": "nested_mapgen_id",
-                                                    "filter": { "jsonObject.nested_mapgen_id": { "$exists": true } }
+                                    "translate_ter": {
+                                        "type": "array",
+                                        "title": "Translate Ter",
+                                        "format": "tabs",
+                                        "options": {
+                                            "disable_collapse": false,
+                                            "disable_array_add": false,
+                                            "disable_array_delete": false,
+                                            "disable_array_reorder": false,
+                                            "disable_properties": false,
+                                            "collapsed": false,
+                                            "hidden": false
+                                        },
+                                        "items": {
+                                            "type": "object",
+                                            "title": "Title Root End Update Mapgen Translate Ter ",
+                                            "options": {
+                                                "disable_collapse": false,
+                                                "disable_edit_json": false,
+                                                "disable_properties": false,
+                                                "collapsed": false,
+                                                "hidden": false
+                                            },
+                                            "defaultProperties": [
+                                                "from",
+                                                "to",
+                                                "x",
+                                                "y"
+                                            ],
+                                            "properties": {
+                                                "from": {
+                                                    "type": "string",
+                                                    "title": "From",
+                                                    "default": "t_underbrush",
+                                                    "format": "text",
+                                                    "description": "Description for 'from' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/from'",
+                                                    "propertyOrder": 10
+                                                },
+                                                "to": {
+                                                    "type": "string",
+                                                    "title": "To",
+                                                    "default": "t_dirt",
+                                                    "format": "text",
+                                                    "description": "Description for 'to' Type: 'string' Path: '/properties/end/properties/update_mapgen/items/properties/translate_ter/items/properties/to'",
+                                                    "propertyOrder": 20
+                                                },
+                                                "x": {
+                                                    "type": "integer",
+                                                    "title": "X",
+                                                    "default": 0,
+                                                    "description": "A description for 'x'  Type: 'integer'",
+                                                    "propertyOrder": 30
+                                                },
+                                                "y": {
+                                                    "type": "integer",
+                                                    "title": "Y",
+                                                    "default": 0,
+                                                    "description": "A description for 'y'  Type: 'integer'",
+                                                    "propertyOrder": 40
                                                 }
                                             }
                                         },
-                                        "x": {
-                                            "type": "integer",
-                                            "title": "X",
-                                            "default": 22,
-                                            "description": "A description for 'x'  Type: 'integer'",
-                                            "propertyOrder": 20
+                                        "propertyOrder": 20
+                                    },
+                                    "place_nested": {
+                                        "type": "array",
+                                        "title": "Place Nested",
+                                        "format": "tabs",
+                                        "options": {
+                                            "disable_collapse": false,
+                                            "disable_array_add": false,
+                                            "disable_array_delete": false,
+                                            "disable_array_reorder": false,
+                                            "disable_properties": false,
+                                            "collapsed": false,
+                                            "hidden": false
                                         },
-                                        "y": {
-                                            "type": "integer",
-                                            "title": "Y",
-                                            "default": 0,
-                                            "description": "A description for 'y'  Type: 'integer'",
-                                            "propertyOrder": 30
+                                        "items": {
+                                            "type": "object",
+                                            "title": "Title Root End Update Mapgen Place Nested ",
+                                            "options": {
+                                                "disable_collapse": false,
+                                                "disable_edit_json": false,
+                                                "disable_properties": false,
+                                                "collapsed": false,
+                                                "hidden": false
+                                            },
+                                            "defaultProperties": [
+                                                "chunks",
+                                                "x",
+                                                "y"
+                                            ],
+                                            "properties": {
+                                                "chunks": {
+                                                    "$ref": "#/definitions/string_array",
+                                                    "title": "Chunks",
+                                                    "items": {
+                                                        "default": "tacoma_commune_west_wall_door",
+                                                        "filteredEnum": {
+                                                            "display_key": "nested_mapgen_id",
+                                                            "filter": { "jsonObject.nested_mapgen_id": { "$exists": true } }
+                                                        }
+                                                    }
+                                                },
+                                                "x": {
+                                                    "type": "integer",
+                                                    "title": "X",
+                                                    "default": 22,
+                                                    "description": "A description for 'x'  Type: 'integer'",
+                                                    "propertyOrder": 20
+                                                },
+                                                "y": {
+                                                    "type": "integer",
+                                                    "title": "Y",
+                                                    "default": 0,
+                                                    "description": "A description for 'y'  Type: 'integer'",
+                                                    "propertyOrder": 30
+                                                }
+                                            }
                                         }
+                                    },
+                                    "place_npcs": {
+                                        "type": "array",
+                                        "title": "Place Npcs",
+                                        "format": "tabs",
+                                        "options": {
+                                            "disable_collapse": false,
+                                            "disable_array_add": false,
+                                            "disable_array_delete": false,
+                                            "disable_array_reorder": false,
+                                            "disable_properties": false,
+                                            "collapsed": false,
+                                            "hidden": false
+                                        },
+                                        "items": {
+                                            "type": "object",
+                                            "title": "Npc ",
+                                            "options": {
+                                                "disable_collapse": false,
+                                                "disable_edit_json": false,
+                                                "disable_properties": false,
+                                                "collapsed": false,
+                                                "hidden": false
+                                            },
+                                            "defaultProperties": [
+                                                "class",
+                                                "x",
+                                                "y"
+                                            ],
+                                            "properties": {
+                                                "class": {
+                                                    "type": "string",
+                                                    "title": "Class",
+                                                    "default": "ranch_farmer_1",
+                                                    "format": "text",
+                                                    "description": "Description for 'class' Type: 'string' Path: '/properties/place_npcs/items/properties/class'",
+                                                    "propertyOrder": 10
+                                                },
+                                                "x": {
+                                                    "type": "integer",
+                                                    "title": "X",
+                                                    "default": 19,
+                                                    "description": "A description for 'x'  Type: 'integer'",
+                                                    "propertyOrder": 20
+                                                },
+                                                "y": {
+                                                    "type": "integer",
+                                                    "title": "Y",
+                                                    "default": 20,
+                                                    "description": "A description for 'y'  Type: 'integer'",
+                                                    "propertyOrder": 30
+                                                }
+                                            }
+                                        },
+                                        "propertyOrder": 10
+                                    },
+                                    "set": {
+                                        "type": "array",
+                                        "title": "Set",
+                                        "format": "tabs",
+                                        "options": {
+                                            "disable_collapse": false,
+                                            "disable_array_add": false,
+                                            "disable_array_delete": false,
+                                            "disable_array_reorder": false,
+                                            "disable_properties": false,
+                                            "collapsed": false,
+                                            "hidden": false
+                                        },
+                                        "items": {
+                                            "type": "object",
+                                            "title": "Set ",
+                                            "options": {
+                                                "disable_collapse": false,
+                                                "disable_edit_json": false,
+                                                "disable_properties": false,
+                                                "collapsed": false,
+                                                "hidden": false
+                                            },
+                                            "defaultProperties": [
+                                                "square",
+                                                "id",
+                                                "x",
+                                                "y",
+                                                "x2",
+                                                "y2"
+                                            ],
+                                            "properties": {
+                                                "square": {
+                                                    "type": "string",
+                                                    "title": "Square",
+                                                    "default": "terrain",
+                                                    "format": "text",
+                                                    "description": "Description for 'square' Type: 'string' Path: '/properties/set/items/properties/square'",
+                                                    "propertyOrder": 10
+                                                },
+                                                "point": {
+                                                    "type": "string",
+                                                    "title": "Point",
+                                                    "default": "terrain",
+                                                    "format": "text",
+                                                    "description": "Description for 'point' Type: 'string' Path: '/properties/set/items/properties/id'",
+                                                    "propertyOrder": 20
+                                                },
+                                                "id": {
+                                                    "type": "string",
+                                                    "title": "Id",
+                                                    "default": "t_dirt",
+                                                    "format": "text",
+                                                    "description": "Description for 'id' Type: 'string' Path: '/properties/set/items/properties/id'",
+                                                    "propertyOrder": 20
+                                                },
+                                                "x": {
+                                                    "type": "integer",
+                                                    "title": "X",
+                                                    "default": 7,
+                                                    "description": "A description for 'x'  Type: 'integer'",
+                                                    "propertyOrder": 30
+                                                },
+                                                "y": {
+                                                    "type": "integer",
+                                                    "title": "Y",
+                                                    "default": 4,
+                                                    "description": "A description for 'y'  Type: 'integer'",
+                                                    "propertyOrder": 40
+                                                },
+                                                "x2": {
+                                                    "type": "integer",
+                                                    "title": "X2",
+                                                    "default": 22,
+                                                    "description": "A description for 'x2'  Type: 'integer'",
+                                                    "propertyOrder": 50
+                                                },
+                                                "y2": {
+                                                    "type": "integer",
+                                                    "title": "Y2",
+                                                    "default": 23,
+                                                    "description": "A description for 'y2'  Type: 'integer'",
+                                                    "propertyOrder": 60
+                                                }
+                                            }
+                                        },
+                                        "propertyOrder": 20
+                                    },
+                                    "place_vehicles": {
+                                        "type": "array",
+                                        "title": "Place Vehicles",
+                                        "format": "tabs",
+                                        "options": {
+                                            "disable_collapse": false,
+                                            "disable_array_add": false,
+                                            "disable_array_delete": false,
+                                            "disable_array_reorder": false,
+                                            "disable_properties": false,
+                                            "collapsed": false,
+                                            "hidden": false
+                                        },
+                                        "items": {
+                                            "type": "object",
+                                            "title": "Vehicle ",
+                                            "options": {
+                                                "disable_collapse": false,
+                                                "disable_edit_json": false,
+                                                "disable_properties": false,
+                                                "collapsed": false,
+                                                "hidden": false
+                                            },
+                                            "defaultProperties": [
+                                                "vehicle",
+                                                "x",
+                                                "y",
+                                                "rotation",
+                                                "chance"
+                                            ],
+                                            "properties": {
+                                                "vehicle": {
+                                                    "type": "string",
+                                                    "title": "Vehicle",
+                                                    "default": "car_chassis",
+                                                    "format": "text",
+                                                    "description": "Description for 'vehicle' Type: 'string' Path: '/properties/place_vehicles/items/properties/vehicle'",
+                                                    "propertyOrder": 10
+                                                },
+                                                "x": {
+                                                    "type": "integer",
+                                                    "title": "X",
+                                                    "default": 17,
+                                                    "description": "A description for 'x'  Type: 'integer'",
+                                                    "propertyOrder": 20
+                                                },
+                                                "y": {
+                                                    "type": "integer",
+                                                    "title": "Y",
+                                                    "default": 11,
+                                                    "description": "A description for 'y'  Type: 'integer'",
+                                                    "propertyOrder": 30
+                                                },
+                                                "rotation": {
+                                                    "type": "integer",
+                                                    "title": "Rotation",
+                                                    "default": 90,
+                                                    "description": "A description for 'rotation'  Type: 'integer'",
+                                                    "propertyOrder": 40
+                                                },
+                                                "chance": {
+                                                    "type": "integer",
+                                                    "title": "Chance",
+                                                    "default": 100,
+                                                    "description": "A description for 'chance'  Type: 'integer'",
+                                                    "propertyOrder": 50
+                                                }
+                                            }
+                                        },
+                                        "propertyOrder": 10
                                     }
                                 }
-                            },
-                            "place_npcs": {
-                                "type": "array",
-                                "title": "Place Npcs",
-                                "format": "tabs",
-                                "options": {
-                                    "disable_collapse": false,
-                                    "disable_array_add": false,
-                                    "disable_array_delete": false,
-                                    "disable_array_reorder": false,
-                                    "disable_properties": false,
-                                    "collapsed": false,
-                                    "hidden": false
-                                },
-                                "items": {
-                                    "type": "object",
-                                    "title": "Npc ",
-                                    "options": {
-                                        "disable_collapse": false,
-                                        "disable_edit_json": false,
-                                        "disable_properties": false,
-                                        "collapsed": false,
-                                        "hidden": false
-                                    },
-                                    "defaultProperties": [
-                                        "class",
-                                        "x",
-                                        "y"
-                                    ],
-                                    "properties": {
-                                        "class": {
-                                            "type": "string",
-                                            "title": "Class",
-                                            "default": "ranch_farmer_1",
-                                            "format": "text",
-                                            "description": "Description for 'class' Type: 'string' Path: '/properties/place_npcs/items/properties/class'",
-                                            "propertyOrder": 10
-                                        },
-                                        "x": {
-                                            "type": "integer",
-                                            "title": "X",
-                                            "default": 19,
-                                            "description": "A description for 'x'  Type: 'integer'",
-                                            "propertyOrder": 20
-                                        },
-                                        "y": {
-                                            "type": "integer",
-                                            "title": "Y",
-                                            "default": 20,
-                                            "description": "A description for 'y'  Type: 'integer'",
-                                            "propertyOrder": 30
-                                        }
-                                    }
-                                },
-                                "propertyOrder": 10
-                            },
-                            "set": {
-                                "type": "array",
-                                "title": "Set",
-                                "format": "tabs",
-                                "options": {
-                                    "disable_collapse": false,
-                                    "disable_array_add": false,
-                                    "disable_array_delete": false,
-                                    "disable_array_reorder": false,
-                                    "disable_properties": false,
-                                    "collapsed": false,
-                                    "hidden": false
-                                },
-                                "items": {
-                                    "type": "object",
-                                    "title": "Set ",
-                                    "options": {
-                                        "disable_collapse": false,
-                                        "disable_edit_json": false,
-                                        "disable_properties": false,
-                                        "collapsed": false,
-                                        "hidden": false
-                                    },
-                                    "defaultProperties": [
-                                        "square",
-                                        "id",
-                                        "x",
-                                        "y",
-                                        "x2",
-                                        "y2"
-                                    ],
-                                    "properties": {
-                                        "square": {
-                                            "type": "string",
-                                            "title": "Square",
-                                            "default": "terrain",
-                                            "format": "text",
-                                            "description": "Description for 'square' Type: 'string' Path: '/properties/set/items/properties/square'",
-                                            "propertyOrder": 10
-                                        },
-                                        "point": {
-                                            "type": "string",
-                                            "title": "Point",
-                                            "default": "terrain",
-                                            "format": "text",
-                                            "description": "Description for 'point' Type: 'string' Path: '/properties/set/items/properties/id'",
-                                            "propertyOrder": 20
-                                        },
-                                        "id": {
-                                            "type": "string",
-                                            "title": "Id",
-                                            "default": "t_dirt",
-                                            "format": "text",
-                                            "description": "Description for 'id' Type: 'string' Path: '/properties/set/items/properties/id'",
-                                            "propertyOrder": 20
-                                        },
-                                        "x": {
-                                            "type": "integer",
-                                            "title": "X",
-                                            "default": 7,
-                                            "description": "A description for 'x'  Type: 'integer'",
-                                            "propertyOrder": 30
-                                        },
-                                        "y": {
-                                            "type": "integer",
-                                            "title": "Y",
-                                            "default": 4,
-                                            "description": "A description for 'y'  Type: 'integer'",
-                                            "propertyOrder": 40
-                                        },
-                                        "x2": {
-                                            "type": "integer",
-                                            "title": "X2",
-                                            "default": 22,
-                                            "description": "A description for 'x2'  Type: 'integer'",
-                                            "propertyOrder": 50
-                                        },
-                                        "y2": {
-                                            "type": "integer",
-                                            "title": "Y2",
-                                            "default": 23,
-                                            "description": "A description for 'y2'  Type: 'integer'",
-                                            "propertyOrder": 60
-                                        }
-                                    }
-                                },
-                                "propertyOrder": 20
-                            },
-                            "place_vehicles": {
-                                "type": "array",
-                                "title": "Place Vehicles",
-                                "format": "tabs",
-                                "options": {
-                                    "disable_collapse": false,
-                                    "disable_array_add": false,
-                                    "disable_array_delete": false,
-                                    "disable_array_reorder": false,
-                                    "disable_properties": false,
-                                    "collapsed": false,
-                                    "hidden": false
-                                },
-                                "items": {
-                                    "type": "object",
-                                    "title": "Vehicle ",
-                                    "options": {
-                                        "disable_collapse": false,
-                                        "disable_edit_json": false,
-                                        "disable_properties": false,
-                                        "collapsed": false,
-                                        "hidden": false
-                                    },
-                                    "defaultProperties": [
-                                        "vehicle",
-                                        "x",
-                                        "y",
-                                        "rotation",
-                                        "chance"
-                                    ],
-                                    "properties": {
-                                        "vehicle": {
-                                            "type": "string",
-                                            "title": "Vehicle",
-                                            "default": "car_chassis",
-                                            "format": "text",
-                                            "description": "Description for 'vehicle' Type: 'string' Path: '/properties/place_vehicles/items/properties/vehicle'",
-                                            "propertyOrder": 10
-                                        },
-                                        "x": {
-                                            "type": "integer",
-                                            "title": "X",
-                                            "default": 17,
-                                            "description": "A description for 'x'  Type: 'integer'",
-                                            "propertyOrder": 20
-                                        },
-                                        "y": {
-                                            "type": "integer",
-                                            "title": "Y",
-                                            "default": 11,
-                                            "description": "A description for 'y'  Type: 'integer'",
-                                            "propertyOrder": 30
-                                        },
-                                        "rotation": {
-                                            "type": "integer",
-                                            "title": "Rotation",
-                                            "default": 90,
-                                            "description": "A description for 'rotation'  Type: 'integer'",
-                                            "propertyOrder": 40
-                                        },
-                                        "chance": {
-                                            "type": "integer",
-                                            "title": "Chance",
-                                            "default": 100,
-                                            "description": "A description for 'chance'  Type: 'integer'",
-                                            "propertyOrder": 50
-                                        }
-                                    }
-                                },
-                                "propertyOrder": 10
                             }
                         }
-                    }
+                    ]
                 },
                 "effect": {
-                    "type": "array",
                     "title": "Effect",
-                    "format": "tabs",
-                    "options": {
-                        "disable_collapse": false,
-                        "disable_array_add": false,
-                        "disable_array_delete": false,
-                        "disable_array_reorder": false,
-                        "disable_properties": false,
-                        "collapsed": false,
-                        "hidden": false
-                    },
-                    "items": {
-                        "type": "object",
-                        "title": "Title Root End Effect ",
-                        "options": {
-                            "disable_collapse": false,
-                            "disable_edit_json": false,
-                            "disable_properties": false,
-                            "collapsed": false,
-                            "hidden": false
+                    "oneOf": [
+                        {
+                            "type": "object",
+                            "title": "Object format",
+                            "options": {
+                                "disable_collapse": false,
+                                "disable_edit_json": false,
+                                "disable_properties": false,
+                                "collapsed": false,
+                                "hidden": false
+                            },
+                            "defaultProperties": [
+                                "u_buy_item",
+                                "container",
+                                "count"
+                            ],
+                            "properties": {
+                                "u_buy_item": {
+                                    "type": "string",
+                                    "id": "/properties/effect/properties/u_buy_item",
+                                    "title": "U Buy Item",
+                                    "default": "veggy_pickled",
+                                    "format": "text",
+                                    "description": "Description for 'u_buy_item' Type: 'string' Path: '/properties/effect/properties/u_buy_item'",
+                                    "options": {
+                                        "hidden": false
+                                    },
+                                    "propertyOrder": 10
+                                },
+                                "container": {
+                                    "type": "string",
+                                    "id": "/properties/effect/properties/container",
+                                    "title": "Container",
+                                    "default": "jar_3l_glass_sealed",
+                                    "format": "text",
+                                    "description": "Description for 'container' Type: 'string' Path: '/properties/effect/properties/container'",
+                                    "options": {
+                                        "hidden": false
+                                    },
+                                    "propertyOrder": 20
+                                },
+                                "count": {
+                                    "type": "integer",
+                                    "id": "/properties/effect/properties/count",
+                                    "title": "Count",
+                                    "default": 12,
+                                    "description": "A description for 'count'  Type: 'integer'",
+                                    "options": {
+                                        "hidden": false
+                                    },
+                                    "propertyOrder": 30
+                                }
+                            }
                         },
-                        "defaultProperties": [
-                            "u_buy_item",
-                            "count"
-                        ],
-                        "properties": {
-                            "u_buy_item": {
-                                "type": "string",
-                                "title": "U Buy Item",
-                                "default": "icon",
-                                "format": "text",
-                                "description": "Description for 'u_buy_item' Type: 'string' Path: '/properties/end/properties/effect/items/properties/u_buy_item'",
-                                "propertyOrder": 10
+                        {
+                            "type": "array",
+                            "title": "List format",
+                            "format": "tabs",
+                            "options": {
+                                "disable_collapse": false,
+                                "disable_array_add": false,
+                                "disable_array_delete": false,
+                                "disable_array_reorder": false,
+                                "disable_properties": false,
+                                "collapsed": false,
+                                "hidden": false
                             },
-                            "count": {
-                                "type": "integer",
-                                "title": "Count",
-                                "default": 2,
-                                "description": "A description for 'count'  Type: 'integer'",
-                                "propertyOrder": 20
-                            },
-                            "u_add_var": {
-                                "type": "string",
-                                "title": "U Add Var",
-                                "default": "NC_REFUGEE_Draco_has_guitar",
-                                "format": "text",
-                                "description": "Description for 'u_add_var' Type: 'string' Path: '/properties/end/properties/effect/properties/u_add_var'",
-                                "propertyOrder": 10
-                            },
-                            "type": {
-                                "type": "string",
-                                "title": "Type",
-                                "default": "general",
-                                "format": "text",
-                                "description": "Description for 'type' Type: 'string' Path: '/properties/end/properties/effect/properties/type'",
-                                "propertyOrder": 20
-                            },
-                            "context": {
-                                "type": "string",
-                                "title": "Context",
-                                "default": "mission",
-                                "format": "text",
-                                "description": "Description for 'context' Type: 'string' Path: '/properties/end/properties/effect/properties/context'",
-                                "propertyOrder": 30
-                            },
-                            "value": {
-                                "type": "string",
-                                "title": "Value",
-                                "default": "yes",
-                                "format": "text",
-                                "description": "Description for 'value' Type: 'string' Path: '/properties/end/properties/effect/properties/value'",
-                                "propertyOrder": 40
+                            "items": {
+                                "oneOf": [
+                                    {
+                                        "type": "object",
+                                        "title": "Object format",
+                                        "options": {
+                                            "disable_collapse": false,
+                                            "disable_edit_json": false,
+                                            "disable_properties": false,
+                                            "collapsed": false,
+                                            "hidden": false
+                                        },
+                                        "defaultProperties": [
+                                            "u_buy_item",
+                                            "count"
+                                        ],
+                                        "properties": {
+                                            "u_buy_item": {
+                                                "type": "string",
+                                                "title": "U Buy Item",
+                                                "default": "icon",
+                                                "format": "text",
+                                                "propertyOrder": 10
+                                            },
+                                            "npc_lose_effect": {
+                                                "type": "string",
+                                                "title": "Npc lose effect",
+                                                "default": "infection",
+                                                "format": "text",
+                                                "propertyOrder": 10
+                                            },
+                                            "set_npc_rule": {
+                                                "type": "string",
+                                                "title": "Set npc rule",
+                                                "default": "investigate_noises",
+                                                "format": "text",
+                                                "propertyOrder": 10
+                                            },
+                                            "count": {
+                                                "type": "integer",
+                                                "title": "Count",
+                                                "default": 2,
+                                                "description": "A description for 'count'  Type: 'integer'",
+                                                "propertyOrder": 20
+                                            },
+                                            "u_add_var": {
+                                                "type": "string",
+                                                "title": "U Add Var",
+                                                "default": "NC_REFUGEE_Draco_has_guitar",
+                                                "format": "text",
+                                                "description": "Description for 'u_add_var' Type: 'string' Path: '/properties/end/properties/effect/properties/u_add_var'",
+                                                "propertyOrder": 10
+                                            },
+                                            "type": {
+                                                "type": "string",
+                                                "title": "Type",
+                                                "default": "general",
+                                                "format": "text",
+                                                "description": "Description for 'type' Type: 'string' Path: '/properties/end/properties/effect/properties/type'",
+                                                "propertyOrder": 20
+                                            },
+                                            "context": {
+                                                "type": "string",
+                                                "title": "Context",
+                                                "default": "mission",
+                                                "format": "text",
+                                                "description": "Description for 'context' Type: 'string' Path: '/properties/end/properties/effect/properties/context'",
+                                                "propertyOrder": 30
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "title": "Value",
+                                                "default": "yes",
+                                                "format": "text",
+                                                "description": "Description for 'value' Type: 'string' Path: '/properties/end/properties/effect/properties/value'",
+                                                "propertyOrder": 40
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "type": "string",
+                                        "title": "String format",
+                                        "default": "stop_guard",
+                                        "format": "text"
+                                    }
+                                ]
                             }
                         }
-                    },
-                    "propertyOrder": 10
+                    ]
                 }
             },
             "propertyOrder": 120

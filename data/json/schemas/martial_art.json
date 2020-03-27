@@ -49,6 +49,31 @@
             "default": 2,
             "description": "Unarmed skill level at which leg blocking is unlocked"
         },
+        "copy-from": {
+            "type": "string",
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { "jsonObject.type": { "$eq": "martial_art" } }
+            }
+        },
+        "extend": {
+            "type": "object",
+            "description": "Modders can add an \"extends\" field to their definition to append entries to a list instead of overriding the entire list.",
+            "title": "Extend",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "weapons"
+            ],
+            "properties": {
+                "weapons": { "$ref": "#/definitions/weapons_ref" }
+            }
+        },
         "initiate": {
             "type": "array",
             "id": "/properties/initiate",
@@ -196,23 +221,7 @@
           }
         },
         "weapons": {
-            "$ref": "#/definitions/string_array",
-            "title": "Weapons",
-            "description": "List of weapons usable with this art",
-            "items": {
-                "type": "string",
-                "filteredEnum": {
-                    "display_key": "id",
-                    "filter": { "$and": [ 
-                        { "$or": [ 
-                            { "jsonObject.type": { "$eq": "TOOL" } },
-                            { "jsonObject.type": { "$eq": "GUN" } },
-                            { "jsonObject.type": { "$eq": "GENERIC" } }
-                        ] },
-                        { "jsonObject.id": { "$exists": true } }
-                    ] }
-                }
-            }
+            "$ref": "#/definitions/weapons_ref"
         },
         "autolearn": {
             "$ref": "#/definitions/array_array",
@@ -238,6 +247,25 @@
         }
     },
     "definitions": {
+        "weapons_ref": {
+            "$ref": "#/definitions/string_array",
+            "title": "Weapons",
+            "description": "List of weapons usable with this art",
+            "items": {
+                "type": "string",
+                "filteredEnum": {
+                    "display_key": "id",
+                    "filter": { "$and": [ 
+                        { "$or": [ 
+                            { "jsonObject.type": { "$eq": "TOOL" } },
+                            { "jsonObject.type": { "$eq": "GUN" } },
+                            { "jsonObject.type": { "$eq": "GENERIC" } }
+                        ] },
+                        { "jsonObject.id": { "$exists": true } }
+                    ] }
+                }
+            }
+        },
         "buff_ref": {
             "type": "array",
             "format": "tabs",

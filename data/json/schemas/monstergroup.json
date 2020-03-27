@@ -35,14 +35,16 @@
         },
         "default": {
             "type": "string",
-            "id": "/properties/default",
             "title": "Default",
             "default": "mon_null",
             "format": "text",
             "description": "Description for 'default' Type: 'string' Path: '/properties/default'",
-            "options": {
-                "hidden": false
-            },
+            "propertyOrder": 30
+        },
+        "is_animal": {
+            "type": "boolean",
+            "title": "Is animal",
+            "default": false,
             "propertyOrder": 30
         },
         "monsters": {

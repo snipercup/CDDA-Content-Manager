@@ -5,7 +5,7 @@
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
     "stringifyOptions": {
-      "maxLength": 108
+      "maxLength": 118
     },
     "get_ids_of_type": [ { "type": "material", "display_key": "ident" } ],
     "options": {
@@ -148,6 +148,9 @@
         },
         "proportional": {
           "$ref": "#/definitions/proportional"
+        },
+        "relic_data": {
+          "$ref": "#/definitions/relic_data"
         },
         "relative": {
             "type": "object",
@@ -309,7 +312,10 @@
                   "RESTRICT_HANDS", 
                   "PARTIAL_DEAF", 
                   "SLOWS_MOVEMENT", 
-                  "SLOWS_THIRST", 
+                  "SLOWS_THIRST",
+                  "UNARMED_WEAPON",
+                  "DURABLE_MELEE",
+                  "MAGIC_FOCUS",
                   "SPLINT", 
                   "NONCONDUCTIVE", 
                   "ACTIVE_CLOAKING", 
@@ -346,6 +352,8 @@
                   "WAIST", 
                   "DEAF", 
                   "GAS_PROOF", 
+                  "NO_UNWIELD", 
+                  "PERSONAL", 
                   "FRAGILE", 
                   "FLOTATION", 
                   "FIRESTARTER", 

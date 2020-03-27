@@ -66,16 +66,18 @@
 		async function find_click(){
       let inputElement = document.getElementById('findInput');
       let value = inputElement.value;
+      let displayKey = [ "id", "abstract", "result" ];
       let filter = { "$or": [
-                      { "jsonObject.id": { "$contains": value } },
-                      { "jsonObject.name": { "$contains": value } },
-                      { "jsonObject.name.str": { "$contains": value } },
-                      { "jsonObject.abstract": { "$contains": value } }
+                      { "jsonObject.id": { "$regex": [".*" + value + ".*", "i"] } },
+                      { "jsonObject.name": { "$regex": [".*" + value + ".*", "i"] } },
+                      { "jsonObject.result": { "$regex": [".*" + value + ".*", "i"] } },
+                      { "jsonObject.name.str": { "$regex": [".*" + value + ".*", "i"] } },
+                      { "jsonObject.abstract": { "$regex": [".*" + value + ".*", "i"] } }
                   ] }
       if(entryList){ //Check to see if there is already an entrylist. Otherwise, create one
-        entryList.recreate(document.getElementById("entryList"), entries, [ "id", "abstract" ], filter);
+        entryList.recreate(document.getElementById("entryList"), entries, displayKey, filter);
       } else {
-        entryList = new collectionList(document.getElementById("entryList"), entries, [ "id", "abstract" ], filter);
+        entryList = new collectionList(document.getElementById("entryList"), entries, displayKey, filter);
       }
       document.getElementById('editForm').style.display = "none";
     }
@@ -114,7 +116,7 @@
 			<td class="mainListContainer" id="mainListContainer" style="vertical-align: top;  display:none;">
           <label>Find:</label><input type="text" id="findInput" name="findInput">
           <input type="button" onclick="find_click();" value="Find"><BR>
-					<select name="entryList" id="entryList" onchange="entryList_change(this);" size="5" style="height:90%;"></select>
+					<select name="entryList" id="entryList" onchange="entryList_change(this);" size="5" style="height:90%; max-width: 300px;"></select>
 		</td>
 			<td class="mainContentContainer" style="padding:25px; height:100%; overflow:auto;">
 				<div class="contentContainer" style="height:100%; overflow:auto; min-width: 725px;" id="editForm">

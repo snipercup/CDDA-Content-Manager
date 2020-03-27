@@ -11,6 +11,9 @@
         "collapsed": false,
         "hidden": false
     },
+    "stringifyOptions": {
+      "maxLength": 120
+    },
     "include_properties": [
         { "property": "magazines", "propertyOrder": 150 }
     ],
@@ -112,6 +115,7 @@
                     { "jsonObject.id": { "$exists": true } },
                     { "$or": [
                         { "jsonObject.type": { "$eq": "TOOL_ARMOR" } },
+                        { "jsonObject.type": { "$eq": "COMESTIBLE" } },
                         { "jsonObject.type": { "$eq": "TOOL" } },
                         { "jsonObject.type": { "$eq": "ARMOR" } }
                     ] }
@@ -162,8 +166,10 @@
             "type": "string",
             "filteredEnum": {
                 "display_key": "id",
-                "filter": { "jsonObject.type": { "$eq": "TOOL_ARMOR" }
-                }
+                "filter": { "$or": [
+                    { "jsonObject.type": { "$eq": "TOOL_ARMOR" } },
+                    { "jsonObject.type": { "$eq": "ARMOR" } }
+                ] }
             },
             "enum": [ ]
         },
@@ -179,6 +185,9 @@
         "turns_per_charge": {
           "$ref": "#/definitions/turns_per_charge"
         },
+        "relic_data": {
+          "$ref": "#/definitions/relic_data"
+        },
         "flags": {
           "$ref": "#/definitions/flags", 
           "items": {
@@ -192,8 +201,13 @@
                   "RAD_RESIST",
                   "HOOD",
                   "FIRESTARTER",
+                  "NO_UNLOAD",
+                  "FIX_NEARSIGHT",
+                  "FIX_FARSIGHT",
                   "SKINTIGHT",
                   "FANCY",
+                  "WAIST",
+                  "IS_UPS",
                   "STURDY",
                   "WATCH",
                   "TRADER_AVOID",
@@ -211,7 +225,9 @@
                   "CLIMATE_CONTROL",
                   "REBREATHER",
                   "CHARGEDIM",
+                  "BLOCK_WHILE_WORN",
                   "WATER_FRIENDLY",
+                  "RECHARGE",
                   "WATERPROOF",
                   "RAINPROOF",
                   "GAS_PROOF",

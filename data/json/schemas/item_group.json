@@ -5,7 +5,7 @@
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
     "stringifyOptions": {
-      "maxLength": 115
+      "maxLength": 114
     },
     "options": {
         "disable_collapse": false,
@@ -16,8 +16,7 @@
     },
     "defaultProperties": [
         "type",
-        "id",
-        "name"
+        "id"
     ],
     "properties": {
         "id": {
@@ -29,9 +28,226 @@
           "propertyOrder": 11,
           "default": "item_group"
         },
-        "name": {
-          "$ref": "#/definitions/name", 
-          "propertyOrder": 12
+        "subtype": {
+            "type": "string",
+            "title": "Subtype",
+            "default": "distribution",
+            "enum": [ "collection", "distribution" ],
+            "format": "text",
+            "propertyOrder": 30
+        },
+        "ammo": {
+            "type": "integer",
+            "title": "Ammo",
+            "description": "Specify an ammo chance for the entire item group. Specifies the percent chance that the entries will spawn fully loaded (if it needs a magazine, it will be added for you). Default to 0 if unspecified. Note that ammo only applies to tools, guns, and magazines. Furthermore, it does not apply to tools whose entry explicitly specifies how much ammo (charges) to spawn with, or to tools whose JSON item definition specifies a random amount or a fixed, nonzero amount of initial charges. If any item groups are referenced from your item group, then their ammo chances are ignored, and yours are used instead.",
+            "default": 20,
+            "propertyOrder": 20
+        },
+        "magazine": {
+            "type": "integer",
+            "title": "Magazine",
+            "description": "Specify a magazine chance for the entire item group. Specifies the percent chance that the entries will spawn with a magazine. Default to 0 if unspecified. Note that magazine only applies to tools, guns, and magazines. Furthermore, it does not apply to tools whose entry explicitly specifies how much ammo (charges) to spawn with, or to tools whose JSON item definition specifies a random amount or a fixed, nonzero amount of initial charges. If any item groups are referenced from your item group, then their magazine chances are ignored, and yours are used instead.",
+            "default": 20,
+            "propertyOrder": 20
+        },
+        "entries": {
+            "type": "array",
+            "title": "Entries",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "object",
+                "title": "Entry ",
+                "options": {
+                    "disable_collapse": false,
+                    "disable_edit_json": false,
+                    "disable_properties": false,
+                    "collapsed": false,
+                    "hidden": false
+                },
+                "defaultProperties": [
+                    "item",
+                    "prob"
+                ],
+                "properties": {
+                    "item": {
+                        "type": "string",
+                        "title": "Item",
+                        "default": "Enter item ID here",
+                        "format": "text",
+                        "propertyOrder": 10
+                    },
+                    "group": {
+                        "type": "string",
+                        "title": "Group",
+                        "default": "Enter group id here",
+                        "format": "text",
+                        "propertyOrder": 20
+                    },
+                    "ammo-item": {
+                        "type": "string",
+                        "title": "Ammo-item",
+                        "default": "battery",
+                        "format": "text",
+                        "propertyOrder": 20
+                    },
+                    "count": {
+                        "type": "array",
+                        "title": "Count",
+                        "default": [ 0, 0 ],
+                        "format": "grid",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "items": {
+                            "oneOf": [
+                                {
+                                    "type": "integer",
+                                    "default": 2,
+                                    "options": { "compact": true }
+                                },
+                                {
+                                    "type": "integer",
+                                    "default": 12,
+                                    "options": { "compact": true }
+                                }
+                            ]
+                        },
+                        "propertyOrder": 30
+                    },
+                    "prob": {
+                        "type": "integer",
+                        "title": "Prob",
+                        "default": 20,
+                        "propertyOrder": 40
+                    },
+                    "charges": {
+                        "type": "integer",
+                        "title": "Charges",
+                        "default": 20,
+                        "propertyOrder": 40
+                    }
+                }
+            },
+            "propertyOrder": 40
+        },
+        "items": {
+            "type": "array",
+            "title": "Items",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "headerTemplate": "Items {{i1}}",
+                "oneOf": [
+                    {
+                        "type": "array",
+                        "title": "Simple ",
+                        "format": "grid",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_array_add": false,
+                            "disable_array_delete": false,
+                            "disable_array_reorder": true,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "items": [
+                            {
+                                "type": "string",
+                                "default": "leather_belt",
+                                "format": "text",
+                                "options": { "compact": true }
+                            },
+                            {
+                                "type": "integer",
+                                "default": 50,
+                                "options": { "compact": true }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "object",
+                        "title": "Advanced ",
+                        "options": {
+                            "disable_collapse": false,
+                            "disable_edit_json": false,
+                            "disable_properties": false,
+                            "collapsed": false,
+                            "hidden": false
+                        },
+                        "defaultProperties": [
+                            "item",
+                            "prob",
+                            "container-item"
+                        ],
+                        "properties": {
+                            "group": {
+                                "type": "string",
+                                "title": "Item",
+                                "default": "mixed_alcoholic_drinks",
+                                "format": "text",
+                                "propertyOrder": 10
+                            },
+                            "item": {
+                                "type": "string",
+                                "title": "Item",
+                                "default": "cooking_oil",
+                                "format": "text",
+                                "propertyOrder": 10
+                            },
+                            "prob": {
+                                "type": "integer",
+                                "title": "Prob",
+                                "default": 20,
+                                "propertyOrder": 20
+                            },
+                            "charges-min": {
+                                "type": "integer",
+                                "title": "Charges-min",
+                                "default": 20,
+                                "propertyOrder": 20
+                            },
+                            "charges-max": {
+                                "type": "integer",
+                                "title": "Charges-min",
+                                "default": 20,
+                                "propertyOrder": 20
+                            },
+                            "container-item": {
+                                "type": "string",
+                                "title": "Container Item",
+                                "default": "bottle_plastic",
+                                "format": "text",
+                                "propertyOrder": 30
+                            }
+                        }
+                    }
+                ]
+            },
+            "propertyOrder": 999
         }
     }
 }

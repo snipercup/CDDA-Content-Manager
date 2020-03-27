@@ -5,7 +5,7 @@
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
     "stringifyOptions": {
-      "maxLength": 116
+      "maxLength": 115
     },
     "options": {
         "disable_collapse": false,
@@ -58,6 +58,7 @@
                     ] },
                     { "$or": [
                         { "jsonObject.type": { "$eq": "terrain" } },
+                        { "jsonObject.type": { "$eq": "GENERIC" } },
                         { "jsonObject.type": { "$eq": "furniture" } },
                         { "jsonObject.type": { "$eq": "vehicle_part" } }
                     ] }
@@ -117,10 +118,40 @@
             "description": "A description for 'size'  Type: 'integer'",
             "propertyOrder": 120
         },
+        "epower": {
+            "type": "integer",
+            "title": "Epower",
+            "default": -250,
+            "description": "A description for 'epower'  Type: 'integer'",
+            "propertyOrder": 120
+        },
+        "contact_area": {
+            "type": "integer",
+            "title": "Contact area",
+            "default": 20,
+            "description": "A description for 'contact_area'  Type: 'integer'",
+            "propertyOrder": 120
+        },
+        "folded_volume": {
+            "type": "string",
+            "title": "Folded volume",
+            "default": "2500 ml",
+            "format": "text",
+            "description": "A description for 'folded_volume'  Type: 'string'",
+            "propertyOrder": 120
+        },
         "item": {
             "type": "string",
             "title": "Item",
             "default": "craftrig",
+            "format": "text",
+            "description": "Description for 'item' Type: 'string' Path: '/properties/item'",
+            "propertyOrder": 130
+        },
+        "wheel_type": {
+            "type": "string",
+            "title": "Wheel type",
+            "default": "standard",
             "format": "text",
             "description": "Description for 'item' Type: 'string' Path: '/properties/item'",
             "propertyOrder": 130
@@ -133,7 +164,15 @@
             "description": "Description for 'location' Type: 'string' Path: '/properties/location'",
             "propertyOrder": 140
         },
+        "rolling_resistance": {
+            "type": "number",
+            "title": "Rolling resistance",
+            "default": 0.5
+        },
         "requirements": {
+            "stringifyOptions": {
+              "maxLength": 115
+            },
             "type": "object",
             "title": "Requirements",
             "options": {
@@ -180,13 +219,14 @@
                             },
                             "items": {
                                 "type": "array",
-                                "title": "Title Root Requirements Install Skills ",
+                                "title": "skill ",
+                                "default": [ "mechanics", 3 ],
                                 "format": "grid",
                                 "options": {
                                     "disable_collapse": false,
-                                    "disable_array_add": false,
-                                    "disable_array_delete": false,
-                                    "disable_array_reorder": false,
+                                    "disable_array_add": true,
+                                    "disable_array_delete": true,
+                                    "disable_array_reorder": true,
                                     "disable_properties": false,
                                     "collapsed": false,
                                     "hidden": false
@@ -195,15 +235,20 @@
                                     {
                                         "type": "string",
                                         "default": "mechanics",
-                                        "format": "text"
+                                        "format": "text",
+                                        "options": { "compact": true }
                                     },
                                     {
                                         "type": "integer",
-                                        "default": 3
+                                        "default": 3,
+                                        "options": { "compact": true }
                                     }
                                 ]
                             },
                             "propertyOrder": 10
+                        },
+                        "qualities": {
+                          "$ref": "#/definitions/qualities_ref"
                         },
                         "time": {
                             "type": "string",
@@ -287,6 +332,9 @@
                             "description": "Description for 'time' Type: 'string' Path: '/properties/requirements/properties/removal/properties/time'",
                             "propertyOrder": 20
                         },
+                        "qualities": {
+                          "$ref": "#/definitions/qualities_ref"
+                        },
                         "using": {
                             "$ref": "#/definitions/using_ref"
                         }
@@ -326,7 +374,7 @@
                             "items": {
                                 "type": "array",
                                 "title": "Skill ",
-                                "format": "tabs",
+                                "format": "grid",
                                 "options": {
                                     "disable_collapse": false,
                                     "disable_array_add": true,
@@ -364,7 +412,6 @@
                         },
                         "using": {
                             "type": "array",
-                            "id": "/properties/requirements/properties/repair/properties/using",
                             "title": "Using",
                             "format": "tabs",
                             "options": {
@@ -378,41 +425,27 @@
                             },
                             "items": {
                                 "type": "array",
-                                "id": "/properties/requirements/properties/repair/properties/using/items",
-                                "title": "Title Root Requirements Repair Using ",
-                                "format": "tabs",
+                                "title": "Using ",
+                                "format": "grid",
                                 "options": {
                                     "disable_collapse": false,
                                     "disable_array_add": false,
                                     "disable_array_delete": false,
-                                    "disable_array_reorder": false,
+                                    "disable_array_reorder": true,
                                     "disable_properties": false,
                                     "collapsed": false,
                                     "hidden": false
                                 },
                                 "items": {
-                                    "headerTemplate": "Title Root Requirements Repair Using  {{i1}}",
                                     "oneOf": [
                                         {
                                             "type": "string",
-                                            "id": "/properties/requirements/properties/repair/properties/using/items/oneof0",
-                                            "title": "oneof 0 /properties/requirements/properties/repair/properties/using/items",
                                             "default": "welding_standard",
-                                            "format": "text",
-                                            "description": "Description for 'items' Type: 'string' Path: '/properties/requirements/properties/repair/properties/using/items/items'",
-                                            "options": {
-                                                "hidden": false
-                                            }
+                                            "format": "text"
                                         },
                                         {
                                             "type": "integer",
-                                            "id": "/properties/requirements/properties/repair/properties/using/items/oneof1",
-                                            "title": "oneof 1 /properties/requirements/properties/repair/properties/using/items",
-                                            "default": 5,
-                                            "description": "A description for 'items'  Type: 'integer'",
-                                            "options": {
-                                                "hidden": false
-                                            }
+                                            "default": 5
                                         }
                                     ]
                                 }
@@ -471,6 +504,9 @@
             "$ref": "#/definitions/flags_ref"
         },
         "breaks_into": {
+            "stringifyOptions": {
+              "maxLength": 117
+            },
             "oneOf": [
                 {
                     "type": "array",
@@ -549,22 +585,34 @@
                             },
                             "count": {
                                 "title": "Count",
-                                "propertyOrder": 40,
-                                "type": "array",
-                                "format": "grid",
-                                "default": [ 0, 0 ],
-                                "options": {
-                                    "disable_collapse": true,
-                                    "disable_array_add": true,
-                                    "disable_array_delete": true,
-                                    "disable_array_reorder": true,
-                                    "disable_properties": true,
-                                    "collapsed": false,
-                                    "hidden": false
-                                },
-                                "items": [
-                                    { "type": "integer", "default": 2, "options": { "compact": true } },
-                                    { "type": "integer", "default": 4, "options": { "compact": true } }
+                                "oneOf": [
+                                    {
+                                        "title": "Pair of numbers",
+                                        "propertyOrder": 40,
+                                        "type": "array",
+                                        "format": "grid",
+                                        "default": [ 0, 0 ],
+                                        "options": {
+                                            "disable_collapse": true,
+                                            "disable_array_add": true,
+                                            "disable_array_delete": true,
+                                            "disable_array_reorder": true,
+                                            "disable_properties": true,
+                                            "collapsed": false,
+                                            "hidden": false
+                                        },
+                                        "items": [
+                                            { "type": "integer", "default": 2, "options": { "compact": true } },
+                                            { "type": "integer", "default": 4, "options": { "compact": true } }
+                                        ]
+                                    },
+                                    {
+                                        "type": "integer",
+                                        "title": "Single number",
+                                        "default": 50,
+                                        "description": "A description for 'count'  Type: 'integer'",
+                                        "propertyOrder": 30
+                                    }
                                 ]
                             }
                         }
@@ -607,12 +655,61 @@
                     "type": "integer",
                     "title": "Stab",
                     "default": 20
+                },
+                "bash": {
+                    "type": "integer",
+                    "title": "Bash",
+                    "default": 20
                 }
             },
             "propertyOrder": 180
         }
     },
     "definitions": {
+        "qualities_ref": {
+            "type": "array",
+            "id": "/definitions/qualities_ref",
+            "title": "Qualities",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "object",
+                "title": "Qualitiy ",
+                "options": {
+                    "disable_collapse": false,
+                    "disable_edit_json": false,
+                    "disable_properties": false,
+                    "collapsed": false,
+                    "hidden": false
+                },
+                "defaultProperties": [
+                    "id",
+                    "level"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id",
+                        "default": "WRENCH",
+                        "format": "text"
+                    },
+                    "level": {
+                        "type": "integer",
+                        "title": "Level",
+                        "default": 1
+                    }
+                }
+            },
+            "propertyOrder": 30
+        },
         "using_ref": {
             "title": "Using",
             "oneOf": [
@@ -671,20 +768,41 @@
                     "WATER_PURIFIER",
                     "CRAFTRIG",
                     "AISLE",
+                    "WATER_WHEEL",
                     "VISION",
                     "SEAT",
                     "CIRCLE_LIGHT",
+                    "FORGE",
                     "HALF_BOARD",
                     "INITIAL_PART",
                     "LOW_FINAL_AIR_DRAG",
                     "CONE_LIGHT",
                     "FLUIDTANK",
+                    "WIND_TURBINE",
+                    "KITCHEN",
+                    "FAUCET",
+                    "NO_REPAIR",
+                    "REACTOR",
+                    "FRIDGE",
+                    "FREEZER",
+                    "CONTROL_ANIMAL",
+                    "ROCKWHEEL",
+                    "WINDSHIELD",
+                    "BELTABLE",
+                    "RAIL",
+                    "RECHARGE",
+                    "WHEEL_MOUNT_LIGHT",
                     "REMOTE_CONTROLS",
                     "E_HEATER",
                     "E_HIGHER_SKILL",
                     "DOOR_MOTOR",
                     "DISHWASHER",
                     "DOME_LIGHT",
+                    "MUFFLER",
+                    "CHEMLAB",
+                    "TRANSFORM_TERRAIN", 
+                    "PLOW", 
+                    "AUTOPILOT", 
                     "CTRL_ELECTRONIC",
                     "HALF_CIRCLE_LIGHT",
                     "INTERNAL",
@@ -701,6 +819,7 @@
                     "WATCH",
                     "ARMOR",
                     "CHIMES",
+                    "KILN",
                     "CARGO_LOCKING",
                     "FLOATS",
                     "CAMERA_CONTROL",
@@ -712,11 +831,15 @@
                     "LEAK_DAM",
                     "ATOMIC_LIGHT",
                     "NO_ROOF_NEEDED",
+                    "USE_TANKS",
                     "FULL_BOARD",
                     "SHARP",
                     "MULTISQUARE",
+                    "WELDRIG",
                     "FUNNEL",
                     "NEEDS_WHEEL_MOUNT_LIGHT",
+                    "NEEDS_WHEEL_MOUNT_MEDIUM",
+                    "WHEEL_MOUNT_MEDIUM",
                     "NEEDS_WHEEL_MOUNT_HEAVY",
                     "ODDTURN",
                     "BED",
@@ -736,14 +859,36 @@
                     "ENABLED_DRAINS_EPOWER",
                     "NOINSTALL",
                     "UNMOUNT_ON_MOVE",
+                    "WIND_POWERED",
+                    "STEREO",
+                    "SOLAR_PANEL",
+                    "SCOOP",
+                    "SECURITY",
+                    "ON_CONTROLS",
+                    "OVER",
+                    "TOWEL",
+                    "FLAT_SURF",
+                    "BATTERY_MOUNT",
+                    "NEEDS_BATTERY_MOUNT",
                     "VARIABLE_SIZE",
                     "WHEEL_MOUNT_HEAVY",
                     "POWER_TRANSFER",
                     "AISLE_LIGHT",
+                    "TURRET_MOUNT",
                     "SELF_JACK",
                     "PROTRUSION",
                     "COVERED",
+                    "TURRET_CONTROLS",
+                    "WORKBENCH",
+                    "HARNESS_any",
+                    "WIDE_CONE_LIGHT",
+                    "TRACK",
+                    "COOLER", 
+                    "SPACE_HEATER", 
+                    "WASHING_MACHINE", 
+                    "EMITTER",
                     "ROOF",
+                    "ON_ROOF",
                     "FOLDABLE",
                     "EXTRA_DRAG",
                     "REAPER",

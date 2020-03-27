@@ -97,6 +97,7 @@
                     "RANDOM_TARGET", 
                     "UNSAFE_TELEPORT", 
                     "HOSTILE_SUMMON", 
+                    "SWAP_POS", 
                     "WONDER", 
                     "SILENT", 
                     "NO_LEGS", 

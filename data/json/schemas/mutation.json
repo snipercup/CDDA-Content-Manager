@@ -4,7 +4,6 @@
     "title": "Mutation",
     "type": "object",
     "id": "https://niebert.github.io/json-editor",
-    "get_ids_of_type": [ { "type": "mutation_type", "display_key": "id" } ],
     "stringifyOptions": {
       "maxLength": 115
     },
@@ -297,13 +296,15 @@
             },
             "items": {
                 "type": "string",
-                "id": "/properties/types/items",
                 "title": "Type",
                 "default": "LEGS",
                 "format": "text",
-                "$ref": "#/definitions/mutation_type",
-                "options": {
-                    "hidden": false
+                "filteredEnum": {
+                    "display_key": "id",
+                    "filter": { "$and": [
+                        { "jsonObject.type": { "$eq": "mutation_type" } },
+                        { "jsonObject.id": { "$exists": true } }
+                    ] }
                 }
             },
             "propertyOrder": 60
@@ -559,7 +560,6 @@
             },
             "items": {
                 "type": "object",
-                "id": "/properties/wet_protection/oneof0",
                 "title": "Part",
                 "format": "grid",
                 "options": {
@@ -670,7 +670,6 @@
             },
             "items": {
                 "type": "object",
-                "id": "/properties/armor/oneof0",
                 "title": "Part",
                 "format": "grid",
                 "options": {
@@ -736,124 +735,35 @@
             "propertyOrder": 90
         },
         "attacks": {
-            "type": "object",
-            "id": "/properties/attacks",
             "title": "Attacks",
-            "options": {
-                "disable_collapse": false,
-                "disable_edit_json": false,
-                "disable_properties": false,
-                "collapsed": false,
-                "hidden": false
-            },
-            "defaultProperties": [
-                "attack_text_u",
-                "attack_text_npc",
-                "chance",
-                "strength_damage"
-            ],
-            "properties": {
-                "attack_text_u": {
-                    "type": "string",
-                    "id": "/properties/attacks/properties/attack_text_u",
-                    "title": "Attack Text U",
-                    "default": "You kick %s with your hooves",
-                    "format": "text",
-                    "description": "Description for 'attack_text_u' Type: 'string' Path: '/properties/attacks/properties/attack_text_u'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 10
+            "oneOf": [
+                {
+                  "title": "Object format",
+                  "$ref": "#/definitions/attacks_ref"
                 },
-                "attack_text_npc": {
-                    "type": "string",
-                    "id": "/properties/attacks/properties/attack_text_npc",
-                    "title": "Attack Text Npc",
-                    "default": "%1$s kicks %2$s with their hooves",
-                    "format": "text",
-                    "description": "Description for 'attack_text_npc' Type: 'string' Path: '/properties/attacks/properties/attack_text_npc'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 20
-                },
-                "chance": {
-                    "type": "integer",
-                    "id": "/properties/attacks/properties/chance",
-                    "title": "Chance",
-                    "default": 15,
-                    "description": "A description for 'chance'  Type: 'integer'",
-                    "options": {
-                        "hidden": false
-                    },
-                    "propertyOrder": 30
-                },
-                "strength_damage": {
-                    "type": "object",
-                    "id": "/properties/attacks/properties/strength_damage",
-                    "title": "Strength Damage",
-                    "options": {
-                        "disable_collapse": false,
-                        "disable_edit_json": false,
-                        "disable_properties": false,
-                        "collapsed": false,
-                        "hidden": false
-                    },
-                    "defaultProperties": [
-                        "damage_type",
-                        "amount"
-                    ],
-                    "properties": {
-                        "damage_type": {
-                            "type": "string",
-                            "id": "/properties/attacks/properties/strength_damage/properties/damage_type",
-                            "title": "Damage Type",
-                            "default": "bash",
-                            "format": "text",
-                            "description": "Description for 'damage_type' Type: 'string' Path: '/properties/attacks/properties/strength_damage/properties/damage_type'",
-                            "options": {
-                                "hidden": false
-                            },
-                            "propertyOrder": 10
-                        },
-                        "amount": {
-                            "type": "integer",
-                            "id": "/properties/attacks/properties/strength_damage/properties/amount",
-                            "title": "Amount",
-                            "default": 3,
-                            "description": "A description for 'amount'  Type: 'integer'",
-                            "options": {
-                                "hidden": false
-                            },
-                            "propertyOrder": 20
-                        }
-                    },
-                    "propertyOrder": 40
+                {
+                  "title": "List format",
+                  "$ref": "#/definitions/object_array",
+                  "items": {
+                      "title": "Attack ",
+                      "$ref": "#/definitions/attacks_ref"
+                  }
                 }
-            },
-            "propertyOrder": 150
+            ]
         },
         "active": {
             "type": "boolean",
-            "id": "/properties/active",
             "title": "Active",
             "format": "checkbox",
             "default": true,
             "description": "When set the mutation is an active mutation that the player needs to activate (default: false)",
-            "options": {
-                "hidden": false
-            },
             "propertyOrder": 110
         },
         "cost": {
             "type": "integer",
-            "id": "/properties/cost",
             "title": "Cost",
             "default": 20,
             "description": "Cost to activate this mutation. Needs one of the hunger, thirst, or fatigue values set to true. (default: 0)",
-            "options": {
-                "hidden": false
-            },
             "propertyOrder": 120
         },
         "bodytemp_sleep": {
@@ -1084,7 +994,6 @@
             },
             "items": {
                 "type": "array",
-                "id": "/properties/encumbrance_always/oneof0",
                 "default": [ "HAND_L", 20 ],
                 "title": "Body part",
                 "format": "tabs",
@@ -1101,7 +1010,6 @@
                 "items": [
                     {
                         "type": "string",
-                        "id": "/properties/encumbrance_always/items/oneof0",
                         "default": "HAND_L",
                         "format": "text",
                         "includeDefinition": "body_parts_enum",
@@ -1109,7 +1017,6 @@
                     },
                     {
                         "type": "integer",
-                        "id": "/properties/encumbrance_always/items/oneof1",
                         "default": 20,
                         "options": {
                             "hidden": false,
@@ -1138,7 +1045,6 @@
             "items": {
                 "headerTemplate": "Encumbrance Covered {{i1}}",
                 "type": "array",
-                "id": "/properties/encumbrance_covered/oneof0",
                 "title": "Encumbrance Covered",
                 "format": "tabs",
                 "options": {
@@ -1153,7 +1059,6 @@
                 "items": [
                     {
                         "type": "string",
-                        "id": "/properties/encumbrance_covered/items/oneof0",
                         "title": "Bodypart",
                         "default": "HAND_L",
                         "format": "text",
@@ -1165,7 +1070,6 @@
                     },
                     {
                         "type": "integer",
-                        "id": "/properties/encumbrance_covered/items/oneof1",
                         "title": "Encumbrance",
                         "default": 20,
                         "description": "The amount of encumbrance",
@@ -1199,9 +1103,11 @@
                     "BG_SURVIVAL_STORY",
                     "PRED1",
                     "PRED2",
+                    "PRED3",
                     "PRED4",
                     "CANNIBAL",
                     "UNARMED_BONUS",
+                    "NEED_ACTIVE_TO_MELEE",
                     "hair_white",
                     "hair_red",
                     "hair_gray",
@@ -1215,6 +1121,8 @@
                     "hair_fro",
                     "hair_black",
                     "NO_DISEASE",
+                    "NO_RADIATION",
+                    "NO_THIRST",
                     "mycus"
                 ]
             },
@@ -1270,6 +1178,14 @@
             "options": {
                 "hidden": false
             },
+            "propertyOrder": 160
+        },
+        "bleed_resist": {
+            "type": "integer",
+            "title": "Bleed resist",
+            "format": "selectize",
+            "default": 2,
+            "description": "Add this much to your dodge skill. A negative will subtract it.",
             "propertyOrder": 160
         },
         "fatigue_regen_modifier": {
@@ -1375,10 +1291,72 @@
         }
     },
     "definitions": {
-      "mutation_type": {
-        "type": "string", 
-        "description": "The id of an mutation_type entry", 
-        "enum": [ ]
-      }
+        "attacks_ref": {
+            "type": "object",
+            "id": "/definitions/attacks_ref",
+            "title": "Attacks",
+            "options": {
+                "disable_collapse": false,
+                "disable_edit_json": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "defaultProperties": [
+                "attack_text_u",
+                "attack_text_npc",
+                "chance",
+                "strength_damage"
+            ],
+            "properties": {
+                "attack_text_u": {
+                    "type": "string",
+                    "title": "Attack Text U",
+                    "default": "You kick %s with your hooves",
+                    "format": "text"
+                },
+                "attack_text_npc": {
+                    "type": "string",
+                    "title": "Attack Text Npc",
+                    "default": "%1$s kicks %2$s with their hooves",
+                    "format": "text"
+                },
+                "chance": {
+                    "type": "integer",
+                    "title": "Chance",
+                    "default": 15
+                },
+                "strength_damage": {
+                    "type": "object",
+                    "title": "Strength Damage",
+                    "options": {
+                        "disable_collapse": false,
+                        "disable_edit_json": false,
+                        "disable_properties": false,
+                        "collapsed": false,
+                        "hidden": false
+                    },
+                    "defaultProperties": [
+                        "damage_type",
+                        "amount"
+                    ],
+                    "properties": {
+                        "damage_type": {
+                            "type": "string",
+                            "title": "Damage Type",
+                            "default": "bash",
+                            "format": "text"
+                        },
+                        "amount": {
+                            "type": "integer",
+                            "title": "Amount",
+                            "default": 3
+                        }
+                    },
+                    "propertyOrder": 40
+                }
+            },
+            "propertyOrder": 150
+        }
     }
 }

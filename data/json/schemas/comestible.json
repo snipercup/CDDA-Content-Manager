@@ -292,6 +292,7 @@
         "container": {
             "type": "string",
             "format": "selectize",
+            "enum": [ "null" ],
             "filteredEnum": {
                 "display_key": "id",
                 "filter": { "jsonObject.type": { "$eq": "CONTAINER" } }

@@ -45,12 +45,46 @@
             "description": "(optional) Amount of power storage added by this bionic. Strings can be used \"1 kJ\"/\"1000 J\"/\"1000000 mJ\" (default: 0)",
             "propertyOrder": 40
         },
+        "fake_item": {
+            "type": "string",
+            "title": "Fake item",
+            "default": "afs_bionic_rocket",
+            "format": "text",
+            "propertyOrder": 40
+        },
         "included": {
             "type": "boolean",
             "title": "Included",
             "format": "checkbox",
             "default": false,
             "description": "(optional) Whether this bionic is included with another. If true this bionic does not require a CBM item to be defined. (default: false)"
+        },
+        "fuel_options": {
+            "type": "array",
+            "title": "Fuel Options",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "string",
+                "title": "Fuel Option ",
+                "default": "sunlight",
+                "format": "text"
+            },
+            "propertyOrder": 50
+        },
+        "fuel_efficiency": {
+            "type": "number",
+            "title": "Fuel Efficiency",
+            "default": 0.25,
+            "propertyOrder": 55
         },
         "occupied_bodyparts": {
             "type": "array",

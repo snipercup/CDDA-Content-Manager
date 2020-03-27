@@ -1,0 +1,113 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "additionalProperties": true,
+    "title": "MOD INFO",
+    "type": "object",
+    "id": "https://niebert.github.io/json-editor",
+    "stringifyOptions": {
+      "maxLength": 117
+    },
+    "options": {
+        "disable_collapse": false,
+        "disable_edit_json": false,
+        "disable_properties": false,
+        "collapsed": false,
+        "hidden": false
+    },
+    "defaultProperties": [
+        "type",
+        "id",
+        "name"
+    ],
+    "properties": {
+        "ident": {
+            "$ref": "#/definitions/id", 
+            "title": "Ident",
+            "default": "aftershock",
+            "propertyOrder": 20
+        },
+        "type": {
+            "$ref": "#/definitions/type", 
+            "propertyOrder": 11,
+            "default": "MOD_INFO"
+        },
+        "name": {
+            "$ref": "#/definitions/name", 
+            "propertyOrder": 12
+        },
+        "authors": {
+            "type": "array",
+            "title": "Authors",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "string",
+                "title": "author ",
+                "default": "Esther",
+                "format": "text"
+            },
+            "propertyOrder": 40
+        },
+        "maintainers": {
+            "type": "array",
+            "title": "Maintainers",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": true,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "string",
+                "title": "Maintainer ",
+                "default": "Maleclypse",
+                "format": "text"
+            },
+            "propertyOrder": 50
+        },
+        "description": {
+          "$ref": "#/definitions/description", 
+          "propertyOrder": 13
+        },
+        "category": {
+            "type": "string",
+            "title": "Category",
+            "default": "content",
+            "format": "text",
+            "propertyOrder": 70
+        },
+        "dependencies": {
+            "type": "array",
+            "title": "Dependencies",
+            "format": "grid",
+            "options": {
+                "disable_collapse": false,
+                "disable_array_add": false,
+                "disable_array_delete": false,
+                "disable_array_reorder": false,
+                "disable_properties": false,
+                "collapsed": false,
+                "hidden": false
+            },
+            "items": {
+                "type": "string",
+                "title": "Dependency ",
+                "default": "dda",
+                "format": "text"
+            },
+            "propertyOrder": 80
+        }
+    }
+}

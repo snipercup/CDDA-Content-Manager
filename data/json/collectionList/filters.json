@@ -36,6 +36,13 @@
 	},
 	{
 		"type": "filter",
+		"name": "all_BIONIC_ITEM",
+		"display_name": "Type: BIONIC_ITEM",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "BIONIC_ITEM" } }
+	},
+	{
+		"type": "filter",
 		"name": "all_body_parts",
 		"display_name": "Type: body_part",
 		"display_key": "id",
@@ -71,6 +78,13 @@
 	},
 	{
 		"type": "filter",
+		"name": "all_item_group",
+		"display_name": "Type: item_group",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "item_group" } }
+	},
+	{
+		"type": "filter",
 		"name": "all_GENERIC",
 		"display_name": "Type: GENERIC",
 		"display_key": "id",
@@ -96,6 +110,29 @@
 		"display_name": "Type: mission_definition",
 		"display_key": "id",
 		"filter": { "jsonObject.type": { "$eq": "mission_definition" } }
+	},
+	{
+		"type": "filter",
+		"name": "all_mod_info",
+		"display_name": "Type: MOD_INFO",
+		"display_key": "ident",
+		"filter": { "$and": [ 
+        { "jsonObject.type": { "$eq": "MOD_INFO" } },
+        { "$or": [ 
+            { "jsonObject.obsolete": { "$exists": false } },
+            { "jsonObject.obsolete": { "$eq": false } }
+        ] }
+    ] }
+	},
+	{
+		"type": "filter",
+		"name": "all_mod_info",
+		"display_name": "Type: MOD_INFO (obsolete mods)",
+		"display_key": "ident",
+		"filter": { "$and": [ 
+        { "jsonObject.type": { "$eq": "MOD_INFO" } },
+        { "jsonObject.obsolete": { "$eq": true } }
+    ] }
 	},
 	{
 		"type": "filter",
@@ -156,6 +193,13 @@
 		"display_name": "Type: TOOL_ARMOR",
 		"display_key": "id",
 		"filter": { "jsonObject.type": { "$eq": "TOOL_ARMOR" } }
+	},
+	{
+		"type": "filter",
+		"name": "all_tool_quality",
+		"display_name": "Type: tool_quality",
+		"display_key": "id",
+		"filter": { "jsonObject.type": { "$eq": "tool_quality" } }
 	},
 	{
 		"type": "filter",
@@ -226,17 +270,6 @@
 	},
 	{
 		"type": "filter",
-		"name": "is_id",
-		"display_name": "is equal to id",
-		"display_key": [ "id", "abstract" ],
-		"filter": { "$or": [
-        { "jsonObject.id": { "$eq": "board" } },
-        { "jsonObject.name": { "$eq": "board" } },
-        { "jsonObject.abstract": { "$eq": "board" } }
-    ] }
-	},
-	{
-		"type": "filter",
 		"name": "old_name",
 		"display_name": "Old name string",
 		"display_key": "name",
@@ -244,20 +277,16 @@
         { "jsonObject.name": { "$type": "string" } },
         { "jsonObject.name_plural": { "$exists": false } },
         { "jsonObject.type": { "$ne": "COMESTIBLE" } },
-        { "jsonObject.type": { "$ne": "item_action" } },
-        { "jsonObject.type": { "$ne": "furniture" } },
-        { "jsonObject.type": { "$ne": "MONSTER" } },
-        { "jsonObject.type": { "$ne": "vehicle_part" } },
-        { "jsonObject.type": { "$ne": "martial_art" } },
         { "jsonObject.type": { "$ne": "mutation" } },
-        { "jsonObject.type": { "$ne": "faction" } },
-        { "jsonObject.type": { "$ne": "overmap_terrain" } },
-        { "jsonObject.type": { "$ne": "vehicle" } },
-        { "jsonObject.type": { "$ne": "monstergroup" } },
-        { "jsonObject.type": { "$ne": "start_location" } },
         { "fileName": { "$containsNone": "dining_kitchen.json" } },
         { "jsonObject.type": { "$ne": "overmap_land_use_code" } },
+        { "jsonObject.type": { "$ne": "start_location" } },
+        { "jsonObject.type": { "$ne": "furniture" } },
+        { "jsonObject.type": { "$ne": "vehicle" } },
         { "jsonObject.type": { "$ne": "MONSTER_FACTION" } },
+        { "jsonObject.type": { "$ne": "overmap_terrain" } },
+        { "jsonObject.type": { "$ne": "monstergroup" } },
+        { "jsonObject.type": { "$ne": "faction" } },
         { "jsonObject.type": { "$ne": "scenario" } },
         { "jsonObject.type": { "$ne": "construction_category" } },
         { "jsonObject.type": { "$ne": "LOOT_ZONE" } },
@@ -285,7 +314,12 @@
 		"display_key": "name",
 		"filter": { "$and": [ 
         { "$or": [
+            { "jsonObject.type": { "$eq": "npc_class" } },
+            { "jsonObject.type": { "$eq": "mutation" } },
             { "jsonObject.type": { "$eq": "vehicle_part" } },
+            { "jsonObject.type": { "$eq": "MONSTER" } },
+            { "jsonObject.type": { "$eq": "item_action" } },
+            { "jsonObject.type": { "$eq": "martial_art" } },
             { "jsonObject.type": { "$eq": "ARMOR" } },
             { "jsonObject.type": { "$eq": "WHEEL" } },
             { "jsonObject.type": { "$eq": "GENERIC" } },
@@ -307,18 +341,24 @@
             { "jsonObject.type": { "$eq": "bionic" } }
         ] },
         { "jsonObject.name": { "$type": "string" } },
+        { "$or": [
+            { "fileName": { "$contains": "data\\mods\\DinoMod\\" } },
+            { "fileName": { "$contains": "data\\mods\\Graphical_Overmap\\" } },
+            { "fileName": { "$contains": "data\\mods\\MMA\\" } },
+            { "fileName": { "$contains": "data\\mods\\No_Fungi\\" } },
+            { "fileName": { "$contains": "data\\mods\\No_Rail_Stations\\" } },
+            { "fileName": { "$contains": "data\\mods\\Only_Wildlife\\" } },
+            { "fileName": { "$contains": "data\\mods\\StatsThroughSkills\\" } },
+            { "fileName": { "$contains": "data\\mods\\alt_map_key\\" } },
+            { "fileName": { "$contains": "data\\mods\\cbm_slots\\" } },
+            { "fileName": { "$contains": "data\\mods\\classic_zombies\\" } },
+            { "fileName": { "$contains": "data\\mods\\CrazyCataclysm\\" } },
+            { "fileName": { "$contains": "data\\mods\\dda\\" } },
+            { "fileName": { "$contains": "data\\mods\\desert_region\\" } },
+            { "fileName": { "$contains": "data\\mods\\Fuji_Mil_Prof\\" } },
+            { "fileName": { "$contains": "data\\mods\\My_Sweet_Cataclysm\\" } }
+        ] },
         { "jsonObject.name_plural": { "$exists": false } },
-        { "jsonObject.deconstruct": { "$exists": false } },
-        { "jsonObject.burn_data": { "$exists": false } },
-        { "jsonObject.burn_products": { "$exists": false } },
-        { "jsonObject.attacks": { "$exists": false } },
-        { "jsonObject.install_time": { "$exists": false } },
-        { "fileName": { "$containsNone": "dining_kitchen.json" } },
-        { "fileName": { "$containsNone": "soup.json" } },
-        { "fileName": { "$containsNone": "NPC_Dana_Nunez" } },
-        { "fileName": { "$containsNone": "data\\json\\npcs\\NPC_Brigitte_LaCroix.json" } },
-        { "fileName": { "$containsNone": "mapgen" } },
-        { "fileName": { "$containsNone": "book\\misc.json" } },
         { "fileName": { "$containsNone": "obsolete" } }
     ] }
 	},
@@ -327,6 +367,39 @@
 		"name": "old_name",
 		"display_name": "Old name_plural string",
 		"display_key": "name",
-		"filter": { "jsonObject.name_plural": { "$exists": true } }
+		"filter": { "$and": [ 
+        { "jsonObject.name_plural": { "$exists": true } },
+        { "jsonObject.type": { "$ne": "COMESTIBLE" } },
+        { "$and": [ 
+          { "fileName": { "$containsNone": "data\\mods\\EW_Pack\\" } },
+          { "fileName": { "$containsNone": "data\\mods\\fast_healing\\" } },
+          { "fileName": { "$containsNone": "data\\mods\\FictonalWeapons\\" } },
+          { "fileName": { "$containsNone": "data\\mods\\Medieval_Stuff\\" } },
+          { "fileName": { "$containsNone": "data\\mods\\blazemod\\" } },
+          { "fileName": { "$containsNone": "data\\mods\\Salvaged_Robots\\" } },
+          { "fileName": { "$containsNone": "data\\mods\\Growable_pots\\" } },
+          { "fileName": { "$containsNone": "data\\mods\\More_Survival_Tools\\" } },
+          { "fileName": { "$containsNone": "data\\mods\\Tolerate_This\\" } }
+        ] }
+    ] }
+	},
+	{
+		"type": "filter",
+		"name": "old_item_group",
+		"display_name": "Old item_group definitions",
+		"display_key": "id",
+		"filter": { "$and": [ 
+        { "jsonObject.type": { "$eq": "item_group" } },
+        { "fileName": { "$containsNone": "data\\json\\npcs\\NC_SOLDIER.json" } },
+        { "fileName": { "$containsNone": "data\\json\\itemgroups\\books.json" } },
+        { "fileName": { "$containsNone": "data\\json\\itemgroups\\art_antiques_crafts.json" } },
+        { "fileName": { "$containsNone": "data\\json\\itemgroups\\main.json" } },
+        { "fileName": { "$containsNone": "data\\json\\itemgroups\\furniture.json" } },
+        { "fileName": { "$containsNone": "data\\json\\itemgroups\\Locations_MapExtras\\locations_commercial.json" } },
+        { "fileName": { "$containsNone": "data\\json\\itemgroups\\Locations_MapExtras\\locations.json" } },
+        { "fileName": { "$contains": "data\\json\\itemgroups\\Food\\food.json" } },
+        { "jsonObject.subtype": { "$exists": false } },
+        { "jsonObject.items": { "$exists": true } }
+    ] }
 	}
 ]

@@ -80,12 +80,27 @@
                 "format": "selectize",
                 "filter": { "$or": [
                     { "jsonObject.type": { "$eq": "COMESTIBLE" } },
+                    { "jsonObject.type": { "$eq": "TOOL" } },
                     { "jsonObject.type": { "$eq": "GENERIC" } }
                 ] }
             }
         },
         "proportional": {
           "includeDefinition": "proportional"
+        },
+        "relative": {
+            "type": "object",
+            "title": "Relative",
+            "defaultProperties": [
+                "to_hit"
+            ],
+            "properties": {
+                "to_hit": {
+                    "type": "integer",
+                    "title": "To hit",
+                    "default": 3
+                }
+            }
         },
         "container": {
             "type": "string",
@@ -168,6 +183,7 @@
                     "LEAK_ALWAYS",
                     "CORPSE",
                     "NO_UNLOAD",
+                    "BLEED",
                     "ALLOWS_REMOTE_USE",
                     "PERPETUAL",
                     "RADIOACTIVE",
@@ -201,7 +217,12 @@
                     "BOMB",
                     "RADIO_INVOKE_PROC",
                     "RADIO_MODABLE",
+                    "THERMOMETER",
+                    "BAROMETER",
+                    "HYGROMETER",
                     "MAGIC_FOCUS",
+                    "REACH2",
+                    "ONLY_ONE",
                     "WHIP",
                     "REACH3",
                     "LIGHT_4",

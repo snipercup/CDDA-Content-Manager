@@ -78,6 +78,7 @@ class EditForm {
 		y.appendChild(this.fileNameHTMLElement);
 		y.appendChild(createElement("BR", undefined, undefined, undefined, ""));
 		y.appendChild(createElement("BUTTON", undefined, {"title": "Save", "class": "btn btn-sm btn-primary mr-2 my-1"}, {"click": function() {_this.editFormSubmit_click(this);}}, "<i class='icon icon-check'></i> Save"));
+		y.appendChild(createElement("BUTTON", undefined, {"title": "Save as", "class": "btn btn-sm btn-primary mr-2 my-1"}, {"click": function() {_this.editFormSubmit_click(this);}}, "<i class='icon icon-copy'></i> Save as"));
 		y.appendChild(createElement("BUTTON", undefined, {"title": "Duplicate", "class": "btn btn-sm btn-primary mr-2 my-1"}, {"click": function() {_this.editFormSubmit_click(this);}}, "<i class='icon icon-copy'></i> Duplicate"));
 		y.appendChild(createElement("BUTTON", undefined, {"title": "Delete", "class": "btn btn-sm btn-primary mr-2 my-1 json-editor-btn-delete json-editor-btntype-deleteall"}, {"click": function() {_this.editFormSubmit_click(this);}}, "<i class='icon icon-delete'></i> Delete"));
 		return y;
@@ -124,6 +125,15 @@ class EditForm {
         await updateJsonEntryInFileByIndex(jsonObj, this.fileName, this.indexInParentObject); //jsonObj[0] is the json data, jsonObj[1] is the filename
         entryList.updateList();
         break;
+      case "Save as":
+        //Clicking save will get all the values from the edit form and modify the stored json
+        //It will then prompt the user for a filename and write the json to a file.
+        let fileName = await promptForFileName(this.fileName);
+        if(fileName) { 
+          writeJsonFile(stringifyPrettyCompact([jsonObj], stringify, jsonObj.type), fileName);
+          entryList.updateList();
+         };
+        break;
       case "Duplicate":
         //This will read the json file of the currently selected entry and then append a new item
         //that is a copy of the currently selected entry and then save the json back to disk.
@@ -137,6 +147,7 @@ class EditForm {
         	var result = confirm("Are you sure you want to delete this entry?");
           if (result) {
             await deleteJsonEntryInFileByIndex(jsonObj, this.fileName, this.indexInParentObject);
+            entries.remove(this.loki);
             entryList.updateList();
             entryList.selectRandom();
           }

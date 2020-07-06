@@ -177,6 +177,8 @@
       let jsonObj = entries.get(loki).jsonObject;
       if(jsonObj) {
         let nameString = jsonObj.name;
+        if(!nameString) { return; } //If the object does not have a name, don't add it.
+        if(typeof nameString != "string") { return; } //If the name is not a string it probably already is an object.
         let pluralString = jsonObj.name_plural;
         let newNameObj = {};
         newNameObj.str = nameString;

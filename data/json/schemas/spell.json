@@ -134,37 +134,37 @@
         },
         "message": {
             "type": "string",
-            "id": "/properties/message",
             "title": "Message",
             "default": "",
             "format": "text",
             "description": "The message to the user.",
-            "options": {
-                "hidden": false
-            },
             "propertyOrder": 60
         },
         "//": {
             "type": "string",
-            "id": "/properties///",
             "title": "Comment",
             "default": "This is my comment",
             "format": "text",
             "description": "A comment you can leave that will only show up here but not ingame.",
-            "options": {
-                "hidden": false
-            },
+            "propertyOrder": 70
+        },
+        "min_dot": {
+            "type": "integer",
+            "title": "Min Dot",
+            "default": 1,
+            "propertyOrder": 70
+        },
+        "max_dot": {
+            "type": "integer",
+            "title": "Max Dot",
+            "default": 1,
             "propertyOrder": 70
         },
         "min_damage": {
             "type": "integer",
-            "id": "/properties/min_damage",
             "title": "Min Damage",
             "default": 1,
             "description": "minimum damage (or 'starting' damage)",
-            "options": {
-                "hidden": false
-            },
             "propertyOrder": 70
         },
         "max_damage": {
@@ -278,57 +278,49 @@
         },
         "aoe_increment": {
             "type": "number",
-            "id": "/properties/aoe_increment",
             "title": "aoe_increment",
             "default": 2.0,
             "description": "The incrementation of the AOE effect",
-            "options": {
-                "hidden": false
-            },
             "propertyOrder": 130
         },
         "field_id": {
             "type": "string",
-            "id": "/properties/field_id",
             "title": "field_id",
             "default": 2,
             "description": "The string id of the field (currently hardcoded)",
-            "options": {
-                "hidden": false
-            },
             "propertyOrder": 130
         },
         "min_field_intensity": {
             "type": "integer",
-            "id": "/properties/min_field_intensity",
             "title": "min_field_intensity",
             "default": 2,
             "description": "The minimum intensity of the field",
-            "options": {
-                "hidden": false
-            },
             "propertyOrder": 130
         },
         "max_field_intensity": {
             "type": "integer",
-            "id": "/properties/max_field_intensity",
             "title": "max_field_intensity",
             "default": 2,
             "description": "The maximum intensity of the field",
-            "options": {
-                "hidden": false
-            },
+            "propertyOrder": 130
+        },
+        "min_pierce": {
+            "type": "integer",
+            "title": "Min pierce",
+            "default": 2,
+            "propertyOrder": 130
+        },
+        "max_pierce": {
+            "type": "integer",
+            "title": "Max pierce",
+            "default": 2,
             "propertyOrder": 130
         },
         "field_intensity_increment": {
-            "type": "integer",
-            "id": "/properties/field_intensity_increment",
+            "type": "number",
             "title": "field_intensity_increment",
-            "default": 2,
+            "default": 0.2,
             "description": "The incrementation of the field intensity effect",
-            "options": {
-                "hidden": false
-            },
             "propertyOrder": 130
         },
         "max_level": {
@@ -399,13 +391,9 @@
         },
         "casting_time_increment": {
             "type": "number",
-            "id": "/properties/casting_time_increment",
             "title": "Casting Time Increment",
             "default": -2,
             "description": "The increment of casting time.",
-            "options": {
-                "hidden": false
-            },
             "propertyOrder": 140
         },
         "final_casting_time": {

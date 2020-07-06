@@ -1087,6 +1087,11 @@
               "type": "number",
               "title": "Bashing",
               "default": 0.5
+          },
+          "cutting": {
+              "type": "number",
+              "title": "Cutting",
+              "default": 0.5
           }
       }
   },

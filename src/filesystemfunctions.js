@@ -113,6 +113,36 @@ async function getJSONFilesFromFolder(dirPath, arrayOfFiles) {
   return arrayOfFiles
 }
 
+//Propmts the user for a file path. returns the full path
+async function promptForFileName(currentPath) {
+
+  const {remote} = require('electron'),
+  dialog = remote.dialog,
+  WIN = remote.getCurrentWindow();
+
+  let options = {
+   //Placeholder 1
+   title: "Save file",
+   
+   //Placeholder 2
+   defaultPath : currentPath,
+   
+   //Placeholder 4
+   buttonLabel : "Save File",
+   
+   //Placeholder 3
+   filters :[
+    {name: 'JSON', extensions: ['json']},
+    {name: 'All Files', extensions: ['*']}
+   ]
+  }
+
+  //Synchronous
+  let filename = dialog.showSaveDialogSync(WIN, options)
+  //console.log(filename)
+  return filename;
+}
+
 //Takes a list of folders and returns a list of all JSON files in all folders, recursively.
 //The list of folders must include full folder path, i.e. c:\users\tom\somfolder
 async function getJSONFilesFromFolderList(folderList) {

@@ -407,6 +407,18 @@
 	},
 	{
 		"type": "filter",
+		"name": "modFilter",
+		"display_name": "Mod filter",
+		"display_key": "name",
+		"filter": { "$and": [ 
+        { "jsonObject.name_plural": { "$exists": true } },
+        { "jsonObject.spoils_in": { "$exists": false } },
+        { "jsonObject.container": { "$eq": "paper" } },
+        { "fileName": { "$contains": "data\\mods\\Gourmand'sGraces\\" } }
+    ] }
+	},
+	{
+		"type": "filter",
 		"name": "old_item_group",
 		"display_name": "Old item_group definitions",
 		"display_key": "id",

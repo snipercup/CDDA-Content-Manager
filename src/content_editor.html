@@ -192,6 +192,19 @@
       }
     }
     
+    function btnNutritionToCaloriesClicked(htmlElement){
+      let loki = editorList[0].loki
+      let jsonObj = entries.get(loki).jsonObject;
+      if(jsonObj) {
+        let nutrition = jsonObj.nutrition;
+        if(!nutrition) { return; } //If the object does not have a name, don't add it.
+        delete jsonObj.nutrition;
+        jsonObj.calories = nutrition;
+        entries.get(editorList[0].loki).jsonObject = jsonObj
+				editorList[0].setValue(loki);
+      }
+    }
+    
     function btnTransformItemsEntriesClicked(htmlElement){
       let loki = editorList[0].loki
       let jsonObj = entries.get(loki).jsonObject;
@@ -267,6 +280,7 @@
 			<td class="mainContentContainer" style="padding:25px; height:100%; overflow:auto;">
 				<div class="contentContainer" style="overflow:auto; min-width: 725px; display:none;" id="old_json_update_toolbar">
           <button type="button" class="btn btn-sm btn-primary mr-2 my-1" onclick="btnTransformNameClicked(this)">Name to object</button>
+          <button type="button" class="btn btn-sm btn-primary mr-2 my-1" onclick="btnNutritionToCaloriesClicked(this)">Nutrition to Calories</button>
           <button type="button" class="btn btn-sm btn-primary mr-2 my-1" onclick="btnTransformItemsEntriesClicked(this)">item_group items to entries</button>
 				</div>
 				<div class="contentContainer" style="height:95%; overflow:auto; min-width: 725px;" id="editForm">

@@ -70,12 +70,26 @@
           "$ref": "#/definitions/price", 
           "propertyOrder": 16
         },
+        "container": {
+            "type": "string",
+            "format": "selectize",
+            "enum": [ "null" ],
+            "propertyOrder": 13,
+            "filteredEnum": {
+                "display_key": "id",
+                "filter": { 
+                "$or": [
+                { "jsonObject.type": { "$eq": "CONTAINER" } },
+                { "jsonObject.pocket_data.pocket_type": { "$eq": "CONTAINER" } }
+                ] }
+             }
+        },
         "armor_data": {
           "$ref": "#/definitions/material_thickness", 
           "stringifyOptions": {
             "maxLength": 100
           },
-          "propertyOrder": 13
+          "propertyOrder": 14
         },
         "stack_size": {"$ref": "#/definitions/stack_size"},
         "copy-from": {
@@ -176,9 +190,6 @@
                         "format": "text",
                         "description": "COMPONENT_ID searches all the components of the item (and all of their components, and so on) for an item with the condition string in their ID. The ID only needs to contain the condition, not match it perfectly (though it is case sensitive). For example, supplying a condition mutant would match mutant_meat. FLAG which checks if an item has the specified flag (exact match).",
                         "enum": [ "COMPONENT_ID", "FLAG" ],
-                        "options": {
-                            "hidden": false
-                        },
                         "propertyOrder": 1
                     },
                     "condition": {
@@ -188,9 +199,6 @@
                         "default": "CANNIBALISM",
                         "format": "text",
                         "description": "The condition to check for.",
-                        "options": {
-                            "hidden": false
-                        },
                         "propertyOrder": 2
                     },
                     "name": {
@@ -284,19 +292,7 @@
             "default": "FOOD",
             "format": "text",
             "description": "Description for 'comestible_type' Type: 'string' Path: '/properties/comestible_type'",
-            "options": {
-                "hidden": false
-            },
             "propertyOrder": 70
-        },
-        "container": {
-            "type": "string",
-            "format": "selectize",
-            "enum": [ "null" ],
-            "filteredEnum": {
-                "display_key": "id",
-                "filter": { "jsonObject.type": { "$eq": "CONTAINER" } }
-            }
         },
         "phase": {
             "type": "string",

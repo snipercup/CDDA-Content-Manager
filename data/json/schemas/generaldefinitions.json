@@ -1100,10 +1100,7 @@
       "id": "/definitions/dispersion",
       "title": "Dispersion",
       "default": 40,
-      "description": "Inaccuracy, measured in quarter-degrees",
-      "options": {
-          "hidden": false
-      }
+      "description": "Inaccuracy, measured in quarter-degrees"
   },
   "ammo_type": {
       "type": "string",

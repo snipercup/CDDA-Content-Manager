@@ -930,7 +930,10 @@
               "format": "text",
               "title": "Single",
               "description": "The material",
-              "enum": [ "steel" ]
+              "filteredEnum": {
+                  "display_key": "id",
+                  "filter": { "jsonObject.type": { "$eq": "material" } }
+              }
           },
           {
               "type": "array",
@@ -953,7 +956,10 @@
                   "default": "steel",
                   "format": "text",
                   "description": "The material of this entry",
-                  "enum": [ "steel" ]
+                  "filteredEnum": {
+                      "display_key": "id",
+                      "filter": { "jsonObject.type": { "$eq": "material" } }
+                  }
               }
           }
       ]

@@ -101,7 +101,7 @@
 		"type": "filter",
 		"name": "all_material",
 		"display_name": "Type: material",
-		"display_key": "ident",
+		"display_key": [ "id", "ident" ],
 		"filter": { "jsonObject.type": { "$eq": "material" } }
 	},
 	{
@@ -411,9 +411,8 @@
 		"display_name": "Mod filter",
 		"display_key": "name",
 		"filter": { "$and": [ 
-        { "jsonObject.name_plural": { "$exists": true } },
-        { "jsonObject.spoils_in": { "$exists": false } },
-        { "jsonObject.container": { "$eq": "paper" } },
+        { "jsonObject.name": { "$type": "string" } },
+        { "jsonObject.type": { "$eq": "COMESTIBLE" } },
         { "fileName": { "$contains": "data\\mods\\Gourmand'sGraces\\" } }
     ] }
 	},

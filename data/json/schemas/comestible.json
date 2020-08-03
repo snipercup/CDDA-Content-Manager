@@ -311,9 +311,6 @@
             "title": "Freezing point",
             "default": 3,
             "description": "(Optional) Temperature in F at which item freezes, default is water (32F/0C)",
-            "options": {
-                "hidden": false
-            },
             "propertyOrder": 90
         },
         "proportional": {
@@ -431,9 +428,6 @@
             "title": "charges",
             "default": 3,
             "description": "Number of uses when spawned",
-            "options": {
-                "hidden": false
-            },
             "propertyOrder": 90
         },
         "stim": {
@@ -442,9 +436,6 @@
             "title": "stim",
             "default": 3,
             "description": "Stimulant effect",
-            "options": {
-                "hidden": false
-            },
             "propertyOrder": 90
         },
         "addiction_potential": {
@@ -453,9 +444,6 @@
             "title": "Addiction potential",
             "default": 3,
             "description": "Ability to cause addictions",
-            "options": {
-                "hidden": false
-            },
             "propertyOrder": 90
         },
         "healthy": {
@@ -464,9 +452,6 @@
             "title": "Healthy",
             "default": 1,
             "description": "How much it will affect your health.",
-            "options": {
-                "hidden": false
-            },
             "propertyOrder": 100
         },
         "calories": {"$ref": "#/definitions/calories"},
